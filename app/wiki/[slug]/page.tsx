@@ -1,83 +1,64 @@
 import { notFound } from "next/navigation"
-import { Calendar, Tag, ChevronLeft } from "lucide-react"
-import Link from "next/link"
-import { Navbar } from "@/components/navbar"
-import { Footer } from "@/components/footer"
+import { getPostBySlug } from "@/lib/content"
 import { Container } from "@/components/container"
-import { MarkdownRenderer } from "@/components/markdown-renderer"
-import { getPostBySlug, getAllPosts } from "@/lib/content"
+import { FadeIn } from "@/components/fade-in"
+import { Library, ChevronLeft, Bookmark } from "lucide-react"
+import Link from "next/link"
 
-interface WikiPageProps {
-  params: Promise<{ slug: string }>
-}
+type Props = {
+  params: Promise<{ slug: string }>;
+};
 
-export async function generateStaticParams() {
-  const notes = await getAllPosts("wiki")
-  return notes.map((note) => ({
-    slug: note.slug,
-  }))
-}
-
-export async function generateMetadata({ params }: WikiPageProps) {
-  const { slug } = await params
-  const note = await getPostBySlug("wiki", slug)
-  if (!note) return {}
+export async function generateMetadata({ params }: Props) {
+  const { slug } = await params;
+  const page = await getPostBySlug("wiki", slug);
+  if (!page) return {};
 
   return {
-    title: note.title,
-    description: note.description,
-  }
+    title: page.title,
+    description: page.description,
+  };
 }
 
-export default async function WikiDetailPage({ params }: WikiPageProps) {
-  const { slug } = await params
-  const note = await getPostBySlug("wiki", slug)
+export default async function WikiDetailPage({ params }: Props) {
+  const { slug } = await params;
+  const page = await getPostBySlug("wiki", slug);
 
-  if (!note) {
-    notFound()
+  if (!page) {
+    notFound();
   }
 
   return (
-    <>
-      <Navbar />
-      <main className="flex-1 py-12 lg:py-20">
-        <Container>
-          <div className="flex flex-col space-y-8">
-            {/* Navigation & Back button */}
-            <Link
-              href="/wiki"
-              className="flex items-center space-x-2 text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
-            >
-              <ChevronLeft className="h-4 w-4" />
-              <span>Back to wiki</span>
-            </Link>
+    <div className="py-20">
+      <Container variant="narrow">
+        <FadeIn direction="down">
+          <Link
+            href="/wiki"
+            className="inline-flex items-center text-sm font-medium text-muted-foreground hover:text-primary transition-colors mb-8"
+          >
+            <ChevronLeft className="mr-1 h-4 w-4" />
+            Back to wiki
+          </Link>
 
-            {/* Header */}
-            <header className="flex flex-col space-y-4">
-              <div className="flex items-center space-x-2 text-xs font-semibold text-primary uppercase tracking-widest">
-                <Tag className="h-4 w-4" />
-                <span>{note.category}</span>
-              </div>
-              <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl max-w-4xl">
-                {note.title}
-              </h1>
-
-              <div className="flex flex-wrap items-center gap-6 pt-4 text-sm text-muted-foreground">
-                <div className="flex items-center space-x-2">
-                  <Calendar className="h-4 w-4" />
-                  <span>Last updated: {new Date(note.date).toLocaleDateString("en-US", { month: "long", year: "numeric" })}</span>
-                </div>
-              </div>
-            </header>
-
-            {/* Content */}
-            <div className="pt-8 border-t border-border/40 max-w-4xl mx-auto w-full">
-              <MarkdownRenderer content={note.content} />
+          <div className="space-y-4 mb-12">
+            <div className="flex items-center gap-2 text-primary font-semibold text-sm uppercase tracking-widest">
+               <Library size={14} /> Wiki Page
+            </div>
+            <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl text-foreground">
+              {page.title}
+            </h1>
+            <div className="flex items-center gap-2 pt-2 text-muted-foreground text-sm">
+               <Bookmark size={14} /> Last updated: {page.date}
             </div>
           </div>
-        </Container>
-      </main>
-      <Footer />
-    </>
-  )
+        </FadeIn>
+
+        <FadeIn delay={0.2} direction="none">
+          <article className="prose prose-slate dark:prose-invert max-w-none prose-headings:font-bold prose-a:text-primary prose-pre:bg-card prose-pre:border prose-pre:border-border/40">
+            <div dangerouslySetInnerHTML={{ __html: page.content }} />
+          </article>
+        </FadeIn>
+      </Container>
+    </div>
+  );
 }

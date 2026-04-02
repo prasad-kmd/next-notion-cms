@@ -2,6 +2,10 @@ import type { Metadata } from "next";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import "./globals.css";
 import "katex/dist/katex.min.css"; // Added KaTeX CSS
+import { SidebarProvider } from "@/components/sidebar-context";
+import { Navigation } from "@/components/navigation";
+import { FloatingNavbar } from "@/components/floating-navbar";
+import { Footer } from "@/components/footer";
 
 export const metadata: Metadata = {
   title: {
@@ -25,7 +29,18 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          <SidebarProvider>
+            <div className="flex relative">
+              <Navigation />
+              <div className="flex-1 min-h-screen flex flex-col transition-all duration-300 ease-in-out lg:ml-[260px] [.sidebar-collapsed_&]:lg:ml-[70px]">
+                <FloatingNavbar />
+                <main className="flex-1 w-full pt-16">
+                  {children}
+                </main>
+                <Footer />
+              </div>
+            </div>
+          </SidebarProvider>
         </ThemeProvider>
       </body>
     </html>

@@ -1,9 +1,7 @@
-import { Navbar } from "@/components/navbar"
-import { Footer } from "@/components/footer"
 import { Container } from "@/components/container"
-import { PostCard } from "@/components/post-card"
 import { getAllPosts } from "@/lib/content"
 import { FadeIn } from "@/components/fade-in"
+import { ContentList } from "@/components/content-list"
 
 export const metadata = {
   title: "Blog",
@@ -15,8 +13,7 @@ export default async function BlogPage() {
 
   return (
     <>
-      <Navbar />
-      <main className="flex-1 py-20">
+      <div className="flex-1 py-20">
         <Container>
           <FadeIn direction="down" className="flex flex-col space-y-4 mb-12">
             <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl">
@@ -27,16 +24,9 @@ export default async function BlogPage() {
             </p>
           </FadeIn>
 
-          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {posts.map((post, i) => (
-              <FadeIn key={post.slug} delay={i * 0.1}>
-                <PostCard post={post} type="blog" />
-              </FadeIn>
-            ))}
-          </div>
+          <ContentList initialPosts={posts} type="blog" />
         </Container>
-      </main>
-      <Footer />
+      </div>
     </>
   )
 }
