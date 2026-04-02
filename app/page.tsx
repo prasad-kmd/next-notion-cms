@@ -1,7 +1,5 @@
 import Link from "next/link"
 import { ArrowRight, Code, BookOpen, PenTool, Globe, ChevronRight } from "lucide-react"
-import { Navbar } from "@/components/navbar"
-import { Footer } from "@/components/footer"
 import { Container } from "@/components/container"
 import { PostCard } from "@/components/post-card"
 import { getAllPosts } from "@/lib/content"
@@ -13,10 +11,9 @@ export default async function Home() {
 
   return (
     <>
-      <Navbar />
-      <main className="flex-1">
+      <div className="flex-1">
         {/* Hero Section - Viewport fitted */}
-        <section className="relative flex flex-col justify-center min-h-[calc(100vh-80px)] overflow-hidden py-12 md:py-24">
+        <section className="relative flex flex-col justify-center min-h-[calc(100vh-64px)] overflow-hidden py-12 md:py-24">
           <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,var(--color-primary)_0%,transparent_100%)] opacity-20 dark:opacity-10"></div>
           <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_60%_60%_at_50%_120%,var(--color-secondary)_0%,transparent_100%)] opacity-10 dark:opacity-5"></div>
 
@@ -172,8 +169,7 @@ export default async function Home() {
             </div>
           </Container>
         </section>
-      </main>
-      <Footer />
+      </div>
     </>
   )
 }

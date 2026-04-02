@@ -1,103 +1,118 @@
-import Link from "next/link"
-import { Container } from "./container"
-import { Terminal, Github, Twitter, Linkedin, Mail, ExternalLink, LucideIcon } from "lucide-react"
+"use client";
 
-interface FooterLink {
-  name: string;
-  href: string;
-  icon?: LucideIcon;
-}
-
-interface FooterSection {
-  title: string;
-  links: FooterLink[];
-}
+import React from "react";
+import Link from "next/link";
+import { Github, Twitter, Linkedin, Heart, Mail } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 export function Footer() {
-  const currentYear = new Date().getFullYear()
-
-  const footerLinks: FooterSection[] = [
-    {
-      title: "Content",
-      links: [
-        { name: "Blog", href: "/blog" },
-        { name: "Projects", href: "/projects" },
-        { name: "Wiki", href: "/wiki" },
-        { name: "Search", href: "#" },
-      ]
-    },
-    {
-      title: "Social",
-      links: [
-        { name: "GitHub", href: "https://github.com", icon: Github },
-        { name: "Twitter", href: "https://twitter.com", icon: Twitter },
-        { name: "LinkedIn", href: "https://linkedin.com", icon: Linkedin },
-      ]
-    },
-    {
-      title: "Contact",
-      links: [
-        { name: "Email Me", href: "mailto:hello@example.com", icon: Mail },
-        { name: "Schedule a Call", href: "#", icon: ExternalLink },
-      ]
-    }
-  ]
+  const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="mt-auto border-t border-border/40 bg-secondary/5 py-16 text-muted-foreground transition-colors duration-300">
-      <Container>
-        <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4 lg:gap-8 mb-16">
-          <div className="flex flex-col space-y-6">
-            <Link href="/" className="flex items-center space-x-2.5 transition-all hover:scale-[1.02]">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-                <Terminal className="h-4 w-4" />
+    <footer className="w-full bg-background/40 border-t border-border/50 pt-16 pb-8 transition-colors duration-300">
+      <div className="container mx-auto px-4">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+          {/* Brand and Description */}
+          <div className="col-span-1 md:col-span-2 space-y-4">
+            <Link href="/" className="flex items-center gap-2 font-bold text-xl tracking-tight">
+              <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-primary-foreground shadow-lg shadow-primary/20">
+                B
               </div>
-              <span className="text-xl font-bold tracking-tighter text-foreground">Blogfolio</span>
+              <span>Blogfolio</span>
             </Link>
-            <p className="max-w-xs text-sm leading-relaxed">
-              Engineering a better future through elegant code and modern architecture. A personal platform and high-performance workspace.
+            <p className="text-muted-foreground max-w-sm text-sm leading-relaxed">
+              A minimalist, high-performance engineering blogfolio designed for modern developers.
+              Documenting technical journeys, sharing projects, and providing useful tools.
             </p>
-            <div className="flex space-x-4">
-              {[Github, Twitter, Linkedin, Mail].map((Icon, i) => (
-                <Link key={i} href="#" className="h-9 w-9 flex items-center justify-center rounded-full border border-border/40 bg-card/50 hover:bg-primary/10 hover:text-primary transition-all">
-                  <Icon className="h-4 w-4" />
-                </Link>
-              ))}
+            <div className="flex items-center gap-3 pt-2">
+              <a
+                href="https://github.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-9 h-9 rounded-full bg-accent flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-primary/10 transition-all"
+              >
+                <Github size={18} />
+              </a>
+              <a
+                href="https://twitter.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-9 h-9 rounded-full bg-accent flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-primary/10 transition-all"
+              >
+                <Twitter size={18} />
+              </a>
+              <a
+                href="https://linkedin.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-9 h-9 rounded-full bg-accent flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-primary/10 transition-all"
+              >
+                <Linkedin size={18} />
+              </a>
+              <a
+                href="mailto:contact@example.com"
+                className="w-9 h-9 rounded-full bg-accent flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-primary/10 transition-all"
+              >
+                <Mail size={18} />
+              </a>
             </div>
           </div>
 
-          {footerLinks.map((section) => (
-            <div key={section.title} className="flex flex-col space-y-5">
-              <h4 className="text-sm font-bold uppercase tracking-widest text-foreground">
-                {section.title}
-              </h4>
-              <ul className="flex flex-col space-y-3">
-                {section.links.map((link) => (
-                  <li key={link.name}>
-                    <Link
-                      href={link.href}
-                      className="group inline-flex items-center text-sm font-medium transition-colors hover:text-primary"
-                    >
-                      {link.icon && <link.icon className="mr-2 h-4 w-4 opacity-50 group-hover:opacity-100" />}
-                      {link.name}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+          {/* Quick Links */}
+          <div className="space-y-4">
+            <h3 className="font-bold text-sm uppercase tracking-wider text-foreground/80">Resources</h3>
+            <ul className="space-y-2">
+              <li>
+                <Link href="/blog" className="text-muted-foreground hover:text-primary transition-colors text-sm">Blog Posts</Link>
+              </li>
+              <li>
+                <Link href="/projects" className="text-muted-foreground hover:text-primary transition-colors text-sm">Projects Showcase</Link>
+              </li>
+              <li>
+                <Link href="/wiki" className="text-muted-foreground hover:text-primary transition-colors text-sm">Technical Wiki</Link>
+              </li>
+              <li>
+                <Link href="/tools" className="text-muted-foreground hover:text-primary transition-colors text-sm">Utility Tools</Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Support */}
+          <div className="space-y-4">
+            <h3 className="font-bold text-sm uppercase tracking-wider text-foreground/80">Support</h3>
+            <ul className="space-y-2">
+              <li>
+                <Link href="/about" className="text-muted-foreground hover:text-primary transition-colors text-sm">About Me</Link>
+              </li>
+              <li>
+                <Link href="/contact" className="text-muted-foreground hover:text-primary transition-colors text-sm">Contact</Link>
+              </li>
+              <li>
+                <Link href="/rss" className="text-muted-foreground hover:text-primary transition-colors text-sm">RSS Feed</Link>
+              </li>
+              <li>
+                <Link href="/privacy" className="text-muted-foreground hover:text-primary transition-colors text-sm">Privacy Policy</Link>
+              </li>
+            </ul>
+          </div>
         </div>
 
-        <div className="flex flex-col items-center justify-between border-t border-border/40 pt-10 space-y-6 md:flex-row md:space-y-0">
-          <p className="text-sm">
-            &copy; {currentYear} Engineering Blogfolio. All rights reserved.
+        {/* Bottom Area */}
+        <div className="pt-8 border-t border-border/40 flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-xs text-muted-foreground flex items-center gap-1">
+            © {currentYear} PrasadM. Made with <Heart size={12} className="text-red-500 fill-red-500" /> in LK.
           </p>
-          <div className="flex items-center space-x-6 text-xs font-semibold uppercase tracking-widest">
-            <Link href="#" className="transition-colors hover:text-primary">Privacy Policy</Link>
-            <Link href="#" className="transition-colors hover:text-primary">Terms of Service</Link>
+          <div className="flex items-center gap-6">
+             <div className="flex items-center gap-1.5">
+               <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+               <span className="text-[10px] text-muted-foreground uppercase font-semibold">Systems Operational</span>
+             </div>
+             <p className="text-[10px] text-muted-foreground uppercase font-semibold tracking-widest">
+               v1.2.0-Alpha
+             </p>
           </div>
         </div>
-      </Container>
+      </div>
     </footer>
-  )
+  );
 }
