@@ -1,0 +1,15 @@
+
+> next-notion-cms@1.0.0 dev /app
+> next dev
+
+⚠ Port 3000 is in use by an unknown process, using available port 3001 instead.
+▲ Next.js 16.2.2 (Turbopack)
+- Local:         http://localhost:3001
+- Network:       http://192.168.0.2:3001
+✓ Ready in 726ms
+
+ GET / 200 in 2.1s (next.js: 688ms, application-code: 1403ms)
+ GET /blog 200 in 216ms (next.js: 94ms, application-code: 123ms)
+ GET /projects 200 in 875ms (next.js: 83ms, application-code: 791ms)
+ GET /blog/building-blogfolio 200 in 2.2s (next.js: 1431ms, generate-params: 1157ms, application-code: 726ms)
+ GET /wiki 200 in 144ms (next.js: 62ms, application-code: 81ms)

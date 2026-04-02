@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import "./globals.css";
+import "katex/dist/katex.min.css"; // Added KaTeX CSS
 
 export const metadata: Metadata = {
   title: {
