@@ -5,6 +5,7 @@ import { FadeIn } from "@/components/fade-in"
 import { Calendar, Tag, ChevronLeft, ExternalLink, Github } from "lucide-react"
 import Link from "next/link"
 import { TableOfContents } from "@/components/table-of-contents"
+import { AIContentIndicator } from "@/components/ai-content-indicator"
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -74,10 +75,11 @@ export default async function ProjectDetailPage({ params }: Props) {
         </FadeIn>
 
         <FadeIn delay={0.2} direction="none">
-          <article className="prose prose-slate dark:prose-invert max-w-none prose-headings:font-bold prose-a:text-primary prose-pre:bg-card prose-pre:border prose-pre:border-border/40">
+          <article className="prose prose-zinc dark:prose-invert max-w-none prose-headings:font-extrabold prose-headings:tracking-tight prose-a:text-primary prose-a:no-underline hover:prose-a:underline prose-pre:bg-[#1e1e1e] prose-pre:border prose-pre:border-border/40 prose-img:rounded-2xl">
             <div dangerouslySetInnerHTML={{ __html: project.content }} />
           </article>
         </FadeIn>
+        {project.aiAssisted && <AIContentIndicator />}
         </div>
 
         <aside className="hidden lg:block w-64 shrink-0">
