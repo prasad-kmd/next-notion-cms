@@ -40,3 +40,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 knowlegde.md
+Notion-Instruction.md
+dev_server.log
+.agent
