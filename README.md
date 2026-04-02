@@ -12,7 +12,6 @@ A modern, high-performance engineering blogfolio and workspace built with **Next
 - **Engineering Blog:** Full-featured blog with categories, tags, and reading time estimation.
 - **Project Showcase:** Elegant cards and detail pages for technical projects.
 - **Technical Wiki:** A digital garden for documentation and knowledge sharing.
-- **Interactive Tools:** Built-in utilities like a JSON Formatter and Base64 Converter.
 - **Advanced MDX Rendering:**
   - **Syntax Highlighting:** Powered by Shiki with VS Code-quality themes.
   - **Math Support:** LaTeX rendering via KaTeX.

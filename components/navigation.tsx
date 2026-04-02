@@ -24,7 +24,6 @@ const primaryNav = [
   { name: "Blog", href: "/blog", icon: BookText },
   { name: "Projects", href: "/projects", icon: Briefcase },
   { name: "Wiki", href: "/wiki", icon: Library },
-  { name: "Tools", href: "/tools", icon: Wrench },
 ];
 
 const socialNav = [
@@ -59,7 +58,7 @@ export function Navigation() {
           {item.name}
         </span>
         {isCollapsed && (
-          <div className="absolute left-full ml-2 px-2 py-1 bg-popover text-popover-foreground text-xs rounded opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity z-50 shadow-md border border-border">
+          <div className="fixed left-[80px] px-2.5 py-1.5 bg-popover text-popover-foreground text-[11px] font-medium rounded-md opacity-0 group-hover:opacity-100 pointer-events-none transition-all duration-200 z-[100] shadow-xl border border-border/50 backdrop-blur-md">
             {item.name}
           </div>
         )}
@@ -116,7 +115,7 @@ export function Navigation() {
         </div>
 
         {/* Primary Nav */}
-        <nav className="flex-1 overflow-y-auto py-6 px-3 space-y-1 scrollbar-none">
+        <nav className="flex-1 overflow-y-auto overflow-x-hidden py-6 px-3 space-y-1 scrollbar-none">
           <div className={cn(
             "mb-2 px-3 text-[10px] font-semibold text-muted-foreground uppercase tracking-wider transition-opacity duration-300",
             isCollapsed ? "opacity-0" : "opacity-100"
@@ -151,7 +150,7 @@ export function Navigation() {
                 {item.name}
               </span>
               {isCollapsed && (
-                <div className="absolute left-full ml-2 px-2 py-1 bg-popover text-popover-foreground text-xs rounded opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity z-50 shadow-md border border-border">
+                <div className="fixed left-[80px] px-2.5 py-1.5 bg-popover text-popover-foreground text-[11px] font-medium rounded-md opacity-0 group-hover:opacity-100 pointer-events-none transition-all duration-200 z-[100] shadow-xl border border-border/50 backdrop-blur-md">
                   {item.name}
                 </div>
               )}
