@@ -8,6 +8,7 @@ import { TableOfContents } from "@/components/table-of-contents"
 import { AIContentIndicator } from "@/components/ai-content-indicator"
 import { cn } from "@/lib/utils"
 import { AuthorProfile } from "@/components/ui/author-profile"
+import { CodeBlockWrapper } from "@/components/code-block-wrapper"
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -36,7 +37,7 @@ export default async function WikiDetailPage({ params }: Props) {
   const author = page.author ? await getAuthorBySlug(page.author) : null;
 
   return (
-    <div className="pt-32 pb-20">
+    <div className="pt-20 pb-20">
       <Container>
         <div className="flex flex-col xl:flex-row gap-16">
           {/* Left Sidebar: Wiki Navigation */}
@@ -66,7 +67,7 @@ export default async function WikiDetailPage({ params }: Props) {
           </aside>
 
           {/* Main Content */}
-          <div className="flex-1 min-w-0">
+          <div className="flex-1 min-w-0 py-8">
             <FadeIn direction="down">
               <Link
                 href="/wiki"
@@ -90,16 +91,18 @@ export default async function WikiDetailPage({ params }: Props) {
             </FadeIn>
 
             <FadeIn delay={0.2} direction="none">
-              <article className="prose prose-zinc dark:prose-invert max-w-none prose-headings:font-extrabold prose-headings:tracking-tight prose-a:text-primary prose-a:no-underline hover:prose-a:underline prose-pre:bg-[#1e1e1e] prose-pre:border prose-pre:border-border/40 prose-img:rounded-2xl">
-                <div dangerouslySetInnerHTML={{ __html: page.content }} />
-              </article>
+              <CodeBlockWrapper>
+                <article className="prose prose-zinc dark:prose-invert max-w-none prose-headings:font-extrabold prose-headings:tracking-tight prose-a:text-primary prose-a:no-underline hover:prose-a:underline prose-img:rounded-2xl">
+                  <div dangerouslySetInnerHTML={{ __html: page.content }} />
+                </article>
+              </CodeBlockWrapper>
             </FadeIn>
             {page.aiAssisted && <AIContentIndicator />}
           </div>
 
           {/* Right Sidebar: Table of Contents */}
-          <aside className="hidden lg:block w-72 shrink-0 border-l border-border/40 pl-8 h-fit">
-            <div className="sticky top-32 space-y-8">
+          <aside className="hidden lg:block w-72 shrink-0 border-l border-border/40 pl-8">
+            <div className="sticky top-32 max-h-[calc(100vh-160px)] overflow-y-auto scrollbar-none pr-4 space-y-8 pb-8">
               <TableOfContents headings={page.headings} />
               {author && <AuthorProfile author={author} lastUpdated={page.date} />}
             </div>
