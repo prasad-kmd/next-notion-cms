@@ -33,7 +33,7 @@ export default async function WikiDetailPage({ params }: Props) {
   }
 
   return (
-    <div className="py-20">
+    <div className="pt-32 pb-20">
       <Container>
         <div className="flex flex-col xl:flex-row gap-12">
           {/* Left Sidebar: Wiki Navigation */}

@@ -13,7 +13,7 @@ export default async function Home() {
     <>
       <div className="flex-1">
         {/* Hero Section - Viewport fitted */}
-        <section className="relative flex flex-col justify-center min-h-screen overflow-hidden pt-16 md:pt-24 pb-12">
+        <section className="relative flex flex-col justify-center min-h-screen overflow-hidden pb-12">
           <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,var(--color-primary)_0.1,transparent_100%)] opacity-30 dark:opacity-15"></div>
           <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_60%_60%_at_50%_120%,var(--color-secondary)_0.1,transparent_100%)] opacity-20 dark:opacity-10"></div>
 

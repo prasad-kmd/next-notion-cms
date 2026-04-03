@@ -9,7 +9,7 @@ export const metadata = {
 
 export default function AboutPage() {
   return (
-    <div className="py-20">
+    <div className="pt-32 pb-20">
       <Container>
         <FadeIn>
           <div className="max-w-3xl space-y-12">
