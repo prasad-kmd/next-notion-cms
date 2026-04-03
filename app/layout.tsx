@@ -34,7 +34,7 @@ export default function RootLayout({
               <Navigation />
               <div className="flex-1 min-h-screen flex flex-col transition-all duration-300 ease-in-out lg:ml-[260px] [.sidebar-collapsed_&]:lg:ml-[70px]">
                 <FloatingNavbar />
-                <main className="flex-1 w-full pt-16">
+                <main className="flex-1 w-full">
                   {children}
                 </main>
                 <Footer />

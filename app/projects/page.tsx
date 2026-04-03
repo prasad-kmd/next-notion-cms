@@ -13,7 +13,7 @@ export default async function ProjectsPage() {
 
   return (
     <>
-      <div className="flex-1 py-20">
+      <div className="flex-1 pt-32 pb-20">
         <Container>
           <FadeIn direction="down" className="flex flex-col space-y-4 mb-12 text-center lg:text-left">
             <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl">

@@ -31,7 +31,7 @@ export default async function BlogPostPage({ params }: Props) {
   }
 
   return (
-    <div className="py-20">
+    <div className="pt-32 pb-20">
       <Container>
         <div className="flex flex-col lg:flex-row gap-12">
         <div className="flex-1 max-w-3xl">
