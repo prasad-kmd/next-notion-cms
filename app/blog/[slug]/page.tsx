@@ -1,11 +1,12 @@
 import { notFound } from "next/navigation"
-import { getPostBySlug } from "@/lib/content"
+import { getPostBySlug, getAuthorBySlug } from "@/lib/content"
 import { Container } from "@/components/container"
 import { FadeIn } from "@/components/fade-in"
 import { Calendar, Clock, User, ChevronLeft } from "lucide-react"
 import Link from "next/link"
 import { TableOfContents } from "@/components/table-of-contents"
 import { AIContentIndicator } from "@/components/ai-content-indicator"
+import { AuthorProfile } from "@/components/ui/author-profile"
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -30,11 +31,13 @@ export default async function BlogPostPage({ params }: Props) {
     notFound();
   }
 
+  const author = post.author ? await getAuthorBySlug(post.author) : null;
+
   return (
     <div className="pt-32 pb-20">
       <Container>
-        <div className="flex flex-col lg:flex-row gap-12">
-        <div className="flex-1 max-w-3xl">
+        <div className="flex flex-col lg:flex-row gap-16">
+        <div className="flex-1 min-w-0">
         <FadeIn direction="down">
           <Link
             href="/blog"
@@ -56,7 +59,7 @@ export default async function BlogPostPage({ params }: Props) {
               </div>
               <div className="flex items-center gap-2">
                 <User size={16} />
-                PrasadM
+                {author?.name || "Admin"}
               </div>
               <div className="flex items-center gap-2">
                 <Clock size={16} />
@@ -74,9 +77,10 @@ export default async function BlogPostPage({ params }: Props) {
         {post.aiAssisted && <AIContentIndicator />}
         </div>
 
-        <aside className="hidden lg:block w-64 shrink-0">
-          <div className="sticky top-24">
+        <aside className="hidden lg:block w-72 shrink-0 border-l border-border/40 pl-8 h-fit">
+          <div className="sticky top-32 space-y-8">
             <TableOfContents headings={post.headings} />
+            {author && <AuthorProfile author={author} lastUpdated={post.date} />}
           </div>
         </aside>
         </div>

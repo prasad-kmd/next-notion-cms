@@ -12,10 +12,15 @@ A modern, high-performance engineering blogfolio and workspace built with **Next
 - **Engineering Blog:** Full-featured blog with categories, tags, and reading time estimation.
 - **Project Showcase:** Elegant cards and detail pages for technical projects.
 - **Technical Wiki:** A digital garden for documentation and knowledge sharing.
+- **Author Pages:** Dedicated profile pages for contributors with bios, social links, and a contribution history.
 - **Advanced MDX Rendering:**
   - **Syntax Highlighting:** Powered by Shiki with VS Code-quality themes.
   - **Math Support:** LaTeX rendering via KaTeX.
   - **Table of Contents:** Auto-generated TOC with active state tracking.
+- **Premium UI/UX:**
+  - Custom **Google Sans** typography as default.
+  - Right-aligned sticky sidebar for content detail pages.
+  - Responsive, glassmorphic layout.
 - **Workspace UI:**
   - Glassmorphic design with a persistent, collapsible sidebar.
   - Floating navbar with dark/light mode toggle.
@@ -54,7 +59,7 @@ A modern, high-performance engineering blogfolio and workspace built with **Next
 ```text
 ├── app/              # Next.js App Router (Routes & Pages)
 ├── components/       # Reusable UI components
-├── content/          # Markdown files (Blog, Projects, Wiki)
+├── content/          # Markdown files (Blog, Projects, Wiki, Authors)
 ├── lib/              # Content loader, utilities, and CMS logic
 ├── public/           # Static assets (Fonts, Images)
 └── types/            # Shared TypeScript definitions
@@ -74,8 +79,25 @@ description: "A brief summary for the card view."
 tags: ["Next.js", "React"]
 category: "Engineering"
 technical: "Next.js 16, Tailwind 4"
+author: "author-slug"
 aiAssisted: false
 final: true
+---
+```
+
+### Authors
+
+Authors are managed in `content/authors/`. Create a `.md` file (e.g., `masum.md`) with the following structure:
+
+```markdown
+---
+name: "Author Name"
+role: "Role Description"
+bio: "A short professional biography."
+avatar: "URL or path to avatar image"
+twitter: "username"
+github: "username"
+linkedin: "username"
 ---
 ```
 

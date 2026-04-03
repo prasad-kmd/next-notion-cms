@@ -27,6 +27,19 @@ export interface PostMetadata {
   technical?: string;
   aiAssisted?: boolean;
   final?: boolean;
+  author?: string;
+  type?: PostType;
+}
+
+export interface Author {
+  name: string;
+  slug: string;
+  role: string;
+  bio: string;
+  avatar: string;
+  twitter?: string;
+  github?: string;
+  linkedin?: string;
 }
 
 export interface Heading {
@@ -57,6 +70,7 @@ export async function getAllPosts(type: PostType): Promise<PostMetadata[]> {
 
       return {
         ...(data as PostMetadata),
+        type,
       };
     })
     .filter((post) => post.status === "Published")
@@ -86,6 +100,44 @@ function extractHeadings(content: string): Heading[] {
   }
 
   return headings;
+}
+
+export async function getAuthorBySlug(slug: string): Promise<Author | null> {
+  const fullPath = path.join(contentDirectory, "authors", `${slug}.md`);
+
+  if (!fs.existsSync(fullPath)) {
+    return null;
+  }
+
+  const fileContents = fs.readFileSync(fullPath, "utf8");
+  const { data } = matter(fileContents);
+
+  return {
+    ...(data as Author),
+    slug,
+  };
+}
+
+export async function getAllAuthors(): Promise<Author[]> {
+  const dirPath = path.join(contentDirectory, "authors");
+
+  if (!fs.existsSync(dirPath)) {
+    return [];
+  }
+
+  const fileNames = fs.readdirSync(dirPath);
+  return fileNames
+    .filter((fileName) => fileName.endsWith(".md"))
+    .map((fileName) => {
+      const slug = fileName.replace(/\.md$/, "");
+      const fullPath = path.join(dirPath, fileName);
+      const fileContents = fs.readFileSync(fullPath, "utf8");
+      const { data } = matter(fileContents);
+      return {
+        ...(data as Author),
+        slug,
+      };
+    });
 }
 
 export async function getPostBySlug(type: PostType, slug: string): Promise<Post | null> {
