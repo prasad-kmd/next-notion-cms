@@ -8,6 +8,7 @@ tags: ["Next.js", "React", "Frontend"]
 category: "Engineering"
 technical: "Next.js 16, React 19, Tailwind CSS 4"
 aiAssisted: true
+author: "masum"
 ---
 
 Next.js 16 introduces several game-changing features...

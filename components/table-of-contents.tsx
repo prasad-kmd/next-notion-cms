@@ -34,11 +34,11 @@ export function TableOfContents({ headings }: TableOfContentsProps) {
   if (headings.length === 0) return null
 
   return (
-    <nav className="space-y-2">
-      <p className="text-sm font-bold tracking-uppercase text-muted-foreground mb-4">
+    <nav className="space-y-6 pb-6">
+      <p className="text-lg font-bold tracking-tight text-foreground mb-4">
         Table of Contents
       </p>
-      <ul className="space-y-2 text-sm">
+      <ul className="space-y-3 text-sm">
         {headings.map((heading) => (
           <li
             key={heading.id}
@@ -47,10 +47,10 @@ export function TableOfContents({ headings }: TableOfContentsProps) {
             <a
               href={`#${heading.id}`}
               className={cn(
-                "block py-1 transition-colors hover:text-foreground",
+                "block py-0.5 transition-all duration-200 hover:translate-x-1",
                 activeId === heading.id
-                  ? "font-medium text-foreground"
-                  : "text-muted-foreground"
+                  ? "font-semibold text-primary"
+                  : "text-muted-foreground hover:text-foreground"
               )}
               onClick={(e) => {
                 e.preventDefault()
