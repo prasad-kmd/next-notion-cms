@@ -6,6 +6,7 @@ import { SidebarProvider } from "@/components/sidebar-context";
 import { Navigation } from "@/components/navigation";
 import { FloatingNavbar } from "@/components/floating-navbar";
 import { Footer } from "@/components/footer";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
 export const metadata: Metadata = {
   title: {
@@ -29,18 +30,18 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <SidebarProvider>
-            <div className="flex relative">
-              <Navigation />
-              <div className="flex-1 min-h-screen flex flex-col transition-all duration-300 ease-in-out lg:ml-[260px] [.sidebar-collapsed_&]:lg:ml-[70px]">
-                <FloatingNavbar />
-                <main className="flex-1 w-full">
-                  {children}
-                </main>
-                <Footer />
+          <TooltipProvider>
+            <SidebarProvider>
+              <div className="flex relative">
+                <Navigation />
+                <div className="flex-1 min-h-screen flex flex-col transition-all duration-300 ease-in-out lg:ml-[260px] in-[.sidebar-collapsed]:lg:ml-20">
+                  <FloatingNavbar />
+                  <main className="flex-1 w-full">{children}</main>
+                  <Footer />
+                </div>
               </div>
-            </div>
-          </SidebarProvider>
+            </SidebarProvider>
+          </TooltipProvider>
         </ThemeProvider>
       </body>
     </html>

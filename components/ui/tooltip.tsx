@@ -1,72 +1,32 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { AnimatePresence, motion } from "framer-motion"
-import { cn } from "@/lib/utils"
+import * as React from "react";
+import * as TooltipPrimitive from "@radix-ui/react-tooltip";
 
-interface TooltipProps {
-  children: React.ReactNode
-  content: React.ReactNode
-  side?: "top" | "bottom" | "left" | "right"
-  delayDuration?: number
-}
+import { cn } from "@/lib/utils";
 
-export function Tooltip({
-  children,
-  content,
-  side = "top",
-  delayDuration = 200,
-}: TooltipProps) {
-  const [open, setOpen] = React.useState(false)
-  const timerRef = React.useRef<NodeJS.Timeout | null>(null)
+const TooltipProvider = TooltipPrimitive.Provider;
 
-  const handleMouseEnter = () => {
-    timerRef.current = setTimeout(() => setOpen(true), delayDuration)
-  }
+const Tooltip = TooltipPrimitive.Root;
 
-  const handleMouseLeave = () => {
-    if (timerRef.current) clearTimeout(timerRef.current)
-    setOpen(false)
-  }
+const TooltipTrigger = TooltipPrimitive.Trigger;
 
-  const sideStyles = {
-    top: "-top-2 left-1/2 -translate-x-1/2 -translate-y-full mb-2",
-    bottom: "-bottom-2 left-1/2 -translate-x-1/2 translate-y-full mt-2",
-    left: "-left-2 top-1/2 -translate-y-1/2 -translate-x-full mr-2",
-    right: "-right-2 top-1/2 -translate-y-1/2 translate-x-full ml-2",
-  }
+const TooltipContent = React.forwardRef<
+  React.ElementRef<typeof TooltipPrimitive.Content>,
+  React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Content>
+>(({ className, sideOffset = 4, ...props }, ref) => (
+  <TooltipPrimitive.Portal>
+    <TooltipPrimitive.Content
+      ref={ref}
+      sideOffset={sideOffset}
+      className={cn(
+        "z-50 overflow-hidden rounded-md border border-border bg-popover px-2 py-1 text-[10px] text-popover-foreground shadow-sm animate-in fade-in zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 google-sans",
+        className,
+      )}
+      {...props}
+    />
+  </TooltipPrimitive.Portal>
+));
+TooltipContent.displayName = TooltipPrimitive.Content.displayName;
 
-  return (
-    <div
-      className="relative inline-block"
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-    >
-      {children}
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.95 }}
-            transition={{ duration: 0.15, ease: "easeOut" }}
-            className={cn(
-              "absolute z-[100] px-3 py-1.5 text-xs font-medium bg-zinc-900 dark:bg-zinc-100 text-zinc-100 dark:text-zinc-900 rounded-md shadow-lg pointer-events-none whitespace-nowrap border border-zinc-800 dark:border-zinc-200",
-              sideStyles[side]
-            )}
-          >
-            {content}
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
-  )
-}
-
-export const TooltipTrigger = ({ children, asChild, ...props }: any) => {
-  return <>{children}</>
-}
-
-export const TooltipContent = ({ children, className, side, ...props }: any) => {
-  return <>{children}</>
-}
+export { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider };

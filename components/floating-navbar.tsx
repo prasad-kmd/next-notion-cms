@@ -1,16 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import {
-  Menu,
-  Search,
-  Sun,
-  Moon,
-  Settings,
-  Bell,
-  User,
-  X
-} from "lucide-react";
+import { Menu, Search, Sun, Moon, Settings, Bell, User, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useSidebar } from "./sidebar-context";
 import { useTheme } from "next-themes";
@@ -34,7 +25,6 @@ export function FloatingNavbar() {
     <header
       className={cn(
         "fixed top-0 left-0 right-0 z-40 transition-all duration-300 pointer-events-none",
-        scrolled ? "bg-background/60 backdrop-blur-xl border-b border-border/50" : "bg-transparent"
       )}
     >
       <div className="max-w-[1440px] mx-auto px-6 flex justify-between items-center h-16 pointer-events-none">
@@ -59,7 +49,7 @@ export function FloatingNavbar() {
               <span className="absolute top-2 right-2 w-2 h-2 bg-primary rounded-full border-2 border-background" />
             </button>
 
-            <div className="w-[1px] h-4 bg-border/60 mx-1" />
+            <div className="w-px h-4 bg-border/60 mx-1" />
 
             <button className="w-9 h-9 flex items-center justify-center rounded-xl bg-primary text-primary-foreground hover:scale-105 active:scale-95 transition-all shadow-md shadow-primary/20">
               <User size={18} />
