@@ -184,7 +184,7 @@ export function Navigation() {
           </div>
 
           {/* Primary Nav */}
-          <nav className="flex-1 overflow-y-auto overflow-x-hidden py-3 px-3 space-y-1 scrollbar-none">
+          <nav className="flex-1 overflow-y-auto overflow-x-hidden py-3 px-3 space-y-1 scrollbar-none font-jetbrains-mono">
             {primaryNav.map((item) => (
               <NavItem key={item.name} item={item} isCollapsed={isCollapsed} />
             ))}

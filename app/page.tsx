@@ -20,12 +20,12 @@ export default async function Home() {
           <Container>
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <div className="flex flex-col items-start space-y-8 text-left">
-                <FadeIn direction="down" delay={0.1}>
+                {/* <FadeIn direction="down" delay={0.1}>
                   <div className="inline-flex items-center space-x-2 rounded-full border border-primary/20 bg-primary/5 px-3 py-1.5 text-sm font-medium text-primary backdrop-blur-sm">
                     <span className="flex h-2 w-2 rounded-full bg-primary animate-pulse" />
                     <span>Available for new projects</span>
                   </div>
-                </FadeIn>
+                </FadeIn> */}
 
                 <FadeIn delay={0.2} direction="none">
                   <h1 className="text-5xl font-extrabold tracking-tight sm:text-6xl lg:text-7xl xl:text-8xl leading-[1.1]">
@@ -61,6 +61,7 @@ export default async function Home() {
                 </FadeIn>
               </div>
 
+              {/* who am i code block */}
               <FadeIn delay={0.5} direction="left" className="hidden lg:block">
                 <div className="relative aspect-square max-w-[500px] mx-auto">
                   <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-secondary/20 rounded-3xl blur-3xl" />
