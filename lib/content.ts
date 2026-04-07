@@ -4,6 +4,7 @@ import matter from "gray-matter";
 import { unified } from "unified";
 import remarkParse from "remark-parse";
 import remarkRehype from "remark-rehype";
+import rehypeParse from "rehype-parse";
 import rehypeStringify from "rehype-stringify";
 import rehypeShiki from "@shikijs/rehype";
 import remarkMath from "remark-math";
@@ -76,7 +77,11 @@ export async function getAllPosts(type: PostType): Promise<PostMetadata[]> {
       };
     })
     .filter((post) => post.status === "Published")
-    .sort((a, b) => (a.date < b.date ? 1 : -1));
+    .sort((a, b) => {
+      const dateA = new Date(a.date).getTime();
+      const dateB = new Date(b.date).getTime();
+      return dateB - dateA;
+    });
 
   return allPostsData;
 }
@@ -259,7 +264,16 @@ export async function getPostBySlug(type: PostType, slug: string): Promise<Post 
   let contentHtml = "";
 
   if (isHtml) {
-    contentHtml = injectQuiz(injectAlerts(injectHeadingIds(content)));
+    const rawHtml = injectQuiz(injectAlerts(injectHeadingIds(content)));
+    // Wrap the HTML content with Shiki syntax highlighting support
+    const processedContent = await unified()
+      .use(rehypeParse, { fragment: true })
+      .use(rehypeShiki, {
+        theme: "one-dark-pro",
+      })
+      .use(rehypeStringify)
+      .process(rawHtml);
+    contentHtml = processedContent.toString();
   } else {
     const processedContent = await unified()
       .use(remarkParse)

@@ -156,10 +156,10 @@ export function Navigation() {
                   )}
                 >
                   <Image
-                    src="/favicon.ico"
+                    src="/img/favicon.webp"
                     alt="Logo"
-                    width={24}
-                    height={24}
+                    width={36}
+                    height={36}
                     className="rounded-sm"
                   />
                 </div>

@@ -7,6 +7,18 @@
   --font-mono:
     "JetBrains Mono", "Space Mono", ui-monospace, SFMono-Regular, Menlo, Monaco,
     Consolas, "Liberation Mono", "Courier New", monospace;
+  --font-jetbrains-mono: "JetBrains Mono", monospace;
+  --font-google-sans: "Google Sans", sans-serif;
+  --font-mozilla-headline: "Mozilla Headline", sans-serif;
+  --font-mozilla-text: "Mozilla Text", sans-serif;
+  --font-space-mono: "Space Mono", monospace;
+  --font-noto-serif-sinhala: "Noto Serif Sinhala", serif;
+  --font-roboto: "Roboto", sans-serif;
+  --font-inter: "Inter", sans-serif;
+  --font-noto-sans: "Noto Sans", sans-serif;
+  --font-noto-sans-display: "Noto Sans Display", sans-serif;
+  --font-amoria: "Amoria", serif;
+  --font-philosopher: "Philosopher", sans-serif;
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -104,6 +116,30 @@
     font-style: normal;
     font-display: swap;
   }
+
+  @font-face {
+    font-family: "Amoria";
+    src: url("/fonts/en/AMORIARegular.woff2") format("woff2");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: "Philosopher";
+    src: url("/fonts/en/Philosopher.woff2") format("woff2");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  /* @font-face {
+    font-family: "Mozilla Headline";
+    src: url("/fonts/en/MozillaHeadline-Regular.woff2") format("woff2");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  } */
 
   @font-face {
     font-family: "Mozilla Headline";
@@ -306,7 +342,7 @@
   }
 
   .prose pre {
-    @apply rounded-xl border border-border/40 my-8 overflow-hidden !bg-[#0d1117] shadow-lg;
+    @apply rounded-xl border border-border/40 my-8 overflow-hidden bg-[#0d1117]! shadow-2xl;
   }
 
   .prose pre code {
@@ -315,6 +351,14 @@
 
   .prose code:not(pre code) {
     @apply px-1.5 py-0.5 rounded-md bg-primary/10 text-primary font-medium text-[0.9em];
+  }
+
+  .prose-direct p {
+    @apply mb-0 leading-relaxed;
+  }
+
+  .prose-direct ul, .prose-direct ol {
+    @apply mb-0;
   }
 
   .img_grad_pm {
