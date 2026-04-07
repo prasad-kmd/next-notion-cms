@@ -62,7 +62,7 @@ export function Navigation() {
             href={item.href}
             onClick={() => setMobileSidebarOpen(false)}
             className={cn(
-              "flex items-center rounded-lg px-3 py-2 text-sm font-medium transition-all gap-3 relative group local-jetbrains-mono",
+              "flex items-center rounded-lg px-3 py-2 text-sm font-medium transition-all gap-3 relative group",
               isActive
                 ? "bg-primary/10 text-primary"
                 : "text-muted-foreground hover:bg-muted hover:text-foreground",
@@ -74,7 +74,7 @@ export function Navigation() {
             <item.icon className="h-5 w-5 shrink-0" />
             <span
               className={cn(
-                "transition-opacity duration-300",
+                "transition-opacity duration-300 mozilla-text",
                 isCollapsed
                   ? "lg:opacity-0 lg:w-0 lg:overflow-hidden"
                   : "opacity-100",
@@ -108,25 +108,28 @@ export function Navigation() {
         className={cn(
           "fixed inset-y-0 left-0 z-40 border-r border-border bg-card/70 backdrop-blur-xl transition-all duration-300 ease-in-out lg:translate-x-0 flex flex-col",
           isMobileOpen ? "translate-x-0" : "-translate-x-full",
-          isCollapsed ? "lg:w-20 w-64" : "w-64",
+          isCollapsed ? "lg:w-20 w-60" : "w-60",
         )}
       >
         <div className="flex h-full flex-col relative">
           {/* Collapse Toggle Button (Desktop only) */}
-          <button
-            onClick={toggleSidebar}
-            className="absolute -right-3 top-20 z-50 hidden lg:flex h-6 w-6 items-center justify-center rounded-full border border-border bg-card text-muted-foreground hover:text-foreground shadow-sm transition-transform hover:scale-110 group google-sans"
-            title={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
-          >
-            {isCollapsed ? (
-              <ChevronRight className="h-4 w-4" />
-            ) : (
-              <ChevronLeft className="h-4 w-4" />
-            )}
-            <span className="absolute left-full ml-4 px-2 py-1 bg-popover text-popover-foreground text-[10px] rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none border border-border shadow-sm z-50">
-              {isCollapsed ? "Expand" : "Collapse"}
-            </span>
-          </button>
+          <Tooltip delayDuration={0}>
+            <TooltipTrigger asChild>
+              <button
+                onClick={toggleSidebar}
+                className="absolute -right-3 top-20 z-50 hidden lg:flex h-6 w-6 items-center justify-center rounded-full border border-border bg-card text-muted-foreground hover:text-foreground shadow-sm transition-transform hover:scale-110 group google-sans"
+              >
+                {isCollapsed ? (
+                  <ChevronRight className="h-4 w-4" />
+                ) : (
+                  <ChevronLeft className="h-4 w-4" />
+                )}
+              </button>
+            </TooltipTrigger>
+            <TooltipContent side="right" className="ml-2">
+              {isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
+            </TooltipContent>
+          </Tooltip>
 
           {/* Header */}
           <div
@@ -181,27 +184,15 @@ export function Navigation() {
           </div>
 
           {/* Primary Nav */}
-          <nav className="flex-1 overflow-y-auto overflow-x-hidden py-6 px-3 space-y-1 scrollbar-none">
-            <div
-              className={cn(
-                "mb-2 px-3 text-[10px] font-semibold text-muted-foreground uppercase tracking-wider transition-opacity duration-300",
-                isCollapsed ? "opacity-0" : "opacity-100",
-              )}
-            >
-              Menu
-            </div>
+          <nav className="flex-1 overflow-y-auto overflow-x-hidden py-3 px-3 space-y-1 scrollbar-none">
             {primaryNav.map((item) => (
               <NavItem key={item.name} item={item} isCollapsed={isCollapsed} />
             ))}
 
-            <div
-              className={cn(
-                "mt-8 mb-2 px-3 text-[10px] font-semibold text-muted-foreground uppercase tracking-wider transition-opacity duration-300",
-                isCollapsed ? "opacity-0" : "opacity-100",
-              )}
-            >
-              Socials
+            <div className="my-4 px-3">
+              <div className="h-px bg-border/40 w-full" />
             </div>
+
             {socialNav.map((item) => (
               <Tooltip key={item.name} delayDuration={0}>
                 <TooltipTrigger asChild>
@@ -210,7 +201,7 @@ export function Navigation() {
                     target="_blank"
                     rel="noopener noreferrer"
                     className={cn(
-                      "flex items-center rounded-lg px-3 py-2 text-sm font-medium transition-all gap-3 relative group local-jetbrains-mono",
+                      "flex items-center rounded-lg px-3 py-2 text-sm font-medium transition-all gap-3 relative group mozilla-text",
                       "text-muted-foreground hover:bg-muted hover:text-foreground",
                       isCollapsed
                         ? "lg:justify-center lg:px-2 lg:gap-0"

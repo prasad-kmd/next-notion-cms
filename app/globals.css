@@ -1,8 +1,12 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Google Sans", "Inter", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  --font-mono: "JetBrains Mono", "Space Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --font-sans:
+    "Google Sans", "Inter", ui-sans-serif, system-ui, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-mono:
+    "JetBrains Mono", "Space Mono", ui-monospace, SFMono-Regular, Menlo, Monaco,
+    Consolas, "Liberation Mono", "Courier New", monospace;
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -30,100 +34,120 @@
 
 @layer base {
   @font-face {
-    font-family: 'Space Mono';
-    src: local('Space Mono Regular'), local('SpaceMono-Regular'),
-        url('/fonts/SpaceMono-Regular.woff2') format('woff2'),
-        url('/fonts/SpaceMono-Regular.woff') format('woff');
+    font-family: "Space Mono";
+    src:
+      local("Space Mono Regular"),
+      local("SpaceMono-Regular"),
+      url("/fonts/SpaceMono-Regular.woff2") format("woff2"),
+      url("/fonts/SpaceMono-Regular.woff") format("woff");
     font-weight: normal;
     font-style: normal;
     font-display: swap;
   }
 
   @font-face {
-    font-family: 'Noto Serif Sinhala';
-    src: local('Noto Serif Sinhala Regular'), local('NotoSerifSinhala-Regular'),
-        url('/fonts/NotoSerifSinhala-Regular.woff2') format('woff2'),
-        url('/fonts/NotoSerifSinhala-Regular.woff') format('woff');
+    font-family: "Noto Serif Sinhala";
+    src:
+      local("Noto Serif Sinhala Regular"),
+      local("NotoSerifSinhala-Regular"),
+      url("/fonts/NotoSerifSinhala-Regular.woff2") format("woff2"),
+      url("/fonts/NotoSerifSinhala-Regular.woff") format("woff");
     font-weight: normal;
     font-style: normal;
     font-display: swap;
   }
 
   @font-face {
-    font-family: 'Roboto';
-    src: local('Roboto Regular'), local('Roboto-Regular'),
-        url('/fonts/Roboto-Regular.woff2') format('woff2'),
-        url('/fonts/Roboto-Regular.woff') format('woff');
+    font-family: "Roboto";
+    src:
+      local("Roboto Regular"),
+      local("Roboto-Regular"),
+      url("/fonts/Roboto-Regular.woff2") format("woff2"),
+      url("/fonts/Roboto-Regular.woff") format("woff");
     font-weight: normal;
     font-style: normal;
     font-display: swap;
   }
 
   @font-face {
-    font-family: 'Inter';
-    src: local('Inter Regular'), local('Inter-Regular'),
-        url('/fonts/Inter-Regular.woff2') format('woff2'),
-        url('/fonts/Inter-Regular.woff') format('woff');
+    font-family: "Inter";
+    src:
+      local("Inter Regular"),
+      local("Inter-Regular"),
+      url("/fonts/Inter-Regular.woff2") format("woff2"),
+      url("/fonts/Inter-Regular.woff") format("woff");
     font-weight: normal;
     font-style: normal;
     font-display: swap;
   }
 
   @font-face {
-    font-family: 'Google Sans';
-    src: local('Google Sans Regular'), local('GoogleSans-Regular'),
-        url('/fonts/GoogleSans-Regular.woff2') format('woff2'),
-        url('/fonts/GoogleSans-Regular.woff') format('woff');
+    font-family: "Google Sans";
+    src:
+      local("Google Sans Regular"),
+      local("GoogleSans-Regular"),
+      url("/fonts/GoogleSans-Regular.woff2") format("woff2"),
+      url("/fonts/GoogleSans-Regular.woff") format("woff");
     font-weight: normal;
     font-style: normal;
     font-display: swap;
   }
 
   @font-face {
-    font-family: 'JetBrains Mono';
-    src: local('JetBrains Mono Regular'), local('JetBrainsMono-Regular'),
-        url('/fonts/JetBrainsMono-Regular.woff2') format('woff2'),
-        url('/fonts/JetBrainsMono-Regular.woff') format('woff');
+    font-family: "JetBrains Mono";
+    src:
+      local("JetBrains Mono Regular"),
+      local("JetBrainsMono-Regular"),
+      url("/fonts/JetBrainsMono-Regular.woff2") format("woff2"),
+      url("/fonts/JetBrainsMono-Regular.woff") format("woff");
     font-weight: normal;
     font-style: normal;
     font-display: swap;
   }
 
   @font-face {
-    font-family: 'Mozilla Headline';
-    src: local('Mozilla Headline ExtraLight'), local('MozillaHeadline-ExtraLight'),
-        url('/fonts/MozillaHeadline-ExtraLight.woff2') format('woff2'),
-        url('/fonts/MozillaHeadline-ExtraLight.woff') format('woff');
+    font-family: "Mozilla Headline";
+    src:
+      local("Mozilla Headline ExtraLight"),
+      local("MozillaHeadline-ExtraLight"),
+      url("/fonts/MozillaHeadline-ExtraLight.woff2") format("woff2"),
+      url("/fonts/MozillaHeadline-ExtraLight.woff") format("woff");
     font-weight: 200;
     font-style: normal;
     font-display: swap;
   }
 
   @font-face {
-    font-family: 'Mozilla Text';
-    src: local('Mozilla Text ExtraLight'), local('MozillaText-ExtraLight'),
-        url('/fonts/MozillaText-ExtraLight.woff2') format('woff2'),
-        url('/fonts/MozillaText-ExtraLight.woff') format('woff');
+    font-family: "Mozilla Text";
+    src:
+      local("Mozilla Text ExtraLight"),
+      local("MozillaText-ExtraLight"),
+      url("/fonts/MozillaText-ExtraLight.woff2") format("woff2"),
+      url("/fonts/MozillaText-ExtraLight.woff") format("woff");
     font-weight: 200;
     font-style: normal;
     font-display: swap;
   }
 
   @font-face {
-    font-family: 'Noto Sans';
-    src: local('Noto Sans Regular'), local('NotoSans-Regular'),
-        url('/fonts/NotoSans-Regular.woff2') format('woff2'),
-        url('/fonts/NotoSans-Regular.woff') format('woff');
+    font-family: "Noto Sans";
+    src:
+      local("Noto Sans Regular"),
+      local("NotoSans-Regular"),
+      url("/fonts/NotoSans-Regular.woff2") format("woff2"),
+      url("/fonts/NotoSans-Regular.woff") format("woff");
     font-weight: normal;
     font-style: normal;
     font-display: swap;
   }
 
   @font-face {
-    font-family: 'Noto Sans Display';
-    src: local('Noto Sans Display Regular'), local('NotoSansDisplay-Regular'),
-        url('/fonts/NotoSansDisplay-Regular.woff2') format('woff2'),
-        url('/fonts/NotoSansDisplay-Regular.woff') format('woff');
+    font-family: "Noto Sans Display";
+    src:
+      local("Noto Sans Display Regular"),
+      local("NotoSansDisplay-Regular"),
+      url("/fonts/NotoSansDisplay-Regular.woff2") format("woff2"),
+      url("/fonts/NotoSansDisplay-Regular.woff") format("woff");
     font-weight: normal;
     font-style: normal;
     font-display: swap;
@@ -152,6 +176,24 @@
     --radius: 0.75rem;
     --sidebar-width: 260px;
     --sidebar-collapsed-width: 70px;
+
+    --page-gradient: linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.4) 0%,
+      rgba(255, 255, 255, 0.6) 25%,
+      rgba(255, 255, 255, 0.8) 40%,
+      rgba(255, 255, 255, 0.9) 60%,
+      rgba(255, 255, 255, 1) 75%
+    );
+    --item-gradient: linear-gradient(
+      45deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.2) 30%,
+      rgba(255, 255, 255, 0.4) 40%,
+      rgba(255, 255, 255, 0.5) 50%,
+      rgba(255, 255, 255, 0.7) 65%,
+      rgba(255, 255, 255, 0.9) 90%
+    );
   }
 
   .dark {
@@ -174,6 +216,24 @@
     --border: oklch(0.269 0 0);
     --input: oklch(0.269 0 0);
     --ring: oklch(0.439 0 0);
+
+    --page-gradient: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.4) 0%,
+      rgba(0, 0, 0, 0.6) 25%,
+      rgba(0, 0, 0, 0.8) 40%,
+      rgba(0, 0, 0, 0.9) 60%,
+      rgb(0, 0, 0) 75%
+    );
+    --item-gradient: linear-gradient(
+      45deg,
+      #00000000 0%,
+      #0000003d 30%,
+      #00000063 40%,
+      #00000088 50%,
+      #000000c5 65%,
+      #000000 90%
+    );
   }
 
   * {
@@ -184,7 +244,9 @@
     background-color: var(--background);
     color: var(--foreground);
     font-family: var(--font-sans);
-    font-feature-settings: "rlig" 1, "calt" 1;
+    font-feature-settings:
+      "rlig" 1,
+      "calt" 1;
   }
 }
 
@@ -230,7 +292,8 @@
     @apply leading-relaxed mb-6 text-foreground/70;
   }
 
-  .prose ul, .prose ol {
+  .prose ul,
+  .prose ol {
     @apply mb-6 text-foreground/70;
   }
 
@@ -243,10 +306,49 @@
   }
 
   .prose pre {
-    @apply rounded-2xl border border-border/40 my-8 overflow-hidden !bg-[#0d1117];
+    @apply rounded-xl border border-border/40 my-8 overflow-hidden !bg-[#0d1117] shadow-lg;
+  }
+
+  .prose pre code {
+    @apply block p-4 text-[0.9rem] leading-relaxed font-mono;
   }
 
   .prose code:not(pre code) {
     @apply px-1.5 py-0.5 rounded-md bg-primary/10 text-primary font-medium text-[0.9em];
+  }
+
+  .img_grad_pm {
+    background-image: var(--page-gradient), url("/img/page-hero.webp");
+    background-blend-mode: normal;
+    background-origin: border-box;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: color-mix(
+      in srgb,
+      var(--color-muted-foreground) 30%,
+      transparent
+    );
+    border-radius: 10px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: color-mix(
+      in srgb,
+      var(--color-muted-foreground) 50%,
+      transparent
+    );
   }
 }

@@ -1,69 +1,74 @@
-"use client"
+"use client";
 
-import { Heading } from "@/lib/content"
-import { cn } from "@/lib/utils"
-import { useEffect, useState } from "react"
+import { Heading } from "@/lib/content";
+import { cn } from "@/lib/utils";
+import { useEffect, useState } from "react";
 
 interface TableOfContentsProps {
-  headings: Heading[]
+  headings: Heading[];
 }
 
 export function TableOfContents({ headings }: TableOfContentsProps) {
-  const [activeId, setActiveId] = useState<string>("")
+  const [activeId, setActiveId] = useState<string>("");
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            setActiveId(entry.target.id)
+            setActiveId(entry.target.id);
           }
-        })
+        });
       },
-      { rootMargin: "0% 0% -80% 0%" }
-    )
+      { rootMargin: "0% 0% -80% 0%" },
+    );
 
     headings.forEach((heading) => {
-      const element = document.getElementById(heading.id)
-      if (element) observer.observe(element)
-    })
+      const element = document.getElementById(heading.id);
+      if (element) observer.observe(element);
+    });
 
-    return () => observer.disconnect()
-  }, [headings])
+    return () => observer.disconnect();
+  }, [headings]);
 
-  if (headings.length === 0) return null
+  if (headings.length === 0) return null;
 
   return (
-    <nav className="space-y-6 pb-6">
-      <p className="text-lg font-bold tracking-tight text-foreground mb-4">
-        Table of Contents
-      </p>
-      <ul className="space-y-3 text-sm">
-        {headings.map((heading) => (
-          <li
-            key={heading.id}
-            style={{ paddingLeft: `${(heading.level - 2) * 1}rem` }}
-          >
-            <a
-              href={`#${heading.id}`}
-              className={cn(
-                "block py-0.5 transition-all duration-200 hover:translate-x-1",
-                activeId === heading.id
-                  ? "font-semibold text-primary"
-                  : "text-muted-foreground hover:text-foreground"
-              )}
-              onClick={(e) => {
-                e.preventDefault()
-                document.getElementById(heading.id)?.scrollIntoView({
-                  behavior: "smooth",
-                })
-              }}
-            >
-              {heading.text}
-            </a>
-          </li>
-        ))}
-      </ul>
+    <nav className="flex flex-col h-full max-h-screen">
+      <div className="flex items-center gap-2 mb-6 px-1">
+        <div className="h-1 w-1 rounded-full bg-primary" />
+        <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-foreground/50">
+          Table of Contents
+        </p>
+      </div>
+      <div className="flex-1 overflow-y-auto custom-scrollbar pr-2 pb-4">
+        <ul className="space-y-1 border-l border-border/40 ml-0.5">
+          {headings.map((heading) => (
+            <li key={heading.id} className="relative">
+              <a
+                href={`#${heading.id}`}
+                className={cn(
+                  "block py-2 pr-4 transition-all duration-200 hover:text-primary relative group",
+                  heading.level === 3
+                    ? "pl-6 text-[13px]"
+                    : "pl-4 text-sm font-medium",
+                  activeId === heading.id
+                    ? "text-primary border-l-2 border-primary -ml-[1.5px] bg-primary/5"
+                    : "text-muted-foreground border-l border-transparent",
+                )}
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.getElementById(heading.id)?.scrollIntoView({
+                    behavior: "smooth",
+                  });
+                }}
+              >
+                <span className="truncate block">{heading.text}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
     </nav>
-  )
+  );
 }

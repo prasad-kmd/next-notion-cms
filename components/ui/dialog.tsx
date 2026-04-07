@@ -1,64 +1,80 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { AnimatePresence, motion } from "framer-motion"
-import { X } from "lucide-react"
-import { cn } from "@/lib/utils"
+import * as React from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { X } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface DialogProps {
-  children: React.ReactNode
-  open?: boolean
-  onOpenChange?: (open: boolean) => void
+  children: React.ReactNode;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
 }
 
-export function Dialog({ children, open: controlledOpen, onOpenChange }: DialogProps) {
-  const [uncontrolledOpen, setUncontrolledOpen] = React.useState(false)
-  const open = controlledOpen ?? uncontrolledOpen
-  const setOpen = onOpenChange ?? setUncontrolledOpen
+export function Dialog({
+  children,
+  open: controlledOpen,
+  onOpenChange,
+}: DialogProps) {
+  const [uncontrolledOpen, setUncontrolledOpen] = React.useState(false);
+  const open = controlledOpen ?? uncontrolledOpen;
+  const setOpen = onOpenChange ?? setUncontrolledOpen;
 
   return (
     <DialogContext.Provider value={{ open, setOpen }}>
       {children}
     </DialogContext.Provider>
-  )
+  );
 }
 
 const DialogContext = React.createContext<{
-  open: boolean
-  setOpen: (open: boolean) => void
-} | null>(null)
+  open: boolean;
+  setOpen: (open: boolean) => void;
+} | null>(null);
 
 const useDialog = () => {
-  const context = React.useContext(DialogContext)
-  if (!context) throw new Error("useDialog must be used within Dialog")
-  return context
-}
+  const context = React.useContext(DialogContext);
+  if (!context) throw new Error("useDialog must be used within Dialog");
+  return context;
+};
 
-export function DialogTrigger({ children }: { children: React.ReactElement<any> }) {
-  const { setOpen } = useDialog()
+export function DialogTrigger({
+  children,
+  asChild,
+}: {
+  children: React.ReactElement<any>;
+  asChild?: boolean;
+}) {
+  const { setOpen } = useDialog();
   return React.cloneElement(children, {
     onClick: (e: React.MouseEvent) => {
       if (children.props.onClick) {
-        children.props.onClick(e)
+        children.props.onClick(e);
       }
-      setOpen(true)
+      setOpen(true);
     },
-  })
+  });
 }
 
-export function DialogContent({ children, className }: { children: React.ReactNode, className?: string }) {
-  const { open, setOpen } = useDialog()
+export function DialogContent({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
+  const { open, setOpen } = useDialog();
 
   React.useEffect(() => {
     if (open) {
-      document.body.style.overflow = "hidden"
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = "unset"
+      document.body.style.overflow = "unset";
     }
     return () => {
-      document.body.style.overflow = "unset"
-    }
-  }, [open])
+      document.body.style.overflow = "unset";
+    };
+  }, [open]);
 
   return (
     <AnimatePresence>
@@ -78,7 +94,7 @@ export function DialogContent({ children, className }: { children: React.ReactNo
               exit={{ opacity: 0, scale: 0.95, y: 10 }}
               className={cn(
                 "relative w-full max-w-lg bg-card border border-border p-6 rounded-2xl shadow-2xl",
-                className
+                className,
               )}
             >
               <button
@@ -93,17 +109,55 @@ export function DialogContent({ children, className }: { children: React.ReactNo
         </>
       )}
     </AnimatePresence>
-  )
+  );
 }
 
-export function DialogHeader({ children, className }: { children: React.ReactNode, className?: string }) {
-  return <div className={cn("flex flex-col space-y-1.5 text-center sm:text-left", className)}>{children}</div>
+export function DialogHeader({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
+  return (
+    <div
+      className={cn(
+        "flex flex-col space-y-1.5 text-center sm:text-left",
+        className,
+      )}
+    >
+      {children}
+    </div>
+  );
 }
 
-export function DialogTitle({ children, className }: { children: React.ReactNode, className?: string }) {
-  return <h2 className={cn("text-lg font-semibold leading-none tracking-tight", className)}>{children}</h2>
+export function DialogTitle({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
+  return (
+    <h2
+      className={cn(
+        "text-lg font-semibold leading-none tracking-tight",
+        className,
+      )}
+    >
+      {children}
+    </h2>
+  );
 }
 
-export function DialogDescription({ children, className }: { children: React.ReactNode, className?: string }) {
-  return <p className={cn("text-sm text-muted-foreground", className)}>{children}</p>
+export function DialogDescription({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
+  return (
+    <p className={cn("text-sm text-muted-foreground", className)}>{children}</p>
+  );
 }

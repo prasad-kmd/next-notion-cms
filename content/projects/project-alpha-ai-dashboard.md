@@ -7,6 +7,7 @@ description: "A comprehensive dashboard for managing and monitoring AI model dep
 tags: ["AI", "Dashboard", "React"]
 category: "AI/ML"
 technical: "Python, FastAPI, Next.js, OpenAI API"
+author: "prasadm"
 ---
 
 The AI Dashboard project was designed to simplify...

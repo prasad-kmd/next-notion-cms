@@ -4,9 +4,10 @@ slug: "modern-web-engineering-nextjs-15"
 date: "2025-05-15"
 status: "Published"
 description: "Exploring the latest features in Next.js 16 and how they revolutionize the developer experience."
-tags: ["Next.js", "React", "Backend"]
+tags: ["Admin","Next.js", "React", "Backend"]
 category: "Engineering"
 technical: "Next.js 16, React 19, Tailwind CSS 4"
+author: "prasadm"
 ---
 
 Next.js 16 introduces several game-changing features...

@@ -62,14 +62,16 @@ export async function getAllPosts(type: PostType): Promise<PostMetadata[]> {
 
   const fileNames = fs.readdirSync(dirPath);
   const allPostsData = fileNames
-    .filter((fileName) => fileName.endsWith(".md"))
+    .filter((fileName) => fileName.endsWith(".md") || fileName.endsWith(".html"))
     .map((fileName) => {
       const fullPath = path.join(dirPath, fileName);
       const fileContents = fs.readFileSync(fullPath, "utf8");
       const { data } = matter(fileContents);
+      const slug = fileName.replace(/\.(md|html)$/, "");
 
       return {
         ...(data as PostMetadata),
+        slug,
         type,
       };
     })
@@ -88,15 +90,25 @@ function slugify(text: string): string {
     .trim();
 }
 
-function extractHeadings(content: string): Heading[] {
-  const headingRegex = /^(#{2,4})\s+(.+)$/gm;
+function extractHeadings(content: string, isHtml: boolean = false): Heading[] {
   const headings: Heading[] = [];
-  let match;
-
-  while ((match = headingRegex.exec(content)) !== null) {
-    const level = match[1].length;
-    const text = match[2];
-    headings.push({ level, text, id: slugify(text) });
+  
+  if (isHtml) {
+    const headingRegex = /<h([2-4])[^>]*>(.*?)<\/h\1>/gi;
+    let match;
+    while ((match = headingRegex.exec(content)) !== null) {
+      const level = parseInt(match[1]);
+      const text = match[2].replace(/<[^>]*>/g, ""); // Strip nested tags
+      headings.push({ level, text, id: slugify(text) });
+    }
+  } else {
+    const headingRegex = /^(#{2,4})\s+(.+)$/gm;
+    let match;
+    while ((match = headingRegex.exec(content)) !== null) {
+      const level = match[1].length;
+      const text = match[2];
+      headings.push({ level, text, id: slugify(text) });
+    }
   }
 
   return headings;
@@ -142,37 +154,59 @@ export async function getAllAuthors(): Promise<Author[]> {
 
 export async function getPostBySlug(type: PostType, slug: string): Promise<Post | null> {
   const dirPath = path.join(contentDirectory, type);
-  const fullPath = path.join(dirPath, `${slug}.md`);
+  const mdPath = path.join(dirPath, `${slug}.md`);
+  const htmlPath = path.join(dirPath, `${slug}.html`);
 
-  if (!fs.existsSync(fullPath)) {
+  let fullPath = "";
+  let isHtml = false;
+
+  if (fs.existsSync(mdPath)) {
+    fullPath = mdPath;
+  } else if (fs.existsSync(htmlPath)) {
+    fullPath = htmlPath;
+    isHtml = true;
+  } else {
     return null;
   }
 
   const fileContents = fs.readFileSync(fullPath, "utf8");
   const { data, content } = matter(fileContents);
 
-  const headings = extractHeadings(content);
+  const headings = extractHeadings(content, isHtml);
+  let contentHtml = "";
 
-  const processedContent = await unified()
-    .use(remarkParse)
-    .use(remarkGfm)
-    .use(remarkMath)
-    .use(remarkRehype)
-    .use(rehypeSlug)
-    .use(rehypeAutolinkHeadings, {
-      behavior: "append",
-      properties: {
-        className: ["anchor"],
-      },
-    })
-    .use(rehypeShiki, {
-      theme: "one-dark-pro",
-    })
-    .use(rehypeKatex)
-    .use(rehypeStringify)
-    .process(content);
+  if (isHtml) {
+    // For HTML files, we inject IDs if they are missing
+    contentHtml = content.replace(
+      /<h([2-4])([^>]*)>(.*?)<\/h\1>/gi,
+      (match, level, attrs, text) => {
+        if (attrs.toLowerCase().includes("id=")) return match;
+        const id = slugify(text.replace(/<[^>]*>/g, ""));
+        return `<h${level}${attrs} id="${id}">${text}</h${level}>`;
+      }
+    );
+  } else {
+    const processedContent = await unified()
+      .use(remarkParse)
+      .use(remarkGfm)
+      .use(remarkMath)
+      .use(remarkRehype)
+      .use(rehypeSlug)
+      .use(rehypeAutolinkHeadings, {
+        behavior: "append",
+        properties: {
+          className: ["anchor"],
+        },
+      })
+      .use(rehypeShiki, {
+        theme: "one-dark-pro",
+      })
+      .use(rehypeKatex)
+      .use(rehypeStringify)
+      .process(content);
 
-  const contentHtml = processedContent.toString();
+    contentHtml = processedContent.toString();
+  }
 
   const metadata = data as PostMetadata;
   return {
