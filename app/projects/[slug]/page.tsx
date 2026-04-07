@@ -102,7 +102,7 @@ export default async function ProjectDetailPage({ params }: Props) {
                   <AuthorProfile author={author} lastUpdated={project.date} />
                 </div>
               )}
-              <div className="flex-1 overflow-hidden">
+              <div className="flex-1 flex flex-col min-h-0">
                 <TableOfContents headings={project.headings} />
               </div>
             </div>

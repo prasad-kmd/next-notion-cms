@@ -152,6 +152,89 @@ export async function getAllAuthors(): Promise<Author[]> {
     });
 }
 
+function injectHeadingIds(html: string): string {
+  return html.replace(
+    /<h([2-4])([^>]*)>(.*?)<\/h\1>/gi,
+    (match, level, attrs, text) => {
+      if (attrs.toLowerCase().includes("id=")) return match;
+      const id = slugify(text.replace(/<[^>]*>/g, ""));
+      return `<h${level}${attrs} id="${id}">${text}</h${level}>`;
+    },
+  );
+}
+
+function injectQuiz(html: string): string {
+  const placeholders: string[] = [];
+  const protectedHtml = html.replace(/<(pre|code)[\s\S]*?<\/\1>/gi, (match) => {
+    placeholders.push(match);
+    return `__QUIZ_PROTECTED_BLOCK_${placeholders.length - 1}__`;
+  });
+
+  const injectedHtml = protectedHtml.replace(
+    /\[quiz\]([\s\S]*?)\[\/quiz\]/g,
+    (match, jsonContent) => {
+      try {
+        let cleanJson = jsonContent.replace(/<[^>]*>/g, "").trim();
+        cleanJson = cleanJson.replace(/[\r\n\t]+/g, " ");
+        cleanJson = cleanJson.replace(
+          /\\(["\\\/bfnrt]|u[0-9a-fA-F]{4})|\\/g,
+          (match: string, p1: string) => (p1 ? match : "\\\\"),
+        );
+
+        const minifiedJson = JSON.stringify(JSON.parse(cleanJson));
+        const encodedJson = minifiedJson.replace(/'/g, "&apos;");
+        return `<div class="interactive-quiz-placeholder" data-quiz='${encodedJson}'></div>`;
+      } catch (e) {
+        console.error("Quiz HTML inject parse error:", e);
+        return `<div class="bg-red-500/10 border border-red-500 p-4 rounded-lg text-red-500 my-4">
+        <p><strong>Quiz Error:</strong> Invalid JSON format.</p>
+      </div>`;
+      }
+    },
+  );
+
+  return injectedHtml.replace(
+    /__QUIZ_PROTECTED_BLOCK_(\d+)__/g,
+    (match, index) => {
+      return placeholders[parseInt(index)];
+    },
+  );
+}
+
+function injectAlerts(html: string): string {
+  const alertTypes = {
+    NOTE: { color: "blue", icon: "info" },
+    TIP: { color: "green", icon: "lightbulb" },
+    IMPORTANT: { color: "purple", icon: "alert-circle" },
+    WARNING: { color: "yellow", icon: "alert-triangle" },
+    CAUTION: { color: "red", icon: "alert-octagon" },
+  };
+
+  return html.replace(
+    /\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]\s*(?:<\/p>|<br\/?>)?([\s\S]*?)(?=(?:\[!|$))/gi,
+    (match, type, content) => {
+      const upperType = type.toUpperCase() as keyof typeof alertTypes;
+      const config = alertTypes[upperType];
+      const colors: Record<string, string> = {
+        BLUE: "border-blue-500 bg-blue-500/10 text-blue-700 dark:text-blue-400",
+        GREEN: "border-green-500 bg-green-500/10 text-green-700 dark:text-green-400",
+        PURPLE: "border-purple-500 bg-purple-500/10 text-purple-700 dark:text-purple-400",
+        YELLOW: "border-yellow-500 bg-yellow-500/10 text-yellow-700 dark:text-yellow-400",
+        RED: "border-red-500 bg-red-500/10 text-red-700 dark:text-red-400",
+      };
+      
+      const colorClass = colors[upperType] || colors.BLUE;
+
+      return `<div class="my-6 border-l-4 p-4 rounded-r-lg ${colorClass}">
+      <p class="flex items-center gap-2 font-bold mb-2 uppercase text-xs tracking-widest">
+        <span class="opacity-80">${upperType}</span>
+      </p>
+      <div class="prose-direct text-sm leading-relaxed">${content.trim()}</div>
+    </div>`;
+    },
+  );
+}
+
 export async function getPostBySlug(type: PostType, slug: string): Promise<Post | null> {
   const dirPath = path.join(contentDirectory, type);
   const mdPath = path.join(dirPath, `${slug}.md`);
@@ -176,15 +259,7 @@ export async function getPostBySlug(type: PostType, slug: string): Promise<Post 
   let contentHtml = "";
 
   if (isHtml) {
-    // For HTML files, we inject IDs if they are missing
-    contentHtml = content.replace(
-      /<h([2-4])([^>]*)>(.*?)<\/h\1>/gi,
-      (match, level, attrs, text) => {
-        if (attrs.toLowerCase().includes("id=")) return match;
-        const id = slugify(text.replace(/<[^>]*>/g, ""));
-        return `<h${level}${attrs} id="${id}">${text}</h${level}>`;
-      }
-    );
+    contentHtml = injectQuiz(injectAlerts(injectHeadingIds(content)));
   } else {
     const processedContent = await unified()
       .use(remarkParse)

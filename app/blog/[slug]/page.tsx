@@ -87,7 +87,7 @@ export default async function BlogPostPage({ params }: Props) {
                   <AuthorProfile author={author} lastUpdated={post.date} />
                 </div>
               )}
-              <div className="flex-1 overflow-hidden">
+              <div className="flex-1 flex flex-col min-h-0">
                 <TableOfContents headings={post.headings} />
               </div>
             </div>

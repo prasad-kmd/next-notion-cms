@@ -2,9 +2,26 @@
 
 A modern, high-performance engineering blogfolio and workspace built with **Next.js 16**, **Tailwind CSS 4**, and **TypeScript**. Designed for developers who want a polished personal platform with a file-based CMS and interactive tools.
 
-![Next.js](https://img.shields.io/badge/Next.js-16.2-black?style=flat-square&logo=next.js)
+<!-- ![Next.js](https://img.shields.io/badge/Next.js-16.2-black?style=flat-square&logo=next.js)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.0-38B2AC?style=flat-square&logo=tailwind-css)
-![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178C6?style=flat-square&logo=typescript)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178C6?style=flat-square&logo=typescript) -->
+
+---
+![Next.js](https://img.shields.io/badge/Next.js-16-black?style=for-the-badge&logo=next.js)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?style=for-the-badge&logo=typescript)
+![Tailwind](https://img.shields.io/badge/Tailwind_CSS-4-38B2AC?style=for-the-badge&logo=tailwind-css)
+![Prisma](https://img.shields.io/badge/Prisma-6-2D3748?style=for-the-badge&logo=prisma)
+![Supabase](https://img.shields.io/badge/Supabase-PostgreSQL-3ECF8E?style=for-the-badge&logo=supabase)
+![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)
+![GitHub License](https://img.shields.io/github/license/prasad-kmd/next-notion-cms?style=for-the-badge)
+![GitHub commit activity](https://img.shields.io/github/commit-activity/w/prasad-kmd/next-notion-cms?style=for-the-badge&logo=github&logoColor=black)
+![GitHub contributors](https://img.shields.io/github/contributors/prasad-kmd/next-notion-cms?style=for-the-badge)
+![GitHub last commit](https://img.shields.io/github/last-commit/prasad-kmd/next-notion-cms?display_timestamp=committer&style=for-the-badge)
+![GitHub repo size](https://img.shields.io/github/repo-size/prasad-kmd/next-notion-cms?style=for-the-badge)
+---
+![Static Badge](https://img.shields.io/badge/VIBE-CODE-purple?style=for-the-badge&logo=googlejules&logoColor=white)
+![Static Badge](https://img.shields.io/badge/VIBE-CODE-black?style=for-the-badge&logo=v0&logoColor=white)
+![Static Badge](https://img.shields.io/badge/VIBE-CODE-blue?style=for-the-badge&logo=googlegemini&logoColor=white)
 
 ## ✨ Features
 
