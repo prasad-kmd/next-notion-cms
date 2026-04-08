@@ -1,10 +1,11 @@
-import type { Metadata } from "next"
-import Link from "next/link"
-import { getContentByType } from "@/lib/content"
-import { Calendar, ArrowRight } from "lucide-react"
+import type { Metadata } from "next";
+import Link from "next/link";
+import { getContentByType } from "@/lib/content";
+import { Calendar, ArrowRight } from "lucide-react";
 
-const title = "Articles"
-const description = "Technical articles and reflections documenting my engineering journey."
+const title = "Articles";
+const description =
+  "Technical articles and reflections documenting my engineering journey.";
 
 export const metadata: Metadata = {
   title,
@@ -28,10 +29,10 @@ export const metadata: Metadata = {
     description,
     images: [`/api/og?title=${encodeURIComponent(title)}`],
   },
-}
+};
 
 export default function ArticlesPage() {
-  const entries = getContentByType("articles")
+  const entries = getContentByType("articles");
 
   return (
     <div className="min-h-screen px-6 py-12 lg:px-8 articles_page img_grad_pm">
@@ -39,34 +40,49 @@ export default function ArticlesPage() {
         <div className="mb-12">
           <h1 className="mb-4 text-4xl font-bold mozilla-headline">Articles</h1>
           <p className="text-lg text-muted-foreground leading-relaxed google-sans">
-            Technical articles and reflections documenting my engineering journey.
+            Technical articles and reflections documenting my engineering
+            journey.
           </p>
         </div>
 
         {entries.length === 0 ? (
           <div className="rounded-xl border border-border bg-card p-12 text-center">
             <p className="text-muted-foreground">
-              No articles yet. Create a <code className="rounded bg-muted px-2 py-1 font-mono text-sm">.md</code>{" "}
-              or <code className="rounded bg-muted px-2 py-1 font-mono text-sm">.html</code> file in the{" "}
-              <code className="rounded bg-muted px-2 py-1 font-mono text-sm">content/articles/</code> directory.
+              No articles yet. Create a{" "}
+              <code className="rounded bg-muted px-2 py-1 font-mono text-sm">
+                .md
+              </code>{" "}
+              or{" "}
+              <code className="rounded bg-muted px-2 py-1 font-mono text-sm">
+                .html
+              </code>{" "}
+              file in the{" "}
+              <code className="rounded bg-muted px-2 py-1 font-mono text-sm">
+                content/articles/
+              </code>{" "}
+              directory.
             </p>
           </div>
         ) : (
           <div className="space-y-6">
             {entries.map((entry, index) => {
-              const borderColor = index === 0 ? "border-blue-500/70" : "border-border"
-              const hoverBorderColor = index === 0 ? "hover:border-blue-500" : "hover:border-primary/50"
+              const borderColor =
+                index === 0 ? "border-blue-500/70" : "border-border";
+              const hoverBorderColor =
+                index === 0
+                  ? "hover:border-blue-500"
+                  : "hover:border-primary/50";
 
               const backgroundStyle = entry.firstImage
                 ? {
-                  backgroundImage: `var(--item-gradient), url("${entry.firstImage}")`,
-                  backgroundBlendMode: "overlay" as const,
-                  backgroundOrigin: "border-box" as const,
-                  backgroundPosition: "right" as const,
-                  backgroundSize: "cover" as const,
-                  backgroundAttachment: "scroll" as const,
-                }
-                : undefined
+                    backgroundImage: `var(--item-gradient), url("${entry.firstImage}")`,
+                    backgroundBlendMode: "overlay" as const,
+                    backgroundOrigin: "border-box" as const,
+                    backgroundPosition: "right" as const,
+                    backgroundSize: "cover" as const,
+                    backgroundAttachment: "scroll" as const,
+                  }
+                : undefined;
 
               return (
                 <Link
@@ -77,9 +93,13 @@ export default function ArticlesPage() {
                 >
                   <div className="flex items-start justify-between gap-4">
                     <div className="flex-1">
-                      <h2 className="mb-2 text-2xl font-semibold group-hover:text-primary font-google-sans">{entry.title}</h2>
+                      <h2 className="mb-2 text-2xl font-semibold group-hover:text-primary font-google-sans">
+                        {entry.title}
+                      </h2>
                       {entry.description && (
-                        <p className="mb-3 text-muted-foreground leading-relaxed font-local-inter">{entry.description}</p>
+                        <p className="mb-3 text-muted-foreground leading-relaxed font-local-inter">
+                          {entry.description}
+                        </p>
                       )}
                       {entry.date && (
                         <div className="flex items-center gap-2 text-sm text-muted-foreground font-local-inter">
@@ -95,11 +115,11 @@ export default function ArticlesPage() {
                     <ArrowRight className="h-5 w-5 text-muted-foreground transition-transform group-hover:translate-x-1 group-hover:text-primary" />
                   </div>
                 </Link>
-              )
+              );
             })}
           </div>
         )}
       </div>
     </div>
-  )
+  );
 }

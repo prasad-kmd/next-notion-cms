@@ -47,7 +47,7 @@ export function ContentRenderer({ content, id }: ContentRendererProps) {
           label: "Take Quiz",
           onClick: () => {
             const quizElement = contentRef.current?.querySelector(
-              ".interactive-quiz-card"
+              ".interactive-quiz-card",
             );
             if (quizElement) {
               quizElement.scrollIntoView({
@@ -153,9 +153,8 @@ export function ContentRenderer({ content, id }: ContentRendererProps) {
       // 1. Render Math using auto-render (safer and skips code blocks)
       try {
         // @ts-ignore - auto-render might not have types in some environments
-        const renderMathInElement = (
-          await import("katex/contrib/auto-render")
-        ).default;
+        const renderMathInElement = (await import("katex/contrib/auto-render"))
+          .default;
         renderMathInElement(contentRef.current, {
           delimiters: [
             { left: "$$", right: "$$", display: true },
@@ -193,7 +192,9 @@ export function ContentRenderer({ content, id }: ContentRendererProps) {
 
   // Split content into parts to interleave HTML and React components (Quizzes)
   // Use [\s\S]*? to handle newlines in the data-quiz attribute
-  const parts = content.split(/(<div class="interactive-quiz-placeholder" data-quiz='[\s\S]*?'>\s*<\/div>)/g);
+  const parts = content.split(
+    /(<div class="interactive-quiz-placeholder" data-quiz='[\s\S]*?'>\s*<\/div>)/g,
+  );
 
   return (
     <div
@@ -227,7 +228,11 @@ export function ContentRenderer({ content, id }: ContentRendererProps) {
               return <Quiz key={index} id={id} {...quizData} />;
             } catch (e) {
               console.error("Failed to parse quiz data:", e);
-              return <div key={index} className="text-red-500">Error loading quiz</div>;
+              return (
+                <div key={index} className="text-red-500">
+                  Error loading quiz
+                </div>
+              );
             }
           }
         }
@@ -235,7 +240,7 @@ export function ContentRenderer({ content, id }: ContentRendererProps) {
           <div
             key={index}
             dangerouslySetInnerHTML={{ __html: part }}
-            style={{ display: 'contents' }}
+            style={{ display: "contents" }}
           />
         );
       })}

@@ -1,21 +1,21 @@
-import Link from "next/link"
-import { ArrowRight, Calendar } from "lucide-react"
-import { getContentByType } from "@/lib/content"
-import Image from "next/image"
+import Link from "next/link";
+import { ArrowRight, Calendar } from "lucide-react";
+import { getContentByType } from "@/lib/content";
+import Image from "next/image";
 
 interface RelatedContentProps {
-  type: "blog" | "articles" | "projects" | "tutorials" | "wiki"
-  currentSlug: string
+  type: "blog" | "articles" | "projects" | "tutorials" | "wiki";
+  currentSlug: string;
 }
 
 export function RelatedContent({ type, currentSlug }: RelatedContentProps) {
-  const allItems = getContentByType(type)
+  const allItems = getContentByType(type);
   const relatedItems = allItems
     .filter((item) => item.slug !== currentSlug)
-    .slice(0, 3)
+    .slice(0, 3);
 
   if (relatedItems.length === 0) {
-    return null
+    return null;
   }
 
   const titles = {
@@ -24,7 +24,7 @@ export function RelatedContent({ type, currentSlug }: RelatedContentProps) {
     projects: "Other Projects",
     tutorials: "More Tutorials",
     wiki: "More Wiki Entries",
-  }
+  };
 
   return (
     <section className="mt-16 border-t border-border pt-16 google-sans">
@@ -63,5 +63,5 @@ export function RelatedContent({ type, currentSlug }: RelatedContentProps) {
         ))}
       </div>
     </section>
-  )
+  );
 }

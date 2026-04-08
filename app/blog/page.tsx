@@ -1,11 +1,11 @@
-import type { Metadata } from "next"
-import Link from "next/link"
-import { getContentByType } from "@/lib/content"
-import { Calendar, ArrowRight, CheckCircle2 } from "lucide-react"
+import type { Metadata } from "next";
+import Link from "next/link";
+import { getContentByType } from "@/lib/content";
+import { Calendar, ArrowRight, CheckCircle2 } from "lucide-react";
 
-const title = "Blog"
+const title = "Blog";
 const description =
-  "Comprehensive engineering ideas and technical insights. Each post explores practical solutions combining mechanical and mechatronics expertise."
+  "Comprehensive engineering ideas and technical insights. Each post explores practical solutions combining mechanical and mechatronics expertise.";
 
 export const metadata: Metadata = {
   title,
@@ -29,11 +29,11 @@ export const metadata: Metadata = {
     description,
     images: [`/api/og?title=${encodeURIComponent(title)}`],
   },
-}
+};
 
 export default function BlogPage() {
-  const blogPosts = getContentByType("blog")
-  const hasFinalPost = blogPosts.some((post) => post.final)
+  const blogPosts = getContentByType("blog");
+  const hasFinalPost = blogPosts.some((post) => post.final);
 
   return (
     <div className="min-h-screen px-6 py-12 lg:px-8 blog_page img_grad_pm">
@@ -41,17 +41,28 @@ export default function BlogPage() {
         <div className="mb-12">
           <h1 className="mb-4 text-4xl font-bold mozilla-headline">Blog</h1>
           <p className="text-lg text-muted-foreground leading-relaxed font-google-sans">
-            Comprehensive engineering ideas and technical insights. Each post explores practical solutions
-            combining mechanical and mechatronics expertise.
+            Comprehensive engineering ideas and technical insights. Each post
+            explores practical solutions combining mechanical and mechatronics
+            expertise.
           </p>
         </div>
 
         {blogPosts.length === 0 ? (
           <div className="rounded-xl border border-border bg-card p-12 text-center">
             <p className="text-muted-foreground">
-              No ideas yet. Create a <code className="rounded bg-muted px-2 py-1 font-mono text-sm">.md</code> or{" "}
-              <code className="rounded bg-muted px-2 py-1 font-mono text-sm">.html</code> file in the{" "}
-              <code className="rounded bg-muted px-2 py-1 font-mono text-sm">content/blog/</code> directory.
+              No ideas yet. Create a{" "}
+              <code className="rounded bg-muted px-2 py-1 font-mono text-sm">
+                .md
+              </code>{" "}
+              or{" "}
+              <code className="rounded bg-muted px-2 py-1 font-mono text-sm">
+                .html
+              </code>{" "}
+              file in the{" "}
+              <code className="rounded bg-muted px-2 py-1 font-mono text-sm">
+                content/blog/
+              </code>{" "}
+              directory.
             </p>
           </div>
         ) : (
@@ -61,24 +72,24 @@ export default function BlogPage() {
                 ? post.final
                   ? "border-green-500/70"
                   : "border-gray-500/30"
-                : "border-border"
+                : "border-border";
 
               const hoverBorderColor = hasFinalPost
                 ? post.final
                   ? "hover:border-green-500"
                   : "hover:border-gray-500/50"
-                : "hover:border-primary/50"
+                : "hover:border-primary/50";
 
               const backgroundStyle = post.firstImage
                 ? {
-                  backgroundImage: `var(--item-gradient), url("${post.firstImage}")`,
-                  backgroundBlendMode: "overlay" as const,
-                  backgroundOrigin: "border-box" as const,
-                  backgroundPosition: "right" as const,
-                  backgroundSize: "cover" as const,
-                  backgroundAttachment: "scroll" as const,
-                }
-                : undefined
+                    backgroundImage: `var(--item-gradient), url("${post.firstImage}")`,
+                    backgroundBlendMode: "overlay" as const,
+                    backgroundOrigin: "border-box" as const,
+                    backgroundPosition: "right" as const,
+                    backgroundSize: "cover" as const,
+                    backgroundAttachment: "scroll" as const,
+                  }
+                : undefined;
 
               return (
                 <Link
@@ -95,9 +106,13 @@ export default function BlogPage() {
                   )}
                   <div className="flex items-start justify-between gap-4">
                     <div className="flex-1">
-                      <h2 className="mb-2 text-2xl font-semibold group-hover:text-primary font-google-sans">{post.title}</h2>
+                      <h2 className="mb-2 text-2xl font-semibold group-hover:text-primary font-google-sans">
+                        {post.title}
+                      </h2>
                       {post.description && (
-                        <p className="mb-3 text-muted-foreground leading-relaxed font-local-inter">{post.description}</p>
+                        <p className="mb-3 text-muted-foreground leading-relaxed font-local-inter">
+                          {post.description}
+                        </p>
                       )}
                       {post.date && (
                         <div className="flex items-center gap-2 text-sm text-muted-foreground font-local-inter">
@@ -113,11 +128,11 @@ export default function BlogPage() {
                     <ArrowRight className="h-5 w-5 text-muted-foreground transition-transform group-hover:translate-x-1 group-hover:text-primary" />
                   </div>
                 </Link>
-              )
+              );
             })}
           </div>
         )}
       </div>
     </div>
-  )
+  );
 }

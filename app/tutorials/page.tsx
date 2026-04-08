@@ -1,10 +1,20 @@
-import type { Metadata } from "next"
-import Link from "next/link"
-import { getContentByType } from "@/lib/content"
-import { Calendar, ArrowRight } from "lucide-react"
+import type { Metadata } from "next";
+import Link from "next/link";
+import Image from "next/image";
+import { getContentByType, getAuthorBySlug } from "@/lib/content";
+import {
+  Calendar,
+  ChevronLeft,
+  ChevronRight,
+  User,
+  ArrowUpRight,
+} from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 
-const title = "Tutorials"
-const description = "General updates, announcements, and insights from our engineering team."
+const title = "Tutorials";
+const description =
+  "General updates, announcements, and insights from our engineering team.";
 
 export const metadata: Metadata = {
   title,
@@ -28,78 +38,287 @@ export const metadata: Metadata = {
     description,
     images: [`/api/og?title=${encodeURIComponent(title)}`],
   },
+};
+
+interface TutorialsPageProps {
+  searchParams: Promise<{ page?: string }>;
 }
 
-export default function TutorialsPage() {
-  const tutorials = getContentByType("tutorials")
+export default async function TutorialsPage({
+  searchParams,
+}: TutorialsPageProps) {
+  const { page } = await searchParams;
+  const currentPage = parseInt(page || "1");
+  const postsPerPage = 9;
+  const allTutorials = getContentByType("tutorials");
+
+  const totalPages = Math.ceil(allTutorials.length / postsPerPage);
+  const tutorials = allTutorials.slice(
+    (currentPage - 1) * postsPerPage,
+    currentPage * postsPerPage,
+  );
 
   return (
-    <div className="min-h-screen px-6 py-12 lg:px-8 tutorials_page img_grad_pm">
-      <div className="mx-auto max-w-4xl">
-        <div className="mb-12">
-          <h1 className="mb-4 text-4xl font-bold mozilla-headline">Tutorials</h1>
-          <p className="text-lg text-muted-foreground leading-relaxed font-google-sans">
-            General updates, announcements, and insights from our engineering team.
+    <div className="min-h-screen py-12 tutorials_page img_grad_pm">
+      <div className="mx-auto max-w-6xl px-6 lg:px-8">
+        <div className="mb-14">
+          <h1 className="mb-4 text-4xl font-bold mozilla-headline tracking-tight sm:text-6xl text-foreground">
+            Tutorials
+          </h1>
+          <p className="text-lg text-muted-foreground leading-relaxed font-google-sans max-w-2xl border-l-4 border-primary pl-4">
+            {description}
           </p>
         </div>
 
-        {tutorials.length === 0 ? (
-          <div className="rounded-xl border border-border bg-card p-12 text-center">
-            <p className="text-muted-foreground">
-              No tutorials yet. Create a <code className="rounded bg-muted px-2 py-1 font-mono text-sm">.md</code> or{" "}
-              <code className="rounded bg-muted px-2 py-1 font-mono text-sm">.html</code> file in the{" "}
-              <code className="rounded bg-muted px-2 py-1 font-mono text-sm">content/tutorials/</code> directory.
+        {allTutorials.length === 0 ? (
+          <div className="rounded-3xl border border-dashed border-border bg-card p-12 text-center shadow-inner">
+            <p className="text-muted-foreground font-local-inter">
+              No tutorials yet. Check back later!
             </p>
           </div>
         ) : (
-          <div className="space-y-6">
-            {tutorials.map((post, index) => {
-              const borderColor = index === 0 ? "border-blue-500/70" : "border-border"
-              const hoverBorderColor = index === 0 ? "hover:border-blue-500" : "hover:border-primary/50"
+          <>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 xl:gap-10">
+              {tutorials.map((post) => {
+                const author = post.author
+                  ? getAuthorBySlug(post.author)
+                  : null;
+                const category = post.category || post.technical;
 
-              const backgroundStyle = post.firstImage
-                ? {
-                  backgroundImage: `var(--item-gradient), url("${post.firstImage}")`,
-                  backgroundBlendMode: "overlay" as const,
-                  backgroundOrigin: "border-box" as const,
-                  backgroundPosition: "right" as const,
-                  backgroundSize: "cover" as const,
-                  backgroundAttachment: "scroll" as const,
-                }
-                : undefined
+                return (
+                  <Link
+                    key={post.slug}
+                    href={`/tutorials/${post.slug}`}
+                    className="group relative flex w-full flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-sm transition-all duration-300 hover:shadow-2xl hover:border-primary/40 hover:-translate-y-1.5 aspect-[3/2] min-h-[300px]"
+                  >
+                    {/* Background Layer */}
+                    {post.firstImage ? (
+                      <div className="absolute inset-0 z-0">
+                        <Image
+                          src={post.firstImage}
+                          alt={post.title}
+                          fill
+                          className="object-cover transition-transform duration-1000 ease-out group-hover:scale-105"
+                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        />
+                        <div className="absolute inset-0 bg-linear-to-t from-black/95 via-black/60 to-transparent" />
+                        <div className="absolute inset-0 bg-linear-to-br from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                      </div>
+                    ) : (
+                      <div className="absolute inset-0 z-0 bg-linear-to-br from-primary/5 via-primary/10 to-transparent dark:from-primary/20 dark:via-background dark:to-background">
+                        <div className="absolute inset-0 bg-linear-to-t from-background/95 via-background/40 to-transparent" />
+                      </div>
+                    )}
 
-              return (
-                <Link
-                  key={post.slug}
-                  href={`/tutorials/${post.slug}`}
-                  className={`group block rounded-xl border ${borderColor} ${hoverBorderColor} bg-card p-6 transition-all hover:shadow-lg hover:shadow-primary/5 overflow-hidden`}
-                  style={backgroundStyle}
-                >
-                  <div className="flex items-start justify-between gap-4">
-                    <div className="flex-1">
-                      <h2 className="mb-2 text-2xl font-semibold group-hover:text-primary font-google-sans">{post.title}</h2>
-                      {post.description && (
-                        <p className="mb-3 text-muted-foreground leading-relaxed font-local-inter">{post.description}</p>
-                      )}
-                      {post.date && (
-                        <div className="flex items-center gap-2 text-sm text-muted-foreground font-local-inter">
-                          <Calendar className="h-4 w-4" />
-                          {new Date(post.date).toLocaleDateString("en-US", {
-                            year: "numeric",
-                            month: "long",
-                            day: "numeric",
-                          })}
+                    {/* Main Content Area */}
+                    <div className="relative z-10 flex h-full flex-col p-6">
+                      {/* Top Bar: Category and Arrow */}
+                      <div className="flex items-center justify-between mb-4">
+                        {category && (
+                          <Badge
+                            className={`
+                              px-3 py-1 text-[10px] font-bold uppercase tracking-widest local-jetbrains-mono border-0
+                              ${
+                                post.firstImage
+                                  ? "bg-primary text-white shadow-lg shadow-primary/30"
+                                  : "bg-primary/10 text-primary"
+                              }
+                            `}
+                          >
+                            {category}
+                          </Badge>
+                        )}
+                        <div
+                          className={`p-1.5 rounded-full border transition-all duration-300 opacity-0 group-hover:opacity-100 transform translate-x-2 -translate-y-2 group-hover:translate-x-0 group-hover:translate-y-0 ${
+                            post.firstImage
+                              ? "bg-white/10 border-white/20 text-white"
+                              : "bg-primary/10 border-primary/20 text-primary"
+                          }`}
+                        >
+                          <ArrowUpRight className="h-4 w-4" />
                         </div>
-                      )}
+                      </div>
+
+                      {/* Middle: Title and Description */}
+                      <div className="grow overflow-hidden">
+                        <h2
+                          className={`
+                          mb-3 text-2xl font-bold transition-colors duration-300 line-clamp-2 mozilla-headline leading-[1.1] group-hover:text-primary
+                          ${post.firstImage ? "text-white" : "text-foreground"}
+                        `}
+                        >
+                          {post.title}
+                        </h2>
+
+                        {post.description && (
+                          <p
+                            className={`
+                            text-xs line-clamp-3 font-google-sans leading-relaxed opacity-80
+                            ${
+                              post.firstImage
+                                ? "text-gray-300"
+                                : "text-muted-foreground"
+                            }
+                          `}
+                          >
+                            {post.description}
+                          </p>
+                        )}
+                      </div>
+
+                      {/* Bottom Section: Author, Date, and Tags */}
+                      <div
+                        className={`
+                        mt-4 pt-4 border-t flex flex-col gap-4
+                        ${post.firstImage ? "border-white/10" : "border-border/50"}
+                      `}
+                      >
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-2.5">
+                            <div
+                              className={`
+                              relative h-7 w-7 overflow-hidden rounded-full border transition-transform duration-300
+                              ${post.firstImage ? "border-white/20" : "border-border"}
+                            `}
+                            >
+                              {author?.avatar ? (
+                                <Image
+                                  src={author.avatar}
+                                  alt={author.name}
+                                  fill
+                                  className="object-cover"
+                                />
+                              ) : (
+                                <div className="flex h-full w-full items-center justify-center bg-muted text-muted-foreground">
+                                  <User className="h-3.5 w-3.5" />
+                                </div>
+                              )}
+                            </div>
+                            <p
+                              className={`
+                              text-[11px] font-bold uppercase tracking-wider local-jetbrains-mono
+                              ${post.firstImage ? "text-white" : "text-foreground"}
+                            `}
+                            >
+                              {author?.name || "Anonymous"}
+                            </p>
+                          </div>
+
+                          {post.date && (
+                            <div
+                              className={`
+                               flex items-center gap-1.5 text-[11px] space-mono
+                               ${
+                                 post.firstImage
+                                   ? "text-gray-400"
+                                   : "text-muted-foreground"
+                               }
+                             `}
+                            >
+                              <Calendar className="h-3 w-3" />
+                              {new Date(post.date).toLocaleDateString("en-US", {
+                                month: "short",
+                                day: "numeric",
+                              })}
+                            </div>
+                          )}
+                        </div>
+
+                        {/* Tags */}
+                        {post.tags && post.tags.length > 0 && (
+                          <div className="flex flex-wrap gap-2 overflow-hidden">
+                            {post.tags.slice(0, 3).map((tag) => (
+                              <span
+                                key={tag}
+                                className={`
+                                  whitespace-nowrap text-[10px] font-medium px-2.5 py-1 rounded-md border
+                                  ${
+                                    post.firstImage
+                                      ? "bg-white/5 border-white/10 text-white/60 group-hover:text-white/90"
+                                      : "bg-muted/50 border-border text-muted-foreground group-hover:text-primary"
+                                  }
+                                `}
+                              >
+                                #{tag}
+                              </span>
+                            ))}
+                          </div>
+                        )}
+                      </div>
                     </div>
-                    <ArrowRight className="h-5 w-5 text-muted-foreground transition-transform group-hover:translate-x-1 group-hover:text-primary" />
+                  </Link>
+                );
+              })}
+            </div>
+
+            {/* Sticky Pagination */}
+            {totalPages > 1 && (
+              <div className="sticky bottom-5 z-50 mt-16 mb-3 flex justify-center pointer-events-none">
+                <div className="flex items-center gap-3 bg-background/60 backdrop-blur-xl p-1.5 rounded-full border border-border/50 shadow-2xl shadow-primary/10 pointer-events-auto scale-90 sm:scale-100 transition-all hover:scale-105 hover:bg-background/80 hover:border-primary/30">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    asChild
+                    disabled={currentPage <= 1}
+                    className={`rounded-full w-10 h-10 p-0 ${
+                      currentPage <= 1
+                        ? "pointer-events-none opacity-20"
+                        : "hover:bg-primary/10 hover:text-primary"
+                    }`}
+                  >
+                    <Link href={`/tutorials?page=${currentPage - 1}`}>
+                      <ChevronLeft className="h-5 w-5" />
+                      <span className="sr-only">Previous</span>
+                    </Link>
+                  </Button>
+
+                  <div className="flex items-center gap-1 px-2 border-x border-border/50">
+                    {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+                      (p) => (
+                        <Button
+                          key={p}
+                          variant={currentPage === p ? "default" : "ghost"}
+                          size="sm"
+                          asChild
+                          className={`w-9 h-9 rounded-full transition-all ${
+                            currentPage === p
+                              ? "shadow-lg shadow-primary/40 bg-primary text-primary-foreground"
+                              : "hover:bg-primary/10 hover:text-primary"
+                          }`}
+                        >
+                          <Link
+                            href={`/tutorials?page=${p}`}
+                            className="text-xs font-bold local-jetbrains-mono"
+                          >
+                            {p}
+                          </Link>
+                        </Button>
+                      ),
+                    )}
                   </div>
-                </Link>
-              )
-            })}
-          </div>
+
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    asChild
+                    disabled={currentPage >= totalPages}
+                    className={`rounded-full w-10 h-10 p-0 ${
+                      currentPage >= totalPages
+                        ? "pointer-events-none opacity-20"
+                        : "hover:bg-primary/10 hover:text-primary"
+                    }`}
+                  >
+                    <Link href={`/tutorials?page=${currentPage + 1}`}>
+                      <span className="sr-only">Next</span>
+                      <ChevronRight className="h-5 w-5" />
+                    </Link>
+                  </Button>
+                </div>
+              </div>
+            )}
+          </>
         )}
       </div>
     </div>
-  )
+  );
 }

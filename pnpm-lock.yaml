@@ -161,6 +161,9 @@ importers:
       tw-animate-css:
         specifier: latest
         version: 1.4.0
+      unified:
+        specifier: ^11.0.5
+        version: 11.0.5
     devDependencies:
       '@tailwindcss/postcss':
         specifier: ^4.1.14
