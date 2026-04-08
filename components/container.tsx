@@ -9,7 +9,11 @@ interface ContainerProps {
   variant?: "default" | "narrow" | "wide" | "full";
 }
 
-export function Container({ children, className, variant = "default" }: ContainerProps) {
+export function Container({
+  children,
+  className,
+  variant = "default",
+}: ContainerProps) {
   const variants = {
     default: "max-w-7xl",
     narrow: "max-w-4xl",
@@ -18,7 +22,13 @@ export function Container({ children, className, variant = "default" }: Containe
   };
 
   return (
-    <div className={cn("mx-auto px-4 sm:px-6 lg:px-8 w-full", variants[variant], className)}>
+    <div
+      className={cn(
+        "mx-auto px-4 sm:px-6 lg:px-8 w-full",
+        variants[variant],
+        className,
+      )}
+    >
       {children}
     </div>
   );

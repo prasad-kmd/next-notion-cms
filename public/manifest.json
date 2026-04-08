@@ -1,0 +1,132 @@
+{
+  "id": "next-notion-cms",
+  "name": "Next Notion CMS",
+  "short_name": "NotionCMS",
+  "description": "A modern, high-performance engineering blogfolio and workspace built with Next.js 16, Tailwind CSS 4, and TypeScript.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#000000",
+  "orientation": "portrait",
+  "lang": "en",
+  "dir": "ltr",
+  "scope": "/",
+  "iarc_rating_id": null,
+  "launch_handler": {
+    "client_mode": ["focus-existing", "auto"]
+  },
+  "prefer_related_applications": false,
+  "related_applications": [],
+  "scope_extensions": [
+    {
+      "origin": "*.vercel.app"
+    }
+  ],
+  "share_target": {
+    "action": "/search",
+    "method": "GET",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url"
+    }
+  },
+  "display_override": [
+    "window-controls-overlay",
+    "minimal-ui",
+    "standalone"
+  ],
+  "edge_side_panel": {
+    "preferred_width": 400
+  },
+  "widgets": [],
+  "icons": [
+    {
+      "src": "/img/favicon/favicon-16.png",
+      "sizes": "16x16",
+      "type": "image/png"
+    },
+    {
+      "src": "/img/favicon/favicon-32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "/img/favicon/favicon-48.png",
+      "sizes": "48x48",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/img/favicon/favicon-64.png",
+      "sizes": "64x64",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/img/favicon/favicon-128.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/img/favicon/favicon-256.png",
+      "sizes": "256x256",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/img/favicon/favicon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "categories": [
+    "education",
+    "productivity",
+    "utilities"
+  ],
+  "shortcuts": [
+    {
+      "name": "Portfolio",
+      "url": "/portfolio",
+      "icons": [
+        {
+          "src": "/img/favicon/portfolio-48.png",
+          "sizes": "48x48"
+        }
+      ]
+    },
+    {
+      "name": "Blog",
+      "url": "/blog",
+      "icons": [
+        {
+          "src": "/img/favicon/blog-48.png",
+          "sizes": "48x48"
+        }
+      ]
+    },
+    {
+      "name": "Projects",
+      "url": "/projects",
+      "icons": [
+        {
+          "src": "/img/favicon/projects-48.png",
+          "sizes": "48x48"
+        }
+      ]
+    },
+    {
+      "name": "Site Directory",
+      "url": "/pages",
+      "icons": [
+        {
+          "src": "/img/favicon/pages-48.png",
+          "sizes": "48x48"
+        }
+      ]
+    }
+  ]
+}

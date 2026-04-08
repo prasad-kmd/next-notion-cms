@@ -1,0 +1,2405 @@
+[
+  {
+    "code": "AGM3203",
+    "name": "Communication skills",
+    "credits": 2,
+    "level": 3,
+    "category": "M",
+    "dept": "AG",
+    "prerequisites": "None",
+    "specializations": [
+      "Agricultural Engineering",
+      "Civil Engineering",
+      "Computer Engineering",
+      "Electronics and Communication Engineering",
+      "Mechanical Engineering",
+      "Mechatronics Engineering",
+      "Textile and Clothing Engineering"
+    ]
+  },
+  {
+    "code": "CVB3310",
+    "name": "Mechanics and Materials",
+    "credits": 3,
+    "level": 3,
+    "category": "B",
+    "dept": "CV",
+    "prerequisites": "None",
+    "specializations": [
+      "Agricultural Engineering",
+      "Civil Engineering",
+      "Computer Engineering",
+      "Electrical Engineering",
+      "Electronics and Communication Engineering",
+      "Mechanical Engineering",
+      "Mechatronics Engineering",
+      "Textile and Clothing Engineering"
+    ]
+  },
+  {
+    "code": "DMB3301",
+    "name": "Thermo - Fluids",
+    "credits": 3,
+    "level": 3,
+    "category": "B",
+    "dept": "DM",
+    "prerequisites": "None",
+    "specializations": [
+      "Agricultural Engineering",
+      "Civil Engineering",
+      "Computer Engineering",
+      "Electrical Engineering",
+      "Electronics and Communication Engineering",
+      "Mechanical Engineering",
+      "Mechatronics Engineering",
+      "Textile and Clothing Engineering"
+    ]
+  },
+  {
+    "code": "DMS3203",
+    "name": "Workshop Practice",
+    "credits": 1,
+    "level": 3,
+    "category": "S",
+    "dept": "DM",
+    "prerequisites": "None",
+    "specializations": [
+      "Agricultural Engineering",
+      "Civil Engineering",
+      "Computer Engineering",
+      "Electrical Engineering",
+      "Electronics and Communication Engineering",
+      "Mechanical Engineering",
+      "Mechatronics Engineering",
+      "Textile and Clothing Engineering"
+    ]
+  },
+  {
+    "code": "DMS3205",
+    "name": "Engineering Graphics",
+    "credits": 2,
+    "level": 3,
+    "category": "S",
+    "dept": "DM",
+    "prerequisites": "None",
+    "specializations": [
+      "Agricultural Engineering",
+      "Civil Engineering",
+      "Computer Engineering",
+      "Electrical Engineering",
+      "Electronics and Communication Engineering",
+      "Mechanical Engineering",
+      "Mechatronics Engineering",
+      "Textile and Clothing Engineering"
+    ]
+  },
+  {
+    "code": "EEB3210",
+    "name": "Theory of Electricity",
+    "credits": 2,
+    "level": 3,
+    "category": "B",
+    "dept": "EE",
+    "prerequisites": "None",
+    "specializations": [
+      "Agricultural Engineering",
+      "Civil Engineering",
+      "Computer Engineering",
+      "Electrical Engineering",
+      "Electronics and Communication Engineering",
+      "Mechanical Engineering",
+      "Mechatronics Engineering",
+      "Textile and Clothing Engineering"
+    ]
+  },
+  {
+    "code": "EEK3217",
+    "name": "Programming Fundamentals",
+    "credits": 2,
+    "level": 3,
+    "category": "K",
+    "dept": "EE",
+    "prerequisites": "None",
+    "specializations": [
+      "Agricultural Engineering",
+      "Civil Engineering",
+      "Computer Engineering",
+      "Electrical Engineering",
+      "Electronics and Communication Engineering",
+      "Mechanical Engineering",
+      "Mechatronics Engineering",
+      "Textile and Clothing Engineering"
+    ]
+  },
+  {
+    "code": "MHZ3310",
+    "name": "Calculus I",
+    "credits": 3,
+    "level": 3,
+    "category": "Z",
+    "dept": "MH",
+    "prerequisites": "None",
+    "specializations": [
+      "Agricultural Engineering",
+      "Civil Engineering",
+      "Computer Engineering",
+      "Electrical Engineering",
+      "Electronics and Communication Engineering",
+      "Mechanical Engineering",
+      "Mechatronics Engineering",
+      "Textile and Clothing Engineering"
+    ]
+  },
+  {
+    "code": "AGB3101",
+    "name": "Essentials of Life and Earth Systems",
+    "credits": 1,
+    "level": 3,
+    "category": "B",
+    "dept": "AG",
+    "prerequisites": "None",
+    "specializations": [
+      "Agricultural Engineering",
+      "Civil Engineering",
+      "Computer Engineering",
+      "Electrical Engineering",
+      "Electronics and Communication Engineering",
+      "Mechanical Engineering",
+      "Mechatronics Engineering",
+      "Textile and Clothing Engineering"
+    ]
+  },
+  {
+    "code": "AGS3201",
+    "name": "Basic Biology",
+    "credits": 2,
+    "level": 3,
+    "category": "S",
+    "dept": "AG",
+    "prerequisites": "None",
+    "specializations": [
+      "Agricultural Engineering"
+    ]
+  },
+  {
+    "code": "DMB3202",
+    "name": "Measurements in Engineering",
+    "credits": 2,
+    "level": 3,
+    "category": "B",
+    "dept": "DM",
+    "prerequisites": "None",
+    "specializations": [
+      "Agricultural Engineering",
+      "Civil Engineering",
+      "Computer Engineering",
+      "Electrical Engineering",
+      "Electronics and Communication Engineering",
+      "Mechanical Engineering",
+      "Mechatronics Engineering",
+      "Textile and Clothing Engineering"
+    ]
+  },
+  {
+    "code": "EEK3218",
+    "name": "Software Development for Engineers",
+    "credits": 2,
+    "level": 3,
+    "category": "K",
+    "dept": "EE",
+    "prerequisites": "EEK3217(CR)",
+    "specializations": [
+      "Agricultural Engineering",
+      "Civil Engineering",
+      "Computer Engineering",
+      "Electrical Engineering",
+      "Electronics and Communication Engineering",
+      "Mechanical Engineering",
+      "Mechatronics Engineering",
+      "Textile and Clothing Engineering"
+    ]
+  },
+  {
+    "code": "MHZ3311",
+    "name": "Differential Equations MHZ3310",
+    "credits": 3,
+    "level": 3,
+    "category": "Z",
+    "dept": "MH",
+    "prerequisites": "(CR)",
+    "specializations": [
+      "Agricultural Engineering",
+      "Civil Engineering",
+      "Computer Engineering",
+      "Electrical Engineering",
+      "Electronics and Communication Engineering",
+      "Mechanical Engineering",
+      "Mechatronics Engineering",
+      "Textile and Clothing Engineering"
+    ]
+  },
+  {
+    "code": "MHZ3212",
+    "name": "Linear Algebra",
+    "credits": 2,
+    "level": 3,
+    "category": "Z",
+    "dept": "MH",
+    "prerequisites": "None",
+    "specializations": [
+      "Agricultural Engineering",
+      "Civil Engineering",
+      "Computer Engineering",
+      "Electrical Engineering",
+      "Electronics and Communication Engineering",
+      "Mechanical Engineering",
+      "Mechatronics Engineering",
+      "Textile and Clothing Engineering"
+    ]
+  },
+  {
+    "code": "AGS4204",
+    "name": "Crop Technology I",
+    "credits": 2,
+    "level": 4,
+    "category": "S",
+    "dept": "AG",
+    "prerequisites": "None",
+    "specializations": [
+      "Agricultural Engineering"
+    ]
+  },
+  {
+    "code": "CVS4240",
+    "name": "Engineering Hydrology CVS3340",
+    "credits": 2,
+    "level": 4,
+    "category": "S",
+    "dept": "CV",
+    "prerequisites": "(CA)",
+    "specializations": [
+      "Agricultural Engineering",
+      "Civil Engineering"
+    ]
+  },
+  {
+    "code": "CVS4242",
+    "name": "Surveying I DMS3205",
+    "credits": 2,
+    "level": 4,
+    "category": "S",
+    "dept": "CV",
+    "prerequisites": "(CA)",
+    "specializations": [
+      "Agricultural Engineering",
+      "Civil Engineering"
+    ]
+  },
+  {
+    "code": "DMS4205",
+    "name": "Strength of Materials I DMS3204",
+    "credits": 2,
+    "level": 4,
+    "category": "S",
+    "dept": "DM",
+    "prerequisites": "(CA)",
+    "specializations": [
+      "Agricultural Engineering",
+      "Mechanical Engineering",
+      "Mechatronics Engineering"
+    ]
+  },
+  {
+    "code": "MHZ4313",
+    "name": "Calculus II MHZ3310",
+    "credits": 3,
+    "level": 4,
+    "category": "Z",
+    "dept": "MH",
+    "prerequisites": "(CA)",
+    "specializations": [
+      "Agricultural Engineering",
+      "Civil Engineering",
+      "Electrical Engineering",
+      "Electronics and Communication Engineering",
+      "Mechanical Engineering",
+      "Mechatronics Engineering",
+      "Textile and Clothing Engineering"
+    ]
+  },
+  {
+    "code": "MHZ4214",
+    "name": "Probability and Statistics MHZ3310",
+    "credits": 2,
+    "level": 4,
+    "category": "Z",
+    "dept": "MH",
+    "prerequisites": "(CA)",
+    "specializations": [
+      "Agricultural Engineering",
+      "Civil Engineering",
+      "Computer Engineering",
+      "Electrical Engineering",
+      "Electronics and Communication Engineering",
+      "Mechanical Engineering",
+      "Mechatronics Engineering",
+      "Textile and Clothing Engineering"
+    ]
+  },
+  {
+    "code": "AGS4208",
+    "name": "Crop Technology II",
+    "credits": 2,
+    "level": 4,
+    "category": "S",
+    "dept": "AG",
+    "prerequisites": "None",
+    "specializations": [
+      "Agricultural Engineering"
+    ]
+  },
+  {
+    "code": "AGS4356",
+    "name": "Soil Science",
+    "credits": 3,
+    "level": 4,
+    "category": "S",
+    "dept": "AG",
+    "prerequisites": "None",
+    "specializations": [
+      "Agricultural Engineering"
+    ]
+  },
+  {
+    "code": "AGW4302",
+    "name": "Industrial Training I",
+    "credits": 3,
+    "level": 4,
+    "category": "W",
+    "dept": "AG",
+    "prerequisites": "(Agric. Engineering) 8 credits (P) at Level 3",
+    "specializations": [
+      "Agricultural Engineering"
+    ]
+  },
+  {
+    "code": "AGY4260",
+    "name": "Group Project",
+    "credits": 2,
+    "level": 4,
+    "category": "Y",
+    "dept": "AG",
+    "prerequisites": "(Agric Engineering) 8 credits (CA) at Level 3",
+    "specializations": [
+      "Agricultural Engineering"
+    ]
+  },
+  {
+    "code": "CVM4401",
+    "name": "Accounting for Engineers AGM3203",
+    "credits": 4,
+    "level": 4,
+    "category": "M",
+    "dept": "CV",
+    "prerequisites": "(CA), AGM4307(CR)",
+    "specializations": [
+      "Agricultural Engineering",
+      "Civil Engineering",
+      "Electrical Engineering",
+      "Electronics and Communication Engineering",
+      "Mechanical Engineering",
+      "Mechatronics Engineering",
+      "Textile and Clothing Engineering"
+    ]
+  },
+  {
+    "code": "AGS5310",
+    "name": "Soil Management Tillage and Traction AGS4356",
+    "credits": 3,
+    "level": 5,
+    "category": "S",
+    "dept": "AG",
+    "prerequisites": "(CA)",
+    "specializations": [
+      "Agricultural Engineering"
+    ]
+  },
+  {
+    "code": "AGS5212",
+    "name": "Farm Power Sources 24 credits",
+    "credits": 2,
+    "level": 5,
+    "category": "S",
+    "dept": "AG",
+    "prerequisites": "(P) at Level 3",
+    "specializations": [
+      "Agricultural Engineering"
+    ]
+  },
+  {
+    "code": "AGS5213",
+    "name": "Design and Management of Irrigation AGS4356",
+    "credits": 2,
+    "level": 5,
+    "category": "S",
+    "dept": "AG",
+    "prerequisites": "(P)",
+    "specializations": [
+      "Agricultural Engineering"
+    ]
+  },
+  {
+    "code": "AGS5276",
+    "name": "Crop Processing 24 credits",
+    "credits": 2,
+    "level": 5,
+    "category": "S",
+    "dept": "AG",
+    "prerequisites": "(P) at Level 3",
+    "specializations": [
+      "Agricultural Engineering"
+    ]
+  },
+  {
+    "code": "AGS4306",
+    "name": "",
+    "credits": 4,
+    "level": 5,
+    "category": "S",
+    "dept": "AG",
+    "prerequisites": "(CA), LTE34TI(P)",
+    "specializations": [
+      "Agricultural Engineering"
+    ]
+  },
+  {
+    "code": "MHJ5333",
+    "name": "Technology, Society, and Environment 24 credits",
+    "credits": 3,
+    "level": 5,
+    "category": "J",
+    "dept": "MH",
+    "prerequisites": "(P) at Level 3",
+    "specializations": [
+      "Agricultural Engineering",
+      "Civil Engineering",
+      "Computer Engineering",
+      "Electrical Engineering",
+      "Electronics and Communication Engineering",
+      "Mechanical Engineering",
+      "Mechatronics Engineering"
+    ]
+  },
+  {
+    "code": "AGS5214",
+    "name": "Food Science 24 credits",
+    "credits": 2,
+    "level": 5,
+    "category": "S",
+    "dept": "AG",
+    "prerequisites": "(P) at Level 3 and 4",
+    "specializations": [
+      "Agricultural Engineering"
+    ]
+  },
+  {
+    "code": "AGS5316",
+    "name": "Farm Power and Mechanization  AGS5212",
+    "credits": 3,
+    "level": 5,
+    "category": "S",
+    "dept": "AG",
+    "prerequisites": "(CR)",
+    "specializations": [
+      "Agricultural Engineering"
+    ]
+  },
+  {
+    "code": "AGS5217",
+    "name": "Design and Management of Drainage  AGS4356",
+    "credits": 2,
+    "level": 5,
+    "category": "S",
+    "dept": "AG",
+    "prerequisites": "(CA)",
+    "specializations": [
+      "Agricultural Engineering"
+    ]
+  },
+  {
+    "code": "MHJ5234",
+    "name": "History of Technology 24 credits",
+    "credits": 2,
+    "level": 5,
+    "category": "J",
+    "dept": "MH",
+    "prerequisites": "(P) at Level 3",
+    "specializations": [
+      "Agricultural Engineering",
+      "Computer Engineering",
+      "Electrical Engineering",
+      "Electronics and Communication Engineering",
+      "Mechanical Engineering",
+      "Mechatronics Engineering"
+    ]
+  },
+  {
+    "code": "MHM5232",
+    "name": "Professional Ethics 24 credits",
+    "credits": 2,
+    "level": 5,
+    "category": "M",
+    "dept": "MH",
+    "prerequisites": "(P) at Level 3",
+    "specializations": [
+      "Agricultural Engineering",
+      "Civil Engineering",
+      "Computer Engineering",
+      "Electrical Engineering",
+      "Electronics and Communication Engineering",
+      "Mechanical Engineering",
+      "Mechatronics Engineering",
+      "Textile and Clothing Engineering"
+    ]
+  },
+  {
+    "code": "AGS4205",
+    "name": "",
+    "credits": 2,
+    "level": 5,
+    "category": "S",
+    "dept": "AG",
+    "prerequisites": "(CA), AGS4209(CA)",
+    "specializations": [
+      "Agricultural Engineering"
+    ]
+  },
+  {
+    "code": "AGS5367",
+    "name": "Soil Plant Water Management AGS4356",
+    "credits": 3,
+    "level": 5,
+    "category": "S",
+    "dept": "AG",
+    "prerequisites": "(CA)",
+    "specializations": [
+      "Agricultural Engineering"
+    ]
+  },
+  {
+    "code": "AGS6278",
+    "name": "Agricultural Hydrology  AGS4356",
+    "credits": 2,
+    "level": 6,
+    "category": "S",
+    "dept": "AG",
+    "prerequisites": "(P)",
+    "specializations": [
+      "Agricultural Engineering"
+    ]
+  },
+  {
+    "code": "AGS6283",
+    "name": "Groundwater Resources Management AGS4356",
+    "credits": 2,
+    "level": 6,
+    "category": "S",
+    "dept": "AG",
+    "prerequisites": "(P)",
+    "specializations": [
+      "Agricultural Engineering"
+    ]
+  },
+  {
+    "code": "AGS6387",
+    "name": "Plantation Crop Technology 24 credits",
+    "credits": 3,
+    "level": 6,
+    "category": "S",
+    "dept": "AG",
+    "prerequisites": "(P) at Levels 3 and 4",
+    "specializations": [
+      "Agricultural Engineering"
+    ]
+  },
+  {
+    "code": "AGS6289",
+    "name": "Soil Erosion  AGS4356",
+    "credits": 2,
+    "level": 6,
+    "category": "S",
+    "dept": "AG",
+    "prerequisites": "(P)",
+    "specializations": [
+      "Agricultural Engineering"
+    ]
+  },
+  {
+    "code": "DMM6301",
+    "name": "Management for Engineers I AGM4307",
+    "credits": 3,
+    "level": 6,
+    "category": "M",
+    "dept": "DM",
+    "prerequisites": "(P), CVM4401 (P)",
+    "specializations": [
+      "Agricultural Engineering",
+      "Civil Engineering",
+      "Computer Engineering",
+      "Electrical Engineering",
+      "Electronics and Communication Engineering",
+      "Mechatronics Engineering",
+      "Textile and Clothing Engineering"
+    ]
+  },
+  {
+    "code": "AGS6285",
+    "name": "Well hydraulics and Design AGS4356",
+    "credits": 2,
+    "level": 6,
+    "category": "S",
+    "dept": "AG",
+    "prerequisites": "(P), AGS6278 (CR)",
+    "specializations": [
+      "Agricultural Engineering"
+    ]
+  },
+  {
+    "code": "AGS6290",
+    "name": "Soil and Water Conservation  AGS4356",
+    "credits": 2,
+    "level": 6,
+    "category": "S",
+    "dept": "AG",
+    "prerequisites": "(P), AGS6289 (CR)",
+    "specializations": [
+      "Agricultural Engineering"
+    ]
+  },
+  {
+    "code": "DMM6302",
+    "name": "Management for Engineers II  DMM6301",
+    "credits": 3,
+    "level": 6,
+    "category": "M",
+    "dept": "DM",
+    "prerequisites": "(CR)",
+    "specializations": [
+      "Agricultural Engineering",
+      "Civil Engineering",
+      "Computer Engineering",
+      "Electrical Engineering",
+      "Electronics and Communication Engineering",
+      "Mechanical Engineering",
+      "Mechatronics Engineering"
+    ]
+  },
+  {
+    "code": "AGS6230",
+    "name": "Food Engineering AGS5214",
+    "credits": 2,
+    "level": 6,
+    "category": "S",
+    "dept": "AG",
+    "prerequisites": "(P)",
+    "specializations": [
+      "Agricultural Engineering"
+    ]
+  },
+  {
+    "code": "AGS6291",
+    "name": "Landscaping  45 credits",
+    "credits": 2,
+    "level": 6,
+    "category": "S",
+    "dept": "AG",
+    "prerequisites": "(P) at Levels 3 and 4",
+    "specializations": [
+      "Agricultural Engineering"
+    ]
+  },
+  {
+    "code": "AGS6292",
+    "name": "Commercial Horticulture AGS6291",
+    "credits": 2,
+    "level": 6,
+    "category": "S",
+    "dept": "AG",
+    "prerequisites": "(CR)",
+    "specializations": [
+      "Agricultural Engineering"
+    ]
+  },
+  {
+    "code": "CVS3340",
+    "name": "Fundamentals of Hydrology and Hydraulics  DMB3301",
+    "credits": 3,
+    "level": 3,
+    "category": "S",
+    "dept": "CV",
+    "prerequisites": "(CR)",
+    "specializations": [
+      "Civil Engineering"
+    ]
+  },
+  {
+    "code": "CVS3242",
+    "name": "Strength of Materials",
+    "credits": 2,
+    "level": 3,
+    "category": "S",
+    "dept": "CV",
+    "prerequisites": "None",
+    "specializations": [
+      "Civil Engineering"
+    ]
+  },
+  {
+    "code": "AGM4307",
+    "name": "Economics and Marketing for Engineers",
+    "credits": 3,
+    "level": 4,
+    "category": "M",
+    "dept": "AG",
+    "prerequisites": "None",
+    "specializations": [
+      "Civil Engineering",
+      "Mechanical Engineering",
+      "Mechatronics Engineering",
+      "Textile and Clothing Engineering"
+    ]
+  },
+  {
+    "code": "CVS4241",
+    "name": "Structural Analysis I  CVS3242",
+    "credits": 2,
+    "level": 4,
+    "category": "S",
+    "dept": "CV",
+    "prerequisites": "(CA)",
+    "specializations": [
+      "Civil Engineering"
+    ]
+  },
+  {
+    "code": "CVS4243",
+    "name": "Soil Mechanics  CVS3340",
+    "credits": 2,
+    "level": 4,
+    "category": "S",
+    "dept": "CV",
+    "prerequisites": "(CA), CVS3242(CA)",
+    "specializations": [
+      "Civil Engineering"
+    ]
+  },
+  {
+    "code": "CVS4247",
+    "name": "Concrete Technology 10 Credits",
+    "credits": 2,
+    "level": 4,
+    "category": "S",
+    "dept": "CV",
+    "prerequisites": "(CA) at Level 3",
+    "specializations": [
+      "Civil Engineering"
+    ]
+  },
+  {
+    "code": "CVS4250",
+    "name": "Quantity Surveying * CVS4242",
+    "credits": 2,
+    "level": 4,
+    "category": "S",
+    "dept": "CV",
+    "prerequisites": "(CR), CVS4246(CR)",
+    "specializations": [
+      "Civil Engineering"
+    ]
+  },
+  {
+    "code": "MHZ4215",
+    "name": "Numerical Methods MHZ3310",
+    "credits": 2,
+    "level": 4,
+    "category": "Z",
+    "dept": "MH",
+    "prerequisites": "(CA), MHZ3311(CA)",
+    "specializations": [
+      "Civil Engineering",
+      "Electrical Engineering",
+      "Mechanical Engineering",
+      "Mechatronics Engineering"
+    ]
+  },
+  {
+    "code": "CVS4244",
+    "name": "Engineering Geology  10 Credits",
+    "credits": 2,
+    "level": 4,
+    "category": "S",
+    "dept": "CV",
+    "prerequisites": "(CA) at Level 3",
+    "specializations": [
+      "Civil Engineering"
+    ]
+  },
+  {
+    "code": "CVS4245",
+    "name": "Structural Analysis II CVS3242",
+    "credits": 2,
+    "level": 4,
+    "category": "S",
+    "dept": "CV",
+    "prerequisites": "(CA)",
+    "specializations": [
+      "Civil Engineering"
+    ]
+  },
+  {
+    "code": "CVS4246",
+    "name": "Construction Engineering  10 Credits",
+    "credits": 2,
+    "level": 4,
+    "category": "S",
+    "dept": "CV",
+    "prerequisites": "(CA) at Level 3",
+    "specializations": [
+      "Civil Engineering"
+    ]
+  },
+  {
+    "code": "CVS4249",
+    "name": "Building Service Engineering * DMB3301",
+    "credits": 2,
+    "level": 4,
+    "category": "S",
+    "dept": "CV",
+    "prerequisites": "(CA), EEB3210(CA)",
+    "specializations": [
+      "Civil Engineering"
+    ]
+  },
+  {
+    "code": "CVS4251",
+    "name": "Sustainability for Engineering  10 Credits",
+    "credits": 2,
+    "level": 4,
+    "category": "S",
+    "dept": "CV",
+    "prerequisites": "(CA) at Level 3",
+    "specializations": [
+      "Civil Engineering"
+    ]
+  },
+  {
+    "code": "CVS5240",
+    "name": "Surveying II DMS3205",
+    "credits": 1,
+    "level": 5,
+    "category": "S",
+    "dept": "CV",
+    "prerequisites": "(P), CVS4242(CA), 25 Credits (P)",
+    "specializations": [
+      "Civil Engineering"
+    ]
+  },
+  {
+    "code": "CVS5241",
+    "name": "Hydraulics CVS3340",
+    "credits": 2,
+    "level": 5,
+    "category": "S",
+    "dept": "CV",
+    "prerequisites": "(P), CVS4240(CA)",
+    "specializations": [
+      "Civil Engineering"
+    ]
+  },
+  {
+    "code": "CVS5242",
+    "name": "Design of Timber and Masonry Structures  CVS3242",
+    "credits": 2,
+    "level": 5,
+    "category": "S",
+    "dept": "CV",
+    "prerequisites": "(P), CVS4245(CA)",
+    "specializations": [
+      "Civil Engineering"
+    ]
+  },
+  {
+    "code": "CVS5343",
+    "name": "Advanced Structural Analysis  CVS4245",
+    "credits": 3,
+    "level": 5,
+    "category": "S",
+    "dept": "CV",
+    "prerequisites": "(CA)",
+    "specializations": [
+      "Civil Engineering"
+    ]
+  },
+  {
+    "code": "CVS5245",
+    "name": "Design of Concrete Structures  CVS3242",
+    "credits": 2,
+    "level": 5,
+    "category": "S",
+    "dept": "CV",
+    "prerequisites": "(P), CVS4245(CA)",
+    "specializations": [
+      "Civil Engineering"
+    ]
+  },
+  {
+    "code": "CVS5246",
+    "name": "Highway and Traffic Engineering  CVS4242",
+    "credits": 2,
+    "level": 5,
+    "category": "S",
+    "dept": "CV",
+    "prerequisites": "(CA)",
+    "specializations": [
+      "Civil Engineering"
+    ]
+  },
+  {
+    "code": "CVS5344",
+    "name": "Geotechnical Engineering CVS4243",
+    "credits": 3,
+    "level": 5,
+    "category": "S",
+    "dept": "CV",
+    "prerequisites": "(CA)",
+    "specializations": [
+      "Civil Engineering"
+    ]
+  },
+  {
+    "code": "CVS5247",
+    "name": "Hydraulic Engineering and Design  CVS3340",
+    "credits": 2,
+    "level": 5,
+    "category": "S",
+    "dept": "CV",
+    "prerequisites": "(P), CVS4240(CA),",
+    "specializations": [
+      "Civil Engineering"
+    ]
+  },
+  {
+    "code": "CVS5180",
+    "name": "Research Methodology LTE34TI",
+    "credits": 25,
+    "level": 5,
+    "category": "S",
+    "dept": "CV",
+    "prerequisites": "(CR), 30 Credits (P) at Level 3,",
+    "specializations": [
+      "Civil Engineering"
+    ]
+  },
+  {
+    "code": "CVW5603",
+    "name": "Industrial Training",
+    "credits": 6,
+    "level": 5,
+    "category": "W",
+    "dept": "CV",
+    "prerequisites": "(Civil-Undergraduate) 30 Credits (P) at Level 3, 25 Credits (CA)",
+    "specializations": [
+      "Civil Engineering"
+    ]
+  },
+  {
+    "code": "CVS6240",
+    "name": "Design of Steel Structures CVS5343",
+    "credits": 2,
+    "level": 6,
+    "category": "S",
+    "dept": "CV",
+    "prerequisites": "(CA)",
+    "specializations": [
+      "Civil Engineering"
+    ]
+  },
+  {
+    "code": "CVS6245",
+    "name": "Environmental Engineering  CVS5241",
+    "credits": 2,
+    "level": 6,
+    "category": "S",
+    "dept": "CV",
+    "prerequisites": "(CA), CVS5247(CA)",
+    "specializations": [
+      "Civil Engineering"
+    ]
+  },
+  {
+    "code": "CVY6880",
+    "name": "Engineering Research Project",
+    "credits": 4,
+    "level": 6,
+    "category": "Y",
+    "dept": "CV",
+    "prerequisites": "(ERP) LTE34TI(P), CVS5180(CA), 65 Credits (P)",
+    "specializations": [
+      "Civil Engineering"
+    ]
+  },
+  {
+    "code": "CVY6385",
+    "name": "Comprehensive Design Project",
+    "credits": 65,
+    "level": 6,
+    "category": "Y",
+    "dept": "CV",
+    "prerequisites": "(CDP) LTE34TI(P), CVS5242(P), CVS5245(P),",
+    "specializations": [
+      "Civil Engineering"
+    ]
+  },
+  {
+    "code": "CVS6251",
+    "name": "Bridge Engineering  34 Credits",
+    "credits": 2,
+    "level": 6,
+    "category": "S",
+    "dept": "CV",
+    "prerequisites": "(P) at Level 3, 25 Credits (CA)",
+    "specializations": [
+      "Civil Engineering"
+    ]
+  },
+  {
+    "code": "CVS6252",
+    "name": "Ground Improvement Techniques 34 Credits",
+    "credits": 2,
+    "level": 6,
+    "category": "S",
+    "dept": "CV",
+    "prerequisites": "(P) at Level 3, 25 Credits (CA)",
+    "specializations": [
+      "Civil Engineering"
+    ]
+  },
+  {
+    "code": "CVS6253",
+    "name": "Applied Engineering Geology  34 Credits",
+    "credits": 2,
+    "level": 6,
+    "category": "S",
+    "dept": "CV",
+    "prerequisites": "(P) at Level 3, 25 Credits (CA)",
+    "specializations": [
+      "Civil Engineering"
+    ]
+  },
+  {
+    "code": "CVS6254",
+    "name": "Irrigation Engineering  34 Credits",
+    "credits": 2,
+    "level": 6,
+    "category": "S",
+    "dept": "CV",
+    "prerequisites": "(P) at Level 3, 25 Credits (CA)",
+    "specializations": [
+      "Civil Engineering"
+    ]
+  },
+  {
+    "code": "CVS6255",
+    "name": "Water and Wastewater Engineering  34 Credits",
+    "credits": 2,
+    "level": 6,
+    "category": "S",
+    "dept": "CV",
+    "prerequisites": "(P) at Level 3, 25 Credits (CA)",
+    "specializations": [
+      "Civil Engineering"
+    ]
+  },
+  {
+    "code": "CVS6241",
+    "name": "Environmental Engineering Design  CVS52419CA), CVS5247",
+    "credits": 2,
+    "level": 6,
+    "category": "S",
+    "dept": "CV",
+    "prerequisites": "(CA)",
+    "specializations": [
+      "Civil Engineering"
+    ]
+  },
+  {
+    "code": "CVS6342",
+    "name": "Geotechnical Engineering Design  CVS5344",
+    "credits": 3,
+    "level": 6,
+    "category": "S",
+    "dept": "CV",
+    "prerequisites": "(CA)",
+    "specializations": [
+      "Civil Engineering"
+    ]
+  },
+  {
+    "code": "CVS6263",
+    "name": "Environmental Modelling and Management  34 Credits",
+    "credits": 2,
+    "level": 6,
+    "category": "S",
+    "dept": "CV",
+    "prerequisites": "(P) at Level 3, 25 Credits (CA)",
+    "specializations": [
+      "Civil Engineering"
+    ]
+  },
+  {
+    "code": "CVS6264",
+    "name": "Remote Sensing and GIS 34 Credits",
+    "credits": 2,
+    "level": 6,
+    "category": "S",
+    "dept": "CV",
+    "prerequisites": "(P) at Level 3, 25 Credits (CA)",
+    "specializations": [
+      "Civil Engineering"
+    ]
+  },
+  {
+    "code": "CVS6265",
+    "name": "Rock Mechanics 34 Credits",
+    "credits": 2,
+    "level": 6,
+    "category": "S",
+    "dept": "CV",
+    "prerequisites": "(P) at Level 3, 25 Credits (CA)",
+    "specializations": [
+      "Civil Engineering"
+    ]
+  },
+  {
+    "code": "CVY4385",
+    "name": "Group Project",
+    "credits": 3,
+    "level": 6,
+    "category": "Y",
+    "dept": "CV",
+    "prerequisites": "(Civil -Higher Diploma) 30 Credits (CA) at Level 3",
+    "specializations": [
+      "Civil Engineering"
+    ]
+  },
+  {
+    "code": "EES4331",
+    "name": "Circuit Theory and Design EES3330",
+    "credits": 3,
+    "level": 4,
+    "category": "S",
+    "dept": "EE",
+    "prerequisites": "(CA), 8 Credits (CA) at Level 3",
+    "specializations": [
+      "Computer Engineering"
+    ]
+  },
+  {
+    "code": "EES4230",
+    "name": "Analog Electronics EES3330",
+    "credits": 2,
+    "level": 4,
+    "category": "S",
+    "dept": "EE",
+    "prerequisites": "(CA), 8 Credits (CA) at Level 3",
+    "specializations": [
+      "Computer Engineering",
+      "Electrical Engineering",
+      "Electronics and Communication Engineering"
+    ]
+  },
+  {
+    "code": "EES5326",
+    "name": "Digital Electronic Design EES4436",
+    "credits": 15,
+    "level": 5,
+    "category": "S",
+    "dept": "EE",
+    "prerequisites": "(CA), 24 Credits(P) at Level 3,",
+    "specializations": [
+      "Computer Engineering",
+      "Electrical Engineering",
+      "Electronics and Communication Engineering"
+    ]
+  },
+  {
+    "code": "MHZ5318",
+    "name": "Discrete Mathematics 24 Credits",
+    "credits": 3,
+    "level": 5,
+    "category": "Z",
+    "dept": "MH",
+    "prerequisites": "(P) at Level 3",
+    "specializations": [
+      "Computer Engineering"
+    ]
+  },
+  {
+    "code": "EES5334",
+    "name": "Data Communications and Networks EES3236",
+    "credits": 3,
+    "level": 5,
+    "category": "S",
+    "dept": "EE",
+    "prerequisites": "(P), 30 Credits (P)",
+    "specializations": [
+      "Computer Engineering",
+      "Electronics and Communication Engineering"
+    ]
+  },
+  {
+    "code": "MHJ5235",
+    "name": "Nature of Science  24 Credits",
+    "credits": 2,
+    "level": 5,
+    "category": "J",
+    "dept": "MH",
+    "prerequisites": "(P) at Level 3",
+    "specializations": [
+      "Computer Engineering",
+      "Electrical Engineering",
+      "Electronics and Communication Engineering",
+      "Mechanical Engineering",
+      "Mechatronics Engineering"
+    ]
+  },
+  {
+    "code": "EEY6401",
+    "name": "System Design in Groups LTE34TI",
+    "credits": 60,
+    "level": 6,
+    "category": "Y",
+    "dept": "EE",
+    "prerequisites": "(P), EES4230(P), EES5317(P),",
+    "specializations": [
+      "Computer Engineering"
+    ]
+  },
+  {
+    "code": "EES6121",
+    "name": "Emerging Technologies AGM3203",
+    "credits": 45,
+    "level": 6,
+    "category": "S",
+    "dept": "EE",
+    "prerequisites": "(P), EEK3217(P), EEK3218(P),",
+    "specializations": [
+      "Computer Engineering"
+    ]
+  },
+  {
+    "code": "EES5230",
+    "name": "Advanced Electronics  EES4230",
+    "credits": 3,
+    "level": 6,
+    "category": "S",
+    "dept": "EE",
+    "prerequisites": "(CA), 24 Credits (P)",
+    "specializations": [
+      "Computer Engineering",
+      "Electronics and Communication Engineering"
+    ]
+  },
+  {
+    "code": "EES6209",
+    "name": "Cloud Computing  EEK3218",
+    "credits": 45,
+    "level": 6,
+    "category": "S",
+    "dept": "EE",
+    "prerequisites": "(P), EES3236(P), EES4235(P),",
+    "specializations": [
+      "Computer Engineering",
+      "Electronics and Communication Engineering"
+    ]
+  },
+  {
+    "code": "EES6219",
+    "name": "Creative Design AGM3203",
+    "credits": 45,
+    "level": 6,
+    "category": "S",
+    "dept": "EE",
+    "prerequisites": "(P), EEK3217(P), EEK3218(P),",
+    "specializations": [
+      "Computer Engineering"
+    ]
+  },
+  {
+    "code": "AGM3207",
+    "name": "Communication Skills",
+    "credits": 2,
+    "level": 3,
+    "category": "M",
+    "dept": "AG",
+    "prerequisites": "None",
+    "specializations": [
+      "Electrical Engineering"
+    ]
+  },
+  {
+    "code": "EES4222",
+    "name": "Power Systems and Electrical Machines EES3330",
+    "credits": 2,
+    "level": 4,
+    "category": "S",
+    "dept": "EE",
+    "prerequisites": "(CA); MHZ3310(CA)",
+    "specializations": [
+      "Electrical Engineering",
+      "Electronics and Communication Engineering"
+    ]
+  },
+  {
+    "code": "EEW4393",
+    "name": "Industrial Training I",
+    "credits": 3,
+    "level": 4,
+    "category": "W",
+    "dept": "EE",
+    "prerequisites": "(Electronics)  EES4230(CR), 15 Credits (P)",
+    "specializations": [
+      "Electrical Engineering",
+      "Electronics and Communication Engineering"
+    ]
+  },
+  {
+    "code": "MHZ4216",
+    "name": "Fourier Analysis MHZ3311",
+    "credits": 2,
+    "level": 4,
+    "category": "Z",
+    "dept": "MH",
+    "prerequisites": "(CA), MHZ3212(CA).",
+    "specializations": [
+      "Electrical Engineering",
+      "Electronics and Communication Engineering",
+      "Mechatronics Engineering"
+    ]
+  },
+  {
+    "code": "EES5310",
+    "name": "Electrical Installation Design  EEB3210",
+    "credits": 3,
+    "level": 4,
+    "category": "S",
+    "dept": "EE",
+    "prerequisites": "(P), EES3330(CA)",
+    "specializations": [
+      "Electrical Engineering",
+      "Electronics and Communication Engineering"
+    ]
+  },
+  {
+    "code": "EES5316",
+    "name": "Power Electronics  EES4230",
+    "credits": 3,
+    "level": 5,
+    "category": "S",
+    "dept": "EE",
+    "prerequisites": "(CA), EES 4331(CA)",
+    "specializations": [
+      "Electrical Engineering",
+      "Electronics and Communication Engineering"
+    ]
+  },
+  {
+    "code": "EES5222",
+    "name": "Protection of Power Systems EES5232",
+    "credits": 2,
+    "level": 5,
+    "category": "S",
+    "dept": "EE",
+    "prerequisites": "(CR), EES4332(CA), MHZ3212(P)",
+    "specializations": [
+      "Electrical Engineering"
+    ]
+  },
+  {
+    "code": "EES6211",
+    "name": "Electromagnetism and Wave Propagation MHZ4313",
+    "credits": 2,
+    "level": 5,
+    "category": "S",
+    "dept": "EE",
+    "prerequisites": "(CA), EEB3210(P)",
+    "specializations": [
+      "Electrical Engineering",
+      "Electronics and Communication Engineering"
+    ]
+  },
+  {
+    "code": "DMS5210",
+    "name": "Design of Classical Control Systems DMS5209",
+    "credits": 2,
+    "level": 5,
+    "category": "S",
+    "dept": "DM",
+    "prerequisites": "(CR)",
+    "specializations": [
+      "Electrical Engineering",
+      "Mechanical Engineering",
+      "Mechatronics Engineering"
+    ]
+  },
+  {
+    "code": "EES5328",
+    "name": "Electrical Machines and Drives EES4328",
+    "credits": 3,
+    "level": 5,
+    "category": "S",
+    "dept": "EE",
+    "prerequisites": "(CA), EES4230(CA), EES5316(CR)",
+    "specializations": [
+      "Electrical Engineering"
+    ]
+  },
+  {
+    "code": "EES5338",
+    "name": "High Voltage Engineering EES4332",
+    "credits": 3,
+    "level": 5,
+    "category": "S",
+    "dept": "EE",
+    "prerequisites": "(CA), EES4328(CA), MHZ3311(P)",
+    "specializations": [
+      "Electrical Engineering"
+    ]
+  },
+  {
+    "code": "EES6222",
+    "name": "Modern Power Systems EES4332",
+    "credits": 2,
+    "level": 6,
+    "category": "S",
+    "dept": "EE",
+    "prerequisites": "(P), MHZ5219(CA), EES5232(CA)",
+    "specializations": [
+      "Electrical Engineering"
+    ]
+  },
+  {
+    "code": "DMS6205",
+    "name": "Factory Automation EES4436",
+    "credits": 2,
+    "level": 6,
+    "category": "S",
+    "dept": "DM",
+    "prerequisites": "(CA), 70 Credits (P)",
+    "specializations": [
+      "Electrical Engineering",
+      "Mechanical Engineering",
+      "Mechatronics Engineering"
+    ]
+  },
+  {
+    "code": "DMS6207",
+    "name": "Modern Control Systems DMS5210",
+    "credits": 2,
+    "level": 6,
+    "category": "S",
+    "dept": "DM",
+    "prerequisites": "(CA)",
+    "specializations": [
+      "Electrical Engineering",
+      "Mechatronics Engineering"
+    ]
+  },
+  {
+    "code": "EES6210",
+    "name": "Nuclear Energy EES4332",
+    "credits": 2,
+    "level": 6,
+    "category": "S",
+    "dept": "EE",
+    "prerequisites": "(P), EES5232(CA)",
+    "specializations": [
+      "Electrical Engineering"
+    ]
+  },
+  {
+    "code": "EES6216",
+    "name": "Power Electronics Applications EES5316",
+    "credits": 2,
+    "level": 6,
+    "category": "S",
+    "dept": "EE",
+    "prerequisites": "(CA), EES4230(P), EES5328(CA)",
+    "specializations": [
+      "Electrical Engineering"
+    ]
+  },
+  {
+    "code": "EES6228",
+    "name": "Image Processing EEK3218",
+    "credits": 45,
+    "level": 6,
+    "category": "S",
+    "dept": "EE",
+    "prerequisites": "(P), MHZ4215(P), MHZ4216(P),",
+    "specializations": [
+      "Electrical Engineering",
+      "Electronics and Communication Engineering"
+    ]
+  },
+  {
+    "code": "EES6231",
+    "name": "Network Theory EES4331",
+    "credits": 2,
+    "level": 6,
+    "category": "S",
+    "dept": "EE",
+    "prerequisites": "(P), MHZ4216(P), MHZ3311(P)",
+    "specializations": [
+      "Electrical Engineering"
+    ]
+  },
+  {
+    "code": "TAS6410",
+    "name": "Ergonomics 45 Credits",
+    "credits": 2,
+    "level": 6,
+    "category": "S",
+    "dept": "TA",
+    "prerequisites": "(P) at Level 4 and above",
+    "specializations": [
+      "Electrical Engineering"
+    ]
+  },
+  {
+    "code": "EES4333",
+    "name": "Communications EES3236",
+    "credits": 3,
+    "level": 4,
+    "category": "S",
+    "dept": "EE",
+    "prerequisites": "(CA)",
+    "specializations": [
+      "Electronics and Communication Engineering"
+    ]
+  },
+  {
+    "code": "EES5333",
+    "name": "Communication Theory and Systems EES4333",
+    "credits": 3,
+    "level": 5,
+    "category": "S",
+    "dept": "EE",
+    "prerequisites": "(CA), MHZ4313(CA)",
+    "specializations": [
+      "Electronics and Communication Engineering"
+    ]
+  },
+  {
+    "code": "DMS5202",
+    "name": "Design of Classical Control Systems  DMS5210",
+    "credits": 2,
+    "level": 5,
+    "category": "S",
+    "dept": "DM",
+    "prerequisites": "(CR)",
+    "specializations": [
+      "Electronics and Communication Engineering",
+      "Mechanical Engineering"
+    ]
+  },
+  {
+    "code": "EES6213",
+    "name": "Microwave Engineering EES6211",
+    "credits": 2,
+    "level": 5,
+    "category": "S",
+    "dept": "EE",
+    "prerequisites": "(CR)",
+    "specializations": [
+      "Electronics and Communication Engineering"
+    ]
+  },
+  {
+    "code": "EES6333",
+    "name": "Wireless Communications EES5333",
+    "credits": 3,
+    "level": 5,
+    "category": "S",
+    "dept": "EE",
+    "prerequisites": "(CR), EES4333(P)",
+    "specializations": [
+      "Electronics and Communication Engineering"
+    ]
+  },
+  {
+    "code": "EEY6403",
+    "name": "Comprehensive Electronics Design EES5230",
+    "credits": 60,
+    "level": 5,
+    "category": "Y",
+    "dept": "EE",
+    "prerequisites": "(CR), EES4230(P), LTE34TI(P),",
+    "specializations": [
+      "Electronics and Communication Engineering"
+    ]
+  },
+  {
+    "code": "EES6214",
+    "name": "Antenna Design EES6211",
+    "credits": 2,
+    "level": 6,
+    "category": "S",
+    "dept": "EE",
+    "prerequisites": "(CA), EES6213(CR)",
+    "specializations": [
+      "Electronics and Communication Engineering"
+    ]
+  },
+  {
+    "code": "EES6230",
+    "name": "Electronics Circuit Design EES5230",
+    "credits": 2,
+    "level": 6,
+    "category": "S",
+    "dept": "EE",
+    "prerequisites": "(CA), EES5326(CA)",
+    "specializations": [
+      "Electronics and Communication Engineering"
+    ]
+  },
+  {
+    "code": "EES5235",
+    "name": "Advanced Data Structures and Algorithms EEK3217",
+    "credits": 24,
+    "level": 6,
+    "category": "S",
+    "dept": "EE",
+    "prerequisites": "(P), EEK3218(P), EES4235(CA),",
+    "specializations": [
+      "Electronics and Communication Engineering"
+    ]
+  },
+  {
+    "code": "EES6215",
+    "name": "Physical and Opto Electronics EES5230",
+    "credits": 2,
+    "level": 6,
+    "category": "S",
+    "dept": "EE",
+    "prerequisites": "(CA), EES4230(P)",
+    "specializations": [
+      "Electronics and Communication Engineering"
+    ]
+  },
+  {
+    "code": "DMS3204",
+    "name": "Engineering Mechanics I CVB3310",
+    "credits": 2,
+    "level": 3,
+    "category": "S",
+    "dept": "DM",
+    "prerequisites": "(CR)",
+    "specializations": [
+      "Mechanical Engineering",
+      "Mechatronics Engineering"
+    ]
+  },
+  {
+    "code": "DMS3206",
+    "name": "Manufacturing Technology I CVB3310",
+    "credits": 2,
+    "level": 3,
+    "category": "S",
+    "dept": "DM",
+    "prerequisites": "(CR), DMS3203(CR)",
+    "specializations": [
+      "Mechanical Engineering",
+      "Mechatronics Engineering"
+    ]
+  },
+  {
+    "code": "DMS3207",
+    "name": "Analog and Digital Electronics  EEB3210",
+    "credits": 2,
+    "level": 3,
+    "category": "S",
+    "dept": "DM",
+    "prerequisites": "(CR)",
+    "specializations": [
+      "Mechanical Engineering",
+      "Mechatronics Engineering"
+    ]
+  },
+  {
+    "code": "DMS4201",
+    "name": "Applied Thermodynamics I DMB3301",
+    "credits": 2,
+    "level": 4,
+    "category": "S",
+    "dept": "DM",
+    "prerequisites": "(CA)",
+    "specializations": [
+      "Mechanical Engineering",
+      "Mechatronics Engineering"
+    ]
+  },
+  {
+    "code": "DMS4202",
+    "name": "Applied Fluid Dynamics I DMB3301",
+    "credits": 2,
+    "level": 4,
+    "category": "S",
+    "dept": "DM",
+    "prerequisites": "(CA)",
+    "specializations": [
+      "Mechanical Engineering",
+      "Mechatronics Engineering"
+    ]
+  },
+  {
+    "code": "DMS4203",
+    "name": "Mechatronics systems   DMB3202",
+    "credits": 2,
+    "level": 4,
+    "category": "S",
+    "dept": "DM",
+    "prerequisites": "(CA), DMS3207(CA)",
+    "specializations": [
+      "Mechanical Engineering"
+    ]
+  },
+  {
+    "code": "DMS4204",
+    "name": "Advanced Engineering Graphics DMS3205",
+    "credits": 1,
+    "level": 4,
+    "category": "S",
+    "dept": "DM",
+    "prerequisites": "(CA)",
+    "specializations": [
+      "Mechanical Engineering"
+    ]
+  },
+  {
+    "code": "DMS4207",
+    "name": "Automobile Technology  DMS4201",
+    "credits": 2,
+    "level": 4,
+    "category": "S",
+    "dept": "DM",
+    "prerequisites": "(CR)",
+    "specializations": [
+      "Mechanical Engineering"
+    ]
+  },
+  {
+    "code": "DMW4308",
+    "name": "Industrial Training I",
+    "credits": 3,
+    "level": 4,
+    "category": "W",
+    "dept": "DM",
+    "prerequisites": "(Mechanical) DMS3206(CA), DMY4306 (CR)",
+    "specializations": [
+      "Mechanical Engineering"
+    ]
+  },
+  {
+    "code": "DMY4306",
+    "name": "Mechanical Engineering Challenge  LTE34TE",
+    "credits": 3,
+    "level": 4,
+    "category": "Y",
+    "dept": "DM",
+    "prerequisites": "(CR), Credits 24(CA)",
+    "specializations": [
+      "Mechanical Engineering"
+    ]
+  },
+  {
+    "code": "DMS5201",
+    "name": "Engineering Mechanics II DMS3204",
+    "credits": 2,
+    "level": 5,
+    "category": "S",
+    "dept": "DM",
+    "prerequisites": "(P), MHZ3311(P)",
+    "specializations": [
+      "Mechanical Engineering",
+      "Mechatronics Engineering"
+    ]
+  },
+  {
+    "code": "DMS5203",
+    "name": "Applied Thermodynamics II DMB3301",
+    "credits": 2,
+    "level": 5,
+    "category": "S",
+    "dept": "DM",
+    "prerequisites": "(P), DMS4201(CA)",
+    "specializations": [
+      "Mechanical Engineering"
+    ]
+  },
+  {
+    "code": "DMS5204",
+    "name": "Strength of Materials II  DMS4205",
+    "credits": 2,
+    "level": 5,
+    "category": "S",
+    "dept": "DM",
+    "prerequisites": "(CA)",
+    "specializations": [
+      "Mechanical Engineering"
+    ]
+  },
+  {
+    "code": "DMS5406",
+    "name": "Design of Machine Elements  DMS3204",
+    "credits": 4,
+    "level": 5,
+    "category": "S",
+    "dept": "DM",
+    "prerequisites": "(P), DMS4205(CA)",
+    "specializations": [
+      "Mechanical Engineering",
+      "Mechatronics Engineering"
+    ]
+  },
+  {
+    "code": "DMS5205",
+    "name": "Materials Engineering CVB3310",
+    "credits": 2,
+    "level": 5,
+    "category": "S",
+    "dept": "DM",
+    "prerequisites": "(P)",
+    "specializations": [
+      "Mechanical Engineering"
+    ]
+  },
+  {
+    "code": "DMS5207",
+    "name": "Electrical and Fluid Machinery DMS3207",
+    "credits": 2,
+    "level": 5,
+    "category": "S",
+    "dept": "DM",
+    "prerequisites": "(P)",
+    "specializations": [
+      "Mechanical Engineering",
+      "Mechatronics Engineering"
+    ]
+  },
+  {
+    "code": "DMS5208",
+    "name": "Manufacturing Technology II DMS3206",
+    "credits": 2,
+    "level": 5,
+    "category": "S",
+    "dept": "DM",
+    "prerequisites": "(P)",
+    "specializations": [
+      "Mechanical Engineering"
+    ]
+  },
+  {
+    "code": "DMS5411",
+    "name": "Mechanical Engineering Design  DMS5406",
+    "credits": 4,
+    "level": 5,
+    "category": "S",
+    "dept": "DM",
+    "prerequisites": "(CR), DMS4204(CA)",
+    "specializations": [
+      "Mechanical Engineering"
+    ]
+  },
+  {
+    "code": "DMS5112",
+    "name": "Introduction to Engineering Research LTE34TI",
+    "credits": 1,
+    "level": 5,
+    "category": "S",
+    "dept": "DM",
+    "prerequisites": "(CR), 45 Credits (P)",
+    "specializations": [
+      "Mechanical Engineering",
+      "Mechatronics Engineering"
+    ]
+  },
+  {
+    "code": "DMW5313",
+    "name": "Industrial Training II",
+    "credits": 3,
+    "level": 5,
+    "category": "W",
+    "dept": "DM",
+    "prerequisites": "(Mechanical) DMW4308(CR), 45 Credits (P)",
+    "specializations": [
+      "Mechanical Engineering"
+    ]
+  },
+  {
+    "code": "DMS6204",
+    "name": "Design for Manufacturing and Assembly DMS5208",
+    "credits": 2,
+    "level": 6,
+    "category": "S",
+    "dept": "DM",
+    "prerequisites": "(CA)",
+    "specializations": [
+      "Mechanical Engineering"
+    ]
+  },
+  {
+    "code": "DMS6206",
+    "name": "AI Techniques   DMS5210",
+    "credits": 2,
+    "level": 6,
+    "category": "S",
+    "dept": "DM",
+    "prerequisites": "(CA)",
+    "specializations": [
+      "Mechanical Engineering"
+    ]
+  },
+  {
+    "code": "DMS6211",
+    "name": "Thermal Power Technologies DMS5203",
+    "credits": 2,
+    "level": 6,
+    "category": "S",
+    "dept": "DM",
+    "prerequisites": "(CA)",
+    "specializations": [
+      "Mechanical Engineering"
+    ]
+  },
+  {
+    "code": "DMS6212",
+    "name": "Renewable Energy Technologies DMS5203",
+    "credits": 2,
+    "level": 6,
+    "category": "S",
+    "dept": "DM",
+    "prerequisites": "(CA)",
+    "specializations": [
+      "Mechanical Engineering"
+    ]
+  },
+  {
+    "code": "DMS6219",
+    "name": "Automobile Engineering DMS4207",
+    "credits": 2,
+    "level": 6,
+    "category": "S",
+    "dept": "DM",
+    "prerequisites": "(P)",
+    "specializations": [
+      "Mechanical Engineering"
+    ]
+  },
+  {
+    "code": "DMS6221",
+    "name": "Manufacturing Engineering DMS5208",
+    "credits": 2,
+    "level": 6,
+    "category": "S",
+    "dept": "DM",
+    "prerequisites": "(CA)",
+    "specializations": [
+      "Mechanical Engineering"
+    ]
+  },
+  {
+    "code": "DMS6222",
+    "name": "Manufacturing Systems DMS5208",
+    "credits": 2,
+    "level": 6,
+    "category": "S",
+    "dept": "DM",
+    "prerequisites": "(CA)",
+    "specializations": [
+      "Mechanical Engineering"
+    ]
+  },
+  {
+    "code": "DMS6223",
+    "name": "Digital Design for Manufacturing DMS4204",
+    "credits": 2,
+    "level": 6,
+    "category": "S",
+    "dept": "DM",
+    "prerequisites": "(P)",
+    "specializations": [
+      "Mechanical Engineering"
+    ]
+  },
+  {
+    "code": "DMS6224",
+    "name": "Design of Energy Systems DMS6212",
+    "credits": 70,
+    "level": 6,
+    "category": "S",
+    "dept": "DM",
+    "prerequisites": "(CR),",
+    "specializations": [
+      "Mechanical Engineering"
+    ]
+  },
+  {
+    "code": "DMS6233",
+    "name": "Design of Manufacturing Systems DMS6222",
+    "credits": 70,
+    "level": 6,
+    "category": "S",
+    "dept": "DM",
+    "prerequisites": "(CR),",
+    "specializations": [
+      "Mechanical Engineering"
+    ]
+  },
+  {
+    "code": "DMS4210",
+    "name": "Sensors and Instrumentation DMS3207",
+    "credits": 2,
+    "level": 4,
+    "category": "S",
+    "dept": "DM",
+    "prerequisites": "(CA), MHZ3311(CA)",
+    "specializations": [
+      "Mechatronics Engineering"
+    ]
+  },
+  {
+    "code": "DMS4211",
+    "name": "Image Processing MHZ3212",
+    "credits": 2,
+    "level": 4,
+    "category": "S",
+    "dept": "DM",
+    "prerequisites": "(CA), MHZ4216(CR)",
+    "specializations": [
+      "Mechatronics Engineering"
+    ]
+  },
+  {
+    "code": "DMW4309",
+    "name": "Industrial Training I",
+    "credits": 3,
+    "level": 4,
+    "category": "W",
+    "dept": "DM",
+    "prerequisites": "(Mechatronics) DMS3206(CA), DMY4312(CR)",
+    "specializations": [
+      "Mechatronics Engineering"
+    ]
+  },
+  {
+    "code": "DMY4312",
+    "name": "Mechatronics Engineering Challenge  LTE34TE",
+    "credits": 3,
+    "level": 4,
+    "category": "Y",
+    "dept": "DM",
+    "prerequisites": "(CR), Credits 24(CA)",
+    "specializations": [
+      "Mechatronics Engineering"
+    ]
+  },
+  {
+    "code": "DMS5216",
+    "name": "Signal Processing MHZ4313",
+    "credits": 2,
+    "level": 5,
+    "category": "S",
+    "dept": "DM",
+    "prerequisites": "(CA), MHZ4216(CA)",
+    "specializations": [
+      "Mechatronics Engineering"
+    ]
+  },
+  {
+    "code": "DMS5217",
+    "name": "Mechatronics Product Design I DMS3207",
+    "credits": 2,
+    "level": 5,
+    "category": "S",
+    "dept": "DM",
+    "prerequisites": "(CA), DMS4210(CA)",
+    "specializations": [
+      "Mechatronics Engineering"
+    ]
+  },
+  {
+    "code": "DMS5218",
+    "name": "Mechatronics Product Design II DMS5217",
+    "credits": 2,
+    "level": 5,
+    "category": "S",
+    "dept": "DM",
+    "prerequisites": "(CR)",
+    "specializations": [
+      "Mechatronics Engineering"
+    ]
+  },
+  {
+    "code": "DMS5219",
+    "name": "Artificial Intelligence DMS5210",
+    "credits": 2,
+    "level": 5,
+    "category": "S",
+    "dept": "DM",
+    "prerequisites": "(CR), 24 Credits(P) at Level 3",
+    "specializations": [
+      "Mechatronics Engineering"
+    ]
+  },
+  {
+    "code": "DMS5220",
+    "name": "Power Electronics and Motor Drives DMS4210",
+    "credits": 2,
+    "level": 5,
+    "category": "S",
+    "dept": "DM",
+    "prerequisites": "(CA), DMS5207(CR)",
+    "specializations": [
+      "Mechatronics Engineering"
+    ]
+  },
+  {
+    "code": "DMW5314",
+    "name": "Industrial Training II",
+    "credits": 3,
+    "level": 5,
+    "category": "W",
+    "dept": "DM",
+    "prerequisites": "(Mechatronics) DMW4309(CR), 45 Credits (P)",
+    "specializations": [
+      "Mechatronics Engineering"
+    ]
+  },
+  {
+    "code": "DMS6203",
+    "name": "Robot Manipulation and Control DMS5201",
+    "credits": 2,
+    "level": 6,
+    "category": "S",
+    "dept": "DM",
+    "prerequisites": "(CA)",
+    "specializations": [
+      "Mechatronics Engineering"
+    ]
+  },
+  {
+    "code": "DMS6208",
+    "name": "Machine Vision DMS4211",
+    "credits": 2,
+    "level": 6,
+    "category": "S",
+    "dept": "DM",
+    "prerequisites": "(P), DMS4210(P)",
+    "specializations": [
+      "Mechatronics Engineering"
+    ]
+  },
+  {
+    "code": "DMS6237",
+    "name": "Cognitive Computing DMS5219",
+    "credits": 2,
+    "level": 6,
+    "category": "S",
+    "dept": "DM",
+    "prerequisites": "(CA), 70 Credits (P))",
+    "specializations": [
+      "Mechatronics Engineering"
+    ]
+  },
+  {
+    "code": "DMS6238",
+    "name": "Machine Learning for Control Systems DMS5219",
+    "credits": 2,
+    "level": 6,
+    "category": "S",
+    "dept": "DM",
+    "prerequisites": "(CA), 70 Credits (P)",
+    "specializations": [
+      "Mechatronics Engineering"
+    ]
+  },
+  {
+    "code": "DMS6242",
+    "name": "Internet of Things",
+    "credits": 2,
+    "level": 6,
+    "category": "S",
+    "dept": "DM",
+    "prerequisites": "(IoT) DMS4210(P), 70 Credits (P)",
+    "specializations": [
+      "Mechatronics Engineering"
+    ]
+  },
+  {
+    "code": "DMS6210",
+    "name": "Design of Intelligent Control Systems DMS6207",
+    "credits": 2,
+    "level": 6,
+    "category": "S",
+    "dept": "DM",
+    "prerequisites": "(CR), DMS5219(CA)",
+    "specializations": [
+      "Mechatronics Engineering"
+    ]
+  },
+  {
+    "code": "DMS6246",
+    "name": "Building Management Systems DMS6210",
+    "credits": 2,
+    "level": 6,
+    "category": "S",
+    "dept": "DM",
+    "prerequisites": "(CR), 70 Credits (P)",
+    "specializations": [
+      "Mechatronics Engineering"
+    ]
+  },
+  {
+    "code": "DMS6248",
+    "name": "Digital Twin Technology DMS6210",
+    "credits": 2,
+    "level": 6,
+    "category": "S",
+    "dept": "DM",
+    "prerequisites": "(CR), 70 Credits (P)",
+    "specializations": [
+      "Mechatronics Engineering"
+    ]
+  },
+  {
+    "code": "TAS3310",
+    "name": "Fiber Science & Technology",
+    "credits": 3,
+    "level": 3,
+    "category": "S",
+    "dept": "TA",
+    "prerequisites": "None",
+    "specializations": [
+      "Textile and Clothing Engineering"
+    ]
+  },
+  {
+    "code": "TAS3317",
+    "name": "Garment Analysis and Sewing Machinery",
+    "credits": 3,
+    "level": 3,
+    "category": "S",
+    "dept": "TA",
+    "prerequisites": "None",
+    "specializations": [
+      "Textile and Clothing Engineering"
+    ]
+  },
+  {
+    "code": "TAS4311",
+    "name": "Woven Fabric Technology  [TAS3310",
+    "credits": 3,
+    "level": 4,
+    "category": "S",
+    "dept": "TA",
+    "prerequisites": "(CA), 5 credits (CA) at Level 3]",
+    "specializations": [
+      "Textile and Clothing Engineering"
+    ]
+  },
+  {
+    "code": "TAS3212",
+    "name": "",
+    "credits": 3,
+    "level": 4,
+    "category": "S",
+    "dept": "TA",
+    "prerequisites": "(CA)], 3 credits (CA) at Level",
+    "specializations": [
+      "Textile and Clothing Engineering"
+    ]
+  },
+  {
+    "code": "MHZ4217",
+    "name": "Statistical Methods MHZ4214",
+    "credits": 2,
+    "level": 4,
+    "category": "Z",
+    "dept": "MH",
+    "prerequisites": "(CR)",
+    "specializations": [
+      "Textile and Clothing Engineering"
+    ]
+  },
+  {
+    "code": "TAS4413",
+    "name": "Garment Manufacture TAS3317",
+    "credits": 4,
+    "level": 4,
+    "category": "S",
+    "dept": "TA",
+    "prerequisites": "(CA), 5 credits (CA) at Level 3",
+    "specializations": [
+      "Textile and Clothing Engineering"
+    ]
+  },
+  {
+    "code": "TAS5214",
+    "name": "Basic Weave Designs and Calculations TAS4311",
+    "credits": 12,
+    "level": 5,
+    "category": "S",
+    "dept": "TA",
+    "prerequisites": "(CA), 24 credits (P) at Level 3,",
+    "specializations": [
+      "Textile and Clothing Engineering"
+    ]
+  },
+  {
+    "code": "TAS5211",
+    "name": "Textile Printing and Finishing TAS5210",
+    "credits": 15,
+    "level": 5,
+    "category": "S",
+    "dept": "TA",
+    "prerequisites": "(CR), 24 credits (P) at Level 3,",
+    "specializations": [
+      "Textile and Clothing Engineering"
+    ]
+  },
+  {
+    "code": "TAS5213",
+    "name": "Quality Assurance for Textile & Clothing II TAS5212",
+    "credits": 15,
+    "level": 5,
+    "category": "S",
+    "dept": "TA",
+    "prerequisites": "(CR), 24 credits (P) at Level 3,",
+    "specializations": [
+      "Textile and Clothing Engineering"
+    ]
+  },
+  {
+    "code": "TAS6218",
+    "name": "Plant Utilities II TAS5218",
+    "credits": 3,
+    "level": 6,
+    "category": "S",
+    "dept": "TA",
+    "prerequisites": "(CA), 45 credits (P) at Levels",
+    "specializations": [
+      "Textile and Clothing Engineering"
+    ]
+  }
+]

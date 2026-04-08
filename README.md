@@ -1,4 +1,4 @@
-# Engineering Blogfolio + Workspace
+# Next Notion CMS
 
 A modern, high-performance engineering blogfolio and workspace built with **Next.js 16**, **Tailwind CSS 4**, and **TypeScript**. Designed for developers who want a polished personal platform with a file-based CMS and interactive tools.
 

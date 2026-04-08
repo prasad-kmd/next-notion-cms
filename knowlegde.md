@@ -1,0 +1,17 @@
+- Notion CMS integration requires the following environment variables: `NOTION_AUTH_TOKEN`, `NOTION_BLOG_ID`, `NOTION_ARTICLES_ID`, `NOTION_PROJECTS_ID`, `NOTION_TUTORIALS_ID`, and `NOTION_WIKI_ID`.
+- The project integrates Notion as a CMS using `@notionhq/client` and `notion-to-md`. Database IDs for different content types (blog, articles, etc.) are managed via environment variables.
+- Always try to use PNPM instead of NPM for performance.
+- The platform is built with Next.js 16.x, Tailwind CSS 4, and TypeScript, optimized for high performance and technical documentation.
+- Advanced PWA manifest settings (public/manifest.json) include launch_handler (focus-existing), display_override (window-controls-overlay), share_target (via /search), and scope_extensions for origin matching.
+- The custom context menu in 'components/custom-context-menu.tsx' includes link-specific actions ('Open in New Tab', 'Copy Link Address') and is now allowed on touch-capable laptops by only enforcing a width-based check (>= 1024px).
+- The project uses Tailwind CSS 4, which defaults to 'oklch' color functions. Since html2canvas (v1.4.1) does not support oklch parsing, dedicated PDF export templates must use hex or RGB colors via inline styles to ensure successful rendering.
+- Math notation in tutorial content is standardized using '$' for inline math and '$$' for block math to ensure consistent rendering.
+- always update the readme.md file with mentioning added/implemented features.
+- Article-style pages (blog, tutorials, articles, projects) include a scroll progress bar, estimated reading time, a 'Related Content' section, a dynamic Table of Contents (TOC), and support for embedded interactive quizzes.
+- The global loading state is implemented via 'app/loading.tsx', featuring a pulsing themed animation and consistent glassmorphism styling.
+- Always use local fonts from the `public/fonts/` directory; do not use 3rd-party font providers (e.g., Google Fonts) or CDN-hosted fonts.
+- Make sure to update ReadMe.md for each commit/update. You may use badges and something similar for better visualization and to improve user understanding. If current readme isn't complete yet, means it isn't up to date, update it with up to date info, including from -getting start, to final steps.
+- If there any improvements need to be done or should be added to the system, please mention that on "suggestions/{topic}.md"
+- when something should have done / should done by the user, make sure to notify them by creating markdown file "attention/{reason}.md"
+- You can view and reference [prasad-kmd/PMEngineerLK-NextJS](https://github.com/prasad-kmd/PMEngineerLK-NextJS) repo and get inspire for this project.
+- This repo branch has successful integrating of Notion as CMS. [Migrate Notion CMS](https://github.com/prasad-kmd/PMEngineerLK-NextJS/tree/migrate-notion-cms-12306267623394892345) ; you may review it.

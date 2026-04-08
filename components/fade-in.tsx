@@ -31,7 +31,7 @@ export function FadeIn({
       initial={{
         opacity: 0,
         y: directions[direction].y,
-        x: directions[direction].x
+        x: directions[direction].x,
       }}
       whileInView={{ opacity: 1, y: 0, x: 0 }}
       viewport={{ once: true, margin: "-100px" }}

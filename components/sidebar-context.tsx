@@ -1,71 +1,47 @@
-"use client";
+"use client"
 
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, { createContext, useContext, useState, useEffect } from "react"
 
 interface SidebarContextType {
-  isCollapsed: boolean;
-  isMobileOpen: boolean;
-  toggleSidebar: () => void;
-  setCollapsed: (collapsed: boolean) => void;
-  toggleMobileSidebar: () => void;
-  setMobileSidebarOpen: (open: boolean) => void;
+    isCollapsed: boolean
+    toggleSidebar: () => void
 }
 
-const SidebarContext = createContext<SidebarContextType | undefined>(undefined);
+const SidebarContext = createContext<SidebarContextType | undefined>(undefined)
 
 export function SidebarProvider({ children }: { children: React.ReactNode }) {
-  const [isCollapsed, setIsCollapsed] = useState(false);
-  const [isMobileOpen, setIsMobileOpen] = useState(false);
-  const [isInitialized, setIsInitialized] = useState(false);
+    const [isCollapsed, setIsCollapsed] = useState(false)
 
-  // Load sidebar state from localStorage on mount
-  useEffect(() => {
-    const savedState = localStorage.getItem("sidebar-collapsed");
-    if (savedState !== null) {
-      setIsCollapsed(savedState === "true");
-    }
-    setIsInitialized(true);
-  }, []);
+    // Initialize state from localStorage
+    useEffect(() => {
+        const saved = localStorage.getItem("sidebar-collapsed")
+        if (saved !== null) {
+            setIsCollapsed(saved === "true")
+        }
+    }, [])
 
-  // Save sidebar state to localStorage when it changes
-  useEffect(() => {
-    if (isInitialized) {
-      localStorage.setItem("sidebar-collapsed", String(isCollapsed));
+    // Update localStorage and CSS variable when state changes
+    useEffect(() => {
+        localStorage.setItem("sidebar-collapsed", String(isCollapsed))
 
-      // Update a CSS variable on the document for easy styling
-      if (isCollapsed) {
-        document.documentElement.classList.add("sidebar-collapsed");
-      } else {
-        document.documentElement.classList.remove("sidebar-collapsed");
-      }
-    }
-  }, [isCollapsed, isInitialized]);
+        // Set CSS variable for dynamic layout adjustments
+        const width = isCollapsed ? "80px" : "256px" // 20 vs 64 in tailwind
+        document.documentElement.style.setProperty("--sidebar-width", width)
+    }, [isCollapsed])
 
-  const toggleSidebar = () => setIsCollapsed((prev) => !prev);
-  const setCollapsed = (collapsed: boolean) => setIsCollapsed(collapsed);
-  const toggleMobileSidebar = () => setIsMobileOpen((prev) => !prev);
-  const setMobileSidebarOpen = (open: boolean) => setIsMobileOpen(open);
+    const toggleSidebar = () => setIsCollapsed((prev) => !prev)
 
-  return (
-    <SidebarContext.Provider
-      value={{
-        isCollapsed,
-        isMobileOpen,
-        toggleSidebar,
-        setCollapsed,
-        toggleMobileSidebar,
-        setMobileSidebarOpen,
-      }}
-    >
-      {children}
-    </SidebarContext.Provider>
-  );
+    return (
+        <SidebarContext.Provider value={{ isCollapsed, toggleSidebar }}>
+            {children}
+        </SidebarContext.Provider>
+    )
 }
 
 export function useSidebar() {
-  const context = useContext(SidebarContext);
-  if (context === undefined) {
-    throw new Error("useSidebar must be used within a SidebarProvider");
-  }
-  return context;
+    const context = useContext(SidebarContext)
+    if (context === undefined) {
+        throw new Error("useSidebar must be used within a SidebarProvider")
+    }
+    return context
 }

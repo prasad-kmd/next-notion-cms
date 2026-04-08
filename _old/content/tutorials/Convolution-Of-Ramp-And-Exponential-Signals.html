@@ -1,0 +1,95 @@
+---
+title: "Convolution Of Ramp And Exponential Signals"
+date: "2026-02-11"
+description: "In the convolution integral, τ is the dummy variable of integration. It is used to parameterize the shift and overlap between the two signals x1 & x2."
+
+status: "Published"
+---
+<figure><img alt='©️Image: Learning Space' class='full' src='https://blogger.googleusercontent.com/img/a/AVvXsEgxRDq2W1Mzr-3w2ctAOCT1dFs0_bwzIgzhnjABP4YnFnsLf3jpKEQOLbrl-ezMM0xMfQkBYhhXqdZRwhHs98b4M0E0KiA9HzrNRihAyNvqIbE0t14dwY4LQPy4sxw9byCuwUjV_IDvQYDUDfxgPew9FAqIT5i1bKBm1MDmB38hMNaPnK3DsbbUGbFFlvJ-=s16000'/></figure>
+
+<h1>Problem Statement</h1>
+
+Find the convolution $y(t) = x_1(t) * x_2(t)$ for the following signals:
+
+$$ x_1(t) = r(t) $$
+$$ x_2(t) = e^{-2t} u(t) $$
+
+Where $r(t)$ is the ramp function and $u(t)$ is the unit step function.
+
+<h3>1. Definitions and Convolution Formula</h3>
+
+First, let's define the functions involved:
+<ul><li>The unit step function, $u(t)$, is defined as:<br />
+  $u(t) = \begin{cases} 1, \quad t \ge 0 \\ 0, \quad t \lt 0 \end{cases}$ </li>
+<li>The ramp function, $r(t)$, is defined as: <br />
+  $r(t) = t \cdot u(t) = \begin{cases} t, \quad t \ge 0 \\ 0, \quad t \lt 0 \end{cases}$ </li></ul>
+
+The convolution integral is given by the formula:
+$$ y(t) = x_1(t) * x_2(t) = \int_{-\infty}^{\infty} x_1(\tau) x_2(t-\tau) d\tau $$
+
+<h3>2. Setting up the Integral</h3>
+
+We need to express the signals in terms of the integration variable $\tau$:
+<ul><li>$x_1(\tau) = r(\tau) = \tau u(\tau)$ </li>
+  <li>$x_2(t-\tau) = e^{-2(t-\tau)} u(t-\tau)$ </li></ul>
+
+Substituting these into the convolution integral:
+$$ y(t) = \int_{-\infty}^{\infty} [\tau u(\tau)] [e^{-2(t-\tau)} u(t-\tau)] d\tau $$
+
+<h3>3. Determining the Limits of Integration</h3>
+
+The integrand is non-zero only when both unit step functions are non-zero.
+<ul><li> $u(\tau) \neq 0 \implies \tau \ge 0$ </li>
+  <li> $u(t-\tau) \neq 0 \implies t-\tau \ge 0 \implies \tau \le t$ </li></ul>
+
+For the integral to be non-zero, both conditions must be met simultaneously: $0 \le \tau \le t$. This implies that there is no overlapping region if $t \lt 0$. Therefore, we have two cases for the value of $t$.
+
+<br /><b>Case 1: $t \lt 0$ </b>
+If $t \lt 0$, the conditions $\tau \ge 0$ and $\tau \le t$ cannot both be true. There is no overlap, so the integral evaluates to zero.
+$$ y(t) = 0 \quad \text{for } t \lt 0 $$
+
+<br /><b>Case 2: $t \ge 0$</b>
+If $t \ge 0$, the limits of integration become $0$ to $t$. The unit step functions are equal to $1$ within this range, so they can be removed from the integrand.
+
+$$ y(t) = \int_{0}^{t} \tau e^{-2(t-\tau)} d\tau $$
+
+<h3>4. Solving the Integral</h3>
+
+Now, we solve the integral for $t \ge 0$.<br />
+First, simplify the integrand by expanding the exponential term:
+$$ y(t) = \int_{0}^{t} \tau e^{-2t} e^{2\tau} d\tau $$
+Since $e^{-2t}$ is a constant with respect to $\tau$, we can pull it out of the integral:
+$$ y(t) = e^{-2t} \int_{0}^{t} \tau e^{2\tau} d\tau $$
+This integral requires <b>Integration by Parts</b>. The formula is $\int u \, dv = uv - \int v \, du$.
+Let:
+<ul><li>$u = \tau \implies du = d\tau$ </li>
+  <li>$dv = e^{2\tau} d\tau \implies v = \int e^{2\tau} d\tau = \frac{1}{2} e^{2\tau}$ </li></ul>
+
+Applying the formula:
+$$ \int \tau e^{2\tau} d\tau = \tau \left(\frac{1}{2}e^{2\tau}\right) - \int \frac{1}{2}e^{2\tau} d\tau $$
+$$ = \frac{1}{2}\tau e^{2\tau} - \frac{1}{2} \int e^{2\tau} d\tau $$
+$$ = \frac{1}{2}\tau e^{2\tau} - \frac{1}{2} \left(\frac{1}{2}e^{2\tau}\right) = \frac{1}{2}\tau e^{2\tau} - \frac{1}{4}e^{2\tau} $$
+
+Now, we evaluate the definite integral from $0$ to $t$:
+$$ \int_{0}^{t} \tau e^{2\tau} d\tau = \left[ \frac{1}{2}\tau e^{2\tau} - \frac{1}{4}e^{2\tau} \right]_{0}^{t} $$
+$$ = \left( \frac{1}{2}t e^{2t} - \frac{1}{4}e^{2t} \right) - \left( \frac{1}{2}(0)e^{0} - \frac{1}{4}e^{0} \right) $$
+$$ = \left( \frac{1}{2}t e^{2t} - \frac{1}{4}e^{2t} \right) - \left( 0 - \frac{1}{4} \right) $$
+$$ = \frac{1}{2}t e^{2t} - \frac{1}{4}e^{2t} + \frac{1}{4} $$
+
+Substitute this result back into the expression for $y(t)$:
+$$ y(t) = e^{-2t} \left( \frac{1}{2}t e^{2t} - \frac{1}{4}e^{2t} + \frac{1}{4} \right) $$
+Distribute the $e^{-2t}$ term:
+$$ y(t) = \frac{1}{2}t e^{-2t}e^{2t} - \frac{1}{4}e^{-2t}e^{2t} + \frac{1}{4}e^{-2t} $$
+$$ y(t) = \frac{1}{2}t - \frac{1}{4} + \frac{1}{4}e^{-2t} $$
+
+<h3>5. Final Result</h3>
+
+Combining the results from both cases:
+<ul><li>For $t \lt 0$, $y(t) = 0$.</li>
+  <li>For $t \ge 0$, $y(t) = \frac{1}{2}t - \frac{1}{4} + \frac{1}{4}e^{-2t}$.</li></ul>
+
+We can write this as a single expression using the unit step function $u(t)$:
+
+$$ y(t) = \left( \frac{1}{2}t - \frac{1}{4} + \frac{1}{4}e^{-2t} \right) u(t) $$
+
+$$ \boxed {y(t) = \left( \frac{1}{2}t - \frac{1}{4} + \frac{1}{4}e^{-2t} \right) u(t)} $$

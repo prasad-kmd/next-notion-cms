@@ -1,131 +1,111 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getPostBySlug, getAllPosts, getAuthorBySlug } from "@/lib/content";
-import { Container } from "@/components/container";
-import { FadeIn } from "@/components/fade-in";
-import { Library, ChevronLeft, Bookmark, FileText } from "lucide-react";
+import { getContentByType, getContentItem } from "@/lib/content";
+import { ArrowLeft, Clock, BookOpen, Hash } from "lucide-react";
 import Link from "next/link";
-import { TableOfContents } from "@/components/table-of-contents";
+import { ContentRenderer } from "@/components/content-renderer";
+import { BookmarkButton } from "@/components/bookmark-button";
+import { ScrollProgress } from "@/components/scroll-progress";
+import { RelatedContent } from "@/components/related-content";
+import { TOC } from "@/components/toc";
 import { AIContentIndicator } from "@/components/ai-content-indicator";
-import { cn } from "@/lib/utils";
-import { AuthorProfile } from "@/components/ui/author-profile";
-import { CodeBlockWrapper } from "@/components/code-block-wrapper";
 
-type Props = {
+export async function generateStaticParams() {
+  const wikiEntries = getContentByType("wiki");
+  return wikiEntries.map((entry) => ({
+    slug: entry.slug,
+  }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
   params: Promise<{ slug: string }>;
-};
-
-export async function generateMetadata({ params }: Props) {
+}): Promise<Metadata> {
   const { slug } = await params;
-  const page = await getPostBySlug("wiki", slug);
-  if (!page) return {};
+  const entry = getContentItem("wiki", slug);
+
+  if (!entry) {
+    return {};
+  }
 
   return {
-    title: page.title,
-    description: page.description,
+    title: `${entry.title} | Engineering Wiki`,
+    description: entry.description,
   };
 }
 
-export default async function WikiDetailPage({ params }: Props) {
+export default async function WikiEntryPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
   const { slug } = await params;
-  const page = await getPostBySlug("wiki", slug);
-  const allWikiPages = await getAllPosts("wiki");
+  const entry = getContentItem("wiki", slug);
 
-  if (!page) {
+  if (!entry) {
     notFound();
   }
 
-  const author = page.author ? await getAuthorBySlug(page.author) : null;
-
   return (
-    <div className="min-h-screen px-6 py-12 lg:px-8 wiki_item img_grad_pm pt-32">
-      <div className="mx-auto max-w-7xl">
-        <div className="flex flex-col xl:flex-row gap-12 relative">
-          {/* Left Sidebar: Wiki Navigation */}
-          <aside className="hidden xl:block w-64 shrink-0">
-            <div className="sticky top-32 space-y-8">
-              <div>
-                <h3 className="text-xs uppercase tracking-widest font-bold text-muted-foreground/60 mb-6 px-3 google-sans">
-                  Wiki Explorer
-                </h3>
-                <nav className="flex flex-col gap-1">
-                  {allWikiPages.map((wiki) => (
-                    <Link
-                      key={wiki.slug}
-                      href={`/wiki/${wiki.slug}`}
-                      className={cn(
-                        "flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm transition-all duration-200 group mozilla-text",
-                        slug === wiki.slug
-                          ? "bg-primary/10 text-primary font-bold border border-primary/20 shadow-sm shadow-primary/5"
-                          : "text-muted-foreground hover:bg-muted/50 hover:text-foreground border border-transparent",
-                      )}
-                    >
-                      <FileText
-                        size={16}
-                        className={cn(
-                          "transition-colors",
-                          slug === wiki.slug
-                            ? "text-primary"
-                            : "text-muted-foreground/50 group-hover:text-primary",
-                        )}
-                      />
-                      <span className="truncate">{wiki.title}</span>
-                    </Link>
-                  ))}
-                </nav>
-              </div>
-            </div>
-          </aside>
+    <div className="min-h-screen px-6 py-12 lg:px-8 wiki_item img_grad_pm">
+      <ScrollProgress />
+      <div className="mx-auto max-w-5xl">
+        <Link
+          href="/wiki"
+          className="mb-8 inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground font-local-inter"
+        >
+          <ArrowLeft className="h-4 w-4" />
+          Back to Wiki
+        </Link>
 
-          {/* Main Content */}
+        <div className="flex flex-col lg:flex-row gap-12">
           <article className="flex-1 min-w-0">
-            <FadeIn direction="down">
-              <Link
-                href="/wiki"
-                className="inline-flex items-center text-sm font-medium text-muted-foreground hover:text-foreground transition-colors mb-8 xl:hidden font-google-sans"
-              >
-                <ChevronLeft className="mr-1 h-4 w-4" />
-                Back to wiki
-              </Link>
-
-              <header className="mb-12 border-b border-border/40 pb-8">
-                <div className="flex items-center gap-2 text-primary font-bold text-[11px] uppercase tracking-[0.2em] mb-4 google-sans">
-                  <Library size={14} /> Wiki Page
+            <header className="mb-8 border-b border-border pb-8">
+              <div className="flex items-center gap-2 text-primary mb-4">
+                <BookOpen className="h-5 w-5" />
+                <span className="text-sm font-bold uppercase tracking-widest font-local-inter">
+                  Wiki Reference
+                </span>
+              </div>
+              <h1 className="mb-4 text-4xl font-bold text-balance lg:text-5xl font-google-sans">
+                {entry.title}
+              </h1>
+              <div className="flex flex-wrap items-center justify-between gap-4 text-muted-foreground font-local-inter">
+                <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-2">
+                    <Hash className="h-4 w-4 text-primary/60" />
+                    <span className="text-sm font-medium font-local-jetbrains-mono">
+                      {entry.technical || "General Engineering"}
+                    </span>
+                  </div>
+                  {entry.readingTime && (
+                    <span className="flex items-center gap-1.5 border-l border-border pl-4 font-local-inter">
+                      <Clock className="h-3.5 w-3.5" />
+                      {entry.readingTime} min read
+                    </span>
+                  )}
                 </div>
-                <h1 className="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl leading-tight text-foreground mozilla-headline mb-6">
-                  {page.title}
-                </h1>
-                <div className="flex items-center gap-3 text-muted-foreground text-sm font-google-sans">
-                  <Bookmark size={14} className="text-primary" />
-                  <span>Last updated: {page.date}</span>
-                </div>
-              </header>
-            </FadeIn>
+                <BookmarkButton
+                  key={entry.slug}
+                  item={{
+                    slug: entry.slug,
+                    title: entry.title,
+                    type: "wiki",
+                  }}
+                />
+              </div>
+            </header>
 
-            <FadeIn delay={0.2} direction="none">
-              <CodeBlockWrapper>
-                <article className="prose prose-zinc dark:prose-invert max-w-none prose-headings:font-bold prose-headings:tracking-tight prose-a:text-primary prose-a:no-underline hover:prose-a:underline prose-img:rounded-2xl font-google-sans">
-                  <div dangerouslySetInnerHTML={{ __html: page.content }} />
-                </article>
-              </CodeBlockWrapper>
-            </FadeIn>
-            {page.aiAssisted && <AIContentIndicator />}
+            <ContentRenderer content={entry.content} id={entry.slug} />
           </article>
 
-          {/* Right Sidebar: Table of Contents */}
-          <aside className="hidden lg:block w-64 shrink-0">
-            <div className="sticky top-32 flex flex-col gap-8 max-h-[calc(100vh-160px)]">
-              {author && (
-                <div className="pb-4 border-b border-border/40">
-                  <AuthorProfile author={author} lastUpdated={page.date} />
-                </div>
-              )}
-              <div className="flex-1 flex flex-col min-h-0">
-                <TableOfContents headings={page.headings} />
-              </div>
-            </div>
-          </aside>
+          <TOC content={entry.content} />
         </div>
+
+        <RelatedContent type="wiki" currentSlug={entry.slug} />
       </div>
+      {entry.aiAssisted && <AIContentIndicator />}
     </div>
   );
 }

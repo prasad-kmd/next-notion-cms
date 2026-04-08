@@ -1,0 +1,87 @@
+[
+  {
+    "id": "bsc_hons_eng",
+    "name": "Bachelor of Science Honours in Engineering",
+    "min_credits": 140,
+    "min_l56": 70,
+    "min_l6": 30,
+    "categories": {
+      "Z": {
+        "min": 13,
+        "max": 21
+      },
+      "B": {
+        "min": 11,
+        "max": 15
+      },
+      "K": {
+        "min": 4,
+        "max": 8
+      },
+      "S": {
+        "min": 63,
+        "max": 71,
+        "min_l56": 35,
+        "min_l6": 15
+      },
+      "Y": {
+        "min": 11,
+        "max": 15,
+        "min_l6": 8
+      },
+      "M": {
+        "min": 19,
+        "max": 19
+      },
+      "J": {
+        "min": 5,
+        "max": 8
+      },
+      "W": {
+        "min": 6,
+        "max": 6
+      }
+    }
+  },
+  {
+    "id": "hd_eng",
+    "name": "Higher Diploma in Engineering",
+    "min_credits": 65,
+    "min_l4_above": 30,
+    "categories": {
+      "Z": {
+        "min": 7,
+        "max": 15
+      },
+      "B": {
+        "min": 11,
+        "max": 15
+      },
+      "K": {
+        "min": 4,
+        "max": 8
+      },
+      "S": {
+        "min": 25,
+        "max": 33,
+        "min_l4_above": 15
+      },
+      "Y": {
+        "min": 2,
+        "max": 10
+      },
+      "M": {
+        "min": 2,
+        "max": 10
+      },
+      "J": {
+        "min": 0,
+        "max": 8
+      },
+      "W": {
+        "min": 6,
+        "max": 6
+      }
+    }
+  }
+]

@@ -1,125 +1,174 @@
-import { Container } from "@/components/container"
-import { FadeIn } from "@/components/fade-in"
-import { Mail, MessageSquare, Twitter, Github, Linkedin, ArrowRight } from "lucide-react"
+import type { Metadata } from "next";
+import { Mail, Phone, MapPin } from "lucide-react";
+import Image from "next/image";
+import { siteConfig } from "@/lib/config";
 
-export const metadata = {
-  title: "Contact",
-  description: "Get in touch with me for collaborations, inquiries, or just to say hi.",
-}
+import ContactForm from "./ContactForm";
+
+const title = "Get In Touch";
+const description =
+  "Have questions about my work? Want to collaborate or provide feedback? I'd love to hear from you.";
+
+export const metadata: Metadata = {
+  title,
+  description,
+  openGraph: {
+    title,
+    description,
+    url: "/contact",
+    images: [
+      {
+        url: `/api/og?title=${encodeURIComponent(title)}`,
+        width: 1200,
+        height: 630,
+        alt: description,
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title,
+    description,
+    images: [`/api/og?title=${encodeURIComponent(title)}`],
+  },
+};
 
 export default function ContactPage() {
   return (
-    <div className="pt-32 pb-20">
-      <Container>
-        <FadeIn>
-          <div className="max-w-4xl space-y-12">
-            <section className="space-y-4">
-              <h1 className="text-4xl font-extrabold tracking-tight sm:text-6xl text-foreground">
-                Get in Touch
-              </h1>
-              <p className="text-xl text-muted-foreground leading-relaxed max-w-2xl">
-                Have a question, a project idea, or just want to connect?
-                I'm always open to discussing new opportunities and collaborations.
+    <div className="min-h-screen">
+      {/* Hero Section */}
+      <section className="relative border-b border-border">
+        <Image
+          src="/img/contact_us.webp"
+          alt="Contact Us"
+          fill
+          className="object-cover"
+          priority
+        />
+        <div className="absolute inset-0 bg-black/50" />
+        <div className="relative z-10 mx-auto max-w-7xl px-6 py-16 lg:px-8 lg:py-24">
+          <div className="mx-auto max-w-3xl text-center text-white">
+            <h1 className="text-4xl font-bold tracking-tight text-balance lg:text-5xl amoriaregular">
+              Get In Touch
+            </h1>
+            <p className="mt-6 text-lg leading-8 text-gray-200 text-pretty">
+              Have questions about my work? Want to collaborate or provide
+              feedback? I&apos;d love to hear from you.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Contact Content */}
+      <div className="mx-auto max-w-7xl px-6 py-16 lg:px-8">
+        <div className="grid grid-cols-1 gap-12 lg:grid-cols-2">
+          {/* Contact Information */}
+          <div className="space-y-12">
+            <div>
+              <h2 className="text-2xl font-bold">Contact Information</h2>
+              <p className="mt-4 text-muted-foreground">
+                Reach out to me through any of the following channels. I
+                typically respond within 24-48 hours.
               </p>
-            </section>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <a
-                href="mailto:contact@example.com"
-                className="group flex flex-col gap-4 p-6 rounded-2xl bg-card border border-border/50 hover:border-primary/50 transition-all hover:translate-y-[-4px]"
-              >
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-primary group-hover:scale-110 transition-transform">
-                  <Mail className="h-6 w-6" />
+              <div className="mt-8 space-y-6">
+                <div className="flex gap-4">
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-primary/10">
+                    <Mail className="h-6 w-6 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold">Email</h3>
+                    <p className="mt-1 text-sm text-muted-foreground">
+                      {siteConfig.socialLinks.email.replace("mailto:", "")}
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="font-bold">Email</h3>
-                  <p className="text-sm text-muted-foreground">contact@example.com</p>
-                </div>
-                <div className="mt-auto flex items-center gap-2 text-primary font-medium text-sm group-hover:gap-3 transition-all">
-                   Send an email <ArrowRight size={14} />
-                </div>
-              </a>
 
-              <a
-                href="https://twitter.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group flex flex-col gap-4 p-6 rounded-2xl bg-card border border-border/50 hover:border-primary/50 transition-all hover:translate-y-[-4px]"
-              >
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-primary group-hover:scale-110 transition-transform">
-                  <Twitter className="h-6 w-6" />
+                <div className="flex gap-4">
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-primary/10">
+                    <Phone className="h-6 w-6 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold">Phone</h3>
+                    <p className="mt-1 text-sm text-muted-foreground">
+                      +94 11 234 5678
+                    </p>
+                    <p className="mt-1 text-sm text-muted-foreground">
+                      Available Mon-Fri, 9:00 AM - 5:00 PM
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="font-bold">Twitter</h3>
-                  <p className="text-sm text-muted-foreground">@example_handle</p>
-                </div>
-                <div className="mt-auto flex items-center gap-2 text-primary font-medium text-sm group-hover:gap-3 transition-all">
-                   Follow me <ArrowRight size={14} />
-                </div>
-              </a>
 
-              <a
-                href="https://linkedin.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group flex flex-col gap-4 p-6 rounded-2xl bg-card border border-border/50 hover:border-primary/50 transition-all hover:translate-y-[-4px]"
-              >
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-primary group-hover:scale-110 transition-transform">
-                  <Linkedin className="h-6 w-6" />
+                <div className="flex gap-4">
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-primary/10">
+                    <MapPin className="h-6 w-6 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold">Location</h3>
+                    <p className="mt-1 text-sm text-muted-foreground">
+                      Faculty of Engineering
+                    </p>
+                    <p className="text-sm text-muted-foreground">
+                      University of [Your University]
+                    </p>
+                    <p className="text-sm text-muted-foreground">
+                      Colombo, Sri Lanka
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="font-bold">LinkedIn</h3>
-                  <p className="text-sm text-muted-foreground">Professional Profile</p>
-                </div>
-                <div className="mt-auto flex items-center gap-2 text-primary font-medium text-sm group-hover:gap-3 transition-all">
-                   Connect <ArrowRight size={14} />
-                </div>
-              </a>
+              </div>
             </div>
 
-            <section className="p-8 md:p-12 rounded-3xl bg-card border border-border/50 space-y-8">
-              <div className="flex items-center gap-4">
-                 <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/20 text-primary animate-pulse">
-                   <MessageSquare className="h-6 w-6" />
-                 </div>
-                 <h2 className="text-2xl md:text-3xl font-bold">Quick Contact</h2>
+            {/* Additional Info or Socials could go here */}
+          </div>
+
+          {/* Contact Form */}
+          <div>
+            <h2 className="mb-6 text-2xl font-bold">Send a Message</h2>
+            <ContactForm />
+          </div>
+        </div>
+      </div>
+
+      {/* FAQ Section */}
+      <div className="border-t border-border bg-muted/30">
+        <div className="mx-auto max-w-7xl px-6 py-16 lg:px-8">
+          <div className="mx-auto max-w-3xl">
+            <h2 className="text-2xl font-bold">Frequently Asked Questions</h2>
+            <div className="mt-8 space-y-6">
+              <div className="rounded-lg border border-border bg-card p-6">
+                <h3 className="font-semibold">Can I collaborate with you?</h3>
+                <p className="mt-2 text-sm text-muted-foreground">
+                  I welcome collaboration opportunities! Please reach out via
+                  email with details about your background and how you&apos;d
+                  like to work together.
+                </p>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                 <div className="space-y-4">
-                   <label className="block text-sm font-medium text-muted-foreground">Name</label>
-                   <input
-                    type="text"
-                    placeholder="Your Name"
-                    className="w-full px-4 py-3 rounded-xl bg-background border border-border focus:border-primary/50 focus:ring-1 focus:ring-primary/50 outline-none transition-all"
-                   />
-                 </div>
-                 <div className="space-y-4">
-                   <label className="block text-sm font-medium text-muted-foreground">Email</label>
-                   <input
-                    type="email"
-                    placeholder="Your Email"
-                    className="w-full px-4 py-3 rounded-xl bg-background border border-border focus:border-primary/50 focus:ring-1 focus:ring-primary/50 outline-none transition-all"
-                   />
-                 </div>
-                 <div className="md:col-span-2 space-y-4">
-                   <label className="block text-sm font-medium text-muted-foreground">Message</label>
-                   <textarea
-                    rows={4}
-                    placeholder="How can I help you?"
-                    className="w-full px-4 py-3 rounded-xl bg-background border border-border focus:border-primary/50 focus:ring-1 focus:ring-primary/50 outline-none transition-all resize-none"
-                   ></textarea>
-                 </div>
-                 <div className="md:col-span-2">
-                   <button className="w-full md:w-auto px-8 py-4 rounded-xl bg-primary text-primary-foreground font-bold hover:scale-[1.02] active:scale-95 transition-all">
-                     Send Message
-                   </button>
-                 </div>
+              <div className="rounded-lg border border-border bg-card p-6">
+                <h3 className="font-semibold">
+                  Are you looking for professional opportunities?
+                </h3>
+                <p className="mt-2 text-sm text-muted-foreground">
+                  Yes! I&apos;m interested in connecting with industry partners
+                  and exploring professional opportunities where I can apply my
+                  engineering skills.
+                </p>
               </div>
-            </section>
+
+              <div className="rounded-lg border border-border bg-card p-6">
+                <h3 className="font-semibold">
+                  How can I stay updated on your work?
+                </h3>
+                <p className="mt-2 text-sm text-muted-foreground">
+                  Check my Blog and Projects sections regularly for updates. You
+                  can also follow me on LinkedIn for major professional updates.
+                </p>
+              </div>
+            </div>
           </div>
-        </FadeIn>
-      </Container>
+        </div>
+      </div>
     </div>
-  )
+  );
 }

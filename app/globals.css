@@ -1,398 +1,434 @@
 @import "tailwindcss";
+@import "tw-animate-css";
 
-@theme {
-  --font-sans:
-    "Google Sans", "Inter", ui-sans-serif, system-ui, sans-serif,
-    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  --font-mono:
-    "JetBrains Mono", "Space Mono", ui-monospace, SFMono-Regular, Menlo, Monaco,
-    Consolas, "Liberation Mono", "Courier New", monospace;
-  --font-jetbrains-mono: "JetBrains Mono", monospace;
-  --font-google-sans: "Google Sans", sans-serif;
-  --font-mozilla-headline: "Mozilla Headline", sans-serif;
-  --font-mozilla-text: "Mozilla Text", sans-serif;
-  --font-space-mono: "Space Mono", monospace;
-  --font-noto-serif-sinhala: "Noto Serif Sinhala", serif;
-  --font-roboto: "Roboto", sans-serif;
-  --font-inter: "Inter", sans-serif;
-  --font-noto-sans: "Noto Sans", sans-serif;
-  --font-noto-sans-display: "Noto Sans Display", sans-serif;
-  --font-amoria: "Amoria", serif;
-  --font-philosopher: "Philosopher", sans-serif;
+@custom-variant dark (&:is(.dark *));
 
+:root {
+  --background-rgb: 250, 250, 250;
+  /* Light theme defaults */
+  --background: hsl(216 100% 98%);
+  --foreground: hsl(220 27% 4%);
+  --card: hsl(0 0% 100%);
+  --card-foreground: hsl(220 27% 4%);
+  --popover: hsl(0 0% 100%);
+  --popover-foreground: hsl(220 27% 4%);
+  --primary: hsl(181 100% 28%);
+  --primary-foreground: hsl(216 100% 98%);
+  --secondary: hsl(216 20% 90%);
+  --secondary-foreground: hsl(220 27% 4%);
+  --muted: hsl(216 20% 90%);
+  --muted-foreground: hsl(220 5% 34%);
+  --accent: hsl(216 20% 90%);
+  --accent-foreground: hsl(220 27% 4%);
+  --destructive: hsl(3 65% 55%);
+  --destructive-foreground: hsl(0 0% 97%);
+  --border: hsl(222 13% 85%);
+  --input: hsl(222 13% 85%);
+  --ring: hsl(181 100% 28%);
+  --chart-1: hsl(181 100% 28%);
+  --chart-2: hsl(131 73% 35%);
+  --chart-3: hsl(39 100% 39%);
+  --chart-4: hsl(352 94% 38%);
+  --chart-5: hsl(289 44% 52%);
+  --radius: 0.625rem;
+  --sidebar: hsl(218 48% 95%);
+  --sidebar-foreground: hsl(220 27% 4%);
+  --sidebar-primary: hsl(181 100% 28%);
+  --sidebar-primary-foreground: hsl(216 100% 98%);
+  --sidebar-accent: hsl(216 20% 90%);
+  --sidebar-accent-foreground: hsl(220 27% 4%);
+  --sidebar-border: hsl(222 13% 85%);
+  --sidebar-ring: hsl(181 100% 28%);
+
+  --page-gradient: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.4) 0%,
+    rgba(255, 255, 255, 0.6) 25%,
+    rgba(255, 255, 255, 0.8) 40%,
+    rgba(255, 255, 255, 0.9) 60%,
+    rgba(255, 255, 255, 1) 75%
+  );
+  --item-gradient: linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.2) 30%,
+    rgba(255, 255, 255, 0.4) 40%,
+    rgba(255, 255, 255, 0.5) 50%,
+    rgba(255, 255, 255, 0.7) 65%,
+    rgba(255, 255, 255, 0.9) 90%
+  );
+}
+
+.dark {
+  --background-rgb: 3, 7, 18;
+  /* Updated color palette for dark theme with teal accent */
+  --background: hsl(220 27% 4%);
+  --foreground: hsl(216 33% 94%);
+  --card: hsl(214 19% 7%);
+  --card-foreground: hsl(216 33% 94%);
+  --popover: hsl(214 19% 7%);
+  --popover-foreground: hsl(216 33% 94%);
+  --primary: hsl(180 100% 34%);
+  --primary-foreground: hsl(220 27% 4%);
+  --secondary: hsl(218 11% 14%);
+  --secondary-foreground: hsl(216 33% 94%);
+  --muted: hsl(214 13% 11%);
+  --muted-foreground: hsl(220 4% 57%);
+  --accent: hsl(218 11% 14%);
+  --accent-foreground: hsl(216 33% 94%);
+  --destructive: hsl(357 100% 45%);
+  --destructive-foreground: hsl(0 0% 98%);
+  --border: hsl(218 10% 16%);
+  --input: hsl(218 10% 16%);
+  --ring: hsl(180 100% 34%);
+  --chart-1: hsl(180 100% 34%);
+  --chart-2: hsl(126 46% 50%);
+  --chart-3: hsl(41 100% 45%);
+  --chart-4: hsl(359 71% 55%);
+  --chart-5: hsl(289 61% 65%);
+  --sidebar: hsl(223 24% 6%);
+  --sidebar-foreground: hsl(216 33% 94%);
+  --sidebar-primary: hsl(180 100% 34%);
+  --sidebar-primary-foreground: hsl(220 27% 4%);
+  --sidebar-accent: hsl(214 13% 11%);
+  --sidebar-accent-foreground: hsl(216 33% 94%);
+  --sidebar-border: hsl(218 10% 16%);
+  --sidebar-ring: hsl(180 100% 34%);
+
+  --page-gradient: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.4) 0%,
+    rgba(0, 0, 0, 0.6) 25%,
+    rgba(0, 0, 0, 0.8) 40%,
+    rgba(0, 0, 0, 0.9) 60%,
+    rgb(0, 0, 0) 75%
+  );
+  --item-gradient: linear-gradient(
+    45deg,
+    #00000000 0%,
+    #0000003d 30%,
+    #00000063 40%,
+    #00000088 50%,
+    #000000c5 65%,
+    #000000 90%
+  );
+}
+
+@theme inline {
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-jetbrains-mono);
+  --font-amoria: var(--font-amoria-regular);
+  --font-mozilla-headline: var(--font-mozilla-headline);
+  --font-philosopher: var(--font-philosopher);
+  --font-google-sans: var(--font-google-sans);
+  --font-mozilla-text: var(--font-mozilla-text);
+  --font-noto-sans: var(--font-noto-sans);
+  --font-noto-sans-display: var(--font-noto-sans-display);
+  --font-noto-serif-sinhala: var(--font-noto-serif-sinhala);
+  --font-roboto: var(--font-roboto);
+  --font-space-mono: var(--font-space-mono);
+  --font-local-inter: var(--font-local-inter);
+  --font-local-jetbrains-mono: var(--font-local-jetbrains-mono);
+
+  /* Color System - Dark theme with teal accent */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
+
   --color-popover: var(--popover);
   --color-popover-foreground: var(--popover-foreground);
+
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
+
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
+
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
+
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
+
   --color-destructive: var(--destructive);
   --color-destructive-foreground: var(--destructive-foreground);
+
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
-  --radius-lg: var(--radius);
-  --radius-md: calc(var(--radius) - 2px);
+
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
   --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
 }
 
 @layer base {
-  @font-face {
-    font-family: "Space Mono";
-    src:
-      local("Space Mono Regular"),
-      local("SpaceMono-Regular"),
-      url("/fonts/SpaceMono-Regular.woff2") format("woff2"),
-      url("/fonts/SpaceMono-Regular.woff") format("woff");
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
-  }
-
-  @font-face {
-    font-family: "Noto Serif Sinhala";
-    src:
-      local("Noto Serif Sinhala Regular"),
-      local("NotoSerifSinhala-Regular"),
-      url("/fonts/NotoSerifSinhala-Regular.woff2") format("woff2"),
-      url("/fonts/NotoSerifSinhala-Regular.woff") format("woff");
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
-  }
-
-  @font-face {
-    font-family: "Roboto";
-    src:
-      local("Roboto Regular"),
-      local("Roboto-Regular"),
-      url("/fonts/Roboto-Regular.woff2") format("woff2"),
-      url("/fonts/Roboto-Regular.woff") format("woff");
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
-  }
-
-  @font-face {
-    font-family: "Inter";
-    src:
-      local("Inter Regular"),
-      local("Inter-Regular"),
-      url("/fonts/Inter-Regular.woff2") format("woff2"),
-      url("/fonts/Inter-Regular.woff") format("woff");
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
-  }
-
-  @font-face {
-    font-family: "Google Sans";
-    src:
-      local("Google Sans Regular"),
-      local("GoogleSans-Regular"),
-      url("/fonts/GoogleSans-Regular.woff2") format("woff2"),
-      url("/fonts/GoogleSans-Regular.woff") format("woff");
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
-  }
-
-  @font-face {
-    font-family: "JetBrains Mono";
-    src:
-      local("JetBrains Mono Regular"),
-      local("JetBrainsMono-Regular"),
-      url("/fonts/JetBrainsMono-Regular.woff2") format("woff2"),
-      url("/fonts/JetBrainsMono-Regular.woff") format("woff");
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
-  }
-
-  @font-face {
-    font-family: "Amoria";
-    src: url("/fonts/en/AMORIARegular.woff2") format("woff2");
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
-  }
-
-  @font-face {
-    font-family: "Philosopher";
-    src: url("/fonts/en/Philosopher.woff2") format("woff2");
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
-  }
-
-  /* @font-face {
-    font-family: "Mozilla Headline";
-    src: url("/fonts/en/MozillaHeadline-Regular.woff2") format("woff2");
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap;
-  } */
-
-  @font-face {
-    font-family: "Mozilla Headline";
-    src:
-      local("Mozilla Headline ExtraLight"),
-      local("MozillaHeadline-ExtraLight"),
-      url("/fonts/MozillaHeadline-ExtraLight.woff2") format("woff2"),
-      url("/fonts/MozillaHeadline-ExtraLight.woff") format("woff");
-    font-weight: 200;
-    font-style: normal;
-    font-display: swap;
-  }
-
-  @font-face {
-    font-family: "Mozilla Text";
-    src:
-      local("Mozilla Text ExtraLight"),
-      local("MozillaText-ExtraLight"),
-      url("/fonts/MozillaText-ExtraLight.woff2") format("woff2"),
-      url("/fonts/MozillaText-ExtraLight.woff") format("woff");
-    font-weight: 200;
-    font-style: normal;
-    font-display: swap;
-  }
-
-  @font-face {
-    font-family: "Noto Sans";
-    src:
-      local("Noto Sans Regular"),
-      local("NotoSans-Regular"),
-      url("/fonts/NotoSans-Regular.woff2") format("woff2"),
-      url("/fonts/NotoSans-Regular.woff") format("woff");
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
-  }
-
-  @font-face {
-    font-family: "Noto Sans Display";
-    src:
-      local("Noto Sans Display Regular"),
-      local("NotoSansDisplay-Regular"),
-      url("/fonts/NotoSansDisplay-Regular.woff2") format("woff2"),
-      url("/fonts/NotoSansDisplay-Regular.woff") format("woff");
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
-  }
-
-  :root {
-    --background: oklch(1 0 0);
-    --foreground: oklch(0.145 0 0);
-    --card: oklch(1 0 0);
-    --card-foreground: oklch(0.145 0 0);
-    --popover: oklch(1 0 0);
-    --popover-foreground: oklch(0.145 0 0);
-    --primary: oklch(0.648 0.15 190);
-    --primary-foreground: oklch(0.985 0 0);
-    --secondary: oklch(0.97 0 0);
-    --secondary-foreground: oklch(0.648 0.15 190);
-    --muted: oklch(0.97 0 0);
-    --muted-foreground: oklch(0.556 0 0);
-    --accent: oklch(0.97 0 190 / 0.1);
-    --accent-foreground: oklch(0.648 0.15 190);
-    --destructive: oklch(0.577 0.245 27.325);
-    --destructive-foreground: oklch(0.577 0.245 27.325);
-    --border: oklch(0.922 0 0);
-    --input: oklch(0.922 0 0);
-    --ring: oklch(0.648 0.15 190);
-    --radius: 0.75rem;
-    --sidebar-width: 260px;
-    --sidebar-collapsed-width: 70px;
-
-    --page-gradient: linear-gradient(
-      to bottom,
-      rgba(255, 255, 255, 0.4) 0%,
-      rgba(255, 255, 255, 0.6) 25%,
-      rgba(255, 255, 255, 0.8) 40%,
-      rgba(255, 255, 255, 0.9) 60%,
-      rgba(255, 255, 255, 1) 75%
-    );
-    --item-gradient: linear-gradient(
-      45deg,
-      rgba(255, 255, 255, 0) 0%,
-      rgba(255, 255, 255, 0.2) 30%,
-      rgba(255, 255, 255, 0.4) 40%,
-      rgba(255, 255, 255, 0.5) 50%,
-      rgba(255, 255, 255, 0.7) 65%,
-      rgba(255, 255, 255, 0.9) 90%
-    );
-  }
-
-  .dark {
-    --background: oklch(0.129 0 0);
-    --foreground: oklch(0.985 0 0);
-    --card: oklch(0.14 0 0);
-    --card-foreground: oklch(0.985 0 0);
-    --popover: oklch(0.14 0 0);
-    --popover-foreground: oklch(0.985 0 0);
-    --primary: oklch(0.7 0.12 190);
-    --primary-foreground: oklch(0.129 0 0);
-    --secondary: oklch(0.2 0 0);
-    --secondary-foreground: oklch(0.7 0.12 190);
-    --muted: oklch(0.2 0 0);
-    --muted-foreground: oklch(0.708 0 0);
-    --accent: oklch(0.7 0.12 190 / 0.15);
-    --accent-foreground: oklch(0.7 0.12 190);
-    --destructive: oklch(0.396 0.141 25.723);
-    --destructive-foreground: oklch(0.637 0.237 25.331);
-    --border: oklch(0.269 0 0);
-    --input: oklch(0.269 0 0);
-    --ring: oklch(0.439 0 0);
-
-    --page-gradient: linear-gradient(
-      to bottom,
-      rgba(0, 0, 0, 0.4) 0%,
-      rgba(0, 0, 0, 0.6) 25%,
-      rgba(0, 0, 0, 0.8) 40%,
-      rgba(0, 0, 0, 0.9) 60%,
-      rgb(0, 0, 0) 75%
-    );
-    --item-gradient: linear-gradient(
-      45deg,
-      #00000000 0%,
-      #0000003d 30%,
-      #00000063 40%,
-      #00000088 50%,
-      #000000c5 65%,
-      #000000 90%
-    );
-  }
-
   * {
-    border-color: var(--border);
+    @apply border-border outline-ring/50;
   }
 
   body {
-    background-color: var(--background);
-    color: var(--foreground);
-    font-family: var(--font-sans);
-    font-feature-settings:
-      "rlig" 1,
-      "calt" 1;
+    @apply bg-background text-foreground;
+  }
+
+  /* @media (min-width: 768px) {
+    *,
+    body {
+      cursor: none !important;
+    }
+
+    a,
+    button,
+    [role="button"],
+    input,
+    textarea,
+    select {
+      cursor: none !important;
+    }
+  } */
+}
+
+@utility scrollbar-hide {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  &::-webkit-scrollbar {
+    display: none; /* Safari and Chrome */
   }
 }
 
-@layer utilities {
-  .scrollbar-none::-webkit-scrollbar {
-    display: none;
-  }
-  .scrollbar-none {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-background/0;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-muted rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-muted-foreground/50;
+}
+
+/* KaTeX styling overrides for dark theme */
+.katex {
+  font-size: 1.1em;
+}
+
+.katex-display {
+  margin: 1.5em 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.katex .mord,
+.katex .mop,
+.katex .mbin,
+.katex .mrel,
+.katex .mopen,
+.katex .mclose,
+.katex .mpunct,
+.katex .minner {
+  color: inherit;
+}
+
+/* Highlight.js code block styling */
+pre code.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 1em;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+}
+
+code.hljs {
+  padding: 0.2em 0.4em;
+  background: var(--muted);
+  border-radius: 0.25rem;
+}
+
+@layer base {
+  .prose *,
+  .prose ::after,
+  .prose ::before,
+  .prose ::backdrop,
+  .prose ::file-selector-button {
+    margin: revert;
+    padding: revert;
   }
 
-  .glass-card {
-    @apply bg-card/40 backdrop-blur-md border border-border/50;
+  .prose h1,
+  .prose h2,
+  .prose h3,
+  .prose h4,
+  .prose h5,
+  .prose h6 {
+    font-size: revert;
+    font-weight: revert;
   }
 
-  .prose {
-    --tw-prose-headings: var(--foreground);
-    --tw-prose-links: var(--primary);
-    --tw-prose-bold: var(--foreground);
-    --tw-prose-counters: var(--muted-foreground);
-    --tw-prose-bullets: var(--primary);
-    --tw-prose-hr: var(--border);
-    --tw-prose-quotes: var(--foreground);
-    --tw-prose-quote-borders: var(--primary);
-    --tw-prose-captions: var(--muted-foreground);
-    --tw-prose-code: var(--foreground);
-    --tw-prose-pre-code: var(--foreground);
-    --tw-prose-pre-bg: transparent;
-    --tw-prose-th-borders: var(--border);
-    --tw-prose-td-borders: var(--border);
-  }
-
-  .prose h2 {
-    @apply text-2xl font-bold tracking-tight mt-12 mb-6 pb-2 border-b border-border/40 text-foreground/90;
-  }
-
-  .prose h3 {
-    @apply text-xl font-bold tracking-tight mt-8 mb-4 text-foreground/80;
-  }
-
-  .prose p {
-    @apply leading-relaxed mb-6 text-foreground/70;
-  }
-
+  .prose ol,
   .prose ul,
-  .prose ol {
-    @apply mb-6 text-foreground/70;
+  .prose menu {
+    list-style: revert;
   }
 
-  .prose li {
-    @apply mb-2;
+  .prose table,
+  .prose td,
+  .prose th {
+    @apply border border-border;
+    padding: 0.5rem;
+    border-collapse: collapse;
   }
 
-  .prose blockquote {
-    @apply italic border-l-4 border-primary/40 pl-4 py-1 bg-primary/5 rounded-r-lg;
+  .prose table {
+    width: 100%;
   }
+}
 
-  .prose pre {
-    @apply rounded-xl border border-border/40 my-8 overflow-hidden bg-[#0d1117]! shadow-2xl;
-  }
+.img_grad_pm {
+  background-blend-mode: normal;
+  background-origin: border-box;
+  background-position: left center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
 
-  .prose pre code {
-    @apply block p-4 text-[0.9rem] leading-relaxed font-mono;
-  }
+.blog_page {
+  background-image: var(--page-gradient), url("/img/page/ideas_2.webp");
+}
 
-  .prose code:not(pre code) {
-    @apply px-1.5 py-0.5 rounded-md bg-primary/10 text-primary font-medium text-[0.9em];
-  }
+.blog_item {
+  background-image: var(--page-gradient), url("/img/page/ideas_item.webp");
+}
 
-  .prose-direct p {
-    @apply mb-0 leading-relaxed;
-  }
+.articles_page {
+  background-image: var(--page-gradient), url("/img/page/diary.webp");
+}
 
-  .prose-direct ul, .prose-direct ol {
-    @apply mb-0;
-  }
+.articles_item {
+  background-image: var(--page-gradient), url("/img/page/diary_page.webp");
+}
 
-  .img_grad_pm {
-    background-image: var(--page-gradient), url("/img/page-hero.webp");
-    background-blend-mode: normal;
-    background-origin: border-box;
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-  }
+.tutorials_page {
+  background-image: var(--page-gradient), url("/img/page/posts.webp");
+}
 
-  .custom-scrollbar::-webkit-scrollbar {
-    width: 4px;
-  }
+.projects_page {
+  background-image: var(--page-gradient), url("/img/page/workflow.webp");
+}
 
-  .custom-scrollbar::-webkit-scrollbar-track {
-    background: transparent;
-  }
+:root {
+  --font-amoria-regular: "amoriaregular", sans-serif;
+}
 
-  .custom-scrollbar::-webkit-scrollbar-thumb {
-    background: color-mix(
-      in srgb,
-      var(--color-muted-foreground) 30%,
-      transparent
-    );
-    border-radius: 10px;
-  }
+.amoriaregular {
+  font-family: var(--font-amoria-regular);
+}
 
-  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    background: color-mix(
-      in srgb,
-      var(--color-muted-foreground) 50%,
-      transparent
-    );
-  }
+.mozilla-headline {
+  font-family: var(--font-mozilla-headline);
+}
+
+.philosopher {
+  font-family: var(--font-philosopher);
+}
+
+.google-sans {
+  font-family: var(--font-google-sans);
+}
+
+.mozilla-text {
+  font-family: var(--font-mozilla-text);
+}
+
+.noto-sans {
+  font-family: var(--font-noto-sans);
+}
+
+.noto-sans-display {
+  font-family: var(--font-noto-sans-display);
+}
+
+.noto-serif-sinhala {
+  font-family: var(--font-noto-serif-sinhala);
+}
+
+.roboto {
+  font-family: var(--font-roboto);
+}
+
+.space-mono {
+  font-family: var(--font-space-mono);
+}
+
+.local-inter {
+  font-family: var(--font-local-inter);
+}
+
+.local-jetbrains-mono {
+  font-family: var(--font-local-jetbrains-mono);
+}
+
+/* View Transitions [Scale] */
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-old(root) {
+  animation: 400ms cubic-bezier(0.4, 0, 0.2, 1) both scale-out,
+             400ms cubic-bezier(0.4, 0, 0.2, 1) both fade-out;
+}
+
+::view-transition-new(root) {
+  animation: 400ms cubic-bezier(0.4, 0, 0.2, 1) both scale-in,
+             400ms cubic-bezier(0.4, 0, 0.2, 1) both fade-in;
+}
+
+@keyframes scale-out {
+  from { transform: scale(1); }
+  to { transform: scale(0.92); }
+}
+
+@keyframes scale-in {
+  from { transform: scale(1.08); }
+  to { transform: scale(1); }
+}
+
+@keyframes fade-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Fallback for browsers that don't support View Transitions */
+@supports not (view-transition-name: root) {
+  /* You could add a standard CSS transition here if needed */
 }

@@ -1,0 +1,996 @@
+---
+title: "Sinhala Archaic Numbers: Unicode Representation, Font Support and Digital Preservation Challenges"
+date: "2026-02-14"
+description: "Sinhala Archaic Numbers is a Unicode block containing Sinhala Illakkam number characters."
+status: "Published"
+---
+<article class="font-local-inter">
+  <figure>
+    <img
+      src="/content/blog/Sinhala Archaic Numbers.avif"
+    />
+  </figure>
+
+  <h2 id="executive-summary"><strong>Executive Summary</strong></h2>
+  <p>
+    This report provides a comprehensive analysis of Sinhala Archaic Numbers,
+    known as Sinhala Illakkam, focusing on their historical context, Unicode
+    encoding, and current font representation challenges. These numerals
+    represent a distinct historical system, officially encoded in the Unicode
+    block U+111E0–U+111FF within the Supplementary Multilingual Plane (SMP)
+    since version 7.0. A critical finding is the apparent lack of explicit
+    support for this specific Unicode block within the widely used Noto Serif
+    Sinhala font, which primarily supports the main Sinhala script. This
+    omission necessitates reliance on font fallback mechanisms for rendering,
+    leading to potential inconsistencies in visual appearance. The report
+    underscores the profound significance of Unicode in the digital revival of
+    these historically disused numerals, while also highlighting the ongoing
+    challenges in achieving consistent and historically accurate typographic
+    representation, which is crucial for digital preservation and scholarly
+    engagement with ancient texts.
+  </p>
+  <h2 id="1-introduction-to-sinhala-archaic-numbers">
+    <strong>1. Introduction to Sinhala Archaic Numbers</strong>
+  </h2>
+  <p>
+    This section establishes a foundational understanding of Sinhala Archaic
+    Numbers, setting the stage for a detailed technical and representational
+    analysis.
+  </p>
+
+  <h3 id="11-historical-context-and-significance">
+    <strong>1.1 Historical Context and Significance</strong>
+  </h3>
+  <p>
+    The origins of Sinhala numerals are deeply rooted in the Brahmi script, with
+    evidence of their use in ancient Sri Lanka dating back to the 2nd century
+    AD. Rock inscriptions, such as those found at Dhakkina Vihare, preserve
+    early forms of these numerals, demonstrating similarities with numeral
+    systems from other parts of the Indian subcontinent.1 As the Sinhala
+    language evolved, it developed several unique methods for depicting numbers,
+    reflecting a rich and diverse numeral tradition.3
+  </p>
+  <p>
+    These numeral systems were not merely abstract symbols; they were integral
+    to various facets of ancient Sri Lankan society, encompassing administrative
+    records, religious texts, and everyday calculations.4 A notable example of
+    their administrative importance is the use of Sinhala Illakkam to number
+    clauses in the Kandyan Convention of 1815, a pivotal historical document.2
+    Their presence in palm-leaf manuscripts further highlights their role in
+    preserving a wide array of knowledge, including literary, astrological, and
+    medicinal content.4 The utilization of these numerals in such significant
+    historical and cultural artifacts underscores their deep connection to the
+    cultural identity and sovereignty of the Sinhala people prior to the advent
+    of colonial influence. The modern re-introduction of these numerals through
+    Unicode, after centuries of disuse, can be viewed as an important act of
+    cultural reclamation and digital preservation, emphasizing the enduring
+    value of indigenous systems beyond their functional utility.
+  </p>
+  <h3 id="12-decline-and-modern-revival-through-unicode">
+    <strong>1.2 Decline and Modern Revival through Unicode</strong>
+  </h3>
+  <p>
+    The widespread use of indigenous Sinhala numerals experienced a gradual
+    decline with the arrival of European colonizers—the Portuguese, Dutch, and
+    British—from the 16th century onwards.2 The Indo-Arabic numerals, introduced
+    by these powers, progressively replaced the native systems for general use.2
+    By the early 19th century, the application of Sinhala Illakkam for common
+    calculations had largely ceased.2
+  </p>
+  <p>
+    This historical shift resulted in a significant generational loss of
+    knowledge, rendering subsequent generations largely unfamiliar with the
+    forms, shapes, or even the very existence of Sinhala numeric figures.2 The
+    re-emergence of Sinhala numerals, particularly Sinhala Illakkam, in the
+    modern technological era is primarily attributable to their introduction
+    into the Unicode standard.5 Extensive research, spearheaded by organizations
+    such as the ICT Agency of Sri Lanka (ICTA) in collaboration with the
+    University of Colombo, was instrumental in identifying and standardizing
+    these numerals for digital encoding.8 This standardization is a critical
+    step for the digital preservation and accessibility of historical texts that
+    contain these numerals. The historical narrative clearly illustrates a
+    decline in Sinhala numeral usage directly linked to colonial influence.
+    Their reappearance in the digital realm through Unicode signifies a profound
+    turning point. This demonstrates Unicode's role not merely as a technical
+    standard for character encoding, but as a vital instrument for cultural
+    preservation and revival. By providing a standardized digital
+    representation, Unicode facilitates the study, display, and integration of
+    these previously marginalized numeral systems into contemporary digital
+    environments, thereby counteracting centuries of decline and fostering
+    cultural continuity.
+  </p>
+  <h2 id="2-diverse-sinhala-numeral-systems">
+    <strong>2. Diverse Sinhala Numeral Systems</strong>
+  </h2>
+  <p>
+    This section explores the various numeral systems historically employed in
+    Sinhala, clarifying the distinctions between them and highlighting the
+    specific characteristics of Sinhala Archaic Numbers (Sinhala Illakkam).
+  </p>
+  <h3
+    id="21-sinhala-illakkam-archaic-numerals-characteristics-and-historical-usage"
+  >
+    <strong
+      >2.1 Sinhala Illakkam (Archaic Numerals): Characteristics and Historical
+      Usage</strong
+    >
+  </h3>
+  <p>
+    Sinhala Illakkam, officially designated as Sinhala Archaic Numbers,
+    represent a distinct set of numerical characters.5 These characters are
+    encoded within the Unicode block U+111E0–U+111FF, situated in the
+    Supplementary Multilingual Plane (SMP).9 This block comprises 32 code
+    points, with 20 currently assigned to Sinhala Illakkam characters, while the
+    remaining 12 are reserved.10
+  </p>
+  <p>Key characteristics define Sinhala Illakkam:</p>
+  <ul>
+    <li>
+      <strong>Absence of Zero Concept:</strong> A fundamental distinguishing
+      feature is the lack of a zero place holder concept.3 This contrasts
+      notably with Indo-Arabic numerals and even other Sinhala numeral systems,
+      such as Lith Illakkam, which incorporate a zero.3
+    </li>
+    <li>
+      <strong>Separate Symbols for Higher Values:</strong> The system employs
+      distinct symbols for specific numerical values, including 10, 40, 50, 100,
+      and 1000, rather than relying solely on positional notation.2 For
+      instance, U+111EA represents SINHALA ARCHAIC NUMBER TEN, U+111ED is
+      SINHALA ARCHAIC NUMBER FORTY, U+111EE is SINHALA ARCHAIC NUMBER FIFTY,
+      U+111F3 is SINHALA ARCHAIC NUMBER ONE HUNDRED, and U+111F4 is SINHALA
+      ARCHAIC NUMBER ONE THOUSAND.5
+    </li>
+  </ul>
+  <p>
+    Historically, these numerals were used for ordinary calculations and to
+    express simple numbers.2 A significant historical application is their
+    appearance in the Kandyan Convention, signed in 1815, where clauses were
+    numbered using Sinhala Illakkam.2 The script tradition observed in this
+    document served as a primary reference for the shapes encoded in Unicode.2
+    Despite their historical importance, the general use of Sinhala Illakkam
+    largely ceased by the early 19th century, superseded by Indo-Arabic
+    numerals.2 The term "archaic" might suggest a singular, ancient system.
+    However, the research indicates that "Sinhala Archaic Numbers" (Sinhala
+    Illakkam) are specifically one of five distinct numeral systems historically
+    employed. Furthermore, their characteristic absence of a zero concept
+    significantly differentiates them from other systems, such as Lith Illakkam,
+    which did incorporate zero. This precision in Unicode encoding
+    (U+111E0–U+111FF) reflects a deliberate choice to preserve this particular
+    historical mathematical approach, rather than a generalized "ancient Sinhala
+    numbers" system. This specificity has implications for how these characters
+    are rendered and interpreted in digital contexts, emphasizing the need for
+    accurate representation of their unique properties.
+  </p>
+  <h3
+    id="22-lith-illakkam-ephemerisastrological-numerals-characteristics-and-historical-usage"
+  >
+    <strong
+      >2.2 Lith Illakkam (Ephemeris/Astrological Numerals): Characteristics and
+      Historical Usage</strong
+    >
+  </h3>
+  <p>
+    Lith Illakkam represent another distinct set of Sinhala numerals, separate
+    from Sinhala Illakkam. These were also encoded in Unicode, but within the
+    Basic Multilingual Plane (BMP) in the range 0DE6-0DEF.2
+  </p>
+  <p>Key characteristics of Lith Illakkam include:</p>
+  <ul>
+    <li>
+      <strong>Presence of Zero:</strong> In contrast to Sinhala Illakkam, Lith
+      Illakkam featured a zero and a zero place holder concept.2 The zero was
+      symbolized by the 'Halantha' or 'Hal lakuna' (kodiya).2
+    </li>
+    <li>
+      <strong>Positional System:</strong> Numbers exceeding zero were written in
+      a manner similar to Arabic numerals, where the value of the number on the
+      left increased by a factor of ten when a zero was present.2
+    </li>
+  </ul>
+  <p>
+    Historically, Lith Illakkam were predominantly used for astrological
+    calculations and for writing horoscopes on Ola leaf manuscripts.2 This
+    practice persisted until the early 20th century.2 They were also employed to
+    denote traditional years and dates in ephemerides 2 and for page numbering
+    in certain Ola leaf books, particularly those addressing non-Buddhist
+    subjects.2 The coexistence of Lith Illakkam, which included a zero concept
+    and were primarily used for astrological and calendrical purposes, alongside
+    Sinhala Illakkam, which lacked a zero and were used for "ordinary
+    calculations" 2, indicates a functional specialization of numeral systems
+    within ancient Sinhala society. The fact that Lith Illakkam were encoded in
+    the BMP (0DE6-0DEF), while Sinhala Illakkam were placed in the SMP
+    (U+111E0–U+111FF) 5, suggests a perceived difference in their contemporary
+    relevance or historical continuity during the Unicode standardization
+    process. Lith Illakkam's continued use into the 20th century likely accorded
+    them a higher priority or a more direct path to encoding in the more
+    accessible BMP, reflecting their practical utility for a living tradition
+    like astrology, as opposed to the more disused "archaic" Sinhala Illakkam.
+  </p>
+  <h3
+    id="23-other-historical-systems-katapayadia-sinhala-swara-and-bhootha-anka"
+  >
+    <strong
+      >2.3 Other Historical Systems: Katapayadia, Sinhala Swara, and Bhootha
+      Anka</strong
+    >
+  </h3>
+  <p>
+    Beyond Sinhala Illakkam and Lith Illakkam, several other numeral systems
+    contributed to the rich numerical heritage of the Sinhala language:
+  </p>
+  <ul>
+    <li>
+      <strong>Katapayadia:</strong> This is a unique numbering scheme where
+      numbers from 1 to 9 and 0 are represented by specific Sinhala consonants.2
+      Its primary application was for writing dates, and it continues to be used
+      in popular ephemerides, known as 'Panchanga Lith,' even today.2 This
+      system was also adopted by South Indian astrologers and is found in some
+      Chola rock inscriptions in Sri Lanka.2
+    </li>
+    <li>
+      <strong>Sinhala Swara (Vowel-Consonants for Page Numbering):</strong> This
+      system involved the use of Sinhala vowel-consonants for numbering pages,
+      particularly prevalent in Buddhist canonical books and Ola leaf
+      manuscripts.2 Its origins can be traced back to Aryabhata's Sanskrit Swara
+      numbering system, which was adapted to Sinhala characters based on the
+      order of consonants and vowels in the Sinhala Alphabet.2
+    </li>
+    <li>
+      <strong>Bhootha Anka (Word-based Numeration):</strong> In this system,
+      specific Sinhala words were used to denote numbers; for instance, "sky"
+      for zero, "moon" for one, and "eye" for two.2 Numbers could then be
+      constructed by combining these words.2 This system, which originated from
+      ancient Sanskrit mathematicians, likely served as a mnemonic aid,
+      facilitating memorization through rhythmical word sequences, especially in
+      contexts where knowledge transfer was primarily oral.2
+    </li>
+  </ul>
+  <p>
+    The existence of Katapayadia (consonant-based), Sinhala Swara
+    (vowel-consonant based), and Bhootha Anka (word-based) 2 reveals a
+    sophisticated understanding of numeration that extended beyond simple
+    symbolic representation. These systems suggest an adaptive approach to
+    numerical expression, tailored for diverse cognitive and practical
+    requirements: Katapayadia for mnemonic dates, Swara for systematic page
+    numbering in texts, and Bhootha Anka for oral transmission and poetic
+    expression. This multi-layered approach highlights a rich intellectual
+    tradition that sought to integrate numbers seamlessly into linguistic and
+    cultural frameworks, rather than treating them as isolated abstract symbols.
+  </p>
+  <h3 id="table-2-comparative-overview-of-sinhala-numeral-systems">
+    <strong>Table 2: Comparative Overview of Sinhala Numeral Systems</strong>
+  </h3>
+  <div class="table sticky bordered stripped hovered mh100">
+    <table>
+      <thead>
+        <tr>
+          <th align="left">System Name</th>
+          <th align="left">Unicode Status</th>
+          <th align="left">Presence of Zero Concept</th>
+          <th align="left">Primary Usage Context</th>
+          <th align="left">Historical Period of Prominent Use</th>
+          <th align="left">Key Characteristics</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td align="left">Sinhala Illakkam</td>
+          <td align="left">Encoded (U+111E0–U+111FF, SMP)</td>
+          <td align="left">No 5</td>
+          <td align="left">
+            Ordinary calculations, simple numbers, administrative records
+            (Kandyan Convention) 2
+          </td>
+          <td align="left">
+            Prior to early 19th century; 1754-1825 AD in palm-leaf 2
+          </td>
+          <td align="left">Separate symbols for 10, 40, 50, 100, 1000 2</td>
+        </tr>
+        <tr>
+          <td align="left">Lith Illakkam</td>
+          <td align="left">Encoded (0DE6-0DEF, BMP) 5</td>
+          <td align="left">Yes (Halantha/Hal lakuna) 3</td>
+          <td align="left">
+            Astrological calculations, horoscopes, ephemerides, page numbering
+            of Ola leaves (non-Buddhist) 3
+          </td>
+          <td align="left">Early 19th to early 20th century 3</td>
+          <td align="left">
+            Positional system with zero, some symbols are Sinhala
+            consonants/vowel modifiers 3
+          </td>
+        </tr>
+        <tr>
+          <td align="left">Katapayadia</td>
+          <td align="left">
+            Not explicitly encoded as a block, but uses existing Sinhala
+            consonants 6
+          </td>
+          <td align="left">Yes (consonant-based) 6</td>
+          <td align="left">Writing dates, ephemerides (Panchanga Lith) 6</td>
+          <td align="left">
+            Widely used by South Indian astrologers; still in use today 2
+          </td>
+          <td align="left">
+            Numbers 1-9 and 0 depicted by Sinhala consonants 6
+          </td>
+        </tr>
+        <tr>
+          <td align="left">Sinhala Swara</td>
+          <td align="left">
+            Not explicitly encoded as a block, uses Sinhala vowel-consonants 6
+          </td>
+          <td align="left">No (page numbering)</td>
+          <td align="left">
+            Page numbering of Ola leaf books (especially Buddhist canonical
+            texts) 3
+          </td>
+          <td align="left">
+            Ancient to present day for Ola leaf manuscripts 3
+          </td>
+          <td align="left">
+            Based on Sinhala alphabet consonant/vowel order, adapted from
+            Aryabhata's system 2
+          </td>
+        </tr>
+        <tr>
+          <td align="left">Bhootha Anka</td>
+          <td align="left">Not encoded</td>
+          <td align="left">Implicit (words like "sky" for zero) 6</td>
+          <td align="left">
+            Literary, poetic expression, aiding memorization 6
+          </td>
+          <td align="left">Prevalent from 400 AD onwards 6</td>
+          <td align="left">
+            Numbers denoted by specific words (e.g., "moon" for one, "eye" for
+            two) 6
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <h2 id="3-unicode-encoding-of-sinhala-archaic-numbers">
+    <strong>3. Unicode Encoding of Sinhala Archaic Numbers</strong>
+  </h2>
+  <p>
+    This section provides a detailed technical examination of how Sinhala
+    Archaic Numbers are represented within the Unicode standard.
+  </p>
+  <h3 id="31-the-sinhala-archaic-numbers-unicode-block-u111e0u111ff">
+    <strong
+      >3.1 The Sinhala Archaic Numbers Unicode Block (U+111E0–U+111FF)</strong
+    >
+  </h3>
+  <p>
+    The Unicode Consortium has officially designated a dedicated block for
+    Sinhala Archaic Numbers.10 This block encompasses the range U+111E0 to
+    U+111FF, comprising 32 code points, and is situated within the Supplementary
+    Multilingual Plane (SMP).9 The SMP is typically utilized for less common or
+    historical scripts and symbols, distinguishing it from the Basic
+    Multilingual Plane (BMP), where the primary Sinhala script and Lith Illakkam
+    are located.5 Of the 32 available code points in this block, 20 are
+    currently assigned to Sinhala Illakkam characters, with the remaining 12
+    reserved and unused.10 These characters were assigned as part of Unicode
+    version 7.0, released in 2014.10 The encoding of Sinhala Archaic Numbers in
+    the Supplementary Multilingual Plane (SMP) 9, rather than the Basic
+    Multilingual Plane (BMP) 5, carries significant technical implications.
+    Characters in the SMP often require more modern software or specific font
+    installations for proper display, as older systems may not fully support
+    them. This placement reflects their historical disuse and recent
+    re-discovery, suggesting a lower initial priority for widespread, immediate
+    adoption compared to scripts in the BMP. Consequently, while these
+    characters are standardized, their practical digital accessibility and
+    rendering can be more challenging, demanding up-to-date software
+    environments and dedicated font support.
+  </p>
+  <h3 id="32-assigned-code-points-and-character-glyphs">
+    <strong>3.2 Assigned Code Points and Character Glyphs</strong>
+  </h3>
+  <p>
+    The Sinhala Archaic Numbers block includes individual digits from one
+    through nine, as well as specific symbols for numbers such as ten, twenty,
+    thirty, forty, fifty, sixty, seventy, eighty, ninety, one hundred, and one
+    thousand.5
+  </p>
+  <p>Examples of these code points and their official Unicode names include:</p>
+  <ul class="font-noto-serif-sinhala">
+    <li>U+111E1: SINHALA ARCHAIC DIGIT ONE (𑇡) 5</li>
+    <li>U+111E2: SINHALA ARCHAIC DIGIT TWO (𑇢) 5</li>
+    <li>U+111E3: SINHALA ARCHAIC DIGIT THREE (𑇣) 5</li>
+    <li>U+111E4: SINHALA ARCHAIC DIGIT FOUR (𑇤) 5</li>
+    <li>U+111EE: SINHALA ARCHAIC NUMBER FIFTY (𑇮) 5</li>
+    <li>U+111F3: SINHALA ARCHAIC NUMBER ONE HUNDRED (𑇳) 5</li>
+    <li>U+111F4: SINHALA ARCHAIC NUMBER ONE THOUSAND (𑇴) 5</li>
+  </ul>
+  <p>
+    The provided image visually illustrates the glyphs associated with these
+    Unicode points, spanning from U+111E1 to U+111F4. The shapes of these glyphs
+    are derived from historical references, with particular emphasis on the
+    Kandyan Convention, which was considered a highly accurate source for
+    character forms during the standardization process.2 While the Unicode
+    standard specifies code points and names, the actual glyph shapes are
+    determined by font designers. The research indicates that the shapes for
+    numbers 2 and 3 found in the Kandyan Convention 2 vary from some scholarly
+    depictions, such as those by Mendis Gunasekera 2, particularly regarding the
+    exit stroke. The Unicode standard's reliance on "the most accurate shapes"
+    from the Kandyan Convention implies a deliberate effort to achieve
+    historical fidelity. However, this also presents a challenge for font
+    developers: faithfully reproducing these specific historical nuances while
+    ensuring legibility and consistency within a digital font. Any deviation in
+    font design from these historically referenced shapes could lead to
+    discrepancies in how these archaic numbers are perceived, potentially
+    affecting academic research or cultural understanding.
+  </p>
+  <h3 id="table-1-sinhala-archaic-numbers-unicode-block-u111e0u111ff">
+    <strong
+      >Table 1: Sinhala Archaic Numbers Unicode Block (U+111E0–U+111FF)</strong
+    >
+  </h3>
+  <div class="table sticky bordered stripped hovered mh100">
+    <table>
+      <thead>
+        <tr>
+          <th align="left">Unicode Code Point</th>
+          <th align="left">Character Glyph</th>
+          <th align="left">Official Unicode Name</th>
+          <th align="left">Numeric Value</th>
+        </tr>
+      </thead>
+      <tbody class="font-noto-serif-sinhala">
+        <tr>
+          <td align="left">U+111E1</td>
+          <td align="left">𑇡</td>
+          <td align="left">SINHALA ARCHAIC DIGIT ONE</td>
+          <td align="left">1</td>
+        </tr>
+        <tr>
+          <td align="left">U+111E2</td>
+          <td align="left">𑇢</td>
+          <td align="left">SINHALA ARCHAIC DIGIT TWO</td>
+          <td align="left">2</td>
+        </tr>
+        <tr>
+          <td align="left">U+111E3</td>
+          <td align="left">𑇣</td>
+          <td align="left">SINHALA ARCHAIC DIGIT THREE</td>
+          <td align="left">3</td>
+        </tr>
+        <tr>
+          <td align="left">U+111E4</td>
+          <td align="left">𑇤</td>
+          <td align="left">SINHALA ARCHAIC DIGIT FOUR</td>
+          <td align="left">4</td>
+        </tr>
+        <tr>
+          <td align="left">U+111E5</td>
+          <td align="left">𑇥</td>
+          <td align="left">SINHALA ARCHAIC DIGIT FIVE</td>
+          <td align="left">5</td>
+        </tr>
+        <tr>
+          <td align="left">U+111E6</td>
+          <td align="left">𑇦</td>
+          <td align="left">SINHALA ARCHAIC DIGIT SIX</td>
+          <td align="left">6</td>
+        </tr>
+        <tr>
+          <td align="left">U+111E7</td>
+          <td align="left">𑇧</td>
+          <td align="left">SINHALA ARCHAIC DIGIT SEVEN</td>
+          <td align="left">7</td>
+        </tr>
+        <tr>
+          <td align="left">U+111E8</td>
+          <td align="left">𑇨</td>
+          <td align="left">SINHALA ARCHAIC DIGIT EIGHT</td>
+          <td align="left">8</td>
+        </tr>
+        <tr>
+          <td align="left">U+111E9</td>
+          <td align="left">𑇩</td>
+          <td align="left">SINHALA ARCHAIC DIGIT NINE</td>
+          <td align="left">9</td>
+        </tr>
+        <tr>
+          <td align="left">U+111EA</td>
+          <td align="left">𑇪</td>
+          <td align="left">SINHALA ARCHAIC NUMBER TEN</td>
+          <td align="left">10</td>
+        </tr>
+        <tr>
+          <td align="left">U+111EB</td>
+          <td align="left">𑇫</td>
+          <td align="left">SINHALA ARCHAIC NUMBER TWENTY</td>
+          <td align="left">20</td>
+        </tr>
+        <tr>
+          <td align="left">U+111EC</td>
+          <td align="left">𑇬</td>
+          <td align="left">SINHALA ARCHAIC NUMBER THIRTY</td>
+          <td align="left">30</td>
+        </tr>
+        <tr>
+          <td align="left">U+111ED</td>
+          <td align="left">𑇭</td>
+          <td align="left">SINHALA ARCHAIC NUMBER FORTY</td>
+          <td align="left">40</td>
+        </tr>
+        <tr>
+          <td align="left">U+111EE</td>
+          <td align="left">𑇮</td>
+          <td align="left">SINHALA ARCHAIC NUMBER FIFTY</td>
+          <td align="left">50</td>
+        </tr>
+        <tr>
+          <td align="left">U+111EF</td>
+          <td align="left">𑇯</td>
+          <td align="left">SINHALA ARCHAIC NUMBER SIXTY</td>
+          <td align="left">60</td>
+        </tr>
+        <tr>
+          <td align="left">U+111F0</td>
+          <td align="left">𑇰</td>
+          <td align="left">SINHALA ARCHAIC NUMBER SEVENTY</td>
+          <td align="left">70</td>
+        </tr>
+        <tr>
+          <td align="left">U+111F1</td>
+          <td align="left">𑇱</td>
+          <td align="left">SINHALA ARCHAIC NUMBER EIGHTY</td>
+          <td align="left">80</td>
+        </tr>
+        <tr>
+          <td align="left">U+111F2</td>
+          <td align="left">𑇲</td>
+          <td align="left">SINHALA ARCHAIC NUMBER NINETY</td>
+          <td align="left">90</td>
+        </tr>
+        <tr>
+          <td align="left">U+111F3</td>
+          <td align="left">𑇳</td>
+          <td align="left">SINHALA ARCHAIC NUMBER ONE HUNDRED</td>
+          <td align="left">100</td>
+        </tr>
+        <tr>
+          <td align="left">U+111F4</td>
+          <td align="left">𑇴</td>
+          <td align="left">SINHALA ARCHAIC NUMBER ONE THOUSAND</td>
+          <td align="left">1000</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <h3 id="33-the-standardization-process-and-reference-sources">
+    <strong>3.3 The Standardization Process and Reference Sources</strong>
+  </h3>
+  <p>
+    The encoding of Sinhala Archaic Numbers within Unicode was a meticulous
+    process involving proposals submitted to the Unicode Technical Committee and
+    ISO/IEC 10646 Working Group 2. Notable documents include Michael Everson's
+    proposal from 1997 (L2/97-018, N1473R) and various minutes from WG2 meetings
+    (L2/97-030, N1503; L2/99-010, N1903).10
+  </p>
+  <p>
+    This standardization effort was built upon extensive research, which
+    encompassed studies of inscriptions, horoscopes, Ola leaf paging, and the
+    historical evolution of Sinhala numerals.8 The ICT Agency of Sri Lanka
+    (ICTA) and the University of Colombo School of Computing played a
+    significant role in conducting this foundational research.8 The shapes
+    ultimately accepted for Unicode standards were heavily influenced by written
+    samples from the Kandyan Convention.2 Other important historical documents
+    and scholarly works, such as those by Abraham Mendis Gunasekera and W.A. De
+    Silva, also contributed to the comprehensive understanding of these
+    numerals.2 The "History" section of the Unicode block 10 lists multiple L2
+    and WG2 documents spanning several years (1997-1998) prior to the
+    characters' release in Unicode 7.0 in 2014.10 This extended timeline,
+    coupled with mentions of "extensive research" by ICTA and the University of
+    Colombo 8 and the reliance on specific historical documents like the Kandyan
+    Convention 2, illustrates that Unicode standardization is not a singular
+    event but an iterative, multi-stakeholder, and deeply research-driven
+    process. It necessitates significant academic and linguistic validation to
+    ensure historical accuracy and representational integrity. This long
+    gestation period underscores the complexity inherent in encoding historical
+    scripts, particularly when historical usage patterns and subtle glyphic
+    variations must be carefully reconciled.
+  </p>
+  <h2 id="4-font-representation-and-unicode-variations">
+    <strong>4. Font Representation and Unicode Variations</strong>
+  </h2>
+  <p>
+    This section critically analyzes the rendering of Sinhala Archaic Numbers,
+    with a specific focus on Noto Serif Sinhala and broader challenges in font
+    support.
+  </p>
+  <h3 id="41-analysis-of-noto-serif-sinhala-font-support-for-archaic-numbers">
+    <strong
+      >4.1 Analysis of Noto Serif Sinhala Font Support for Archaic
+      Numbers</strong
+    >
+  </h3>
+  <p>
+    Noto Serif Sinhala is characterized as a modulated ("serif") design tailored
+    for texts in the Indic Sinhala script. It boasts support for 645 glyphs and
+    170 characters drawn from three Unicode blocks: Sinhala, Basic Latin, and
+    General Punctuation.15 As part of the extensive Noto font collection, its
+    overarching goal is to support "all modern and ancient languages".15
+  </p>
+  <p>
+    A critical observation, however, is that the detailed description of Noto
+    Serif Sinhala's Unicode support 15
+  </p>
+  <p>
+    <em>does not explicitly list</em> the "Sinhala Archaic Numbers" block
+    (U+111E0–U+111FF). This omission is significant, indicating that while the
+    font provides comprehensive coverage for the primary Sinhala script, it
+    likely lacks the specific glyphs required for the archaic numerals
+    themselves. Consequently, if a user attempts to display Sinhala Archaic
+    Numbers using Noto Serif Sinhala exclusively, these characters would most
+    probably render as "tofu" (empty boxes or missing glyphs) or trigger a
+    system-level font fallback mechanism. The stated mission of the Noto project
+    is to be a "global font collection for writing in all modern and ancient
+    languages".15 Yet, Noto Serif Sinhala, a font specifically designed for the
+    Sinhala script, does not explicitly include the Sinhala Archaic Numbers
+    block 15, despite these numbers being officially encoded in Unicode since
+    2014.10 This highlights a notable discrepancy: even comprehensive font
+    projects may not prioritize or fully implement support for every
+    historically encoded character within a script's broader family, especially
+    those deemed "archaic" or less frequently used. This implies that the
+    digital preservation efforts achieved through Unicode encoding are only
+    partially realized without corresponding font development, leading to
+    potential rendering failures and hindering the accessibility of historical
+    texts containing these characters.
+  </p>
+  <h3
+    id="42-general-unicode-font-rendering-and-fallback-mechanisms-for-unassigned-glyphs"
+  >
+    <strong
+      >4.2 General Unicode Font Rendering and Fallback Mechanisms for Unassigned
+      Glyphs</strong
+    >
+  </h3>
+  <p>
+    When a font lacks a glyph for a particular Unicode character, operating
+    systems and rendering engines typically implement a "font fallback"
+    mechanism. This process involves searching for another installed font that
+    <em>does</em> contain the necessary glyph and using it to render that
+    specific character, while the remainder of the text continues to be
+    displayed in the primary font.
+  </p>
+  <p>
+    While font fallback prevents the appearance of "tofu," it can introduce
+    visual inconsistencies. The fallback font may possess a different style,
+    weight, or size, thereby disrupting the typographic harmony of the text. For
+    historical scripts like Sinhala Archaic Numbers, identifying a suitable
+    fallback font that accurately and aesthetically renders the unique glyph
+    shapes can be particularly challenging. Therefore, for reliable and
+    aesthetically consistent rendering, dedicated font support for the Sinhala
+    Archaic Numbers block is essential. Such dedicated support ensures that the
+    glyphs are designed to complement the primary Sinhala script and faithfully
+    adhere to the intended historical forms. The reliance on font fallback for
+    unassigned glyphs, a common practice in Unicode rendering, inadvertently
+    creates an "invisible" barrier to the digital accessibility of Sinhala
+    Archaic Numbers. Although these characters are encoded 10 and thus
+    theoretically displayable, the absence of dedicated support in widely used
+    fonts like Noto Serif Sinhala 15 means their appearance is contingent upon
+    the user's system and installed fonts. This leads to inconsistent rendering,
+    where characters may appear in a mismatched style or even be entirely
+    unreadable if no appropriate fallback font is available. This undermines the
+    objective of digital preservation, as the content, while technically
+    present, becomes practically inaccessible or visually jarring, impeding
+    scholarly research and public engagement with historical texts.
+  </p>
+  <h3 id="43-observed-and-potential-glyphic-variations-across-supporting-fonts">
+    <strong
+      >4.3 Observed and Potential Glyphic Variations Across Supporting
+      Fonts</strong
+    >
+  </h3>
+  <p>
+    Given the relatively recent encoding of Sinhala Archaic Numbers (2014) and
+    their "archaic" nature, the number of fonts that fully support this specific
+    Unicode block is likely limited. Even among fonts that do offer support,
+    variations in glyph design can arise. Font designers may interpret
+    historical forms differently, resulting in subtle or even pronounced
+    differences in stroke thickness, curve fluidity, or overall proportion. The
+    discussion regarding the exit stroke of numbers 2 and 3 in the Kandyan
+    Convention versus other scholarly depictions 2 exemplifies how even minor
+    historical ambiguities can lead to variations in digital rendering.
+  </p>
+  <p>
+    For researchers engaged in the study of historical documents, such glyphic
+    variations can pose significant challenges, as precise visual fidelity to
+    original forms is often critical for accurate analysis. This area
+    necessitates ongoing development of high-quality, historically accurate
+    fonts and potentially collaborative, community-driven efforts to document
+    and compare glyphic variations across different implementations. Unicode
+    encoding represents the initial step in making characters digitally
+    representable. However, the consistent and accurate rendering through fonts
+    constitutes the "last mile" of digital preservation. The potential for
+    glyphic variations across supporting fonts, as inferred from the general
+    nature of font design and historical debates on character shapes 2, implies
+    that even if a font supports the block, its interpretation of the archaic
+    forms might not align with specific historical or scholarly expectations.
+    This introduces a challenge for maintaining the integrity and authenticity
+    of historical texts in digital formats, as the visual representation can
+    subtly alter the perceived historical artifact. This highlights the critical
+    need for collaborative efforts among linguists, historians, and typographers
+    to ensure that digital representations are not merely present but also
+    faithful to their historical counterparts.
+  </p>
+  <h2 id="5-conclusion-and-recommendations">
+    <strong>5. Conclusion and Recommendations</strong>
+  </h2>
+  <h3 id="51-summary-of-key-findings">
+    <strong>5.1 Summary of Key Findings</strong>
+  </h3>
+  <p>
+    Sinhala Archaic Numbers (Sinhala Illakkam) have been officially encoded in
+    the Unicode block U+111E0–U+111FF within the Supplementary Multilingual
+    Plane since version 7.0, marking a crucial step in their digital
+    preservation. Sri Lanka possesses a rich and diverse heritage of numeral
+    systems, with Sinhala Illakkam being one of five distinct systems, each
+    characterized by unique features and historical applications, such as Lith
+    Illakkam with its zero concept. Despite its broad coverage, the widely used
+    Noto Serif Sinhala font does not explicitly include support for the Sinhala
+    Archaic Numbers block, necessitating reliance on font fallback mechanisms
+    for their rendering. This reliance on font fallback and the potential for
+    glyphic variations across limited supporting fonts present significant
+    challenges for the consistent and historically accurate digital display of
+    these characters.
+  </p>
+  <h3 id="52-implications-for-digital-preservation-and-typography">
+    <strong>5.2 Implications for Digital Preservation and Typography</strong>
+  </h3>
+  <p>
+    The Unicode encoding of Sinhala Archaic Numbers is vital for re-establishing
+    a connection between modern users and a significant component of their
+    linguistic and cultural heritage, thereby facilitating the study and
+    appreciation of historical documents. Accurate digital representation is
+    indispensable for academic research in fields such as epigraphy,
+    paleography, and historical linguistics, enabling more efficient analysis
+    and dissemination of knowledge derived from ancient texts. The current state
+    of font support highlights a pressing need for improved typographic
+    consistency and quality, particularly for less commonly used historical
+    scripts, to ensure that digital renditions are both legible and
+    aesthetically pleasing.
+  </p>
+  <h3 id="53-recommendations-for-font-developers-researchers-and-users">
+    <strong
+      >5.3 Recommendations for Font Developers, Researchers, and Users</strong
+    >
+  </h3>
+  <p>
+    To further enhance the digital preservation and accessibility of Sinhala
+    Archaic Numbers, the following recommendations are put forth:
+  </p>
+  <p><strong>For Font Developers:</strong></p>
+  <ul>
+    <li>
+      <strong>Expand Noto Serif Sinhala:</strong> Google and other font
+      foundries should consider expanding Noto Serif Sinhala, or developing a
+      complementary Noto font, to explicitly include comprehensive glyph support
+      for the Sinhala Archaic Numbers block (U+111E0–U+111FF). This would
+      substantially improve out-of-the-box rendering for a wider user base.
+    </li>
+    <li>
+      <strong>Adhere to Historical Forms:</strong> New font development should
+      meticulously adhere to historically validated glyph shapes, particularly
+      those referenced during the Unicode standardization process, such as the
+      forms found in the Kandyan Convention, to ensure high fidelity.
+    </li>
+    <li>
+      <strong>Foster Open Source Development:</strong> Encouragement and support
+      for open-source font projects dedicated to historical Sinhala scripts are
+      recommended to stimulate community contributions and accelerate
+      development.
+    </li>
+  </ul>
+  <p><strong>For Researchers and Academics:</strong></p>
+  <ul>
+    <li>
+      <strong>Document Glyphic Variations:</strong> Further research should be
+      conducted to systematically document and analyze glyphic variations of
+      Sinhala Archaic Numbers across different historical periods and
+      manuscripts. This data can provide valuable input for future font
+      development and refinement.
+    </li>
+    <li>
+      <strong>Promote Usage:</strong> Integration of the Unicode-encoded Sinhala
+      Archaic Numbers into academic publications, digital archives, and
+      educational materials is encouraged to increase their visibility and
+      promote broader adoption.
+    </li>
+    <li>
+      <strong>Advocate for Support:</strong> Continued advocacy with software
+      developers and platform providers is crucial to ensure robust rendering
+      support for characters located in the Supplementary Multilingual Plane.
+    </li>
+  </ul>
+  <p><strong>For Users and General Public:</strong></p>
+  <ul>
+    <li>
+      <strong>Utilize Supporting Fonts:</strong> When engaging with texts
+      containing Sinhala Archaic Numbers, users should actively seek out and
+      install fonts specifically known to support the U+111E0–U+111FF block.
+    </li>
+    <li>
+      <strong>Increase Awareness:</strong> Efforts should be made to foster
+      greater public awareness regarding Sinhala's rich numeral heritage and the
+      importance of ongoing digital preservation initiatives.
+    </li>
+    <li>
+      <strong>Report Issues:</strong> Users are encouraged to report any
+      rendering issues, such as "tofu" or incorrect glyphs, to font developers
+      and software vendors to drive continuous improvements.
+    </li>
+  </ul>
+  <h4 id="works-cited"><strong>Works cited</strong></h4>
+  <ol>
+    <li>
+      How Ancient Sinhala Brahmi Numerals Were Invented | PDF | Mathematics -
+      Scribd, accessed on July 29, 2025,
+      <a
+        class="extL"
+        href="https://www.scribd.com/document/689315778/How-ancient-Sinhala-Brahmi-numerals-were-invented"
+        rel="nofollow noreferrer noopener"
+        target="_blank"
+        >https://www.scribd.com/document/689315778/How-ancient-Sinhala-Brahmi-numerals-were-invented</a
+      >
+    </li>
+    <li>
+      Numerations in the Sinhala Language - Local Language Portal, accessed on
+      July 29, 2025,
+      <a
+        class="extL"
+        href="https://www.language.lk/wp-content/uploads/2017/12/Numerals-in-Sinhala-Language.pdf"
+        rel="nofollow noreferrer noopener"
+        target="_blank"
+        >https://www.language.lk/wp-content/uploads/2017/12/Numerals-in-Sinhala-Language.pdf</a
+      >
+    </li>
+    <li>
+      Archaic Sinhala Numerals - Unicode, accessed on July 29, 2025,
+      <a
+        class="extL"
+        href="https://www.unicode.org/L2/L2008/08068-archaic-sinhala.pdf"
+        rel="nofollow noreferrer noopener"
+        target="_blank"
+        >https://www.unicode.org/L2/L2008/08068-archaic-sinhala.pdf</a
+      >
+    </li>
+    <li>
+      (PDF) Ancient Sinhala Numeral Systems Discovered from Palm-leaf ...,
+      accessed on July 29, 2025,
+      <a
+        class="extL"
+        href="https://www.researchgate.net/publication/390283590_Ancient_Sinhala_numeral_systems_discovered_from_palm-leaf_manuscripts_in_Sri_Lanka"
+        rel="nofollow noreferrer noopener"
+        target="_blank"
+        >https://www.researchgate.net/publication/390283590_Ancient_Sinhala_numeral_systems_discovered_from_palm-leaf_manuscripts_in_Sri_Lanka</a
+      >
+    </li>
+    <li>
+      Exploring typography of Sinhala numerals, accessed on July 29, 2025,
+      <a
+        class="extL"
+        href="https://www.typoday.in/2018/spk_papers/kosala-senevirathne-typoday-2018.pdf"
+        rel="nofollow noreferrer noopener"
+        target="_blank"
+        >https://www.typoday.in/2018/spk_papers/kosala-senevirathne-typoday-2018.pdf</a
+      >
+    </li>
+    <li>
+      Sinhala numerals - Wikipedia, accessed on July 29, 2025,
+      <a
+        class="extL"
+        href="https://en.wikipedia.org/wiki/Sinhala_numerals"
+        rel="nofollow noreferrer noopener"
+        target="_blank"
+        >https://en.wikipedia.org/wiki/Sinhala_numerals</a
+      >
+    </li>
+    <li>
+      Numerals or Numerations Around Kandyan Kingdom | PDF | History | Classics
+      - Scribd, accessed on July 29, 2025,
+      <a
+        class="extL"
+        href="https://fr.scribd.com/document/535145358/SINHALA-NUMBER"
+        rel="nofollow noreferrer noopener"
+        target="_blank"
+        >https://fr.scribd.com/document/535145358/SINHALA-NUMBER</a
+      >
+    </li>
+    <li>
+      Sinhala numerals in Unicode 7.0 - Daily FT, accessed on July 29, 2025,
+      <a
+        class="extL"
+        href="https://www.ft.lk/article/313122/Sinhala-numerals-in-Unicode-7.0-"
+        rel="nofollow noreferrer noopener"
+        target="_blank"
+        >https://www.ft.lk/article/313122/Sinhala-numerals-in-Unicode-7.0-</a
+      >
+    </li>
+    <li>
+      SLS 1134 : 2011 - Local Language Portal, accessed on July 29, 2025,
+      <a
+        class="extL"
+        href="https://www.language.lk/wp-content/uploads/2018/03/SLS-1134-2011.pdf"
+        rel="nofollow noreferrer noopener"
+        target="_blank"
+        >https://www.language.lk/wp-content/uploads/2018/03/SLS-1134-2011.pdf</a
+      >
+    </li>
+    <li>
+      Sinhala Archaic Numbers - Wikipedia, accessed on July 29, 2025,
+      <a
+        class="extL"
+        href="https://en.wikipedia.org/wiki/Sinhala_Archaic_Numbers"
+        rel="nofollow noreferrer noopener"
+        target="_blank"
+        >https://en.wikipedia.org/wiki/Sinhala_Archaic_Numbers</a
+      >
+    </li>
+    <li>
+      Sinhala Archaic Numbers - Graphemica, accessed on July 29, 2025,
+      <a
+        class="extL"
+        href="https://graphemica.com/blocks/sinhala-archaic-numbers"
+        rel="nofollow noreferrer noopener"
+        target="_blank"
+        >https://graphemica.com/blocks/sinhala-archaic-numbers</a
+      >
+    </li>
+    <li>
+      Unicode Block “Sinhala Archaic Numbers” - Compart, accessed on July 29,
+      2025,
+      <a
+        class="extL"
+        href="https://www.compart.com/en/unicode/block/U+111E0"
+        rel="nofollow noreferrer noopener"
+        target="_blank"
+        >https://www.compart.com/en/unicode/block/U+111E0</a
+      >
+    </li>
+    <li>
+      “𑇮” U+111EE Sinhala Archaic Number Fifty Unicode Character - Compart,
+      accessed on July 29, 2025,
+      <a
+        class="extL"
+        href="https://www.compart.com/en/unicode/U+111EE"
+        rel="nofollow noreferrer noopener"
+        target="_blank"
+        >https://www.compart.com/en/unicode/U+111EE</a
+      >
+    </li>
+    <li>
+      Sinhala Numerals - Wikimedia Commons, accessed on July 29, 2025,
+      <a
+        class="extL"
+        href="https://commons.wikimedia.org/wiki/Sinhala_Numerals"
+        rel="nofollow noreferrer noopener"
+        target="_blank"
+        >https://commons.wikimedia.org/wiki/Sinhala_Numerals</a
+      >
+    </li>
+    <li>
+      Noto Serif Sinhala - Google Fonts, accessed on July 29, 2025,
+      <a
+        class="extL"
+        href="https://fonts.google.com/noto/specimen/Noto+Serif+Sinhala"
+        rel="nofollow noreferrer noopener"
+        target="_blank"
+        >https://fonts.google.com/noto/specimen/Noto+Serif+Sinhala</a
+      >
+    </li>
+    <li>
+      Noto Serif - Google Fonts, accessed on July 29, 2025,
+      <a
+        class="extL"
+        href="https://fonts.google.com/noto/specimen/Noto+Serif"
+        rel="nofollow noreferrer noopener"
+        target="_blank"
+        >https://fonts.google.com/noto/specimen/Noto+Serif</a
+      >
+    </li>
+  </ol>
+</article>

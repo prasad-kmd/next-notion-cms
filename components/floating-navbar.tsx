@@ -1,81 +1,174 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { Menu, Search, Sun, Moon, Settings, Bell, User, X } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { useSidebar } from "./sidebar-context";
 import { useTheme } from "next-themes";
-import { ThemeToggle } from "./theme/theme-toggle";
+import { Sun, Moon, Bookmark, Share2, LayoutGrid } from "lucide-react";
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import { cn } from "@/lib/utils";
+import { Search } from "./search";
+import { BookmarksModal } from "./bookmarks-modal";
+import { useBookmarks } from "@/hooks/use-bookmarks";
+import { toast } from "sonner";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 
-export function FloatingNavbar() {
-  const { toggleMobileSidebar } = useSidebar();
-  const [scrolled, setScrolled] = useState(false);
+interface FloatingNavbarProps {
+  className?: string;
+  isMobileSidebar?: boolean;
+}
+
+export function FloatingNavbar({
+  className,
+  isMobileSidebar = false,
+}: FloatingNavbarProps) {
   const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+  const [isBookmarksOpen, setIsBookmarksOpen] = useState(false);
+  const { bookmarks } = useBookmarks();
+  const [copied, setCopied] = useState(false);
 
+  // Avoid hydration mismatch
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    setMounted(true);
   }, []);
 
+  if (!mounted) {
+    return null;
+  }
+
+  const toggleTheme = () => {
+    setTheme(theme === "dark" ? "light" : "dark");
+  };
+
+  const handleShare = async () => {
+    const shareData = {
+      title: document.title,
+      text: "Check out this page!",
+      url: window.location.href,
+    };
+
+    if (navigator.share) {
+      try {
+        await navigator.share(shareData);
+      } catch (error) {
+        console.error("Error sharing:", error);
+      }
+    } else {
+      try {
+        await navigator.clipboard.writeText(shareData.url);
+        setCopied(true);
+        toast.success("URL copied to clipboard");
+        setTimeout(() => setCopied(false), 2000);
+      } catch (error) {
+        console.error("Failed to copy URL:", error);
+        toast.error("Failed to copy URL");
+      }
+    }
+  };
+
+  const navItems = [
+    {
+      icon: LayoutGrid,
+      label: "Pages",
+      href: "/pages",
+    },
+    {
+      icon: Share2,
+      label: copied ? "Copied!" : "Share",
+      onClick: handleShare,
+    },
+    {
+      icon: Bookmark,
+      label: "Bookmarks",
+      onClick: () => {
+        if (bookmarks.length === 0) {
+          toast.info("No bookmarks saved yet", {
+            description: "Bookmark posts to see them here",
+          });
+        } else {
+          setIsBookmarksOpen(true);
+        }
+      },
+    },
+  ];
+
   return (
-    <header
+    <div
       className={cn(
-        "fixed top-0 left-0 right-0 z-40 transition-all duration-300 pointer-events-none",
+        "flex items-center gap-1 transition-all google-sans",
+        !isMobileSidebar &&
+          "fixed top-6 right-6 z-[60] p-1 rounded-full border border-border bg-background/80 backdrop-blur shadow-lg",
+        isMobileSidebar &&
+          "relative flex-row p-0 border-none bg-transparent shadow-none",
+        className,
       )}
     >
-      <div className="max-w-[1440px] mx-auto px-6 flex justify-between items-center h-16 pointer-events-none">
-        {/* Mobile Menu Trigger */}
-        <div className="lg:hidden flex items-center h-full pointer-events-auto">
+      <Search isMobileSidebar={isMobileSidebar} />
+      {navItems.map((item) =>
+        item.href ? (
+          <Tooltip key={item.label} delayDuration={0}>
+            <TooltipTrigger asChild>
+              <Link
+                href={item.href}
+                className="p-2 rounded-full hover:bg-muted text-muted-foreground hover:text-foreground transition-colors relative group google-sans"
+                aria-label={item.label}
+              >
+                <item.icon className="h-5 w-5" />
+              </Link>
+            </TooltipTrigger>
+            {!isMobileSidebar && (
+              <TooltipContent side="bottom" sideOffset={8}>
+                {item.label}
+              </TooltipContent>
+            )}
+          </Tooltip>
+        ) : (
+          <Tooltip key={item.label} delayDuration={0}>
+            <TooltipTrigger asChild>
+              <button
+                onClick={item.onClick}
+                className="p-2 rounded-full hover:bg-muted text-muted-foreground hover:text-foreground transition-colors relative group google-sans"
+                aria-label={item.label}
+              >
+                <item.icon className="h-5 w-5" />
+              </button>
+            </TooltipTrigger>
+            {!isMobileSidebar && (
+              <TooltipContent side="bottom" sideOffset={8}>
+                {item.label}
+              </TooltipContent>
+            )}
+          </Tooltip>
+        ),
+      )}
+      <hr className="h-4 w-[1px] bg-border mx-1" />
+      <Tooltip delayDuration={0}>
+        <TooltipTrigger asChild>
           <button
-            onClick={toggleMobileSidebar}
-            className="w-10 h-10 flex items-center justify-center rounded-xl bg-background/60 backdrop-blur-xl border border-border/50 text-foreground shadow-lg shadow-black/5 hover:bg-accent transition-all"
+            onClick={toggleTheme}
+            className="p-2 rounded-full hover:bg-muted text-muted-foreground hover:text-foreground transition-colors relative group google-sans"
+            aria-label="Toggle theme"
           >
-            <Menu size={20} />
+            {theme === "dark" ? (
+              <Sun className="h-5 w-5 animate-in zoom-in-50 duration-300" />
+            ) : (
+              <Moon className="h-5 w-5 animate-in zoom-in-50 duration-300" />
+            )}
           </button>
-        </div>
-
-        {/* Action Bar (Aligned to the right) */}
-        <div className="flex items-center gap-3 pointer-events-auto ml-auto">
-          {/* Icon Buttons */}
-          <div className="flex items-center gap-2 p-1 rounded-2xl bg-background/60 backdrop-blur-xl border border-border/50 shadow-lg shadow-black/5">
-            <ThemeToggle />
-
-            <Tooltip delayDuration={0}>
-              <TooltipTrigger asChild>
-                <button className="w-9 h-9 flex items-center justify-center rounded-xl hover:bg-accent text-muted-foreground transition-all relative">
-                  <Bell size={18} />
-                  <span className="absolute top-2 right-2 w-2 h-2 bg-primary rounded-full border-2 border-background" />
-                </button>
-              </TooltipTrigger>
-              <TooltipContent side="bottom" className="mt-2">
-                Notifications
-              </TooltipContent>
-            </Tooltip>
-
-            <div className="w-px h-4 bg-border/60 mx-1" />
-
-            <Tooltip delayDuration={0}>
-              <TooltipTrigger asChild>
-                <button className="w-9 h-9 flex items-center justify-center rounded-xl bg-primary text-primary-foreground hover:scale-105 active:scale-95 transition-all shadow-md shadow-primary/20">
-                  <User size={18} />
-                </button>
-              </TooltipTrigger>
-              <TooltipContent side="bottom" className="mt-2">
-                Profile
-              </TooltipContent>
-            </Tooltip>
-          </div>
-        </div>
-      </div>
-    </header>
+        </TooltipTrigger>
+        {!isMobileSidebar && (
+          <TooltipContent side="bottom" sideOffset={8}>
+            Toggle Theme
+          </TooltipContent>
+        )}
+      </Tooltip>
+      <BookmarksModal
+        isOpen={isBookmarksOpen}
+        onClose={() => setIsBookmarksOpen(false)}
+      />
+    </div>
   );
 }

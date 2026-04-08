@@ -1,174 +1,64 @@
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
-import { unified } from "unified";
-import remarkParse from "remark-parse";
-import remarkRehype from "remark-rehype";
-import rehypeParse from "rehype-parse";
-import rehypeStringify from "rehype-stringify";
-import rehypeShiki from "@shikijs/rehype";
-import remarkMath from "remark-math";
-import rehypeKatex from "rehype-katex";
-import remarkGfm from "remark-gfm";
-import rehypeSlug from "rehype-slug";
-import rehypeAutolinkHeadings from "rehype-autolink-headings";
+import { marked } from "marked";
 
-const contentDirectory = path.join(process.cwd(), "content");
-
-export type PostType = "blog" | "projects" | "wiki";
-
-export interface PostMetadata {
-  title: string;
-  slug: string;
-  date: string;
-  status: string;
-  description: string;
-  tags?: string[];
-  category?: string;
-  technical?: string;
-  aiAssisted?: boolean;
-  final?: boolean;
-  author?: string;
-  type?: PostType;
-}
-
-export interface Author {
-  name: string;
-  slug: string;
-  role: string;
-  bio: string;
-  avatar: string;
-  twitter?: string;
-  github?: string;
-  linkedin?: string;
-}
-
-export interface Heading {
-  level: number;
-  text: string;
-  id: string;
-}
-
-export interface Post extends PostMetadata {
-  content: string;
-  headings: Heading[];
-}
-
-export async function getAllPosts(type: PostType): Promise<PostMetadata[]> {
-  const dirPath = path.join(contentDirectory, type);
-
-  if (!fs.existsSync(dirPath)) {
-    return [];
-  }
-
-  const fileNames = fs.readdirSync(dirPath);
-  const allPostsData = fileNames
-    .filter((fileName) => fileName.endsWith(".md") || fileName.endsWith(".html"))
-    .map((fileName) => {
-      const fullPath = path.join(dirPath, fileName);
-      const fileContents = fs.readFileSync(fullPath, "utf8");
-      const { data } = matter(fileContents);
-      const slug = fileName.replace(/\.(md|html)$/, "");
-
-      return {
-        ...(data as PostMetadata),
-        slug,
-        type,
-      };
-    })
-    .filter((post) => post.status === "Published")
-    .sort((a, b) => {
-      const dateA = new Date(a.date).getTime();
-      const dateB = new Date(b.date).getTime();
-      return dateB - dateA;
-    });
-
-  return allPostsData;
-}
-
-function slugify(text: string): string {
-  return text
+// Custom renderer to add IDs to headings for TOC
+const renderer = new marked.Renderer();
+renderer.heading = ({ text, depth }) => {
+  const id = text
     .toLowerCase()
-    .replace(/[^\w\s-]/g, "")
-    .replace(/\s+/g, "-")
-    .replace(/--+/g, "-")
-    .trim();
-}
+    .replace(/<[^>]*>/g, "")
+    .replace(/[^\w]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+  return `<h${depth} id="${id}">${text}</h${depth}>`;
+};
 
-function extractHeadings(content: string, isHtml: boolean = false): Heading[] {
-  const headings: Heading[] = [];
-  
-  if (isHtml) {
-    const headingRegex = /<h([2-4])[^>]*>(.*?)<\/h\1>/gi;
-    let match;
-    while ((match = headingRegex.exec(content)) !== null) {
-      const level = parseInt(match[1]);
-      const text = match[2].replace(/<[^>]*>/g, ""); // Strip nested tags
-      headings.push({ level, text, id: slugify(text) });
-    }
-  } else {
-    const headingRegex = /^(#{2,4})\s+(.+)$/gm;
-    let match;
-    while ((match = headingRegex.exec(content)) !== null) {
-      const level = match[1].length;
-      const text = match[2];
-      headings.push({ level, text, id: slugify(text) });
-    }
-  }
-
-  return headings;
-}
-
-export async function getAuthorBySlug(slug: string): Promise<Author | null> {
-  const fullPath = path.join(contentDirectory, "authors", `${slug}.md`);
-
-  if (!fs.existsSync(fullPath)) {
-    return null;
-  }
-
-  const fileContents = fs.readFileSync(fullPath, "utf8");
-  const { data } = matter(fileContents);
-
-  return {
-    ...(data as Author),
-    slug,
-  };
-}
-
-export async function getAllAuthors(): Promise<Author[]> {
-  const dirPath = path.join(contentDirectory, "authors");
-
-  if (!fs.existsSync(dirPath)) {
-    return [];
-  }
-
-  const fileNames = fs.readdirSync(dirPath);
-  return fileNames
-    .filter((fileName) => fileName.endsWith(".md"))
-    .map((fileName) => {
-      const slug = fileName.replace(/\.md$/, "");
-      const fullPath = path.join(dirPath, fileName);
-      const fileContents = fs.readFileSync(fullPath, "utf8");
-      const { data } = matter(fileContents);
+// Custom quiz extension for marked
+const quizExtension = {
+  name: "quiz",
+  level: "block" as const,
+  tokenizer(src: string) {
+    const rule = /^\[quiz\]\s*([\s\S]*?)\s*\[\/quiz\](?:\s*\n|$)/;
+    const match = rule.exec(src);
+    if (match) {
       return {
-        ...(data as Author),
-        slug,
+        type: "quiz",
+        raw: match[0],
+        json: match[1],
       };
-    });
-}
+    }
+  },
+  renderer(token: any) {
+    // Just wrap it in a placeholder that injectQuiz will handle later
+    // to ensure consistent cleaning and parsing logic
+    return `[quiz]${token.json}[/quiz]`;
+  },
+};
+
+marked.use({
+  renderer,
+  extensions: [quizExtension as any],
+});
 
 function injectHeadingIds(html: string): string {
   return html.replace(
-    /<h([2-4])([^>]*)>(.*?)<\/h\1>/gi,
+    /<h([2-3])([^>]*)>(.*?)<\/h\1>/gi,
     (match, level, attrs, text) => {
       if (attrs.toLowerCase().includes("id=")) return match;
-      const id = slugify(text.replace(/<[^>]*>/g, ""));
+      const id = text
+        .replace(/<[^>]*>/g, "")
+        .toLowerCase()
+        .replace(/[^\w]+/g, "-")
+        .replace(/^-+|-+$/g, "");
       return `<h${level}${attrs} id="${id}">${text}</h${level}>`;
     },
   );
 }
 
 function injectQuiz(html: string): string {
+  // This is now a fallback for HTML content that doesn't go through marked
+  // To avoid rendering quizzes inside code blocks, we temporarily protect them
   const placeholders: string[] = [];
   const protectedHtml = html.replace(/<(pre|code)[\s\S]*?<\/\1>/gi, (match) => {
     placeholders.push(match);
@@ -179,20 +69,33 @@ function injectQuiz(html: string): string {
     /\[quiz\]([\s\S]*?)\[\/quiz\]/g,
     (match, jsonContent) => {
       try {
+        // Normalize JSON content:
+        // 1. Remove any HTML tags that might have been injected by the markdown parser
         let cleanJson = jsonContent.replace(/<[^>]*>/g, "").trim();
+        // 2. Replace literal newlines and tabs with spaces
         cleanJson = cleanJson.replace(/[\r\n\t]+/g, " ");
+        // 3. Escape backslashes that are not part of a valid JSON escape sequence.
+        // We must consume valid escapes to prevent their second characters (like in \\)
+        // from being processed as lone backslashes.
         cleanJson = cleanJson.replace(
           /\\(["\\\/bfnrt]|u[0-9a-fA-F]{4})|\\/g,
           (match: string, p1: string) => (p1 ? match : "\\\\"),
         );
 
+        // Minify and validate JSON
         const minifiedJson = JSON.stringify(JSON.parse(cleanJson));
         const encodedJson = minifiedJson.replace(/'/g, "&apos;");
         return `<div class="interactive-quiz-placeholder" data-quiz='${encodedJson}'></div>`;
       } catch (e) {
-        console.error("Quiz HTML inject parse error:", e);
+        console.error(
+          "Quiz HTML inject parse error:",
+          e,
+          "\nContent:",
+          jsonContent,
+        );
         return `<div class="bg-red-500/10 border border-red-500 p-4 rounded-lg text-red-500 my-4">
         <p><strong>Quiz Error:</strong> Invalid JSON format.</p>
+        <pre class="text-[10px] mt-2 overflow-auto">${jsonContent.substring(0, 100)}...</pre>
       </div>`;
       }
     },
@@ -215,22 +118,27 @@ function injectAlerts(html: string): string {
     CAUTION: { color: "red", icon: "alert-octagon" },
   };
 
+  // Match blockquotes containing [!TYPE]
+  // Markdown output varies: sometimes [!TYPE] is in its own <p>, sometimes not
+  // This version is more flexible to handle attributes and various spacing
   return html.replace(
-    /\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]\s*(?:<\/p>|<br\/?>)?([\s\S]*?)(?=(?:\[!|$))/gi,
+    /<blockquote[^>]*>\s*<p[^>]*>\s*\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]\s*(?:<\/p>|<br\/?>)?([\s\S]*?)<\/blockquote>/gi,
     (match, type, content) => {
       const upperType = type.toUpperCase() as keyof typeof alertTypes;
       const config = alertTypes[upperType];
-      const colors: Record<string, string> = {
-        BLUE: "border-blue-500 bg-blue-500/10 text-blue-700 dark:text-blue-400",
-        GREEN: "border-green-500 bg-green-500/10 text-green-700 dark:text-green-400",
-        PURPLE: "border-purple-500 bg-purple-500/10 text-purple-700 dark:text-purple-400",
-        YELLOW: "border-yellow-500 bg-yellow-500/10 text-yellow-700 dark:text-yellow-400",
-        RED: "border-red-500 bg-red-500/10 text-red-700 dark:text-red-400",
-      };
-      
-      const colorClass = colors[upperType] || colors.BLUE;
 
-      return `<div class="my-6 border-l-4 p-4 rounded-r-lg ${colorClass}">
+      const colors: Record<string, string> = {
+        blue: "border-blue-500 bg-blue-500/10 text-blue-700 dark:text-blue-400",
+        green:
+          "border-green-500 bg-green-500/10 text-green-700 dark:text-green-400",
+        purple:
+          "border-purple-500 bg-purple-500/10 text-purple-700 dark:text-purple-400",
+        yellow:
+          "border-yellow-500 bg-yellow-500/10 text-yellow-700 dark:text-yellow-400",
+        red: "border-red-500 bg-red-500/10 text-red-700 dark:text-red-400",
+      };
+
+      return `<div class="my-6 border-l-4 p-4 rounded-r-lg ${colors[config.color] || colors.blue}">
       <p class="flex items-center gap-2 font-bold mb-2 uppercase text-xs tracking-widest">
         <span class="opacity-80">${upperType}</span>
       </p>
@@ -240,68 +148,264 @@ function injectAlerts(html: string): string {
   );
 }
 
-export async function getPostBySlug(type: PostType, slug: string): Promise<Post | null> {
-  const dirPath = path.join(contentDirectory, type);
-  const mdPath = path.join(dirPath, `${slug}.md`);
-  const htmlPath = path.join(dirPath, `${slug}.html`);
+export interface Author {
+  name: string;
+  slug: string;
+  role: string;
+  bio: string;
+  avatar: string;
+  twitter?: string;
+  github?: string;
+  linkedin?: string;
+}
 
-  let fullPath = "";
-  let isHtml = false;
+export interface ContentItem {
+  slug: string;
+  title: string;
+  date?: string;
+  description?: string;
+  content: string;
+  rawContent: string;
+  final?: boolean;
+  firstImage?: string;
+  readingTime?: number;
+  technical?: string;
+  category?: string;
+  tags?: string[];
+  aiAssisted?: boolean;
+  author?: string;
+  type?: "blog" | "articles" | "projects" | "tutorials" | "wiki" | "quizzes";
+}
+
+function calculateReadingTime(content: string): number {
+  const wordsPerMinute = 200;
+  const words = content.trim().split(/\s+/).length;
+  return Math.ceil(words / wordsPerMinute);
+}
+
+function extractFirstImage(
+  content: string,
+  isMarkdown: boolean,
+): string | undefined {
+  if (isMarkdown) {
+    // Match markdown image syntax: ![alt](url)
+    const markdownImageRegex = /!\[.*?\]\((.*?)\)/;
+    const match = content.match(markdownImageRegex);
+    if (match && match[1]) {
+      return match[1];
+    }
+  }
+
+  // Match HTML image syntax: <img src="url" or <img ... src="url"
+  const htmlImageRegex = /<img[^>]+src=["']([^"']+)["']/i;
+  const match = content.match(htmlImageRegex);
+  if (match && match[1]) {
+    return match[1];
+  }
+
+  return undefined;
+}
+
+const contentDirectory = path.join(process.cwd(), "content");
+
+export function getContentByType(
+  type: "blog" | "articles" | "projects" | "tutorials" | "wiki" | "quizzes",
+): ContentItem[] {
+  const typeDirectory = path.join(contentDirectory, type);
+
+  // Create directory if it doesn't exist
+  if (!fs.existsSync(typeDirectory)) {
+    return [];
+  }
+
+  const files = fs.readdirSync(typeDirectory);
+
+  const items = files
+    .filter((file) => file.endsWith(".md") || file.endsWith(".html"))
+    .map((file) => {
+      const slug = file.replace(/\.(md|html)$/, "");
+      const fullPath = path.join(typeDirectory, file);
+      const fileContents = fs.readFileSync(fullPath, "utf8");
+
+      if (file.endsWith(".md")) {
+        const { data, content } = matter(fileContents);
+
+        // Protect display math from marked mangling by ensuring it's not treated as markdown
+        // but keep the $$ symbols for the math renderer
+        const protectedContent = content.replace(
+          /\$\$\s*([\s\S]*?)\s*\$\$/g,
+          (match, math) => {
+            return `\n\n<div class="math-display">$$${math.trim()}$$</div>\n\n`;
+          },
+        );
+
+        const htmlContent = marked(protectedContent) as string;
+        const firstImage = extractFirstImage(content, true);
+
+        return {
+          slug,
+          title: data.title || slug,
+          date: data.date,
+          description: data.description,
+          content: injectQuiz(injectAlerts(injectHeadingIds(htmlContent))),
+          rawContent: content,
+          final: data.final || false,
+          firstImage,
+          readingTime: calculateReadingTime(content),
+          technical: data.technical,
+          category: data.category,
+          tags: data.tags,
+          aiAssisted: data.aiAssisted || false,
+          author: data.author,
+          type: type,
+        };
+      } else {
+        // HTML file
+        const { data, content } = matter(fileContents);
+        const firstImage = extractFirstImage(content, false);
+
+        return {
+          slug,
+          title: data.title || slug,
+          date: data.date,
+          description: data.description,
+          content: injectQuiz(injectAlerts(injectHeadingIds(content))),
+          rawContent: content,
+          final: data.final || false,
+          firstImage,
+          readingTime: calculateReadingTime(content),
+          technical: data.technical,
+          category: data.category,
+          tags: data.tags,
+          aiAssisted: data.aiAssisted || false,
+          author: data.author,
+          type: type,
+        };
+      }
+    })
+    .sort((a, b) => {
+      if (a.date && b.date) {
+        return new Date(b.date).getTime() - new Date(a.date).getTime();
+      }
+      return 0;
+    });
+
+  return items;
+}
+
+export function getContentItem(
+  type: "blog" | "articles" | "projects" | "tutorials" | "wiki" | "quizzes",
+  slug: string,
+): ContentItem | null {
+  const typeDirectory = path.join(contentDirectory, type);
+
+  // Try .md first, then .html
+  const mdPath = path.join(typeDirectory, `${slug}.md`);
+  const htmlPath = path.join(typeDirectory, `${slug}.html`);
+
+  let fullPath: string;
+  let isMarkdown: boolean;
 
   if (fs.existsSync(mdPath)) {
     fullPath = mdPath;
+    isMarkdown = true;
   } else if (fs.existsSync(htmlPath)) {
     fullPath = htmlPath;
-    isHtml = true;
+    isMarkdown = false;
   } else {
     return null;
   }
 
   const fileContents = fs.readFileSync(fullPath, "utf8");
-  const { data, content } = matter(fileContents);
 
-  const headings = extractHeadings(content, isHtml);
-  let contentHtml = "";
+  if (isMarkdown) {
+    const { data, content } = matter(fileContents);
 
-  if (isHtml) {
-    const rawHtml = injectQuiz(injectAlerts(injectHeadingIds(content)));
-    // Wrap the HTML content with Shiki syntax highlighting support
-    const processedContent = await unified()
-      .use(rehypeParse, { fragment: true })
-      .use(rehypeShiki, {
-        theme: "one-dark-pro",
-      })
-      .use(rehypeStringify)
-      .process(rawHtml);
-    contentHtml = processedContent.toString();
+    // Protect display math
+    const protectedContent = content.replace(
+      /\$\$\s*([\s\S]*?)\s*\$\$/g,
+      (match, math) => {
+        return `\n\n<div class="math-display">$$${math.trim()}$$</div>\n\n`;
+      },
+    );
+
+    const htmlContent = marked(protectedContent) as string;
+    const firstImage = extractFirstImage(content, true);
+
+    return {
+      slug,
+      title: data.title || slug,
+      date: data.date,
+      description: data.description,
+      content: injectQuiz(injectAlerts(injectHeadingIds(htmlContent))),
+      rawContent: content,
+      final: data.final || false,
+      firstImage,
+      readingTime: calculateReadingTime(content),
+      technical: data.technical,
+      category: data.category,
+      tags: data.tags,
+      aiAssisted: data.aiAssisted || false,
+      type: type,
+    };
   } else {
-    const processedContent = await unified()
-      .use(remarkParse)
-      .use(remarkGfm)
-      .use(remarkMath)
-      .use(remarkRehype)
-      .use(rehypeSlug)
-      .use(rehypeAutolinkHeadings, {
-        behavior: "append",
-        properties: {
-          className: ["anchor"],
-        },
-      })
-      .use(rehypeShiki, {
-        theme: "one-dark-pro",
-      })
-      .use(rehypeKatex)
-      .use(rehypeStringify)
-      .process(content);
+    const { data, content } = matter(fileContents);
+    const firstImage = extractFirstImage(content, false);
 
-    contentHtml = processedContent.toString();
+    return {
+      slug,
+      title: data.title || slug,
+      date: data.date,
+      description: data.description,
+      content: injectQuiz(injectAlerts(injectHeadingIds(content))),
+      rawContent: content,
+      final: data.final || false,
+      firstImage,
+      readingTime: calculateReadingTime(content),
+      technical: data.technical,
+      category: data.category,
+      tags: data.tags,
+      aiAssisted: data.aiAssisted || false,
+      type: type,
+    };
+  }
+}
+
+export function getAuthorBySlug(slug: string): Author | null {
+  const authorPath = path.join(contentDirectory, "authors", `${slug}.md`);
+
+  if (!fs.existsSync(authorPath)) {
+    return null;
   }
 
-  const metadata = data as PostMetadata;
+  const fileContents = fs.readFileSync(authorPath, "utf8");
+  const { data } = matter(fileContents);
+
   return {
-    ...metadata,
+    ...(data as Author),
     slug,
-    content: contentHtml,
-    headings,
   };
+}
+
+export function getAllAuthors(): Author[] {
+  const authorsDirectory = path.join(contentDirectory, "authors");
+
+  if (!fs.existsSync(authorsDirectory)) {
+    return [];
+  }
+
+  const files = fs.readdirSync(authorsDirectory);
+  return files
+    .filter((file) => file.endsWith(".md"))
+    .map((file) => {
+      const slug = file.replace(/\.md$/, "");
+      const fullPath = path.join(authorsDirectory, file);
+      const fileContents = fs.readFileSync(fullPath, "utf8");
+      const { data } = matter(fileContents);
+
+      return {
+        ...(data as Author),
+        slug,
+      };
+    });
 }
