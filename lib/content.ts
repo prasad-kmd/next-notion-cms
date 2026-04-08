@@ -2,6 +2,7 @@ import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 import { marked } from "marked";
+import { cache } from "react";
 
 // Custom renderer to add IDs to headings for TOC
 const renderer = new marked.Renderer();
@@ -206,14 +207,18 @@ function extractFirstImage(
   return undefined;
 }
 
+function sanitizeContent(html: string): string {
+  // Remove script tags to prevent React warnings and accidental execution
+  return html.replace(/<script\b[^>]*>([\s\S]*?)<\/script>/gim, "");
+}
+
 const contentDirectory = path.join(process.cwd(), "content");
 
-export function getContentByType(
+export const getContentByType = cache(function (
   type: "blog" | "articles" | "projects" | "tutorials" | "wiki" | "quizzes",
 ): ContentItem[] {
   const typeDirectory = path.join(contentDirectory, type);
 
-  // Create directory if it doesn't exist
   if (!fs.existsSync(typeDirectory)) {
     return [];
   }
@@ -226,62 +231,28 @@ export function getContentByType(
       const slug = file.replace(/\.(md|html)$/, "");
       const fullPath = path.join(typeDirectory, file);
       const fileContents = fs.readFileSync(fullPath, "utf8");
+      const { data, content } = matter(fileContents);
 
-      if (file.endsWith(".md")) {
-        const { data, content } = matter(fileContents);
+      // Shallow fetch: No marked or injection processing for lists
+      const firstImage = extractFirstImage(content, file.endsWith(".md"));
 
-        // Protect display math from marked mangling by ensuring it's not treated as markdown
-        // but keep the $$ symbols for the math renderer
-        const protectedContent = content.replace(
-          /\$\$\s*([\s\S]*?)\s*\$\$/g,
-          (match, math) => {
-            return `\n\n<div class="math-display">$$${math.trim()}$$</div>\n\n`;
-          },
-        );
-
-        const htmlContent = marked(protectedContent) as string;
-        const firstImage = extractFirstImage(content, true);
-
-        return {
-          slug,
-          title: data.title || slug,
-          date: data.date,
-          description: data.description,
-          content: injectQuiz(injectAlerts(injectHeadingIds(htmlContent))),
-          rawContent: content,
-          final: data.final || false,
-          firstImage,
-          readingTime: calculateReadingTime(content),
-          technical: data.technical,
-          category: data.category,
-          tags: data.tags,
-          aiAssisted: data.aiAssisted || false,
-          author: data.author,
-          type: type,
-        };
-      } else {
-        // HTML file
-        const { data, content } = matter(fileContents);
-        const firstImage = extractFirstImage(content, false);
-
-        return {
-          slug,
-          title: data.title || slug,
-          date: data.date,
-          description: data.description,
-          content: injectQuiz(injectAlerts(injectHeadingIds(content))),
-          rawContent: content,
-          final: data.final || false,
-          firstImage,
-          readingTime: calculateReadingTime(content),
-          technical: data.technical,
-          category: data.category,
-          tags: data.tags,
-          aiAssisted: data.aiAssisted || false,
-          author: data.author,
-          type: type,
-        };
-      }
+      return {
+        slug,
+        title: data.title || slug,
+        date: data.date,
+        description: data.description,
+        content: "", // Content empty for lists to save memory/rendering
+        rawContent: content,
+        final: data.final || false,
+        firstImage,
+        readingTime: calculateReadingTime(content),
+        technical: data.technical,
+        category: data.category,
+        tags: data.tags,
+        aiAssisted: data.aiAssisted || false,
+        author: data.author,
+        type: type,
+      };
     })
     .sort((a, b) => {
       if (a.date && b.date) {
@@ -291,9 +262,9 @@ export function getContentByType(
     });
 
   return items;
-}
+});
 
-export function getContentItem(
+export const getContentItem = cache(function (
   type: "blog" | "articles" | "projects" | "tutorials" | "wiki" | "quizzes",
   slug: string,
 ): ContentItem | null {
@@ -337,7 +308,9 @@ export function getContentItem(
       title: data.title || slug,
       date: data.date,
       description: data.description,
-      content: injectQuiz(injectAlerts(injectHeadingIds(htmlContent))),
+      content: sanitizeContent(
+        injectQuiz(injectAlerts(injectHeadingIds(htmlContent))),
+      ),
       rawContent: content,
       final: data.final || false,
       firstImage,
@@ -358,7 +331,9 @@ export function getContentItem(
       title: data.title || slug,
       date: data.date,
       description: data.description,
-      content: injectQuiz(injectAlerts(injectHeadingIds(content))),
+      content: sanitizeContent(
+        injectQuiz(injectAlerts(injectHeadingIds(content))),
+      ),
       rawContent: content,
       final: data.final || false,
       firstImage,
@@ -371,9 +346,9 @@ export function getContentItem(
       type: type,
     };
   }
-}
+});
 
-export function getAuthorBySlug(slug: string): Author | null {
+export const getAuthorBySlug = cache(function (slug: string): Author | null {
   const authorPath = path.join(contentDirectory, "authors", `${slug}.md`);
 
   if (!fs.existsSync(authorPath)) {
@@ -387,9 +362,9 @@ export function getAuthorBySlug(slug: string): Author | null {
     ...(data as Author),
     slug,
   };
-}
+});
 
-export function getAllAuthors(): Author[] {
+export const getAllAuthors = cache(function (): Author[] {
   const authorsDirectory = path.join(contentDirectory, "authors");
 
   if (!fs.existsSync(authorsDirectory)) {
@@ -410,4 +385,4 @@ export function getAllAuthors(): Author[] {
         slug,
       };
     });
-}
+});

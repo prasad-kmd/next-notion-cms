@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { getContentByType } from "@/lib/content";
 import Link from "next/link";
+import { ContentCard } from "@/components/content-card";
 import { PortfolioHeroActions } from "@/components/portfolio-hero-actions";
 import SkillMatrix from "@/components/skill-matrix";
 
@@ -91,58 +92,13 @@ export default function PortfolioPage() {
                   Featured Engineering Projects
                 </h2>
               </div>
-              <div className="grid gap-6 sm:grid-cols-2 font-google-sans">
+              <div className="grid gap-8 sm:grid-cols-2">
                 {dynamicProjects.map((project) => (
-                  <Card
+                  <ContentCard
                     key={project.slug}
-                    className="group overflow-hidden border-border/50 transition-all hover:border-primary/30 hover:shadow-lg flex flex-col"
-                  >
-                    <div className="relative h-48 w-full overflow-hidden bg-muted">
-                      <Image
-                        src={
-                          project.firstImage ||
-                          `https://placehold.co/1280x720/1e293b/transparent.AVIF?font=playfair-display&text=${encodeURIComponent(project.title)}`
-                        }
-                        alt={project.title}
-                        fill
-                        className="object-cover transition-transform duration-500 group-hover:scale-110"
-                      />
-                    </div>
-                    <CardContent className="p-6 flex flex-1 flex-col">
-                      <h3 className="text-xl font-bold mb-2 group-hover:text-primary transition-colors line-clamp-1">
-                        {project.title}
-                      </h3>
-                      <p className="text-sm text-muted-foreground mb-4 leading-relaxed line-clamp-3 flex-1">
-                        {project.description}
-                      </p>
-                      {project.technical && (
-                        <p className="text-xs font-mono text-primary/70 mb-4">
-                          Stack: {project.technical}
-                        </p>
-                      )}
-                      {project.tags && project.tags.length > 0 && (
-                        <div className="flex flex-wrap gap-2 mb-4">
-                          {project.tags.map((tag) => (
-                            <span
-                              key={tag}
-                              className="px-2 py-1 bg-primary/5 text-primary text-[10px] font-semibold rounded uppercase tracking-wider"
-                            >
-                              {tag}
-                            </span>
-                          ))}
-                        </div>
-                      )}
-                      <Link href={`/projects/${project.slug}`}>
-                        <Button
-                          variant="link"
-                          className="p-0 text-primary h-auto group-hover:underline"
-                        >
-                          View Case Study{" "}
-                          <ExternalLink className="ml-1 h-3 w-3" />
-                        </Button>
-                      </Link>
-                    </CardContent>
-                  </Card>
+                    post={project}
+                    basePath="/projects"
+                  />
                 ))}
               </div>
             </section>
