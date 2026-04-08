@@ -5,6 +5,7 @@ description: "A comprehensive guide to the fundamental properties and key theore
 technical: "Signal Processing"  
 tags: ["convolution", "signal processing", "theorems", "fourier transform"]  
 aiAssisted: true
+author: "PrasadM"
 ---  
 
 **Objective:** By the end of this tutorial, you will be able to understand and apply the fundamental properties and theorems of convolution, including commutativity, associativity, distributivity, and the convolution theorem in the context of Fourier transforms.  

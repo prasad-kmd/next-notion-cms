@@ -20,7 +20,6 @@ A modern, high-performance engineering blogfolio and workspace built with **Next
 ![GitHub repo size](https://img.shields.io/github/repo-size/prasad-kmd/next-notion-cms?style=for-the-badge)
 ---
 ![Static Badge](https://img.shields.io/badge/VIBE-CODE-purple?style=for-the-badge&logo=googlejules&logoColor=white)
-![Static Badge](https://img.shields.io/badge/VIBE-CODE-black?style=for-the-badge&logo=v0&logoColor=white)
 ![Static Badge](https://img.shields.io/badge/VIBE-CODE-blue?style=for-the-badge&logo=googlegemini&logoColor=white)
 
 ## ✨ Features

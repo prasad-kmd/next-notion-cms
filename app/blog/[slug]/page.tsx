@@ -1,13 +1,17 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getContentByType, getContentItem } from "@/lib/content";
+import {
+  getContentByType,
+  getContentItem,
+  getAuthorBySlug,
+} from "@/lib/content";
 import { Calendar, ArrowLeft, Clock } from "lucide-react";
 import Link from "next/link";
 import { ContentRenderer } from "@/components/content-renderer";
 import { BookmarkButton } from "@/components/bookmark-button";
 import { ScrollProgress } from "@/components/scroll-progress";
 import { RelatedContent } from "@/components/related-content";
-import { TOC } from "@/components/toc";
+import { ArticleSidebar } from "@/components/article-sidebar";
 import { AIContentIndicator } from "@/components/ai-content-indicator";
 
 export async function generateStaticParams() {
@@ -47,10 +51,12 @@ export default async function BlogPostPage({
     notFound();
   }
 
+  const author = post.author ? getAuthorBySlug(post.author) : null;
+
   return (
     <div className="min-h-screen px-6 py-12 lg:px-8 blog_item img_grad_pm">
       <ScrollProgress />
-      <div className="mx-auto max-w-4xl">
+      <div className="mx-auto max-w-6xl">
         <Link
           href="/blog"
           className="mb-8 inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground font-local-inter"
@@ -97,7 +103,11 @@ export default async function BlogPostPage({
             <ContentRenderer content={post.content} id={post.slug} />
           </article>
 
-          <TOC content={post.content} />
+          <ArticleSidebar
+            content={post.content}
+            author={author}
+            lastUpdated={post.date}
+          />
         </div>
 
         <RelatedContent type="blog" currentSlug={post.slug} />

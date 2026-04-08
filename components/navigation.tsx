@@ -5,16 +5,16 @@ import { usePathname } from "next/navigation";
 import {
   FileText,
   BookOpen,
-  GitBranch,
-  Newspaper,
-  Home,
+  FolderGit2,
+  LibraryBig,
+  LayoutPanelLeft,
   Menu,
   X,
-  Mail,
+  MailSearch,
   ChevronLeft,
   ChevronRight,
-  UserRound,
-  Info,
+  UserStar,
+  BadgeInfo,
   Book,
 } from "lucide-react";
 import { useState } from "react";
@@ -31,18 +31,18 @@ import {
 } from "@/components/ui/tooltip";
 
 const primaryNav = [
-  { name: "Home", href: "/", icon: Home },
-  { name: "Portfolio", href: "/portfolio", icon: UserRound },
+  { name: "Home", href: "/", icon: LayoutPanelLeft },
+  { name: "Portfolio", href: "/portfolio", icon: UserStar },
   { name: "Blog", href: "/blog", icon: FileText },
   { name: "Articles", href: "/articles", icon: BookOpen },
-  { name: "Projects", href: "/projects", icon: GitBranch },
+  { name: "Projects", href: "/projects", icon: FolderGit2 },
   { name: "Wiki", href: "/wiki", icon: Book },
-  { name: "Tutorials", href: "/tutorials", icon: Newspaper },
+  { name: "Tutorials", href: "/tutorials", icon: LibraryBig },
 ];
 
 const secondaryNav = [
-  { name: "About", href: "/about", icon: Info },
-  { name: "Contact", href: "/contact", icon: Mail },
+  { name: "About", href: "/about", icon: BadgeInfo },
+  { name: "Contact", href: "/contact", icon: MailSearch },
 ];
 
 export function Navigation() {

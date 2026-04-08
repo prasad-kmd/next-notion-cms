@@ -1,13 +1,17 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getContentByType, getContentItem } from "@/lib/content";
+import {
+  getContentByType,
+  getContentItem,
+  getAuthorBySlug,
+} from "@/lib/content";
 import { ArrowLeft, Clock, BookOpen, Hash } from "lucide-react";
 import Link from "next/link";
 import { ContentRenderer } from "@/components/content-renderer";
 import { BookmarkButton } from "@/components/bookmark-button";
 import { ScrollProgress } from "@/components/scroll-progress";
 import { RelatedContent } from "@/components/related-content";
-import { TOC } from "@/components/toc";
+import { ArticleSidebar } from "@/components/article-sidebar";
 import { AIContentIndicator } from "@/components/ai-content-indicator";
 
 export async function generateStaticParams() {
@@ -47,10 +51,12 @@ export default async function WikiEntryPage({
     notFound();
   }
 
+  const author = entry.author ? getAuthorBySlug(entry.author) : null;
+
   return (
     <div className="min-h-screen px-6 py-12 lg:px-8 wiki_item img_grad_pm">
       <ScrollProgress />
-      <div className="mx-auto max-w-5xl">
+      <div className="mx-auto max-w-6xl">
         <Link
           href="/wiki"
           className="mb-8 inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground font-local-inter"
@@ -100,7 +106,7 @@ export default async function WikiEntryPage({
             <ContentRenderer content={entry.content} id={entry.slug} />
           </article>
 
-          <TOC content={entry.content} />
+          <ArticleSidebar content={entry.content} author={author} />
         </div>
 
         <RelatedContent type="wiki" currentSlug={entry.slug} />

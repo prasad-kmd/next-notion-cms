@@ -346,6 +346,7 @@ export function getContentItem(
       category: data.category,
       tags: data.tags,
       aiAssisted: data.aiAssisted || false,
+      author: data.author,
       type: type,
     };
   } else {
@@ -366,6 +367,7 @@ export function getContentItem(
       category: data.category,
       tags: data.tags,
       aiAssisted: data.aiAssisted || false,
+      author: data.author,
       type: type,
     };
   }
