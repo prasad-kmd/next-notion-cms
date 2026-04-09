@@ -1,101 +1,105 @@
-# Next Notion CMS
+# Engineering Workspace
 
-A modern, high-performance engineering blogfolio and workspace built with **Next.js 16**, **Tailwind CSS 4**, and **TypeScript**. Designed for developers who want a polished personal platform with a file-based CMS and interactive tools.
-
-<!-- ![Next.js](https://img.shields.io/badge/Next.js-16.2-black?style=flat-square&logo=next.js)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.0-38B2AC?style=flat-square&logo=tailwind-css)
-![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178C6?style=flat-square&logo=typescript) -->
+A modern, high-performance technical documentation and engineering portfolio platform built with **Next.js 16**, **Tailwind CSS 4**, and **TypeScript**. Optimized for mechatronics research, digital architecture, and high-fidelity documentation.
 
 ---
 ![Next.js](https://img.shields.io/badge/Next.js-16-black?style=for-the-badge&logo=next.js)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?style=for-the-badge&logo=typescript)
 ![Tailwind](https://img.shields.io/badge/Tailwind_CSS-4-38B2AC?style=for-the-badge&logo=tailwind-css)
-![Prisma](https://img.shields.io/badge/Prisma-6-2D3748?style=for-the-badge&logo=prisma)
-![Supabase](https://img.shields.io/badge/Supabase-PostgreSQL-3ECF8E?style=for-the-badge&logo=supabase)
 ![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)
 ![GitHub License](https://img.shields.io/github/license/prasad-kmd/next-notion-cms?style=for-the-badge)
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/w/prasad-kmd/next-notion-cms?style=for-the-badge&logo=github&logoColor=black)
-![GitHub contributors](https://img.shields.io/github/contributors/prasad-kmd/next-notion-cms?style=for-the-badge)
-![GitHub last commit](https://img.shields.io/github/last-commit/prasad-kmd/next-notion-cms?display_timestamp=committer&style=for-the-badge)
-![GitHub repo size](https://img.shields.io/github/repo-size/prasad-kmd/next-notion-cms?style=for-the-badge)
 ---
-![Static Badge](https://img.shields.io/badge/VIBE-CODE-purple?style=for-the-badge&logo=googlejules&logoColor=white)
-![Static Badge](https://img.shields.io/badge/VIBE-CODE-blue?style=for-the-badge&logo=googlegemini&logoColor=white)
 
 ## ✨ Features
 
-- **File-based CMS:** Manage content using simple Markdown files in `content/`.
-- **Engineering Blog:** Full-featured blog with categories, tags, and reading time estimation.
-- **Project Showcase:** Elegant cards and detail pages for technical projects.
-- **Technical Wiki:** A digital garden for documentation and knowledge sharing.
-- **Author Pages:** Dedicated profile pages for contributors with bios, social links, and a contribution history.
-- **Advanced MDX Rendering:**
-  - **Syntax Highlighting:** Powered by Shiki with VS Code-quality themes.
-  - **Math Support:** LaTeX rendering via KaTeX.
-  - **Table of Contents:** Auto-generated TOC with active state tracking.
-- **Premium UI/UX:**
-  - Custom **Google Sans** typography as default.
-  - Right-aligned sticky sidebar for content detail pages.
-  - Responsive, glassmorphic layout.
-- **Workspace UI:**
-  - Glassmorphic design with a persistent, collapsible sidebar.
-  - Floating navbar with dark/light mode toggle.
-  - Smooth animations using Framer Motion.
-- **Optimized for Performance:** Server components, static generation, and minimal client JS.
+- **🚀 Performance-First Architecture:** Built with **Next.js 16** (App Router) for lightning-fast server-side rendering and minimal client-side hydration.
+- **📂 File-Based CMS:** Zero-database architecture. Manage your entire site via Markdown (`.md`) and HTML (`.html`) files with robust frontmatter support.
+- **🎨 Unique Design Identity:** 
+  - **Redesigned Hero (v7):** A technical "Engineering Excellence" dashboard with a timed carousel of latest works, code-focused aesthetics, and geometric grid systems.
+  - **Specialized Cards:** Distinct visual identities for **Blog**, **Articles**, and **Projects** to distinguish different content types.
+  - **Technical Wiki:** A structured digital garden for persistent knowledge and documentation.
+- **✍️ Authors System:** A comprehensive directory of contributors with high-fidelity "Dossier" profile pages, contribution metrics, and social integration.
+- **🛠️ Advanced Technical Pipeline:**
+  - **Premium Shiki Highlighting:** VS Code-accurate syntax highlighting using Shiki themes (One Dark Pro) with a custom Mac-style window UI.
+  - **LaTeX Support:** Full math notation rendering via KaTeX ($...$ and $$...$$).
+  - **Interactive Quizzes:** Dynamic, base64-encoded quiz components injectable directly into content.
+  - **GitHub-style Alerts:** Support for `[!NOTE]`, `[!TIP]`, `[!WARNING]`, etc.
+- **🛡️ Enterprise-Grade Utilities:**
+  - **Spam Protection:** Integrated temp-mail domain blocker for the contact form via `public/data/tempmail.json`.
+  - **Smart TOC:** Automatically generated Table of Contents with active-state scroll tracking.
+  - **Search & Command Palette:** Global `Cmd+K` search modal for quick navigation.
 
 ## 🚀 Getting Started
 
-### Prerequisites
+### 1. Prerequisites
 
-- Node.js 20+
-- pnpm (recommended)
+Ensure you have the following installed:
+- **Node.js**: v20.x or higher
+- **Package Manager**: `pnpm` (highly recommended)
 
-### Installation
+### 2. Installation & Setup
 
-1. Clone the repository:
-   ```bash
-   git clone <repo-url>
-   cd next-notion-cms
-   ```
+```bash
+# Clone the repository
+git clone https://github.com/prasad-kmd/next-notion-cms.git
 
-2. Install dependencies:
-   ```bash
-   pnpm install
-   ```
+# Navigate to the project directory
+cd next-notion-cms
 
-3. Run the development server:
-   ```bash
-   pnpm dev
-   ```
+# Install dependencies
+pnpm install
 
-4. Open [http://localhost:3000](http://localhost:3000) in your browser.
+# Create local data directory if missing
+mkdir -p public/data
+```
+
+### 3. Development Mode
+
+Start the development server with hot-reloading:
+
+```bash
+pnpm dev
+```
+The site will be available at `http://localhost:3000`.
+
+### 4. Production Build
+
+To build the application for production:
+
+```bash
+pnpm build
+pnpm start
+```
 
 ## 📂 Project Structure
 
 ```text
 ├── app/              # Next.js App Router (Routes & Pages)
 ├── components/       # Reusable UI components
-├── content/          # Markdown files (Blog, Projects, Wiki, Authors)
+├── content/          # Markdown/HTML files (Blog, Projects, Wiki, Authors)
 ├── lib/              # Content loader, utilities, and CMS logic
-├── public/           # Static assets (Fonts, Images)
+├── public/           # Static assets (Fonts, Images, Blacklists)
 └── types/            # Shared TypeScript definitions
 ```
 
 ## 📝 Content Management
 
-To add new content, simply create a `.md` file in the appropriate `content/` subdirectory. Use the following frontmatter:
+To add new content, create a `.md` or `.html` file in the appropriate `content/` subdirectory.
+
+### Frontmatter Example
 
 ```markdown
 ---
-title: "My Awesome Post"
-slug: "my-awesome-post"
+title: "Technical Research Paper"
+slug: "technical-research-paper"
 date: "2025-05-15"
 status: "Published"
-description: "A brief summary for the card view."
-tags: ["Next.js", "React"]
-category: "Engineering"
-technical: "Next.js 16, Tailwind 4"
-author: "author-slug"
+description: "In-depth analysis of mechatronic system efficiency."
+tags: ["Engineering", "Research"]
+category: "Mechatronics"
+technical: "Arduino, Python, MATLAB"
+author: "prasad"
 aiAssisted: false
 final: true
 ---
@@ -103,17 +107,17 @@ final: true
 
 ### Authors
 
-Authors are managed in `content/authors/`. Create a `.md` file (e.g., `masum.md`) with the following structure:
+Authors are managed in `content/authors/`. Create a `.md` file with the following structure:
 
 ```markdown
 ---
-name: "Author Name"
-role: "Role Description"
-bio: "A short professional biography."
-avatar: "URL or path to avatar image"
-twitter: "username"
-github: "username"
-linkedin: "username"
+name: "PrasadM"
+role: "Engineering Undergraduate"
+bio: "Documenting the intersection of hardware and digital architecture."
+avatar: "/img/authors/prasad.webp"
+twitter: "prasad_kmd"
+github: "prasad-kmd"
+linkedin: "prasad-kmd"
 ---
 ```
 
@@ -121,7 +125,7 @@ linkedin: "username"
 
 - **Framework:** Next.js 16 (App Router)
 - **Styling:** Tailwind CSS 4
-- **Content:** gray-matter, unified, remark, rehype
+- **Syntax Highlighting:** Shiki
 - **Animations:** Framer Motion
 - **Icons:** Lucide React
 - **Theme:** next-themes

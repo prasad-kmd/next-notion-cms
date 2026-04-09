@@ -20,7 +20,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const quiz = getContentItem("quizzes", slug);
+  const quiz = await getContentItem("quizzes", slug);
 
   if (!quiz) {
     return {};
@@ -38,7 +38,7 @@ export default async function QuizPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const quiz = getContentItem("quizzes", slug);
+  const quiz = await getContentItem("quizzes", slug);
 
   if (!quiz) {
     notFound();

@@ -253,20 +253,61 @@
   color: inherit;
 }
 
-/* Highlight.js code block styling */
-pre code.hljs {
-  display: block;
-  overflow-x: auto;
-  padding: 1em;
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 0.5rem;
+/* Shiki code block styling */
+.shiki {
+  padding: 0.5rem 2rem 2rem 0rem !important;
+  margin: 0 !important;
+  background-color: transparent !important;
+  font-family: var(--font-local-jetbrains-mono) !important;
+  font-size: 0.85rem !important;
+  line-height: 1.7 !important;
+  counter-reset: step;
+  counter-increment: step 0;
 }
 
-code.hljs {
-  padding: 0.2em 0.4em;
-  background: var(--muted);
-  border-radius: 0.25rem;
+.shiki code {
+  background: transparent !important;
+  padding: 0 !important;
+  display: block;
+}
+
+.shiki .line::before {
+  content: counter(step);
+  counter-increment: step;
+  width: 1.5rem;
+  margin-right: 1.5rem;
+  display: inline-block;
+  text-align: right;
+  color: rgba(255, 255, 255, 0.2);
+  user-select: none;
+  font-size: 0.75rem;
+}
+
+.shiki-container {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
+}
+
+.shiki-container::-webkit-scrollbar {
+  height: 6px;
+}
+
+.shiki-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.shiki-container::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+
+.shiki-container::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Custom selection for code */
+.shiki ::selection {
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 @layer base {
@@ -431,4 +472,8 @@ code.hljs {
 /* Fallback for browsers that don't support View Transitions */
 @supports not (view-transition-name: root) {
   /* You could add a standard CSS transition here if needed */
+}
+
+code, kbd, samp, pre{
+  font-family: var(--font-local-jetbrains-mono);
 }

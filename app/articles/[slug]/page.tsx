@@ -27,7 +27,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const entry = getContentItem("articles", slug);
+  const entry = await getContentItem("articles", slug);
 
   if (!entry) {
     return {};
@@ -45,7 +45,7 @@ export default async function ArticlePage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const entry = getContentItem("articles", slug);
+  const entry = await getContentItem("articles", slug);
 
   if (!entry) {
     notFound();

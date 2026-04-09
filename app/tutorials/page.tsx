@@ -4,6 +4,8 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { ContentCard } from "@/components/content-card";
+import * as motion from "framer-motion/client";
+import { staggerContainer, fadeInUp } from "@/lib/animations";
 
 const title = "Tutorials";
 const description =
@@ -54,14 +56,19 @@ export default async function TutorialsPage({
   return (
     <div className="min-h-screen py-12 tutorials_page img_grad_pm">
       <div className="mx-auto max-w-6xl px-6 lg:px-8">
-        <div className="mb-14">
+        <motion.div 
+          initial="hidden"
+          animate="visible"
+          variants={fadeInUp}
+          className="mb-14"
+        >
           <h1 className="mb-4 text-4xl font-bold mozilla-headline tracking-tight sm:text-6xl text-foreground">
             Tutorials
           </h1>
           <p className="text-lg text-muted-foreground leading-relaxed font-google-sans max-w-2xl border-l-4 border-primary pl-4">
             {description}
           </p>
-        </div>
+        </motion.div>
 
         {allTutorials.length === 0 ? (
           <div className="rounded-3xl border border-dashed border-border bg-card p-12 text-center shadow-inner">
@@ -71,15 +78,22 @@ export default async function TutorialsPage({
           </div>
         ) : (
           <>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 xl:gap-10">
+            <motion.div 
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={staggerContainer}
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 xl:gap-10"
+            >
               {tutorials.map((post) => (
-                <ContentCard
-                  key={post.slug}
-                  post={post}
-                  basePath="/tutorials"
-                />
+                <motion.div key={post.slug} variants={fadeInUp}>
+                  <ContentCard
+                    post={post}
+                    basePath="/tutorials"
+                  />
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
 
             {/* Sticky Pagination */}
             {totalPages > 1 && (

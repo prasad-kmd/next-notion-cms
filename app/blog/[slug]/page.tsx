@@ -27,7 +27,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const post = getContentItem("blog", slug);
+  const post = await getContentItem("blog", slug);
 
   if (!post) {
     return {};
@@ -45,7 +45,7 @@ export default async function BlogPostPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const post = getContentItem("blog", slug);
+  const post = await getContentItem("blog", slug);
 
   if (!post) {
     notFound();

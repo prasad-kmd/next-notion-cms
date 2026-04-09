@@ -1,24 +1,10 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import hljs from "highlight.js/lib/core";
-import javascript from "highlight.js/lib/languages/javascript";
-import python from "highlight.js/lib/languages/python";
-import cpp from "highlight.js/lib/languages/cpp";
-import bash from "highlight.js/lib/languages/bash";
-import matlab from "highlight.js/lib/languages/matlab";
-import "highlight.js/styles/github-dark.css";
 import "katex/dist/katex.min.css";
 import { Quiz } from "@/components/quiz";
 import { toast } from "sonner";
 import { usePathname } from "next/navigation";
-
-// Register highlight.js languages
-hljs.registerLanguage("javascript", javascript);
-hljs.registerLanguage("python", python);
-hljs.registerLanguage("cpp", cpp);
-hljs.registerLanguage("bash", bash);
-hljs.registerLanguage("matlab", matlab);
 
 interface ContentRendererProps {
   content: string;
@@ -29,6 +15,7 @@ export function ContentRenderer({ content, id }: ContentRendererProps) {
   const contentRef = useRef<HTMLDivElement>(null);
   const toastShown = useRef(false);
   const pathname = usePathname();
+  const renderedContent = content;
 
   useEffect(() => {
     // Reset toast state when content changes
@@ -64,21 +51,23 @@ export function ContentRenderer({ content, id }: ContentRendererProps) {
     }
   }, [content, pathname, id]);
 
+
   useEffect(() => {
     if (!contentRef.current) return;
 
     const addCopyButtons = () => {
       const preBlocks = contentRef.current?.querySelectorAll("pre");
       preBlocks?.forEach((pre) => {
-        if (pre.querySelector(".copy-button")) return;
+        // Skip if already has a copy button OR is part of a Shiki enhanced block
+        if (pre.querySelector(".copy-button") || pre.closest(".code-block-wrapper")) return;
 
         pre.style.position = "relative";
         const button = document.createElement("button");
         button.className =
-          "copy-button absolute right-2 top-2 p-1.5 rounded-md bg-muted/80 text-muted-foreground hover:text-foreground hover:bg-muted transition-all lg:opacity-0 group-hover:opacity-100 z-10";
+          "copy-button absolute right-4 top-4 p-2 rounded-xl bg-white/5 text-white/50 hover:text-white hover:bg-white/10 backdrop-blur-md border border-white/10 transition-all opacity-0 group-hover:opacity-100 z-10";
         button.setAttribute("aria-label", "Copy code");
         button.innerHTML =
-          '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>';
+          '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>';
 
         pre.classList.add("group");
 
@@ -91,11 +80,11 @@ export function ContentRenderer({ content, id }: ContentRendererProps) {
             .writeText(code)
             .then(() => {
               button.innerHTML =
-                '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+                '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
               button.classList.add("text-green-500");
               setTimeout(() => {
                 button.innerHTML =
-                  '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>';
+                  '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>';
                 button.classList.remove("text-green-500");
               }, 2000);
             })
@@ -147,12 +136,9 @@ export function ContentRenderer({ content, id }: ContentRendererProps) {
       });
     };
 
-    const renderContent = async () => {
+    const renderMath = async () => {
       if (!contentRef.current) return;
-
-      // 1. Render Math using auto-render (safer and skips code blocks)
       try {
-        // @ts-ignore - auto-render might not have types in some environments
         const renderMathInElement = (await import("katex/contrib/auto-render"))
           .default;
         renderMathInElement(contentRef.current, {
@@ -173,26 +159,14 @@ export function ContentRenderer({ content, id }: ContentRendererProps) {
       } catch (e) {
         console.error("KaTeX auto-render error:", e);
       }
-
-      // 2. Syntax Highlighting
-      const codeBlocks = contentRef.current.querySelectorAll("pre code");
-      codeBlocks.forEach((block) => {
-        hljs.highlightElement(block as HTMLElement);
-      });
-
-      // 3. Add copy buttons
-      addCopyButtons();
-
-      // 4. Process links
-      processExternalLinks();
     };
 
-    renderContent();
-  }, [content]);
+    renderMath();
+    addCopyButtons();
+    processExternalLinks();
+  }, [renderedContent]);
 
-  // Split content into parts to interleave HTML and React components (Quizzes)
-  // Use [\s\S]*? to handle newlines in the data-quiz attribute
-  const parts = content.split(
+  const parts = renderedContent.split(
     /(<div class="interactive-quiz-placeholder" data-quiz='[\s\S]*?'>\s*<\/div>)/g,
   );
 
@@ -201,15 +175,15 @@ export function ContentRenderer({ content, id }: ContentRendererProps) {
       ref={contentRef}
       className="prose prose-neutral dark:prose-invert max-w-none 
         prose-headings:font-bold prose-headings:tracking-tight
-        prose-h1:text-4xl prose-h1:mb-6 
-        prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-4 prose-h2:border-b prose-h2:border-border prose-h2:pb-2
-        prose-h3:text-2xl prose-h3:mt-8 prose-h3:mb-3
-        prose-p:leading-relaxed prose-p:text-muted-foreground
+        prose-h1:text-4xl prose-h1:mb-6 amoriaregular
+        prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-4 prose-h2:border-b prose-h2:border-border prose-h2:pb-2 amoriaregular
+        prose-h3:text-2xl prose-h3:mt-8 prose-h3:mb-3 amoriaregular
+        prose-p:leading-relaxed prose-p:text-muted-foreground google-sans
         prose-a:text-primary prose-a:no-underline hover:prose-a:underline prose-a:font-medium
         prose-strong:text-foreground prose-strong:font-semibold
-        prose-code:rounded prose-code:bg-muted prose-code:px-2 prose-code:py-1 prose-code:font-mono prose-code:text-sm prose-code:text-foreground prose-code:before:content-none prose-code:after:content-none
-        prose-pre:bg-muted prose-pre:border prose-pre:border-border prose-pre:rounded-lg prose-pre:p-4
-        prose-img:rounded-lg prose-img:border prose-img:border-border
+        prose-code:rounded-md prose-code:bg-muted prose-code:px-1.5 prose-code:py-0.5 prose-code:font-mono prose-code:text-sm prose-code:text-foreground prose-code:before:content-none prose-code:after:content-none
+        prose-pre:bg-transparent prose-pre:border-none prose-pre:p-0 prose-pre:m-0 prose-pre:overflow-visible
+        prose-img:rounded-[2.5rem] prose-img:border-4 prose-img:border-card prose-img:shadow-2xl
         prose-table:border-collapse prose-table:border prose-table:border-border
         prose-th:border prose-th:border-border prose-th:bg-muted prose-th:px-4 prose-th:py-2 prose-th:font-semibold
         prose-td:border prose-td:border-border prose-td:px-4 prose-td:py-2

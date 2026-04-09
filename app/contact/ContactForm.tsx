@@ -54,6 +54,18 @@ export default function ContactForm() {
     };
 
     try {
+      // Validate temp mail with optimized Set lookup
+      const tempMailResponse = await fetch("/data/tempmail.json");
+      const { domains } = await tempMailResponse.json();
+      const domainSet = new Set(domains);
+      const emailDomain = data.email.split("@")[1]?.toLowerCase();
+
+      if (emailDomain && domainSet.has(emailDomain)) {
+        toast.error("Temporary email domains are not allowed. Please use a valid email address.");
+        setIsLoading(false);
+        return;
+      }
+
       // Fetch secrets
       const secretsResponse = await fetch("/api/secrets");
       const { telegram_token, telegram_chat_id } = await secretsResponse.json();

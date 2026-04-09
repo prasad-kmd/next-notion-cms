@@ -27,7 +27,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const entry = getContentItem("wiki", slug);
+  const entry = await getContentItem("wiki", slug);
 
   if (!entry) {
     return {};
@@ -45,7 +45,7 @@ export default async function WikiEntryPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const entry = getContentItem("wiki", slug);
+  const entry = await getContentItem("wiki", slug);
 
   if (!entry) {
     notFound();
