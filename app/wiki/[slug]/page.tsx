@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import {
   getContentByType,
   getContentItem,
-  getAuthorBySlug,
+  getAuthorBasic,
 } from "@/lib/content";
 import { ArrowLeft, Clock, BookOpen, Hash } from "lucide-react";
 import Link from "next/link";
@@ -51,7 +51,7 @@ export default async function WikiEntryPage({
     notFound();
   }
 
-  const author = entry.author ? getAuthorBySlug(entry.author) : null;
+  const author = entry.author ? getAuthorBasic(entry.author) : null;
 
   return (
     <div className="min-h-screen px-6 py-12 lg:px-8 wiki_item img_grad_pm">

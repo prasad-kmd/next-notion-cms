@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Calendar, User, ArrowUpRight } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import { ContentItem, getAuthorBySlug } from "@/lib/content";
+import { ContentItem, getAuthorBasic } from "@/lib/content";
 
 interface ContentCardProps {
   post: ContentItem;
@@ -36,7 +36,7 @@ function appendCategories(
 }
 
 export function ContentCard({ post, basePath }: ContentCardProps) {
-  const author = post.author ? getAuthorBySlug(post.author) : null;
+  const author = post.author ? getAuthorBasic(post.author) : null;
   const category = post.category || post.technical;
 
   return (

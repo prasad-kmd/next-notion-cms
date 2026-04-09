@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import {
   getContentByType,
   getContentItem,
-  getAuthorBySlug,
+  getAuthorBasic,
 } from "@/lib/content";
 import { siteConfig } from "@/lib/config";
 import { Calendar, ArrowLeft, Clock } from "lucide-react";
@@ -79,7 +79,7 @@ export default async function TutorialPage({
     notFound();
   }
 
-  const author = post.author ? getAuthorBySlug(post.author) : null;
+  const author = post.author ? getAuthorBasic(post.author) : null;
 
   return (
     <div className="min-h-screen px-6 py-12 lg:px-8 tutorials_item img_grad_pm">

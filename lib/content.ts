@@ -284,6 +284,7 @@ export interface Author {
   twitter?: string;
   github?: string;
   linkedin?: string;
+  bodyContent?: string;
 }
 
 export interface ContentItem {
@@ -494,7 +495,18 @@ export const getContentItem = cache(async function (
   }
 });
 
-export const getAuthorBySlug = cache(function (slug: string): Author | null {
+/** Sync variant — only reads frontmatter, no body parsing. For use in card components. */
+export const getAuthorBasic = cache(function (slug: string): Author | null {
+  const authorPath = path.join(contentDirectory, "authors", `${slug}.md`);
+  if (!fs.existsSync(authorPath)) return null;
+  const fileContents = fs.readFileSync(authorPath, "utf8");
+  const { data } = matter(fileContents);
+  return { ...(data as Author), slug };
+});
+
+export const getAuthorBySlug = cache(async function (
+  slug: string,
+): Promise<Author | null> {
   const authorPath = path.join(contentDirectory, "authors", `${slug}.md`);
 
   if (!fs.existsSync(authorPath)) {
@@ -502,11 +514,18 @@ export const getAuthorBySlug = cache(function (slug: string): Author | null {
   }
 
   const fileContents = fs.readFileSync(authorPath, "utf8");
-  const { data } = matter(fileContents);
+  const { data, content } = matter(fileContents);
+
+  let bodyContent: string | undefined;
+  if (content.trim()) {
+    const rawHtml = (await marked.parse(content)) as string;
+    bodyContent = sanitizeContent(injectAlerts(injectHeadingIds(rawHtml)));
+  }
 
   return {
     ...(data as Author),
     slug,
+    bodyContent,
   };
 });
 

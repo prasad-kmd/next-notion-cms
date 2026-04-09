@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import {
   getContentByType,
   getContentItem,
-  getAuthorBySlug,
+  getAuthorBasic,
 } from "@/lib/content";
 import { Calendar, ArrowLeft, Clock } from "lucide-react";
 import Link from "next/link";
@@ -51,7 +51,7 @@ export default async function BlogPostPage({
     notFound();
   }
 
-  const author = post.author ? getAuthorBySlug(post.author) : null;
+  const author = post.author ? getAuthorBasic(post.author) : null;
 
   return (
     <div className="min-h-screen px-6 py-12 lg:px-8 blog_item img_grad_pm">
