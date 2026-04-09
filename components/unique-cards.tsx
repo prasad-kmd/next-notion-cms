@@ -33,16 +33,16 @@ export function BlogCard({ post }: BlogCardProps) {
         <div className="flex items-center justify-between mb-10">
           <div className="flex items-center gap-4">
              <div className="flex flex-col items-center justify-center bg-primary/10 rounded-2xl p-3 min-w-[70px] border border-primary/20 group-hover:bg-primary group-hover:border-primary transition-all duration-500">
-               <span className="text-3xl font-black text-primary group-hover:text-primary-foreground amoriaregular leading-none">{day}</span>
+               <span className="text-2xl font-black text-primary group-hover:text-primary-foreground amoriaregular leading-none py-1">{day}</span>
                <div className="flex flex-col items-center -mt-1">
-                 <span className="text-[9px] font-black uppercase tracking-tighter text-primary/60 group-hover:text-primary-foreground/60 leading-none">{month}</span>
-                 <span className="text-[8px] font-bold text-primary/40 group-hover:text-primary-foreground/40 mt-0.5">{year}</span>
+                 <span className="text-[12px] font-black uppercase tracking-tighter text-primary/60 group-hover:text-primary-foreground/60 leading-none font-google-sans">{month}</span>
+                 <span className="text-[10px] font-bold text-primary/40 group-hover:text-primary-foreground/40 mt-0.5 font-local-jetbrains-mono">{year}</span>
                </div>
              </div>
           </div>
           <div className="flex flex-wrap justify-end gap-1.5 max-w-[120px]">
             {post.tags?.slice(0, 2).map(tag => (
-              <span key={tag} className="text-[7px] font-black text-primary/70 uppercase tracking-widest bg-primary/5 border border-primary/10 px-2 py-0.5 rounded-md group-hover:bg-primary/20 transition-colors">
+              <span key={tag} className="text-[10px] font-black text-primary/70 uppercase tracking-widest bg-primary/5 border border-primary/10 px-2 py-0.5 rounded-md group-hover:bg-primary/20 transition-colors font-local-inter">
                 {tag}
               </span>
             ))}
@@ -67,8 +67,8 @@ export function BlogCard({ post }: BlogCardProps) {
               )}
             </div>
             <div className="flex flex-col">
-               <span className="text-[10px] font-black tracking-widest uppercase text-muted-foreground">{author?.name || "Anonymous"}</span>
-               <span className="text-[8px] font-bold text-muted-foreground/40 uppercase tracking-widest flex items-center gap-1.5">
+               <span className="text-[14px] font-black tracking-widest uppercase text-muted-foreground font-mozilla-headline">{author?.name || "Anonymous"}</span>
+               <span className="text-[10px] font-bold text-muted-foreground/40 uppercase tracking-widest flex items-center gap-1.5 font-local-inter">
                  <Clock size={8} /> {post.readingTime} MIN READ
                </span>
             </div>
@@ -114,7 +114,7 @@ export function ArticleCard({ post }: ArticleCardProps) {
         />
         <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent opacity-60" />
         <div className="absolute top-4 left-4 flex gap-2">
-           <div className="px-3 py-1 bg-background/80 backdrop-blur-xl border border-border/40 dark:border-white/10 rounded-lg text-[8px] font-black text-primary uppercase tracking-[0.2em]">
+           <div className="px-3 py-1 bg-background/80 backdrop-blur-xl border border-border/40 dark:border-white/10 rounded-lg text-[10px] font-black text-primary uppercase tracking-[0.2em] font-local-inter">
              {formatDateStandard(post.date)}
            </div>
         </div>
@@ -151,7 +151,7 @@ export function ArticleCard({ post }: ArticleCardProps) {
                 <div className="w-full h-full bg-muted flex items-center justify-center"><User size={12} className="text-muted-foreground/20"/></div>
               )}
             </div>
-            <span className="text-[9px] font-black text-muted-foreground uppercase tracking-widest">{author?.name || "Anonymous"}</span>
+            <span className="text-[12px] font-mozilla-headline font-black text-muted-foreground uppercase tracking-widest">{author?.name || "Anonymous"}</span>
           </div>
           <div className="h-8 w-8 rounded-lg bg-muted flex items-center justify-center text-muted-foreground/40 group-hover:bg-primary group-hover:text-primary-foreground transition-all">
              <FileText size={14} />

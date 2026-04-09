@@ -29,7 +29,7 @@ export function ArticleSidebar({
 
   useEffect(() => {
     const headingRegex =
-      /<h([2-3])\s+[^>]*id=["']([^"']+)["'][^>]*>(.*?)<\/h\1>/gi;
+      /<h([2-4])\s+[^>]*id=["']([^"']+)["'][^>]*>([\s\S]*?)<\/h\1>/gi;
     const matches = Array.from(content.matchAll(headingRegex));
 
     const extractedHeadings = matches.map((match) => ({
@@ -105,9 +105,11 @@ export function ArticleSidebar({
                       }}
                       className={cn(
                         "group flex items-center py-2 pr-4 transition-all hover:text-primary relative",
-                        heading.level === 3
-                          ? "pl-8 text-xs"
-                          : "pl-4 text-sm font-medium",
+                        heading.level === 4
+                          ? "pl-12 text-[11px]"
+                          : heading.level === 3
+                            ? "pl-8 text-xs"
+                            : "pl-4 text-sm font-medium",
                         activeId === heading.id
                           ? "text-primary border-l-2 border-primary -ml-[1.5px] bg-primary/5"
                           : "text-muted-foreground border-l border-transparent",

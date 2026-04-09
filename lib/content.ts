@@ -170,7 +170,7 @@ async function highlightCodeBlocks(html: string): Promise<string> {
 
 function injectHeadingIds(html: string): string {
   return html.replace(
-    /<h([2-3])([^>]*)>(.*?)<\/h\1>/gi,
+    /<h([2-4])([^>]*)>(.*?)<\/h\1>/gi,
     (match, level, attrs, text) => {
       if (attrs.toLowerCase().includes("id=")) return match;
       const id = text
@@ -354,10 +354,11 @@ export const getContentByType = cache(function (
   const items = files
     .filter((file) => file.endsWith(".md") || file.endsWith(".html"))
     .map((file) => {
-      const slug = file.replace(/\.(md|html)$/, "");
       const fullPath = path.join(typeDirectory, file);
       const fileContents = fs.readFileSync(fullPath, "utf8");
       const { data, content } = matter(fileContents);
+      const filenameSlug = file.replace(/\.(md|html)$/, "");
+      const slug = data.slug || filenameSlug;
 
       // Shallow fetch: No marked or injection processing for lists
       const firstImage = extractFirstImage(content, file.endsWith(".md"));
@@ -410,7 +411,23 @@ export const getContentItem = cache(async function (
     fullPath = htmlPath;
     isMarkdown = false;
   } else {
-    return null;
+    // Try to find by frontmatter slug
+    if (!fs.existsSync(typeDirectory)) return null;
+    const files = fs.readdirSync(typeDirectory);
+    const foundFile = files.find((file) => {
+      if (!file.endsWith(".md") && !file.endsWith(".html")) return false;
+      const filePath = path.join(typeDirectory, file);
+      const content = fs.readFileSync(filePath, "utf8");
+      const { data } = matter(content);
+      return data.slug === slug;
+    });
+
+    if (foundFile) {
+      fullPath = path.join(typeDirectory, foundFile);
+      isMarkdown = foundFile.endsWith(".md");
+    } else {
+      return null;
+    }
   }
 
   const fileContents = fs.readFileSync(fullPath, "utf8");
