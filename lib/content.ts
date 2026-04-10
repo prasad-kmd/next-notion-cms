@@ -4,6 +4,19 @@ import matter from "gray-matter";
 import { marked } from "marked";
 import { cache } from "react";
 import { createHighlighter } from "shiki";
+import {
+  notion,
+  n2m,
+  DATABASE_IDS,
+  isNotionEnabled,
+  getPlainText,
+  getDate,
+  getMultiSelect,
+  getSelect,
+  getCheckbox,
+  getImageUrl,
+} from "./notion";
+import { unstable_cache } from "next/cache";
 
 let highlighter: any = null;
 
@@ -62,8 +75,6 @@ const quizExtension = {
     }
   },
   renderer(token: any) {
-    // Just wrap it in a placeholder that injectQuiz will handle later
-    // to ensure consistent cleaning and parsing logic
     return `[quiz]${token.json}[/quiz]`;
   },
 };
@@ -77,7 +88,6 @@ marked.use({
 async function highlightCodeBlocks(html: string): Promise<string> {
   try {
     const sh = await getHighlighter();
-    // Improved regex to handle various pre/code structures that might come from marked/html
     const codeRegex =
       /<pre[^>]*><code(?:\s+class="language-([^"]+)")?[^>]*>([\s\S]*?)<\/code><\/pre>/g;
     const matches = Array.from(html.matchAll(codeRegex));
@@ -91,7 +101,6 @@ async function highlightCodeBlocks(html: string): Promise<string> {
       const lang = langMatch || "text";
       const matchIndex = match.index!;
 
-      // Append everything before the match
       result += html.substring(lastIndex, matchIndex);
 
       const decodedCode = code
@@ -115,7 +124,6 @@ async function highlightCodeBlocks(html: string): Promise<string> {
           ],
         });
 
-        // Create the enhanced UI wrapper with a more premium aesthetic
         const enhancedHtml = `
 <div class="code-block-wrapper my-12 rounded-2xl overflow-hidden border border-border/40 bg-[#1e1e1e] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5)] group/code relative transition-all duration-500 hover:shadow-[0_35px_70px_-10px_rgba(var(--primary-rgb),0.15)]">
   <div class="code-block-header flex items-center justify-between px-3 py-1 bg-[#252526] border-b border-white/5 select-none">
@@ -159,7 +167,6 @@ async function highlightCodeBlocks(html: string): Promise<string> {
       lastIndex = matchIndex + fullMatch.length;
     }
 
-    // Append everything after the last match
     result += html.substring(lastIndex);
     return result;
   } catch (e) {
@@ -184,8 +191,6 @@ function injectHeadingIds(html: string): string {
 }
 
 function injectQuiz(html: string): string {
-  // This is now a fallback for HTML content that doesn't go through marked
-  // To avoid rendering quizzes inside code blocks, we temporarily protect them
   const placeholders: string[] = [];
   const protectedHtml = html.replace(/<(pre|code)[\s\S]*?<\/\1>/gi, (match) => {
     placeholders.push(match);
@@ -196,20 +201,13 @@ function injectQuiz(html: string): string {
     /\[quiz\]([\s\S]*?)\[\/quiz\]/g,
     (match, jsonContent) => {
       try {
-        // Normalize JSON content:
-        // 1. Remove any HTML tags that might have been injected by the markdown parser
         let cleanJson = jsonContent.replace(/<[^>]*>/g, "").trim();
-        // 2. Replace literal newlines and tabs with spaces
         cleanJson = cleanJson.replace(/[\r\n\t]+/g, " ");
-        // 3. Escape backslashes that are not part of a valid JSON escape sequence.
-        // We must consume valid escapes to prevent their second characters (like in \\)
-        // from being processed as lone backslashes.
         cleanJson = cleanJson.replace(
           /\\(["\\\/bfnrt]|u[0-9a-fA-F]{4})|\\/g,
           (match: string, p1: string) => (p1 ? match : "\\\\"),
         );
 
-        // Minify and validate JSON
         const minifiedJson = JSON.stringify(JSON.parse(cleanJson));
         const encodedJson = minifiedJson.replace(/'/g, "&apos;");
         return `<div class="interactive-quiz-placeholder" data-quiz='${encodedJson}'></div>`;
@@ -245,9 +243,6 @@ function injectAlerts(html: string): string {
     CAUTION: { color: "red", icon: "alert-octagon" },
   };
 
-  // Match blockquotes containing [!TYPE]
-  // Markdown output varies: sometimes [!TYPE] is in its own <p>, sometimes not
-  // This version is more flexible to handle attributes and various spacing
   return html.replace(
     /<blockquote[^>]*>\s*<p[^>]*>\s*\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]\s*(?:<\/p>|<br\/?>)?([\s\S]*?)<\/blockquote>/gi,
     (match, type, content) => {
@@ -316,7 +311,6 @@ function extractFirstImage(
   isMarkdown: boolean,
 ): string | undefined {
   if (isMarkdown) {
-    // Match markdown image syntax: ![alt](url)
     const markdownImageRegex = /!\[.*?\]\((.*?)\)/;
     const match = content.match(markdownImageRegex);
     if (match && match[1]) {
@@ -324,7 +318,6 @@ function extractFirstImage(
     }
   }
 
-  // Match HTML image syntax: <img src="url" or <img ... src="url"
   const htmlImageRegex = /<img[^>]+src=["']([^"']+)["']/i;
   const match = content.match(htmlImageRegex);
   if (match && match[1]) {
@@ -335,15 +328,97 @@ function extractFirstImage(
 }
 
 function sanitizeContent(html: string): string {
-  // Remove script tags to prevent React warnings and accidental execution
   return html.replace(/<script\b[^>]*>([\s\S]*?)<\/script>/gim, "");
 }
 
 const contentDirectory = path.join(process.cwd(), "content");
 
-export const getContentByType = cache(function (
+async function fetchNotionContentByType(type: string): Promise<ContentItem[]> {
+  const databaseId = (DATABASE_IDS as any)[type];
+  if (!databaseId) return [];
+
+  try {
+    const dbObj = await notion.databases.retrieve({ database_id: databaseId });
+    const dataSourceId = (dbObj as any).data_sources?.[0]?.id || databaseId;
+    const response: any = await notion.dataSources.query({
+      data_source_id: dataSourceId,
+      filter: {
+        property: "Status",
+        select: {
+          equals: "Published",
+        },
+      },
+      sorts: [
+        {
+          property: "Date",
+          direction: "descending",
+        },
+      ],
+    });
+
+    const items = await Promise.all(
+      response.results.map(async (page: any) => {
+        const props = page.properties;
+        const slug = getPlainText(props.Slug);
+        const title = getPlainText(props.Name || props.Title);
+        const date = getDate(props.Date);
+        const description = getPlainText(props.Description);
+        const tags = getMultiSelect(props.Tags);
+        const category = getSelect(props.Categories);
+        const aiAssisted = getCheckbox(props.AIAssisted);
+        const technical = getMultiSelect(props.Technical).join(", ");
+
+        let authorSlug = "";
+        if (
+          props.Authors &&
+          props.Authors.relation &&
+          props.Authors.relation.length > 0
+        ) {
+          const authorPage: any = await notion.pages.retrieve({
+            page_id: props.Authors.relation[0].id,
+          });
+          authorSlug = getPlainText(authorPage.properties.Slug);
+        }
+
+        return {
+          slug,
+          title,
+          date,
+          description,
+          content: "",
+          rawContent: "",
+          final: true,
+          firstImage: undefined,
+          readingTime: 0,
+          technical,
+          category,
+          tags,
+          aiAssisted,
+          author: authorSlug,
+          type: type as any,
+        };
+      }),
+    );
+
+    return items;
+  } catch (error) {
+    console.error(`Error fetching Notion content for ${type}:`, error);
+    return [];
+  }
+}
+
+export const getContentByType = cache(async function (
   type: "blog" | "articles" | "projects" | "tutorials" | "wiki" | "quizzes",
-): ContentItem[] {
+): Promise<ContentItem[]> {
+  if (isNotionEnabled) {
+    const fetcher = unstable_cache(
+      async () => fetchNotionContentByType(type),
+      [`content-list-${type}`],
+      { revalidate: 3600, tags: [`content-${type}`] },
+    );
+    return fetcher();
+  }
+
   const typeDirectory = path.join(contentDirectory, type);
 
   if (!fs.existsSync(typeDirectory)) {
@@ -361,7 +436,6 @@ export const getContentByType = cache(function (
       const filenameSlug = file.replace(/\.(md|html)$/, "");
       const slug = data.slug || filenameSlug;
 
-      // Shallow fetch: No marked or injection processing for lists
       const firstImage = extractFirstImage(content, file.endsWith(".md"));
 
       return {
@@ -369,7 +443,7 @@ export const getContentByType = cache(function (
         title: data.title || slug,
         date: data.date,
         description: data.description,
-        content: "", // Content empty for lists to save memory/rendering
+        content: "",
         rawContent: content,
         final: data.final || false,
         firstImage,
@@ -392,13 +466,105 @@ export const getContentByType = cache(function (
   return items;
 });
 
+async function fetchNotionContentItem(
+  type: string,
+  slug: string,
+): Promise<ContentItem | null> {
+  const databaseId = (DATABASE_IDS as any)[type];
+  if (!databaseId) return null;
+
+  try {
+    const dbObj = await notion.databases.retrieve({ database_id: databaseId });
+    const dataSourceId = (dbObj as any).data_sources?.[0]?.id || databaseId;
+    const response: any = await notion.dataSources.query({
+      data_source_id: dataSourceId,
+      filter: {
+        property: "Slug",
+        rich_text: {
+          equals: slug,
+        },
+      },
+    });
+
+    if (response.results.length === 0) return null;
+
+    const page: any = response.results[0];
+    const props = page.properties;
+
+    const mdblocks = await n2m.pageToMarkdown(page.id);
+    const mdString = n2m.toMarkdownString(mdblocks).parent;
+
+    const title = getPlainText(props.Name || props.Title);
+    const date = getDate(props.Date);
+    const description = getPlainText(props.Description);
+    const tags = getMultiSelect(props.Tags);
+    const category = getSelect(props.Categories);
+    const aiAssisted = getCheckbox(props.AIAssisted);
+    const technical = getMultiSelect(props.Technical).join(", ");
+
+    let authorSlug = "";
+    if (
+      props.Authors &&
+      props.Authors.relation &&
+      props.Authors.relation.length > 0
+    ) {
+      const authorPage: any = await notion.pages.retrieve({
+        page_id: props.Authors.relation[0].id,
+      });
+      authorSlug = getPlainText(authorPage.properties.Slug);
+    }
+
+    const protectedContent = mdString.replace(
+      /\$\$\s*([\s\S]*?)\s*\$\$/g,
+      (match, math) => {
+        return `\n\n<div class="math-display">$$${math.trim()}$$</div>\n\n`;
+      },
+    );
+
+    const htmlContent = (await marked.parse(protectedContent)) as string;
+    const highlightedHtml = await highlightCodeBlocks(htmlContent);
+    const firstImage = extractFirstImage(mdString, true);
+
+    return {
+      slug,
+      title,
+      date,
+      description,
+      content: sanitizeContent(
+        injectQuiz(injectAlerts(injectHeadingIds(highlightedHtml))),
+      ),
+      rawContent: mdString,
+      final: true,
+      firstImage,
+      readingTime: calculateReadingTime(mdString),
+      technical,
+      category,
+      tags,
+      aiAssisted,
+      author: authorSlug,
+      type: type as any,
+    };
+  } catch (error) {
+    console.error(`Error fetching Notion item ${slug} for ${type}:`, error);
+    return null;
+  }
+}
+
 export const getContentItem = cache(async function (
   type: "blog" | "articles" | "projects" | "tutorials" | "wiki" | "quizzes",
   slug: string,
 ): Promise<ContentItem | null> {
+  if (isNotionEnabled) {
+    const fetcher = unstable_cache(
+      async () => fetchNotionContentItem(type, slug),
+      [`content-item-${type}-${slug}`],
+      { revalidate: 3600, tags: [`content-${type}`, `content-item-${slug}`] },
+    );
+    return fetcher();
+  }
+
   const typeDirectory = path.join(contentDirectory, type);
 
-  // Try .md first, then .html
   const mdPath = path.join(typeDirectory, `${slug}.md`);
   const htmlPath = path.join(typeDirectory, `${slug}.html`);
 
@@ -412,7 +578,6 @@ export const getContentItem = cache(async function (
     fullPath = htmlPath;
     isMarkdown = false;
   } else {
-    // Try to find by frontmatter slug
     if (!fs.existsSync(typeDirectory)) return null;
     const files = fs.readdirSync(typeDirectory);
     const foundFile = files.find((file) => {
@@ -436,7 +601,6 @@ export const getContentItem = cache(async function (
   if (isMarkdown) {
     const { data, content } = matter(fileContents);
 
-    // Protect display math
     const protectedContent = content.replace(
       /\$\$\s*([\s\S]*?)\s*\$\$/g,
       (match, math) => {
@@ -496,7 +660,49 @@ export const getContentItem = cache(async function (
 });
 
 /** Sync variant — only reads frontmatter, no body parsing. For use in card components. */
-export const getAuthorBasic = cache(function (slug: string): Author | null {
+export const getAuthorBasic = cache(async function (
+  slug: string,
+): Promise<Author | null> {
+  if (isNotionEnabled) {
+    const fetcher = unstable_cache(
+      async () => {
+        const databaseId = DATABASE_IDS.authors;
+        if (!databaseId) return null;
+        const dbObj = await notion.databases.retrieve({
+          database_id: databaseId,
+        });
+        const dataSourceId = (dbObj as any).data_sources?.[0]?.id || databaseId;
+        const response: any = await notion.dataSources.query({
+          data_source_id: dataSourceId,
+          filter: {
+            property: "Slug",
+            rich_text: {
+              equals: slug,
+            },
+          },
+        });
+        if (response.results.length === 0) return null;
+        const page: any = response.results[0];
+        const props = page.properties;
+        return {
+          name: getPlainText(props.Name || props.Title),
+          slug,
+          role: getPlainText(props.Role),
+          bio: getPlainText(props.Biography),
+          avatar: getImageUrl(props.avatar || props.Avatar) || "",
+          twitter: getPlainText(props.twitter || props.Twitter),
+          github: getPlainText(props.GitHub || props.github),
+          linkedin: getPlainText(
+            props.linkedin || props.LinkedIn || props.Linkedin,
+          ),
+        };
+      },
+      [`author-basic-${slug}`],
+      { revalidate: 3600, tags: ["authors"] },
+    );
+    return fetcher();
+  }
+
   const authorPath = path.join(contentDirectory, "authors", `${slug}.md`);
   if (!fs.existsSync(authorPath)) return null;
   const fileContents = fs.readFileSync(authorPath, "utf8");
@@ -507,6 +713,59 @@ export const getAuthorBasic = cache(function (slug: string): Author | null {
 export const getAuthorBySlug = cache(async function (
   slug: string,
 ): Promise<Author | null> {
+  if (isNotionEnabled) {
+    const fetcher = unstable_cache(
+      async () => {
+        const databaseId = DATABASE_IDS.authors;
+        if (!databaseId) return null;
+        const dbObj = await notion.databases.retrieve({
+          database_id: databaseId,
+        });
+        const dataSourceId = (dbObj as any).data_sources?.[0]?.id || databaseId;
+        const response: any = await notion.dataSources.query({
+          data_source_id: dataSourceId,
+          filter: {
+            property: "Slug",
+            rich_text: {
+              equals: slug,
+            },
+          },
+        });
+        if (response.results.length === 0) return null;
+        const page: any = response.results[0];
+        const props = page.properties;
+
+        const mdblocks = await n2m.pageToMarkdown(page.id);
+        const mdString = n2m.toMarkdownString(mdblocks).parent;
+
+        let bodyContent: string | undefined;
+        if (mdString.trim()) {
+          const rawHtml = (await marked.parse(mdString)) as string;
+          bodyContent = sanitizeContent(
+            injectAlerts(injectHeadingIds(rawHtml)),
+          );
+        }
+
+        return {
+          name: getPlainText(props.Name || props.Title),
+          slug,
+          role: getPlainText(props.Role),
+          bio: getPlainText(props.Biography),
+          avatar: getImageUrl(props.avatar || props.Avatar) || "",
+          twitter: getPlainText(props.twitter || props.Twitter),
+          github: getPlainText(props.GitHub || props.github),
+          linkedin: getPlainText(
+            props.linkedin || props.LinkedIn || props.Linkedin,
+          ),
+          bodyContent,
+        };
+      },
+      [`author-full-${slug}`],
+      { revalidate: 3600, tags: ["authors"] },
+    );
+    return fetcher();
+  }
+
   const authorPath = path.join(contentDirectory, "authors", `${slug}.md`);
 
   if (!fs.existsSync(authorPath)) {
@@ -530,6 +789,47 @@ export const getAuthorBySlug = cache(async function (
 });
 
 export const getAllAuthors = cache(async function (): Promise<Author[]> {
+  if (isNotionEnabled) {
+    const fetcher = unstable_cache(
+      async () => {
+        const databaseId = DATABASE_IDS.authors;
+        if (!databaseId) return [];
+        const dbObj = await notion.databases.retrieve({
+          database_id: databaseId,
+        });
+        const dataSourceId = (dbObj as any).data_sources?.[0]?.id || databaseId;
+        const response: any = await notion.dataSources.query({
+          data_source_id: dataSourceId,
+          filter: {
+            property: "Status",
+            select: {
+              equals: "Published",
+            },
+          },
+        });
+
+        return response.results.map((page: any) => {
+          const props = page.properties;
+          return {
+            name: getPlainText(props.Name || props.Title),
+            slug: getPlainText(props.Slug),
+            role: getPlainText(props.Role),
+            bio: getPlainText(props.Biography),
+            avatar: getImageUrl(props.avatar || props.Avatar) || "",
+            twitter: getPlainText(props.twitter || props.Twitter),
+            github: getPlainText(props.GitHub || props.github),
+            linkedin: getPlainText(
+              props.linkedin || props.LinkedIn || props.Linkedin,
+            ),
+          };
+        });
+      },
+      ["all-authors"],
+      { revalidate: 3600, tags: ["authors"] },
+    );
+    return fetcher();
+  }
+
   const authorsDirectory = path.join(contentDirectory, "authors");
 
   if (!fs.existsSync(authorsDirectory)) {

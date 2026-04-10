@@ -15,7 +15,7 @@ import { ArticleSidebar } from "@/components/article-sidebar";
 import { AIContentIndicator } from "@/components/ai-content-indicator";
 
 export async function generateStaticParams() {
-  const blogPosts = getContentByType("blog");
+  const blogPosts = await getContentByType("blog");
   return blogPosts.map((post) => ({
     slug: post.slug,
   }));
@@ -51,7 +51,7 @@ export default async function BlogPostPage({
     notFound();
   }
 
-  const author = post.author ? getAuthorBasic(post.author) : null;
+  const author = post.author ? await getAuthorBasic(post.author) : null;
 
   return (
     <div className="min-h-screen px-6 py-12 lg:px-8 blog_item img_grad_pm">

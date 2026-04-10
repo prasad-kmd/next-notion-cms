@@ -15,8 +15,8 @@ import { ArticleSidebar } from "@/components/article-sidebar";
 import { AIContentIndicator } from "@/components/ai-content-indicator";
 
 export async function generateStaticParams() {
-  const wikiEntries = getContentByType("wiki");
-  return wikiEntries.map((entry) => ({
+  const entries = await getContentByType("wiki");
+  return entries.map((entry) => ({
     slug: entry.slug,
   }));
 }
@@ -51,7 +51,7 @@ export default async function WikiEntryPage({
     notFound();
   }
 
-  const author = entry.author ? getAuthorBasic(entry.author) : null;
+  const author = entry.author ? await getAuthorBasic(entry.author) : null;
 
   return (
     <div className="min-h-screen px-6 py-12 lg:px-8 wiki_item img_grad_pm">

@@ -8,7 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { AIContentIndicator } from "@/components/ai-content-indicator";
 
 export async function generateStaticParams() {
-  const quizzes = getContentByType("quizzes");
+  const quizzes = await getContentByType("quizzes");
   return quizzes.map((quiz) => ({
     slug: quiz.slug,
   }));

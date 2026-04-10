@@ -5,13 +5,17 @@ export async function GET() {
   const baseUrl = siteConfig.url.endsWith("/")
     ? siteConfig.url.slice(0, -1)
     : siteConfig.url;
+  const blogPosts = await getContentByType("blog");
+  const articlePosts = await getContentByType("articles");
+  const tutorialPosts = await getContentByType("tutorials");
+
   const allContent = [
-    ...getContentByType("blog").map((item) => ({ ...item, type: "blog" })),
-    ...getContentByType("articles").map((item) => ({
+    ...blogPosts.map((item) => ({ ...item, type: "blog" })),
+    ...articlePosts.map((item) => ({
       ...item,
       type: "articles",
     })),
-    ...getContentByType("tutorials").map((item) => ({
+    ...tutorialPosts.map((item) => ({
       ...item,
       type: "tutorials",
     })),

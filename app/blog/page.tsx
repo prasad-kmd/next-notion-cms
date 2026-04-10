@@ -41,7 +41,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
   const { page } = await searchParams;
   const currentPage = parseInt(page || "1");
   const postsPerPage = 9;
-  const allPosts = getContentByType("blog");
+  const allPosts = await getContentByType("blog");
   
   const totalPages = Math.ceil(allPosts.length / postsPerPage);
   const posts = allPosts.slice(

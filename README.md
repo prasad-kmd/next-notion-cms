@@ -7,6 +7,7 @@ A modern, high-performance technical documentation and engineering portfolio pla
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?style=for-the-badge&logo=typescript)
 ![Tailwind](https://img.shields.io/badge/Tailwind_CSS-4-38B2AC?style=for-the-badge&logo=tailwind-css)
 ![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)
+![Notion](https://img.shields.io/badge/Notion-CMS-black?style=for-the-badge&logo=notion)
 ![GitHub License](https://img.shields.io/github/license/prasad-kmd/next-notion-cms?style=for-the-badge)
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/w/prasad-kmd/next-notion-cms?style=for-the-badge&logo=github&logoColor=black)
 ---
@@ -14,7 +15,7 @@ A modern, high-performance technical documentation and engineering portfolio pla
 ## ✨ Features
 
 - **🚀 Performance-First Architecture:** Built with **Next.js 16** (App Router) for lightning-fast server-side rendering and minimal client-side hydration.
-- **📂 File-Based CMS:** Zero-database architecture. Manage your entire site via Markdown (`.md`) and HTML (`.html`) files with robust frontmatter support.
+- **📔 Notion CMS Integration:** Fully integrated with Notion as a headless CMS. Manage your blog, articles, projects, tutorials, and wiki directly from Notion.
 - **🎨 Unique Design Identity:** 
   - **Redesigned Hero (v7):** A technical "Engineering Excellence" dashboard with a timed carousel of latest works, code-focused aesthetics, and geometric grid systems.
   - **Specialized Cards:** Distinct visual identities for **Blog**, **Articles**, and **Projects** to distinguish different content types.
@@ -38,7 +39,16 @@ Ensure you have the following installed:
 - **Node.js**: v20.x or higher
 - **Package Manager**: `pnpm` (highly recommended)
 
-### 2. Installation & Setup
+### 2. Notion Setup
+
+1. Create a Notion Integration at [Notion - My Integrations](https://www.notion.so/my-integrations).
+2. Create databases for **Blog**, **Articles**, **Tutorials**, **Projects**, **Wiki**, and **Authors**.
+3. Share each database with your integration.
+4. Copy the Database IDs and your Internal Integration Token.
+
+Refer to `Notion-Instruction.md` for the detailed database schema and setup steps.
+
+### 3. Installation & Setup
 
 ```bash
 # Clone the repository
@@ -54,7 +64,21 @@ pnpm install
 mkdir -p public/data
 ```
 
-### 3. Development Mode
+### 4. Environment Variables
+
+Create a `.env.local` file in the root directory and add your Notion credentials:
+
+```env
+NOTION_AUTH_TOKEN=your_notion_auth_token
+NOTION_BLOG_ID=your_blog_database_id
+NOTION_ARTICLES_ID=your_articles_database_id
+NOTION_TUTORIALS_ID=your_tutorials_database_id
+NOTION_PROJECTS_ID=your_projects_database_id
+NOTION_WIKI_ID=your_wiki_database_id
+NOTION_AUTHORS_ID=your_authors_database_id
+```
+
+### 5. Development Mode
 
 Start the development server with hot-reloading:
 
@@ -63,7 +87,7 @@ pnpm dev
 ```
 The site will be available at `http://localhost:3000`.
 
-### 4. Production Build
+### 6. Production Build
 
 To build the application for production:
 
@@ -77,53 +101,34 @@ pnpm start
 ```text
 ├── app/              # Next.js App Router (Routes & Pages)
 ├── components/       # Reusable UI components
-├── content/          # Markdown/HTML files (Blog, Projects, Wiki, Authors)
-├── lib/              # Content loader, utilities, and CMS logic
+├── content/          # Fallback Markdown/HTML files
+├── lib/              # Notion client, content loader, and CMS logic
 ├── public/           # Static assets (Fonts, Images, Blacklists)
 └── types/            # Shared TypeScript definitions
 ```
 
 ## 📝 Content Management
 
-To add new content, create a `.md` or `.html` file in the appropriate `content/` subdirectory.
+Content is primarily managed via Notion. If Notion environment variables are not provided, the system falls back to the local `content/` directory.
 
-### Frontmatter Example
+### Notion Database Schema
 
-```markdown
----
-title: "Technical Research Paper"
-slug: "technical-research-paper"
-date: "2025-05-15"
-status: "Published"
-description: "In-depth analysis of mechatronic system efficiency."
-tags: ["Engineering", "Research"]
-category: "Mechatronics"
-technical: "Arduino, Python, MATLAB"
-author: "prasad"
-aiAssisted: false
-final: true
----
-```
-
-### Authors
-
-Authors are managed in `content/authors/`. Create a `.md` file with the following structure:
-
-```markdown
----
-name: "PrasadM"
-role: "Engineering Undergraduate"
-bio: "Documenting the intersection of hardware and digital architecture."
-avatar: "/img/authors/prasad.webp"
-twitter: "prasad_kmd"
-github: "prasad-kmd"
-linkedin: "prasad-kmd"
----
-```
+Each content database should have the following properties:
+- **Name/Title**: Title of the item
+- **Slug**: URL slug
+- **Authors**: Relation to Authors database
+- **Date**: Publication date
+- **Status**: Select [Published, Draft]
+- **Description**: Summary for cards
+- **Tags**: Multi-select
+- **Categories**: Select
+- **AIAssisted**: Checkbox
+- **Technical**: Multi-Select
 
 ## 🛠️ Tech Stack
 
 - **Framework:** Next.js 16 (App Router)
+- **CMS:** Notion API
 - **Styling:** Tailwind CSS 4
 - **Syntax Highlighting:** Shiki
 - **Animations:** Framer Motion

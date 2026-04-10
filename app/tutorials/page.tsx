@@ -45,7 +45,7 @@ export default async function TutorialsPage({
   const { page } = await searchParams;
   const currentPage = parseInt(page || "1");
   const postsPerPage = 9;
-  const allTutorials = getContentByType("tutorials");
+  const allTutorials = await getContentByType("tutorials");
 
   const totalPages = Math.ceil(allTutorials.length / postsPerPage);
   const tutorials = allTutorials.slice(

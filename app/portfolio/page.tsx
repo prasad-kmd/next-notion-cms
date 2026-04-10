@@ -24,8 +24,8 @@ export const metadata: Metadata = {
   description,
 };
 
-export default function PortfolioPage() {
-  const dynamicProjects = getContentByType("projects");
+export default async function PortfolioPage() {
+  const dynamicProjects = await getContentByType("projects");
   return (
     <div className="min-h-screen bg-background">
       {/* Hero Section */}

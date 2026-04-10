@@ -41,7 +41,7 @@ export default async function ArticlesPage({ searchParams }: ArticlesPageProps) 
   const { page } = await searchParams;
   const currentPage = parseInt(page || "1");
   const postsPerPage = 9;
-  const allEntries = getContentByType("articles");
+  const allEntries = await getContentByType("articles");
 
   const totalPages = Math.ceil(allEntries.length / postsPerPage);
   const entries = allEntries.slice(

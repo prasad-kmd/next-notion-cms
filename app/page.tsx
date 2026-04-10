@@ -6,11 +6,11 @@ import { getContentByType } from "@/lib/content";
 import { Calendar, ArrowRight } from "lucide-react";
 import Image from "next/image";
 
-export default function HomePage() {
-  const blogs = getContentByType("blog");
-  const articles = getContentByType("articles");
-  const projects = getContentByType("projects");
-  const tutorials = getContentByType("tutorials");
+export default async function Home() {
+  const blogs = await getContentByType("blog");
+  const articles = await getContentByType("articles");
+  const projects = await getContentByType("projects");
+  const tutorials = await getContentByType("tutorials");
 
   const blogCount = blogs.length;
   const articlesCount = articles.length;

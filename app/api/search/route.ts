@@ -3,8 +3,8 @@ import { getContentByType } from "@/lib/content";
 
 export async function GET() {
   const types = ["blog", "articles", "projects", "tutorials", "wiki"] as const;
-  const allContent = types.flatMap((type) => {
-    const items = getContentByType(type);
+  const allContentPromises = types.map(async (type) => {
+    const items = await getContentByType(type);
     return items.map((item) => ({
       slug: item.slug,
       title: item.title,
@@ -13,6 +13,8 @@ export async function GET() {
       date: item.date,
     }));
   });
+
+  const allContent = (await Promise.all(allContentPromises)).flat();
 
   return NextResponse.json(allContent);
 }
