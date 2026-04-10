@@ -110,6 +110,15 @@ async function highlightCodeBlocks(html: string): Promise<string> {
         .replace(/&quot;/g, '"')
         .replace(/&#39;/g, "'");
 
+      if (lang === "mermaid") {
+        result += `
+<div class="mermaid-preview my-12 rounded-[1.5rem] border border-border/50 bg-card p-8 shadow-sm overflow-x-auto flex justify-center items-center">
+  <pre class="mermaid m-0 bg-transparent p-0">${decodedCode.trim()}</pre>
+</div>`;
+        lastIndex = matchIndex + fullMatch.length;
+        continue;
+      }
+
       try {
         const highlighted = sh.codeToHtml(decodedCode.trim(), {
           lang: lang,
@@ -328,7 +337,10 @@ function extractFirstImage(
 }
 
 function sanitizeContent(html: string): string {
-  return html.replace(/<script\b[^>]*>([\s\S]*?)<\/script>/gim, "");
+  return html.replace(/<script\b[^>]*>([\s\S]*?)<\/script>/gim, (match) => {
+    if (match.includes("gist.github.com")) return match;
+    return "";
+  });
 }
 
 const contentDirectory = path.join(process.cwd(), "content");
