@@ -13,23 +13,41 @@ This document provides comprehensive, step-by-step instructions for completing t
 6. Copy the **Internal Integration Token**. This will be your `NOTION_AUTH_TOKEN`.
 
 ### **B. Set up Databases**
-You need to create five databases in Notion for: **Blog**, **Articles**, **Tutorials**, **Projects**, and **Wiki**.
+You need to create five databases in Notion for: **Blog**, **Articles**, **Tutorials**, **Projects**, and **Wiki** and **Authors**.
 
 #### **Database Schema**
-Each database should have the following properties:
+Each database (except **Authors**) should have the following properties:
+
+- For `/blog`,`/articles`,`/projects`,`/tutorials` and `/wiki`
 
 | Property Name | Property Type | Description |
 | :--- | :--- | :--- |
 | **Name** (or **Title**) | Title | The display name of the content item (automatically detected). |
 | **Slug** | Text | The URL slug (e.g., `my-awesome-post`). |
+| **Authors** | Relation | This has relation with `Authors` database. |
 | **Date** | Date | Publication date. |
-| **Status** | Status | Set to `Published` for the item to appear on the site. |
+| **Status** | Select | [Published, Draft ] Set to `Published` for the item to appear on the site. |
 | **Description** | Text | A brief summary for the card view. |
 | **Tags** | Multi-select | Keywords for filtering. |
-| **Category** | Select | Main category (used for quizzes and organization). |
-| **Final** | Checkbox | (Optional) Mark as a final/complete post. |
+| **Categories** | Select | Main category (used for quizzes and organization). |
 | **AIAssisted** | Checkbox | (Optional) Show an indicator if AI was used. |
-| **Technical** | Text | (Optional) Tech stack or technical details. |
+| **Technical** | Multi-Select | (Optional) Tech stack or technical details. |
+
+For **Authors** Database,
+
+- For `/authors` and `/authors/[slug]/`
+
+| Property Name | Property Type | Description |
+| :--- | :--- | :--- |
+| **Name** (or **Title**) | Title | The display name of the content item (automatically detected). |
+| **Slug** | Text | The URL slug (e.g., `my-awesome-post`). |
+| **Role** | Text | Role of the author. |
+| **Biography** | Text | A Short Biography info |
+| **avatar** | Files and Media | A photo for Author avatar. |
+| **twitter** | Text | twitter username of the author. |
+| **GitHub** | Text | GitHub username of the author. |
+| **linkedin** | Text | linkedin username of the author. |
+| **Status** | Select | [Published, Draft ] Set to `Published` for the item to appear on the site. |
 
 #### **Sharing Databases with the Integration**
 For **each** database created:
@@ -41,7 +59,7 @@ For **each** database created:
 ### **C. Obtain Database IDs**
 For each database, the ID is the part of the URL after the workspace name and before the `?v=...` part.
 - URL format: `https://www.notion.so/myworkspace/DATABASE_ID?v=...`
-- Copy these IDs for each of the five content types.
+- Copy these IDs for each of the six content types.
 
 ---
 
@@ -56,6 +74,7 @@ NOTION_ARTICLES_ID=your_articles_database_id
 NOTION_TUTORIALS_ID=your_tutorials_database_id
 NOTION_PROJECTS_ID=your_projects_database_id
 NOTION_WIKI_ID=your_wiki_database_id
+NOTION_AUTHORS_ID=your_authors_database_id
 ```
 
 ---

@@ -1,5 +1,5 @@
-- Notion CMS integration requires the following environment variables: `NOTION_AUTH_TOKEN`, `NOTION_BLOG_ID`, `NOTION_ARTICLES_ID`, `NOTION_PROJECTS_ID`, `NOTION_TUTORIALS_ID`, and `NOTION_WIKI_ID`.
-- The project integrates Notion as a CMS using `@notionhq/client` and `notion-to-md`. Database IDs for different content types (blog, articles, etc.) are managed via environment variables.
+- Notion CMS integration requires the following environment variables: `NOTION_AUTH_TOKEN`, `NOTION_BLOG_ID`, `NOTION_ARTICLES_ID`, `NOTION_PROJECTS_ID`, `NOTION_TUTORIALS_ID`, `NOTION_WIKI_ID`, and `NOTION_AUTHORS_ID`.
+- The project integrates Notion as a CMS using `@notionhq/client` and `notion-to-md`. Database IDs for different content types (blog, articles, projects, tutorials, wiki, authors) are managed via environment variables.
 - Always try to use PNPM instead of NPM for performance.
 - The platform is built with Next.js 16.x, Tailwind CSS 4, and TypeScript, optimized for high performance and technical documentation.
 - Advanced PWA manifest settings (public/manifest.json) include launch_handler (focus-existing), display_override (window-controls-overlay), share_target (via /search), and scope_extensions for origin matching.
