@@ -53,7 +53,7 @@ graph TD
     A --> D[Vercel Edge Network]
     B --> E[Notion API]
     C --> F[File System]
-    A --> G[Telegram API (Server-side)]
+    A --> G[Telegram API - Server-side]
 ```
 
 ## 🚀 Getting Started
