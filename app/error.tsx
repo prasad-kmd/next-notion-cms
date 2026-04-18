@@ -61,7 +61,7 @@ export default function Error({
           <div className="grid grid-cols-1 md:grid-cols-3">
             {/* Browser Status */}
             <div className="relative px-6 py-12 text-center md:border-r border-border overflow-hidden group">
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div className="absolute inset-0 bg-linear-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               <div className="relative">
                 <div className="flex justify-center mb-6">
                   <div className="relative">
@@ -86,7 +86,7 @@ export default function Error({
 
             {/* Server Status */}
             <div className="relative px-6 py-12 text-center md:border-r border-border overflow-hidden group bg-destructive/5">
-              <div className="absolute inset-0 bg-gradient-to-br from-destructive/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div className="absolute inset-0 bg-linear-to-br from-destructive/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               <div className="relative">
                 <div className="flex justify-center mb-6">
                   <div className="relative">
@@ -113,7 +113,7 @@ export default function Error({
 
             {/* Host Status */}
             <div className="relative px-6 py-12 text-center overflow-hidden group">
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div className="absolute inset-0 bg-linear-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               <div className="relative">
                 <div className="flex justify-center mb-6">
                   <div className="relative">

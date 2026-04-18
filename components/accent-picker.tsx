@@ -58,7 +58,7 @@ export function AccentPicker() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 10, scale: 0.95 }}
             transition={{ type: "spring", damping: 20, stiffness: 300 }}
-            className="absolute right-0 mt-3 p-3 rounded-2xl border border-border bg-background/80 backdrop-blur-xl shadow-2xl z-[70] min-w-[200px]"
+            className="absolute right-0 mt-3 p-3 rounded-2xl border border-border bg-background/80 backdrop-blur-xl shadow-2xl z-70 min-w-[200px]"
           >
             <div className="mb-2 px-1 text-center">
               <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground google-sans">

@@ -1,6 +1,20 @@
 {
   "name": "next-notion-cms",
-  "version": "1.0.0",
+  "version": "1.5.0",
+  "description": "A modern, high-performance technical documentation and engineering portfolio platform built with Next.js 16, Tailwind CSS 4, and TypeScript. Optimized for mechatronics research, digital architecture, and high-fidelity documentation.",
+  "author": "prasad-kmd",
+  "license": "AGPL-3.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/prasad-kmd/next-notion-cms.git"
+  },
+  "directories": {
+    "lib": "lib"
+  },
+  "bugs": {
+    "url": "https://github.com/prasad-kmd/next-notion-cms/issues"
+  },
+  "homepage": "https://github.com/prasad-kmd/next-notion-cms/blob/main/README.md",
   "private": true,
   "scripts": {
     "build": "next build",

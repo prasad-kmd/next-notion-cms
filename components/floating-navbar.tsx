@@ -101,7 +101,7 @@ export function FloatingNavbar({
       className={cn(
         "flex items-center gap-1 transition-all google-sans",
         !isMobileSidebar &&
-          "fixed top-6 right-6 z-[60] p-1 rounded-full border border-border bg-background/80 backdrop-blur shadow-lg",
+          "fixed top-6 right-6 z-60 p-1 rounded-full border border-border bg-background/80 backdrop-blur shadow-lg",
         isMobileSidebar &&
           "relative flex-row p-0 border-none bg-transparent shadow-none",
         className,
@@ -145,9 +145,9 @@ export function FloatingNavbar({
           </Tooltip>
         ),
       )}
-      <hr className="h-4 w-[1px] bg-border mx-1" />
+      <hr className="h-4 w-px bg-border mx-1" />
       <AccentPicker />
-      <hr className="h-4 w-[1px] bg-border mx-1" />
+      <hr className="h-4 w-px bg-border mx-1" />
       <Tooltip delayDuration={0}>
         <TooltipTrigger asChild>
           <button
