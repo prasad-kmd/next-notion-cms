@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -13,7 +15,9 @@ import {
   Rocket,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import { ContentItem, getAuthorBasic } from "@/lib/content";
+import { ContentItem, Author } from "@/lib/content";
+import { getAuthorBasic } from "@/lib/author-client";
+import { useEffect, useState } from "react";
 
 function formatDate(dateStr: string | undefined) {
   if (!dateStr) return "Recent";
@@ -29,7 +33,14 @@ interface BlogCardProps {
 }
 
 export function BlogCard({ post }: BlogCardProps) {
-  const author = post.author ? getAuthorBasic(post.author) : null;
+  const [author, setAuthor] = useState<Author | null>(null);
+
+  useEffect(() => {
+    if (post.author) {
+      getAuthorBasic(post.author).then(setAuthor);
+    }
+  }, [post.author]);
+
   const d = post.date ? new Date(post.date) : null;
   const day = d ? String(d.getDate()).padStart(2, "0") : "--";
   const month = d ? d.toLocaleString("default", { month: "short" }) : "---";
@@ -120,7 +131,14 @@ interface ArticleCardProps {
 }
 
 export function ArticleCard({ post }: ArticleCardProps) {
-  const author = post.author ? getAuthorBasic(post.author) : null;
+  const [author, setAuthor] = useState<Author | null>(null);
+
+  useEffect(() => {
+    if (post.author) {
+      getAuthorBasic(post.author).then(setAuthor);
+    }
+  }, [post.author]);
+
   const formatDateStandard = (dateStr: string | undefined) => {
     if (!dateStr) return "YYYY MM DD";
     const d = new Date(dateStr);

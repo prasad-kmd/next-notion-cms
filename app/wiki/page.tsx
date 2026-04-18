@@ -36,7 +36,7 @@ export default async function WikiPage({ searchParams }: WikiPageProps) {
   const { page } = await searchParams;
   const currentPage = parseInt(page || "1");
   const postsPerPage = 9;
-  const allEntries = getContentByType("wiki");
+  const allEntries = await getContentByType("wiki");
 
   const totalPages = Math.ceil(allEntries.length / postsPerPage);
   const entries = allEntries.slice(

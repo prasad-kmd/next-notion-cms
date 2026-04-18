@@ -7,8 +7,8 @@ export const metadata = {
     "Challenge your engineering knowledge with our interactive quizzes.",
 };
 
-export default function QuizListPage() {
-  const quizzes = getContentByType("quizzes");
+export default async function QuizListPage() {
+  const quizzes = await getContentByType("quizzes");
 
   return (
     <div className="min-h-screen px-6 py-12 lg:px-8 bg-background">

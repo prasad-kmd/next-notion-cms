@@ -28,9 +28,9 @@ export async function generateMetadata({
 }
 
 export async function generateStaticParams() {
-  const projects = getContentByType("projects");
-  return projects.map((project) => ({
-    slug: project.slug,
+  const posts = await getContentByType("projects");
+  return posts.map((post) => ({
+    slug: post.slug,
   }));
 }
 

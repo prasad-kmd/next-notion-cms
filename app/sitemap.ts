@@ -3,14 +3,14 @@ import { getContentByType } from "@/lib/content";
 
 import { siteConfig } from "@/lib/config";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = siteConfig.url.endsWith("/")
     ? siteConfig.url.slice(0, -1)
     : siteConfig.url;
 
   const types = ["blog", "articles", "projects", "tutorials"] as const;
-  const contentRoutes = types.flatMap((type) => {
-    const items = getContentByType(type);
+  const contentRoutesPromise = types.map(async (type) => {
+    const items = await getContentByType(type);
     return items.map((item) => ({
       url: `${baseUrl}/${type}/${item.slug}`,
       lastModified: item.date ? new Date(item.date) : new Date(),
@@ -18,6 +18,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.7,
     }));
   });
+
+  const contentRoutes = (await Promise.all(contentRoutesPromise)).flat();
 
   const staticRoutes = [
     "",

@@ -91,13 +91,25 @@ export default async function AuthorDetailPage({
               <FadeIn direction="up">
                 <div className="relative mb-8 group p-1.5 rounded-[2.5rem] bg-gradient-to-br from-border/50 to-transparent border border-border shadow-xl">
                   <div className="aspect-square relative overflow-hidden rounded-[2.2rem] border border-border/50">
-                    <Image
-                      src={author.avatar}
-                      alt={author.name}
-                      fill
-                      className="object-cover transition-transform duration-700 group-hover:scale-105"
-                      priority
-                    />
+                    {author.avatar &&
+                    typeof author.avatar === "string" &&
+                    author.avatar.trim() !== "" ? (
+                      <Image
+                        src={author.avatar}
+                        alt={author.name}
+                        fill
+                        className="object-cover transition-transform duration-700 group-hover:scale-105"
+                        priority
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-muted/30 flex items-center justify-center transition-colors">
+                        <span className="text-8xl font-black amoriaregular text-muted-foreground/30 group-hover:text-primary transition-colors duration-500">
+                          {author.name
+                            ? author.name.charAt(0).toUpperCase()
+                            : "?"}
+                        </span>
+                      </div>
+                    )}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-40" />
                   </div>
 

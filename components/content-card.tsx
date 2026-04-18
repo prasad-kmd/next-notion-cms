@@ -1,8 +1,11 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import { Calendar, User, ArrowUpRight } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import { ContentItem, getAuthorBasic } from "@/lib/content";
+import { ContentItem, Author } from "@/lib/content";
+import { getAuthorBasic } from "@/lib/author-client";
 
 interface ContentCardProps {
   post: ContentItem;
@@ -35,8 +38,17 @@ function appendCategories(
   return cats;
 }
 
+import { useEffect, useState } from "react";
+
 export function ContentCard({ post, basePath }: ContentCardProps) {
-  const author = post.author ? getAuthorBasic(post.author) : null;
+  const [author, setAuthor] = useState<Author | null>(null);
+
+  useEffect(() => {
+    if (post.author) {
+      getAuthorBasic(post.author).then(setAuthor);
+    }
+  }, [post.author]);
+
   const category = post.category || post.technical;
 
   return (

@@ -61,7 +61,7 @@ export async function generateMetadata({
 }
 
 export async function generateStaticParams() {
-  const posts = getContentByType("tutorials");
+  const posts = await getContentByType("tutorials");
   return posts.map((post) => ({
     slug: post.slug,
   }));
@@ -79,7 +79,7 @@ export default async function TutorialPage({
     notFound();
   }
 
-  const author = post.author ? getAuthorBasic(post.author) : null;
+  const author = post.author ? await getAuthorBasic(post.author) : null;
 
   return (
     <div className="min-h-screen px-6 py-12 lg:px-8 tutorials_item img_grad_pm">
