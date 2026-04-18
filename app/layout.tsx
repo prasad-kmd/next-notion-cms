@@ -119,6 +119,7 @@ import { CustomContextMenu } from "@/components/custom-context-menu";
 import { Footer } from "@/components/footer";
 import { ViewTransitions } from "@/components/view-transitions";
 import ClickSpark from "@/components/ClickSpark";
+import { AccentColorInitializer } from "@/components/accent-color-initializer";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
@@ -127,7 +128,7 @@ export const metadata: Metadata = {
     default: siteConfig.title,
   },
   description: siteConfig.description,
-  generator: "PrasadM",
+  generator: siteConfig.author,
   creator: siteConfig.author,
   publisher: siteConfig.author,
   robots: {
@@ -145,7 +146,7 @@ export const metadata: Metadata = {
     title: siteConfig.title,
     description: siteConfig.description,
     url: siteConfig.url,
-    siteName: "PrasadM's Blogfolio",
+    siteName: `${siteConfig.author}'s Workspace`,
     images: [
       {
         url: `/api/og?title=${encodeURIComponent(siteConfig.title)}`,
@@ -234,7 +235,7 @@ export const metadata: Metadata = {
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",
-    title: "PrasadM's Blogfolio",
+    title: `${siteConfig.author}'s Workspace`,
   },
 };
 
@@ -263,6 +264,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <AccentColorInitializer />
           <TooltipProvider>
             <SidebarProvider>
               <BookmarksProvider>

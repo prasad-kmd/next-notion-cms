@@ -9,6 +9,7 @@ import { Search } from "./search";
 import { BookmarksModal } from "./bookmarks-modal";
 import { useBookmarks } from "@/hooks/use-bookmarks";
 import { toast } from "sonner";
+import { AccentPicker } from "./accent-picker";
 import {
   Tooltip,
   TooltipContent,
@@ -144,6 +145,8 @@ export function FloatingNavbar({
           </Tooltip>
         ),
       )}
+      <hr className="h-4 w-[1px] bg-border mx-1" />
+      <AccentPicker />
       <hr className="h-4 w-[1px] bg-border mx-1" />
       <Tooltip delayDuration={0}>
         <TooltipTrigger asChild>

@@ -12,7 +12,10 @@
   --card-foreground: hsl(220 27% 4%);
   --popover: hsl(0 0% 100%);
   --popover-foreground: hsl(220 27% 4%);
-  --primary: hsl(181 100% 28%);
+  --primary-h: 181;
+  --primary-s: 100%;
+  --primary-l: 28%;
+  --primary: hsl(var(--primary-h) var(--primary-s) var(--primary-l));
   --primary-foreground: hsl(216 100% 98%);
   --secondary: hsl(216 20% 90%);
   --secondary-foreground: hsl(220 27% 4%);
@@ -24,8 +27,8 @@
   --destructive-foreground: hsl(0 0% 97%);
   --border: hsl(222 13% 85%);
   --input: hsl(222 13% 85%);
-  --ring: hsl(181 100% 28%);
-  --chart-1: hsl(181 100% 28%);
+  --ring: var(--primary);
+  --chart-1: var(--primary);
   --chart-2: hsl(131 73% 35%);
   --chart-3: hsl(39 100% 39%);
   --chart-4: hsl(352 94% 38%);
@@ -33,12 +36,16 @@
   --radius: 0.625rem;
   --sidebar: hsl(218 48% 95%);
   --sidebar-foreground: hsl(220 27% 4%);
-  --sidebar-primary: hsl(181 100% 28%);
+  --sidebar-primary: var(--primary);
   --sidebar-primary-foreground: hsl(216 100% 98%);
   --sidebar-accent: hsl(216 20% 90%);
   --sidebar-accent-foreground: hsl(220 27% 4%);
   --sidebar-border: hsl(222 13% 85%);
-  --sidebar-ring: hsl(181 100% 28%);
+  --sidebar-ring: var(--primary);
+
+  /* Brand color mappings for selection and other utilities */
+  --brand-200: hsl(var(--primary-h) var(--primary-s) calc(var(--primary-l) + 50%));
+  --brand-900: hsl(var(--primary-h) var(--primary-s) calc(var(--primary-l) - 20%));
 
   --page-gradient: linear-gradient(
     to bottom,
@@ -68,7 +75,7 @@
   --card-foreground: hsl(216 33% 94%);
   --popover: hsl(214 19% 7%);
   --popover-foreground: hsl(216 33% 94%);
-  --primary: hsl(180 100% 34%);
+  --primary: hsl(var(--primary-h) var(--primary-s) calc(var(--primary-l) + 6%));
   --primary-foreground: hsl(220 27% 4%);
   --secondary: hsl(218 11% 14%);
   --secondary-foreground: hsl(216 33% 94%);
@@ -80,20 +87,20 @@
   --destructive-foreground: hsl(0 0% 98%);
   --border: hsl(218 10% 16%);
   --input: hsl(218 10% 16%);
-  --ring: hsl(180 100% 34%);
-  --chart-1: hsl(180 100% 34%);
+  --ring: var(--primary);
+  --chart-1: var(--primary);
   --chart-2: hsl(126 46% 50%);
   --chart-3: hsl(41 100% 45%);
   --chart-4: hsl(359 71% 55%);
   --chart-5: hsl(289 61% 65%);
   --sidebar: hsl(223 24% 6%);
   --sidebar-foreground: hsl(216 33% 94%);
-  --sidebar-primary: hsl(180 100% 34%);
+  --sidebar-primary: var(--primary);
   --sidebar-primary-foreground: hsl(220 27% 4%);
   --sidebar-accent: hsl(214 13% 11%);
   --sidebar-accent-foreground: hsl(216 33% 94%);
   --sidebar-border: hsl(218 10% 16%);
-  --sidebar-ring: hsl(180 100% 34%);
+  --sidebar-ring: var(--primary);
 
   --page-gradient: linear-gradient(
     to bottom,
@@ -178,6 +185,9 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+
+  --color-brand-200: var(--brand-200);
+  --color-brand-900: var(--brand-900);
 }
 
 @layer base {
@@ -440,51 +450,33 @@
 }
 
 ::view-transition-old(root) {
-  animation:
-    400ms cubic-bezier(0.4, 0, 0.2, 1) both scale-out,
-    400ms cubic-bezier(0.4, 0, 0.2, 1) both fade-out;
+  animation: 400ms cubic-bezier(0.4, 0, 0.2, 1) both scale-out,
+             400ms cubic-bezier(0.4, 0, 0.2, 1) both fade-out;
 }
 
 ::view-transition-new(root) {
-  animation:
-    400ms cubic-bezier(0.4, 0, 0.2, 1) both scale-in,
-    400ms cubic-bezier(0.4, 0, 0.2, 1) both fade-in;
+  animation: 400ms cubic-bezier(0.4, 0, 0.2, 1) both scale-in,
+             400ms cubic-bezier(0.4, 0, 0.2, 1) both fade-in;
 }
 
 @keyframes scale-out {
-  from {
-    transform: scale(1);
-  }
-  to {
-    transform: scale(0.92);
-  }
+  from { transform: scale(1); }
+  to { transform: scale(0.92); }
 }
 
 @keyframes scale-in {
-  from {
-    transform: scale(1.08);
-  }
-  to {
-    transform: scale(1);
-  }
+  from { transform: scale(1.08); }
+  to { transform: scale(1); }
 }
 
 @keyframes fade-out {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
+  from { opacity: 1; }
+  to { opacity: 0; }
 }
 
 @keyframes fade-in {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 /* Fallback for browsers that don't support View Transitions */
@@ -492,10 +484,7 @@
   /* You could add a standard CSS transition here if needed */
 }
 
-code,
-kbd,
-samp,
-pre {
+code, kbd, samp, pre{
   font-family: var(--font-local-jetbrains-mono);
 }
 
