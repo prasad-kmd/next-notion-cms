@@ -6,7 +6,7 @@ const nextConfig = {
   },
   images: {
     // Enable Next.js image optimization
-    unoptimized: true, // Keeping true to avoid complex localPattern issues with query strings during build
+    unoptimized: false, // Keeping true to avoid complex localPattern issues with query strings during build
     remotePatterns: [
       {
         protocol: "https",
@@ -25,6 +25,9 @@ const nextConfig = {
         hostname: "i.pravatar.cc",
       },
     ],
+    formats: ['image/webp', 'image/avif'],
+    dangerouslyAllowSVG: true, // For LQIP shimmers
+    contentDispositionType: 'attachment', // Security for downloads
   },
   // Add security headers including CSP
   async headers() {
@@ -32,7 +35,7 @@ const nextConfig = {
       default-src 'self';
       script-src 'self' 'unsafe-eval' 'unsafe-inline' https://gist.github.com;
       style-src 'self' 'unsafe-inline';
-      img-src 'self' blob: data: https://*.notion.so https://*.amazonaws.com https://i.pravatar.cc https://placehold.co;
+      img-src 'self' blob: data: https://*.notion.so https://*.amazonaws.com https://i.pravatar.cc https://placehold.co https://images.unsplash.com https://*.unsplash.com;
       font-src 'self';
       connect-src 'self' https://api.notion.com https://api.telegram.org;
       frame-src 'self' https://www.youtube.com;
