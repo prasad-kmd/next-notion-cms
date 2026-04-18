@@ -3,7 +3,6 @@ import path from "path";
 import matter from "gray-matter";
 import { marked } from "marked";
 import { cache } from "react";
-import { createHighlighter } from "shiki";
 import {
   notion,
   n2m,
@@ -15,38 +14,17 @@ import {
   getSelect,
   getCheckbox,
   getImageUrl,
+  NotionAPIError,
 } from "./notion";
 import { unstable_cache } from "next/cache";
-
-let highlighter: any = null;
-
-async function getHighlighter() {
-  if (!highlighter) {
-    highlighter = await createHighlighter({
-      themes: ["one-dark-pro"],
-      langs: [
-        "javascript",
-        "typescript",
-        "python",
-        "bash",
-        "json",
-        "html",
-        "css",
-        "markdown",
-        "rust",
-        "go",
-        "cpp",
-        "c",
-        "sql",
-        "matlab",
-        "yaml",
-        "java",
-        "php",
-      ],
-    });
-  }
-  return highlighter;
-}
+import { highlightCode } from "./content/highlighter";
+import {
+  injectAlerts,
+  injectHeadingIds,
+  injectQuiz,
+  sanitizeContent,
+} from "./content/transformers";
+import { contentConfig, notionConfig } from "./constants";
 
 // Custom renderer to add IDs to headings for TOC
 const renderer = new marked.Renderer();
@@ -85,9 +63,11 @@ marked.use({
   extensions: [quizExtension as any],
 });
 
+/**
+ * Highlights code blocks in HTML using Shiki with an enhanced UI wrapper.
+ */
 async function highlightCodeBlocks(html: string): Promise<string> {
   try {
-    const sh = await getHighlighter();
     const codeRegex =
       /<pre[^>]*><code(?:\s+class="language-([^"]+)")?[^>]*>([\s\S]*?)<\/code><\/pre>/g;
     const matches = Array.from(html.matchAll(codeRegex));
@@ -120,18 +100,7 @@ async function highlightCodeBlocks(html: string): Promise<string> {
       }
 
       try {
-        const highlighted = sh.codeToHtml(decodedCode.trim(), {
-          lang: lang,
-          theme: "one-dark-pro",
-          transformers: [
-            {
-              line(node: any, line: number) {
-                node.properties.class = (node.properties.class || "") + " line";
-                node.properties["data-line"] = line;
-              },
-            },
-          ],
-        });
+        const highlighted = await highlightCode(decodedCode.trim(), lang);
 
         const enhancedHtml = `
 <div class="code-block-wrapper my-12 rounded-2xl overflow-hidden border border-border/40 bg-[#1e1e1e] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5)] group/code relative transition-all duration-500 hover:shadow-[0_35px_70px_-10px_rgba(var(--primary-rgb),0.15)]">
@@ -170,6 +139,7 @@ async function highlightCodeBlocks(html: string): Promise<string> {
 </div>`;
         result += enhancedHtml;
       } catch (e) {
+        console.error("Shiki individual block highlight error:", e);
         result += fullMatch;
       }
 
@@ -182,101 +152,6 @@ async function highlightCodeBlocks(html: string): Promise<string> {
     console.error("Shiki highlighting error:", e);
     return html;
   }
-}
-
-function injectHeadingIds(html: string): string {
-  return html.replace(
-    /<h([2-4])([^>]*)>(.*?)<\/h\1>/gi,
-    (match, level, attrs, text) => {
-      if (attrs.toLowerCase().includes("id=")) return match;
-      const id = text
-        .replace(/<[^>]*>/g, "")
-        .toLowerCase()
-        .replace(/[^\w]+/g, "-")
-        .replace(/^-+|-+$/g, "");
-      return `<h${level}${attrs} id="${id}">${text}</h${level}>`;
-    },
-  );
-}
-
-function injectQuiz(html: string): string {
-  const placeholders: string[] = [];
-  const protectedHtml = html.replace(/<(pre|code)[\s\S]*?<\/\1>/gi, (match) => {
-    placeholders.push(match);
-    return `__QUIZ_PROTECTED_BLOCK_${placeholders.length - 1}__`;
-  });
-
-  const injectedHtml = protectedHtml.replace(
-    /\[quiz\]([\s\S]*?)\[\/quiz\]/g,
-    (match, jsonContent) => {
-      try {
-        let cleanJson = jsonContent.replace(/<[^>]*>/g, "").trim();
-        cleanJson = cleanJson.replace(/[\r\n\t]+/g, " ");
-        cleanJson = cleanJson.replace(
-          /\\(["\\\/bfnrt]|u[0-9a-fA-F]{4})|\\/g,
-          (match: string, p1: string) => (p1 ? match : "\\\\"),
-        );
-
-        const minifiedJson = JSON.stringify(JSON.parse(cleanJson));
-        const encodedJson = minifiedJson.replace(/'/g, "&apos;");
-        return `<div class="interactive-quiz-placeholder" data-quiz='${encodedJson}'></div>`;
-      } catch (e) {
-        console.error(
-          "Quiz HTML inject parse error:",
-          e,
-          "\nContent:",
-          jsonContent,
-        );
-        return `<div class="bg-red-500/10 border border-red-500 p-4 rounded-lg text-red-500 my-4">
-        <p><strong>Quiz Error:</strong> Invalid JSON format.</p>
-        <pre class="text-[10px] mt-2 overflow-auto">${jsonContent.substring(0, 100)}...</pre>
-      </div>`;
-      }
-    },
-  );
-
-  return injectedHtml.replace(
-    /__QUIZ_PROTECTED_BLOCK_(\d+)__/g,
-    (match, index) => {
-      return placeholders[parseInt(index)];
-    },
-  );
-}
-
-function injectAlerts(html: string): string {
-  const alertTypes = {
-    NOTE: { color: "blue", icon: "info" },
-    TIP: { color: "green", icon: "lightbulb" },
-    IMPORTANT: { color: "purple", icon: "alert-circle" },
-    WARNING: { color: "yellow", icon: "alert-triangle" },
-    CAUTION: { color: "red", icon: "alert-octagon" },
-  };
-
-  return html.replace(
-    /<blockquote[^>]*>\s*<p[^>]*>\s*\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]\s*(?:<\/p>|<br\/?>)?([\s\S]*?)<\/blockquote>/gi,
-    (match, type, content) => {
-      const upperType = type.toUpperCase() as keyof typeof alertTypes;
-      const config = alertTypes[upperType];
-
-      const colors: Record<string, string> = {
-        blue: "border-blue-500 bg-blue-500/10 text-blue-700 dark:text-blue-400",
-        green:
-          "border-green-500 bg-green-500/10 text-green-700 dark:text-green-400",
-        purple:
-          "border-purple-500 bg-purple-500/10 text-purple-700 dark:text-purple-400",
-        yellow:
-          "border-yellow-500 bg-yellow-500/10 text-yellow-700 dark:text-yellow-400",
-        red: "border-red-500 bg-red-500/10 text-red-700 dark:text-red-400",
-      };
-
-      return `<div class="my-6 border-l-4 p-4 rounded-r-lg ${colors[config.color] || colors.blue}">
-      <p class="flex items-center gap-2 font-bold mb-2 uppercase text-xs tracking-widest">
-        <span class="opacity-80">${upperType}</span>
-      </p>
-      <div class="prose-direct text-sm leading-relaxed">${content.trim()}</div>
-    </div>`;
-    },
-  );
 }
 
 export interface Author {
@@ -309,12 +184,17 @@ export interface ContentItem {
   type?: "blog" | "articles" | "projects" | "tutorials" | "wiki" | "quizzes";
 }
 
+/**
+ * Calculates estimated reading time based on word count.
+ */
 function calculateReadingTime(content: string): number {
-  const wordsPerMinute = 200;
   const words = content.trim().split(/\s+/).length;
-  return Math.ceil(words / wordsPerMinute);
+  return Math.ceil(words / contentConfig.wordsPerMinute);
 }
 
+/**
+ * Extracts the first image URL from Markdown or HTML content.
+ */
 function extractFirstImage(
   content: string,
   isMarkdown: boolean,
@@ -336,15 +216,11 @@ function extractFirstImage(
   return undefined;
 }
 
-function sanitizeContent(html: string): string {
-  return html.replace(/<script\b[^>]*>([\s\S]*?)<\/script>/gim, (match) => {
-    if (match.includes("gist.github.com")) return match;
-    return "";
-  });
-}
-
 const contentDirectory = path.join(process.cwd(), "content");
 
+/**
+ * Low-level fetcher for Notion content list.
+ */
 async function fetchNotionContentByType(type: string): Promise<ContentItem[]> {
   const databaseId = (DATABASE_IDS as any)[type];
   if (!databaseId) return [];
@@ -415,10 +291,14 @@ async function fetchNotionContentByType(type: string): Promise<ContentItem[]> {
     return items;
   } catch (error) {
     console.error(`Error fetching Notion content for ${type}:`, error);
-    return [];
+    throw new NotionAPIError(`Failed to fetch Notion content for ${type}`, 500, error);
   }
 }
 
+/**
+ * Gets all content items of a specific type.
+ * Uses React cache and Next.js unstable_cache for optimal performance.
+ */
 export const getContentByType = cache(async function (
   type: "blog" | "articles" | "projects" | "tutorials" | "wiki" | "quizzes",
 ): Promise<ContentItem[]> {
@@ -426,9 +306,17 @@ export const getContentByType = cache(async function (
     const fetcher = unstable_cache(
       async () => fetchNotionContentByType(type),
       [`content-list-${type}`],
-      { revalidate: 3600, tags: [`content-${type}`] },
+      { 
+        revalidate: notionConfig.revalidate, 
+        tags: [`content-${type}`, ...notionConfig.defaultTags] 
+      },
     );
-    return fetcher();
+    try {
+      return await fetcher();
+    } catch (e) {
+      console.error(`Cache fetch failed for ${type}:`, e);
+      return [];
+    }
   }
 
   const typeDirectory = path.join(contentDirectory, type);
@@ -478,6 +366,9 @@ export const getContentByType = cache(async function (
   return items;
 });
 
+/**
+ * Low-level fetcher for a single Notion content item.
+ */
 async function fetchNotionContentItem(
   type: string,
   slug: string,
@@ -558,10 +449,13 @@ async function fetchNotionContentItem(
     };
   } catch (error) {
     console.error(`Error fetching Notion item ${slug} for ${type}:`, error);
-    return null;
+    throw new NotionAPIError(`Failed to fetch Notion item ${slug}`, 500, error);
   }
 }
 
+/**
+ * Gets a single content item by type and slug.
+ */
 export const getContentItem = cache(async function (
   type: "blog" | "articles" | "projects" | "tutorials" | "wiki" | "quizzes",
   slug: string,
@@ -570,9 +464,17 @@ export const getContentItem = cache(async function (
     const fetcher = unstable_cache(
       async () => fetchNotionContentItem(type, slug),
       [`content-item-${type}-${slug}`],
-      { revalidate: 3600, tags: [`content-${type}`, `content-item-${slug}`] },
+      { 
+        revalidate: notionConfig.revalidate, 
+        tags: [`content-${type}`, `content-item-${slug}`, ...notionConfig.defaultTags] 
+      },
     );
-    return fetcher();
+    try {
+      return await fetcher();
+    } catch (e) {
+      console.error(`Cache fetch failed for ${type}/${slug}:`, e);
+      return null;
+    }
   }
 
   const typeDirectory = path.join(contentDirectory, type);
@@ -710,9 +612,16 @@ export const getAuthorBasic = cache(async function (
         };
       },
       [`author-basic-${slug}`],
-      { revalidate: 3600, tags: ["authors"] },
+      { 
+        revalidate: notionConfig.revalidate, 
+        tags: ["authors", ...notionConfig.defaultTags] 
+      },
     );
-    return fetcher();
+    try {
+      return await fetcher();
+    } catch (e) {
+      return null;
+    }
   }
 
   const authorPath = path.join(contentDirectory, "authors", `${slug}.md`);
@@ -722,6 +631,9 @@ export const getAuthorBasic = cache(async function (
   return { ...(data as Author), slug };
 });
 
+/**
+ * Gets full author details including bio and body content.
+ */
 export const getAuthorBySlug = cache(async function (
   slug: string,
 ): Promise<Author | null> {
@@ -773,9 +685,16 @@ export const getAuthorBySlug = cache(async function (
         };
       },
       [`author-full-${slug}`],
-      { revalidate: 3600, tags: ["authors"] },
+      { 
+        revalidate: notionConfig.revalidate, 
+        tags: ["authors", ...notionConfig.defaultTags] 
+      },
     );
-    return fetcher();
+    try {
+      return await fetcher();
+    } catch (e) {
+      return null;
+    }
   }
 
   const authorPath = path.join(contentDirectory, "authors", `${slug}.md`);
@@ -800,6 +719,9 @@ export const getAuthorBySlug = cache(async function (
   };
 });
 
+/**
+ * Gets all authors.
+ */
 export const getAllAuthors = cache(async function (): Promise<Author[]> {
   if (isNotionEnabled) {
     const fetcher = unstable_cache(
@@ -837,9 +759,16 @@ export const getAllAuthors = cache(async function (): Promise<Author[]> {
         });
       },
       ["all-authors"],
-      { revalidate: 3600, tags: ["authors"] },
+      { 
+        revalidate: notionConfig.revalidate, 
+        tags: ["authors", ...notionConfig.defaultTags] 
+      },
     );
-    return fetcher();
+    try {
+      return await fetcher();
+    } catch (e) {
+      return [];
+    }
   }
 
   const authorsDirectory = path.join(contentDirectory, "authors");

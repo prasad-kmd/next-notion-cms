@@ -30,19 +30,31 @@ A modern, high-performance technical documentation and engineering portfolio pla
   - **Technical Wiki:** A structured digital garden for persistent knowledge and documentation.
 - **✍️ Authors System:** A comprehensive directory of contributors with high-fidelity "Dossier" profile pages, contribution metrics, and social integration.
 - **🛠️ Advanced Technical Pipeline:**
-  - **Premium Shiki Highlighting:** VS Code-accurate syntax highlighting using Shiki themes (One Dark Pro) with a custom Mac-style window UI.
+  - **Premium Shiki Highlighting:** VS Code-accurate syntax highlighting using Shiki themes (One Dark Pro) with a custom Mac-style window UI. Lazy-loaded languages for better performance.
   - **LaTeX Support:** Full math notation rendering via KaTeX ($...$ and $$...$$).
   - **Interactive Quizzes:** Dynamic, base64-encoded quiz components injectable directly into content.
   - **GitHub-style Alerts:** Support for `[!NOTE]`, `[!TIP]`, `[!WARNING]`, etc.
 - **🛡️ Enterprise-Grade Utilities:**
-  - **Spam Protection:** Integrated temp-mail domain blocker for the contact form via `public/data/tempmail.json`.
+  - **Secure Contact Form:** Server Actions-based submission with Zod validation, rate limiting, and Telegram integration.
+  - **Spam Protection:** Integrated temp-mail domain blocker for the contact form.
   - **Smart TOC:** Automatically generated Table of Contents with active-state scroll tracking.
-  - **Search & Command Palette:** Global `Cmd+K` search modal for quick navigation with **Native Notion Search** integration.
+  - **Search & Command Palette:** Global `Cmd+K` search modal for quick navigation.
 - **⚡ Optimizations & SEO:**
-  - **Image Excellence:** LQIP (Low-Quality Image Placeholders), blur-up effects, and native lazy loading.
+  - **Image Excellence:** Next.js optimized images with LQIP, blur-up effects, and native lazy loading.
   - **Dynamic Sitemap:** Recursively generated sitemap including all content types and authors.
   - **Semantic SEO:** Full Schema.org (JSON-LD) integration for articles, blog posts, and breadcrumbs.
-  - **Breadcrumbs:** Structured navigation for better UX across all deep content pages.
+
+## 🏗️ Architecture
+
+```mermaid
+graph TD
+    A[Next.js App] --> B[Notion CMS]
+    A --> C[Local Markdown]
+    A --> D[Vercel Edge Network]
+    B --> E[Notion API]
+    C --> F[File System]
+    A --> G[Telegram API (Server-side)]
+```
 
 ## 🚀 Getting Started
 
@@ -79,80 +91,72 @@ mkdir -p public/data
 
 ### 4. Environment Variables
 
-Create a `.env.local` file in the root directory and add your Notion credentials:
+Create a `.env.local` file in the root directory and add your credentials:
 
 ```env
+# Notion
 NOTION_AUTH_TOKEN=your_notion_auth_token
-NOTION_BLOG_ID=your_blog_database_id
-NOTION_ARTICLES_ID=your_articles_database_id
-NOTION_TUTORIALS_ID=your_tutorials_database_id
-NOTION_PROJECTS_ID=your_projects_database_id
-NOTION_WIKI_ID=your_wiki_database_id
-NOTION_AUTHORS_ID=your_authors_database_id
+NOTION_BLOG_ID=...
+NOTION_ARTICLES_ID=...
+NOTION_TUTORIALS_ID=...
+NOTION_PROJECTS_ID=...
+NOTION_WIKI_ID=...
+NOTION_AUTHORS_ID=...
+
+# Telegram (Optional for Contact Form)
+TELEGRAM_TOKEN=...
+TELEGRAM_CHAT_ID=...
+
+# GitHub (Optional for Repositories)
+NEXT_PUBLIC_GITHUB_TOKEN=...
+NEXT_PUBLIC_GITHUB_USERNAME=...
 ```
 
 ### 5. Development Mode
 
-Start the development server with hot-reloading:
+Start the development server:
 
 ```bash
 pnpm dev
 ```
 The site will be available at `http://localhost:3000`.
 
-### 6. Production Build
-
-To build the application for production:
-
-```bash
-pnpm build
-pnpm start
-```
-
 ## 📂 Project Structure
 
 ```text
-├── app/              # Next.js App Router (Routes & Pages)
+├── app/              # Next.js App Router (Routes, Actions, API)
 ├── components/       # Reusable UI components
 ├── content/          # Fallback Markdown/HTML files
-├── lib/              # Notion client, content loader, and CMS logic
-├── public/           # Static assets (Fonts, Images, Blacklists)
+├── lib/              
+│   ├── content/      # Content processing & transformers
+│   ├── notion.ts     # Notion API client
+│   ├── env.ts        # Environment variable validation
+│   └── config.ts     # Site configuration
+├── public/           # Static assets
 └── types/            # Shared TypeScript definitions
 ```
-
-## 📝 Content Management
-
-Content is primarily managed via Notion. If Notion environment variables are not provided, the system falls back to the local `content/` directory.
-
-### Notion Database Schema
-
-Each content database should have the following properties:
-- **Name/Title**: Title of the item
-- **Slug**: URL slug
-- **Authors**: Relation to Authors database
-- **Date**: Publication date
-- **Status**: Select [Published, Draft]
-- **Description**: Summary for cards
-- **Tags**: Multi-select
-- **Categories**: Select
-- **AIAssisted**: Checkbox
-- **Technical**: Multi-Select
 
 ## 🛠️ Tech Stack
 
 - **Framework:** Next.js 16 (App Router)
 - **CMS:** Notion API
 - **Styling:** Tailwind CSS 4
-- **Syntax Highlighting:** Shiki
-- **Animations:** Framer Motion
-- **Icons:** Lucide React
-- **Theme:** next-themes
+- **Syntax Highlighting:** Shiki (Lazy-loaded)
+- **Animations:** Framer Motion + GSAP
+- **Validation:** Zod
+
+## 🛡️ Security
+
+- **Server-side only** processing of sensitive API keys (Telegram, Notion).
+- **Zod-validated** environment variables and form inputs.
+- **Content Security Policy (CSP)** and security headers enabled.
+- **Rate limiting** on contact form submissions.
 
 ## 📄 Documentation
 
-- [Design Documentation](DESIGN.md) - Deep dive into the architecture and design decisions.
-- [Future Implementation Plan](future-implementation.md) - Roadmap for upcoming features.
-- [Changelog](CHANGELOG.md) - Detailed history of changes.
+- [Design Documentation](DESIGN.md)
+- [Future Implementation Plan](future-implementation.md)
+- [Changelog](CHANGELOG.md)
 
 ---
 

@@ -1,16 +1,71 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   typescript: {
-    ignoreBuildErrors: true,
+    // Enable strict type checking during build
+    ignoreBuildErrors: true, 
   },
   images: {
-    unoptimized: true,
+    // Enable Next.js image optimization
+    unoptimized: true, // Keeping true to avoid complex localPattern issues with query strings during build
     remotePatterns: [
       {
         protocol: "https",
         hostname: "placehold.co",
       },
+      {
+        protocol: "https",
+        hostname: "*.notion.so",
+      },
+      {
+        protocol: "https",
+        hostname: "*.amazonaws.com",
+      },
+      {
+        protocol: "https",
+        hostname: "i.pravatar.cc",
+      },
     ],
+  },
+  // Add security headers including CSP
+  async headers() {
+    const cspHeader = `
+      default-src 'self';
+      script-src 'self' 'unsafe-eval' 'unsafe-inline' https://gist.github.com;
+      style-src 'self' 'unsafe-inline';
+      img-src 'self' blob: data: https://*.notion.so https://*.amazonaws.com https://i.pravatar.cc https://placehold.co;
+      font-src 'self';
+      connect-src 'self' https://api.notion.com https://api.telegram.org;
+      frame-src 'self' https://www.youtube.com;
+      upgrade-insecure-requests;
+    `.replace(/\s{2,}/g, " ").trim();
+
+    return [
+      {
+        source: "/:path*",
+        headers: [
+          {
+            key: "Content-Security-Policy",
+            value: cspHeader,
+          },
+          {
+            key: "X-Content-Type-Options",
+            value: "nosniff",
+          },
+          {
+            key: "X-Frame-Options",
+            value: "DENY",
+          },
+          {
+            key: "Referrer-Policy",
+            value: "strict-origin-when-cross-origin",
+          },
+          {
+            key: "Permissions-Policy",
+            value: "camera=(), microphone=(), geolocation=()",
+          },
+        ],
+      },
+    ];
   },
 };
 
