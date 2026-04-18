@@ -18,6 +18,22 @@ export function ContentRenderer({ content, id }: ContentRendererProps) {
   const renderedContent = content;
 
   useEffect(() => {
+    // Process images to be lazy-loaded and optimized if possible
+    // Note: We are using native lazy loading here as we're injecting HTML
+    if (contentRef.current) {
+      const images = contentRef.current.querySelectorAll('img');
+      images.forEach(img => {
+        if (!img.getAttribute('loading')) {
+          img.setAttribute('loading', 'lazy');
+        }
+        if (!img.getAttribute('decoding')) {
+          img.setAttribute('decoding', 'async');
+        }
+      });
+    }
+  }, [renderedContent]);
+
+  useEffect(() => {
     // Reset toast state when content changes
     toastShown.current = false;
   }, [content]);

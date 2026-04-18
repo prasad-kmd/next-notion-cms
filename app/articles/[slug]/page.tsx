@@ -13,6 +13,8 @@ import { ScrollProgress } from "@/components/scroll-progress";
 import { RelatedContent } from "@/components/related-content";
 import { ArticleSidebar } from "@/components/article-sidebar";
 import { AIContentIndicator } from "@/components/ai-content-indicator";
+import { Breadcrumbs } from "@/components/breadcrumbs";
+import { JsonLd, getContentSchema, getBreadcrumbSchema } from "@/components/json-ld";
 
 export async function generateStaticParams() {
   const entries = await getContentByType("articles");
@@ -55,15 +57,19 @@ export default async function ArticlePage({
 
   return (
     <div className="min-h-screen px-6 py-12 lg:px-8 articles_item img_grad_pm">
+      <JsonLd data={getContentSchema({ ...entry, authorName: author?.name }, "articles")} />
+      <JsonLd data={getBreadcrumbSchema([
+        { label: "Articles", href: "/articles" },
+        { label: entry.title, href: `/articles/${entry.slug}` }
+      ])} />
       <ScrollProgress />
       <div className="mx-auto max-w-6xl">
-        <Link
-          href="/articles"
-          className="mb-8 inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground local-inter"
-        >
-          <ArrowLeft className="h-4 w-4" />
-          Back to Articles
-        </Link>
+        <Breadcrumbs 
+          items={[
+            { label: "Articles", href: "/articles" },
+            { label: entry.title, href: `/articles/${entry.slug}`, active: true }
+          ]} 
+        />
 
         <div className="flex flex-col lg:flex-row gap-12">
           <article className="flex-1 min-w-0">

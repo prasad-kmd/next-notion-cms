@@ -18,6 +18,7 @@ import { Badge } from "@/components/ui/badge";
 import { ContentItem, Author } from "@/lib/content";
 import { getAuthorBasic } from "@/lib/author-client";
 import { useEffect, useState } from "react";
+import { getBlurDataURL } from "@/lib/utils";
 
 function formatDate(dateStr: string | undefined) {
   if (!dateStr) return "Recent";
@@ -98,6 +99,9 @@ export function BlogCard({ post }: BlogCardProps) {
                   width={36}
                   height={36}
                   className="object-cover"
+                  placeholder="blur"
+                  blurDataURL={getBlurDataURL(36, 36)}
+                  loading="lazy"
                 />
               ) : (
                 <div className="w-full h-full bg-muted flex items-center justify-center">
@@ -159,6 +163,9 @@ export function ArticleCard({ post }: ArticleCardProps) {
           alt={post.title}
           fill
           className="object-cover transition-all duration-700 group-hover:scale-105"
+          placeholder="blur"
+          blurDataURL={getBlurDataURL(400, 225)}
+          loading="lazy"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent opacity-60" />
         <div className="absolute top-4 left-4 flex gap-2">
@@ -205,6 +212,9 @@ export function ArticleCard({ post }: ArticleCardProps) {
                   width={32}
                   height={32}
                   className="object-cover"
+                  placeholder="blur"
+                  blurDataURL={getBlurDataURL(32, 32)}
+                  loading="lazy"
                 />
               ) : (
                 <div className="w-full h-full bg-muted flex items-center justify-center">
@@ -245,6 +255,9 @@ export function ProjectCard({ post }: ProjectCardProps) {
           alt={post.title}
           fill
           className="object-cover transition-all duration-1000 group-hover:scale-110 grayscale-[0.3] group-hover:grayscale-0"
+          placeholder="blur"
+          blurDataURL={getBlurDataURL(400, 300)}
+          loading="lazy"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-80" />
 

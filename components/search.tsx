@@ -96,16 +96,39 @@ export function Search({ isMobileSidebar = false }: SearchProps) {
       return;
     }
 
-    const filtered = allContent
-      .filter(
-        (item) =>
-          item.title.toLowerCase().includes(query.toLowerCase()) ||
-          item.description?.toLowerCase().includes(query.toLowerCase()) ||
-          item.type.toLowerCase().includes(query.toLowerCase()),
-      )
-      .slice(0, 8);
+    const timeoutId = setTimeout(async () => {
+      // If query is long enough, try fetching from Notion API if enabled
+      if (query.length > 2) {
+        setIsFetching(true);
+        try {
+          const res = await fetch(`/api/search?q=${encodeURIComponent(query)}`);
+          const data = await res.json();
+          setResults(data.slice(0, 8));
+        } catch (error) {
+          console.error("Search fetch error:", error);
+          // Fallback to local filtering
+          filterLocal();
+        } finally {
+          setIsFetching(false);
+        }
+      } else {
+        filterLocal();
+      }
+    }, 300);
 
-    setResults(filtered);
+    return () => clearTimeout(timeoutId);
+
+    function filterLocal() {
+      const filtered = allContent
+        .filter(
+          (item) =>
+            item.title.toLowerCase().includes(query.toLowerCase()) ||
+            item.description?.toLowerCase().includes(query.toLowerCase()) ||
+            item.type.toLowerCase().includes(query.toLowerCase()),
+        )
+        .slice(0, 8);
+      setResults(filtered);
+    }
   }, [query, allContent]);
 
   const handleClose = () => {
@@ -265,7 +288,8 @@ export function Search({ isMobileSidebar = false }: SearchProps) {
                   onChange={(e) => setQuery(e.target.value)}
                   onKeyDown={(e) => {
                     if (e.key === "Enter" && query.trim()) {
-                      handleResultClick("", ""); // This will be ignored or I should handle it better
+                      router.push(`/search?q=${encodeURIComponent(query)}`);
+                      handleClose();
                     }
                   }}
                   className="ml-3 w-full bg-transparent text-base outline-none placeholder:text-muted-foreground"

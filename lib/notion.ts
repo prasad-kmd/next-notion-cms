@@ -172,6 +172,33 @@ export const DATABASE_IDS = {
 export const isNotionEnabled = !!(NOTION_AUTH_TOKEN && DATABASE_IDS.blog);
 
 /**
+ * Perform a global search across Notion workspace
+ */
+export async function searchNotion(query: string) {
+  if (!isNotionEnabled) return [];
+
+  try {
+    const response = await notion.search({
+      query: query,
+      filter: {
+        value: 'page',
+        property: 'object'
+      },
+      sort: {
+        direction: 'descending',
+        timestamp: 'last_edited_time'
+      },
+      page_size: 10
+    });
+
+    return response.results;
+  } catch (error) {
+    console.error("Notion search error:", error);
+    return [];
+  }
+}
+
+/**
  * Extracts plain text from a Notion property
  */
 export function getPlainText(property: any): string {

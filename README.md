@@ -37,7 +37,12 @@ A modern, high-performance technical documentation and engineering portfolio pla
 - **🛡️ Enterprise-Grade Utilities:**
   - **Spam Protection:** Integrated temp-mail domain blocker for the contact form via `public/data/tempmail.json`.
   - **Smart TOC:** Automatically generated Table of Contents with active-state scroll tracking.
-  - **Search & Command Palette:** Global `Cmd+K` search modal for quick navigation.
+  - **Search & Command Palette:** Global `Cmd+K` search modal for quick navigation with **Native Notion Search** integration.
+- **⚡ Optimizations & SEO:**
+  - **Image Excellence:** LQIP (Low-Quality Image Placeholders), blur-up effects, and native lazy loading.
+  - **Dynamic Sitemap:** Recursively generated sitemap including all content types and authors.
+  - **Semantic SEO:** Full Schema.org (JSON-LD) integration for articles, blog posts, and breadcrumbs.
+  - **Breadcrumbs:** Structured navigation for better UX across all deep content pages.
 
 ## 🚀 Getting Started
 
@@ -142,6 +147,12 @@ Each content database should have the following properties:
 - **Animations:** Framer Motion
 - **Icons:** Lucide React
 - **Theme:** next-themes
+
+## 📄 Documentation
+
+- [Design Documentation](DESIGN.md) - Deep dive into the architecture and design decisions.
+- [Future Implementation Plan](future-implementation.md) - Roadmap for upcoming features.
+- [Changelog](CHANGELOG.md) - Detailed history of changes.
 
 ---
 

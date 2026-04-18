@@ -13,6 +13,7 @@ import { ScrollProgress } from "@/components/scroll-progress";
 import { RelatedContent } from "@/components/related-content";
 import { ArticleSidebar } from "@/components/article-sidebar";
 import { AIContentIndicator } from "@/components/ai-content-indicator";
+import { Breadcrumbs } from "@/components/breadcrumbs";
 
 export async function generateStaticParams() {
   const entries = await getContentByType("wiki");
@@ -57,13 +58,12 @@ export default async function WikiEntryPage({
     <div className="min-h-screen px-6 py-12 lg:px-8 wiki_item img_grad_pm">
       <ScrollProgress />
       <div className="mx-auto max-w-6xl">
-        <Link
-          href="/wiki"
-          className="mb-8 inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground font-local-inter"
-        >
-          <ArrowLeft className="h-4 w-4" />
-          Back to Wiki
-        </Link>
+        <Breadcrumbs 
+          items={[
+            { label: "Wiki", href: "/wiki" },
+            { label: entry.title, href: `/wiki/${entry.slug}`, active: true }
+          ]} 
+        />
 
         <div className="flex flex-col lg:flex-row gap-12">
           <article className="flex-1 min-w-0">

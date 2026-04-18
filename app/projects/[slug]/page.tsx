@@ -8,6 +8,7 @@ import { BookmarkButton } from "@/components/bookmark-button";
 import { ScrollProgress } from "@/components/scroll-progress";
 import { RelatedContent } from "@/components/related-content";
 import { AIContentIndicator } from "@/components/ai-content-indicator";
+import { Breadcrumbs } from "@/components/breadcrumbs";
 
 export async function generateMetadata({
   params,
@@ -50,13 +51,12 @@ export default async function ProjectPage({
     <div className="min-h-screen px-6 py-12 lg:px-8 projects_item img_grad_pm">
       <ScrollProgress />
       <div className="mx-auto max-w-4xl">
-        <Link
-          href="/projects"
-          className="mb-8 inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground font-local-inter"
-        >
-          <ArrowLeft className="h-4 w-4" />
-          Back to Projects
-        </Link>
+        <Breadcrumbs 
+          items={[
+            { label: "Projects", href: "/projects" },
+            { label: project.title, href: `/projects/${project.slug}`, active: true }
+          ]} 
+        />
 
         <article>
           <header className="mb-8 border-b border-border pb-8">
