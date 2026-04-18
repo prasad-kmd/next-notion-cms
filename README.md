@@ -10,6 +10,7 @@ A modern, high-performance technical documentation and engineering portfolio pla
 ![Notion](https://img.shields.io/badge/Notion-CMS-black?style=for-the-badge&logo=notion)
 ![GitHub License](https://img.shields.io/github/license/prasad-kmd/next-notion-cms?style=for-the-badge)
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/w/prasad-kmd/next-notion-cms?style=for-the-badge&logo=github&logoColor=black)
+![GitHub deployments](https://img.shields.io/github/deployments/prasad-kmd/next-notion-cms/Production?logo=Vercel&style=for-the-badge)
 ---
 
 ## ✨ Features
