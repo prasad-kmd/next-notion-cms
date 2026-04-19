@@ -1,0 +1,29 @@
+import { betterFetch } from "@better-fetch/fetch";
+import { NextResponse, type NextRequest } from "next/server";
+import type { Session } from "better-auth/types";
+
+export async function proxy(request: NextRequest) {
+	const { data: session } = await betterFetch<Session>(
+		"/api/auth/get-session",
+		{
+			baseURL: request.nextUrl.origin,
+			headers: {
+				//get the cookie from the request
+				cookie: request.headers.get("cookie") || "",
+			},
+		},
+	);
+
+	if (!session) {
+		return NextResponse.redirect(new URL("/sign-in", request.url));
+	}
+	return NextResponse.next();
+}
+
+export const config = {
+	matcher: [
+        // Add paths that need protection here
+        // "/dashboard/:path*",
+        // "/settings/:path*",
+    ],
+};

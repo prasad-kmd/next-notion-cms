@@ -20,7 +20,9 @@
     "build": "next build",
     "dev": "next dev",
     "lint": "eslint .",
-    "start": "next start"
+    "start": "next start",
+    "db:push": "drizzle-kit push",
+    "db:studio": "drizzle-kit studio"
   },
   "dependencies": {
     "@better-fetch/fetch": "^1.1.21",
@@ -92,6 +94,7 @@
     "@types/react-dom": "^19",
     "@types/react-katex": "^3.0.4",
     "autoprefixer": "^10.4.21",
+    "dotenv": "^16.4.7",
     "drizzle-kit": "^0.31.10",
     "eslint": "9.37.0",
     "eslint-config-next": "16.2.2",

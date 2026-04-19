@@ -20,6 +20,29 @@ const envSchema = z.object({
 
   // Site
   SITE_URL: z.string().url().optional(),
+
+  // Database
+  DATABASE_URL: z.string().optional(),
+
+  // Better Auth
+  BETTER_AUTH_SECRET: z.string().optional(),
+  BETTER_AUTH_URL: z.string().url().optional(),
+
+  // OAuth Providers
+  GOOGLE_CLIENT_ID: z.string().optional(),
+  GOOGLE_CLIENT_SECRET: z.string().optional(),
+  GITHUB_CLIENT_ID: z.string().optional(),
+  GITHUB_CLIENT_SECRET: z.string().optional(),
+  FACEBOOK_CLIENT_ID: z.string().optional(),
+  FACEBOOK_CLIENT_SECRET: z.string().optional(),
+  NOTION_CLIENT_ID: z.string().optional(),
+  NOTION_CLIENT_SECRET: z.string().optional(),
+  TWITTER_CLIENT_ID: z.string().optional(),
+  TWITTER_CLIENT_SECRET: z.string().optional(),
+  VERCEL_CLIENT_ID: z.string().optional(),
+  VERCEL_CLIENT_SECRET: z.string().optional(),
+  REDDIT_CLIENT_ID: z.string().optional(),
+  REDDIT_CLIENT_SECRET: z.string().optional(),
   
   // Node Env
   NODE_ENV: z.enum(["development", "test", "production"]).default("development"),

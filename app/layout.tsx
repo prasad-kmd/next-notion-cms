@@ -120,6 +120,7 @@ import { Footer } from "@/components/footer";
 import { ViewTransitions } from "@/components/view-transitions";
 import ClickSpark from "@/components/ClickSpark";
 import { AccentColorInitializer } from "@/components/accent-color-initializer";
+import { AuthInitializer } from "@/components/auth/auth-initializer";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
@@ -265,6 +266,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <AccentColorInitializer />
+          <AuthInitializer />
           <TooltipProvider>
             <SidebarProvider>
               <BookmarksProvider>

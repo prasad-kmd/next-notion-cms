@@ -2,7 +2,7 @@ import { siteConfig } from "./config";
 
 export const contentConfig = {
   wordsPerMinute: 220,
-  cacheRevalidation: 3600, // 1 hour
+  cacheRevalidation: 21600, // 6 hours
   maxFileSize: 20 * 1024 * 1024, // 20 MB
   allowedFileTypes: ['pdf', 'jpg', 'png', 'jpeg'],
 };
@@ -13,6 +13,6 @@ export const securityConfig = {
 };
 
 export const notionConfig = {
-  revalidate: 3600,
+  revalidate: 21600, // 6 hours
   defaultTags: ["global-content"],
 };

@@ -10,6 +10,7 @@ import { BookmarksModal } from "./bookmarks-modal";
 import { useBookmarks } from "@/hooks/use-bookmarks";
 import { toast } from "sonner";
 import { AccentPicker } from "./accent-picker";
+import { UserMenu } from "./auth/auth-buttons";
 import {
   Tooltip,
   TooltipContent,
@@ -168,6 +169,8 @@ export function FloatingNavbar({
           </TooltipContent>
         )}
       </Tooltip>
+      <hr className="h-4 w-px bg-border mx-1" />
+      <UserMenu isMobile={isMobileSidebar} />
       <BookmarksModal
         isOpen={isBookmarksOpen}
         onClose={() => setIsBookmarksOpen(false)}
