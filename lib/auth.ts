@@ -49,6 +49,16 @@ export const auth = betterAuth({
             clientSecret: process.env.REDDIT_CLIENT_SECRET || "reddit_secret",
             enabled: !!(process.env.REDDIT_CLIENT_ID && process.env.REDDIT_CLIENT_SECRET),
         },
+        notion: {
+            clientId: process.env.NOTION_CLIENT_ID || "notion_id",
+            clientSecret: process.env.NOTION_CLIENT_SECRET || "notion_secret",
+            enabled: !!(process.env.NOTION_CLIENT_ID && process.env.NOTION_CLIENT_SECRET),
+        },
+        vercel: {
+            clientId: process.env.VERCEL_CLIENT_ID || "vercel_id",
+            clientSecret: process.env.VERCEL_CLIENT_SECRET || "vercel_secret",
+            enabled: !!(process.env.VERCEL_CLIENT_ID && process.env.VERCEL_CLIENT_SECRET),
+        },
     },
     // Future extensibility for account linking
     account: {

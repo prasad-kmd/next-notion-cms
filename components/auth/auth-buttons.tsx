@@ -66,9 +66,19 @@ import {
     TooltipContent,
     TooltipTrigger,
 } from "@/components/ui/tooltip";
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { useRouter } from "next/navigation";
 
 export function UserMenu({ isMobile = false }: { isMobile?: boolean }) {
     const { data: session, isPending } = authClient.useSession();
+    const router = useRouter();
 
     if (isPending) return <div className="w-9 h-9 rounded-full bg-muted animate-pulse" />;
 
@@ -94,47 +104,47 @@ export function UserMenu({ isMobile = false }: { isMobile?: boolean }) {
     }
 
     return (
-        <div className="flex items-center gap-1">
-            <Tooltip delayDuration={0}>
-                <TooltipTrigger asChild>
-                    <button
-                        className="p-0.5 rounded-full hover:ring-2 hover:ring-primary/20 transition-all"
-                        aria-label="User profile"
-                    >
-                        <img
-                            src={session.user.image || `https://avatar.vercel.sh/${session.user.email}`}
-                            alt={session.user.name}
-                            className="w-8 h-8 rounded-full border border-border object-cover"
-                        />
-                    </button>
-                </TooltipTrigger>
-                {!isMobile && (
-                    <TooltipContent side="bottom" sideOffset={8} className="flex flex-col gap-1">
-                        <p className="font-medium">{session.user.name}</p>
-                        <p className="text-xs text-muted-foreground">{session.user.email}</p>
-                    </TooltipContent>
-                )}
-            </Tooltip>
-
-            <Tooltip delayDuration={0}>
-                <TooltipTrigger asChild>
-                    <button
-                        onClick={async () => {
-                            await authClient.signOut();
-                            window.location.reload();
-                        }}
-                        className="p-2 rounded-full hover:bg-muted text-muted-foreground hover:text-foreground transition-colors"
-                        aria-label="Sign Out"
-                    >
-                        <LogOut className="h-5 w-5" />
-                    </button>
-                </TooltipTrigger>
-                {!isMobile && (
-                    <TooltipContent side="bottom" sideOffset={8}>
-                        Sign Out
-                    </TooltipContent>
-                )}
-            </Tooltip>
-        </div>
+        <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+                <button
+                    className="p-0.5 rounded-full hover:ring-2 hover:ring-primary/20 transition-all outline-none"
+                    aria-label="User profile"
+                >
+                    <img
+                        src={session.user.image || `https://avatar.vercel.sh/${session.user.email}`}
+                        alt={session.user.name}
+                        className="w-8 h-8 rounded-full border border-border object-cover"
+                    />
+                </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-56 google-sans">
+                <DropdownMenuLabel className="font-normal">
+                    <div className="flex flex-col space-y-1">
+                        <p className="text-sm font-medium leading-none">{session.user.name}</p>
+                        <p className="text-xs leading-none text-muted-foreground">
+                            {session.user.email}
+                        </p>
+                    </div>
+                </DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem 
+                    onClick={() => router.push("/dashboard")}
+                    className="cursor-pointer"
+                >
+                    <Layout className="mr-2 h-4 w-4" />
+                    <span>Dashboard</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem 
+                    onClick={async () => {
+                        await authClient.signOut();
+                        router.refresh();
+                    }}
+                    className="cursor-pointer text-destructive focus:text-destructive"
+                >
+                    <LogOut className="mr-2 h-4 w-4" />
+                    <span>Sign Out</span>
+                </DropdownMenuItem>
+            </DropdownMenuContent>
+        </DropdownMenu>
     );
 }
