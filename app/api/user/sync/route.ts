@@ -5,6 +5,34 @@ import { eq } from "drizzle-orm";
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 
+export async function GET(req: Request) {
+    const session = await auth.api.getSession({
+        headers: await headers(),
+    });
+
+    if (!session) {
+        return new NextResponse("Unauthorized", { status: 401 });
+    }
+
+    try {
+        const currentUser = await db.query.user.findFirst({
+            where: eq(user.id, session.user.id),
+        });
+
+        if (!currentUser) {
+            return new NextResponse("User not found", { status: 404 });
+        }
+
+        return NextResponse.json({ 
+            preferences: currentUser.preferences || {},
+            synced: true 
+        });
+    } catch (error) {
+        console.error("Fetch preferences error:", error);
+        return new NextResponse("Internal Server Error", { status: 500 });
+    }
+}
+
 export async function POST(req: Request) {
     const session = await auth.api.getSession({
         headers: await headers(),

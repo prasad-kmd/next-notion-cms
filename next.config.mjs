@@ -53,7 +53,7 @@ const nextConfig = {
       style-src 'self' 'unsafe-inline';
       img-src 'self' blob: data: https://*.notion.so https://*.amazonaws.com https://i.pravatar.cc https://placehold.co https://images.unsplash.com https://*.unsplash.com https://lh3.googleusercontent.com https://avatars.githubusercontent.com https://avatar.vercel.sh https://*.githubusercontent.com https://*.googleusercontent.com https://*.githubusercontent.com;
       font-src 'self';
-      connect-src 'self' https://api.notion.com https://api.telegram.org;
+      connect-src 'self' https://api.notion.com https://api.telegram.org https://lh3.googleusercontent.com https://avatars.githubusercontent.com https://*.googleusercontent.com https://*.githubusercontent.com;
       frame-src 'self' https://www.youtube.com;
       upgrade-insecure-requests;
     `.replace(/\s{2,}/g, " ").trim();

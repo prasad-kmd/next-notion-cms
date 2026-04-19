@@ -23,8 +23,8 @@ export function BookmarksProvider({ children }: { children: React.ReactNode }) {
     const [bookmarks, setBookmarks] = useState<BookmarkedItem[]>([])
     const [isInitialized, setIsInitialized] = useState(false)
 
-    // Load bookmarks from localStorage on mount
-    useEffect(() => {
+    // Load bookmarks from localStorage on mount and listen for storage changes
+    const loadFromLocalStorage = useCallback(() => {
         const saved = localStorage.getItem("user-bookmarks")
         if (saved) {
             try {
@@ -35,9 +35,31 @@ export function BookmarksProvider({ children }: { children: React.ReactNode }) {
             } catch (e) {
                 console.error("Failed to parse bookmarks:", e)
             }
+        } else {
+            setBookmarks([])
         }
-        setIsInitialized(true)
     }, [])
+
+    useEffect(() => {
+        loadFromLocalStorage()
+        setIsInitialized(true)
+
+        // Listen for storage events (from other hooks like useAuthSync)
+        const handleStorageChange = (e: StorageEvent | Event) => {
+            // Check if it's the correct key or a general refresh event
+            if (e instanceof StorageEvent) {
+                if (e.key === "user-bookmarks") {
+                    loadFromLocalStorage()
+                }
+            } else {
+                // Event from window.dispatchEvent(new Event("storage"))
+                loadFromLocalStorage()
+            }
+        }
+
+        window.addEventListener("storage", handleStorageChange)
+        return () => window.removeEventListener("storage", handleStorageChange)
+    }, [loadFromLocalStorage])
 
     // Sync back to localStorage
     useEffect(() => {
