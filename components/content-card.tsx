@@ -54,7 +54,7 @@ export function ContentCard({ post, basePath }: ContentCardProps) {
   return (
     <Link
       href={`${basePath}/${post.slug}`}
-      className="group relative flex w-full flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-sm transition-all duration-300 hover:shadow-2xl hover:border-primary/40 hover:-translate-y-1.5 aspect-3/2 min-h-[300px]"
+      className="group relative flex w-full flex-col overflow-hidden rounded-xl md:rounded-2xl border border-border bg-card shadow-sm transition-all duration-300 hover:shadow-2xl hover:border-primary/40 hover:-translate-y-1.5 aspect-video md:aspect-3/2 min-h-[200px] md:min-h-[300px]"
     >
       {/* Background Layer */}
       {post.firstImage ? (
@@ -76,17 +76,17 @@ export function ContentCard({ post, basePath }: ContentCardProps) {
       )}
 
       {/* Main Content Area */}
-      <div className="relative z-10 flex h-full flex-col p-5 md:p-6">
+      <div className="relative z-10 flex h-full flex-col p-4 md:p-6">
         {/* Top Bar: Categories and Arrow */}
-        <div className="flex items-center justify-between mb-3 md:mb-4">
-          <div className="flex flex-wrap gap-2">
+        <div className="flex items-center justify-between mb-2 md:mb-4">
+          <div className="flex flex-wrap gap-1.5 md:gap-2">
             {appendCategories(post.category, post.technical)
               .slice(0, 2)
               .map((cat, i) => (
                 <Badge
                   key={i}
                   className={`
-                  px-3 py-1 text-[10px] font-bold uppercase tracking-widest local-jetbrains-mono border-0
+                  px-2 md:px-3 py-0.5 md:py-1 text-[8px] md:text-[10px] font-bold uppercase tracking-widest local-jetbrains-mono border-0
                   ${
                     post.firstImage
                       ? "bg-primary text-white shadow-lg shadow-primary/30"
@@ -110,10 +110,10 @@ export function ContentCard({ post, basePath }: ContentCardProps) {
         </div>
 
         {/* Middle: Title and Description */}
-        <div className="grow overflow-hidden">
+        <div className="grow overflow-hidden mt-1 md:mt-0">
           <h2
             className={`
-            mb-2 md:mb-3 text-xl md:text-2xl font-bold transition-colors duration-300 line-clamp-2 mozilla-headline leading-[1.1] group-hover:text-primary
+            mb-1.5 md:mb-3 text-lg md:text-2xl font-bold transition-colors duration-300 line-clamp-2 mozilla-headline leading-[1.1] group-hover:text-primary
             ${post.firstImage ? "text-white" : "text-foreground"}
           `}
           >
@@ -123,7 +123,7 @@ export function ContentCard({ post, basePath }: ContentCardProps) {
           {post.description && (
             <p
               className={`
-              text-[11px] md:text-xs line-clamp-2 md:line-clamp-3 font-google-sans leading-relaxed opacity-80
+              text-[10px] md:text-xs line-clamp-2 md:line-clamp-3 font-google-sans leading-relaxed opacity-80
               ${post.firstImage ? "text-gray-300" : "text-muted-foreground"}
             `}
             >
@@ -135,15 +135,15 @@ export function ContentCard({ post, basePath }: ContentCardProps) {
         {/* Bottom Section: Author, Date, and Tags */}
         <div
           className={`
-          mt-3 md:mt-4 pt-3 md:pt-4 border-t flex flex-col gap-3 md:gap-4
+          mt-2 md:mt-4 pt-2 md:pt-4 border-t flex flex-col gap-2 md:gap-4
           ${post.firstImage ? "border-white/10" : "border-border/50"}
         `}
         >
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2.5">
+            <div className="flex items-center gap-2 md:gap-2.5">
               <div
                 className={`
-                relative h-7 w-7 overflow-hidden rounded-full border transition-transform duration-300
+                relative h-6 w-6 md:h-7 md:w-7 overflow-hidden rounded-full border transition-transform duration-300
                 ${post.firstImage ? "border-white/20" : "border-border"}
               `}
               >
@@ -162,7 +162,7 @@ export function ContentCard({ post, basePath }: ContentCardProps) {
               </div>
               <p
                 className={`
-                text-[11px] font-bold uppercase tracking-wider local-jetbrains-mono
+                text-[9px] md:text-[11px] font-bold uppercase tracking-wider local-jetbrains-mono
                 ${post.firstImage ? "text-white" : "text-foreground"}
               `}
               >
@@ -173,7 +173,7 @@ export function ContentCard({ post, basePath }: ContentCardProps) {
             {post.date && (
               <div
                 className={`
-                 flex items-center gap-1.5 text-[11px] space-mono
+                 flex items-center gap-1 md:gap-1.5 text-[9px] md:text-[11px] space-mono
                  ${post.firstImage ? "text-gray-400" : "text-muted-foreground"}
                `}
               >
@@ -188,7 +188,7 @@ export function ContentCard({ post, basePath }: ContentCardProps) {
 
           {/* Tags */}
           {post.tags && post.tags.length > 0 && (
-            <div className="flex flex-wrap gap-2 overflow-hidden">
+            <div className="hidden md:flex flex-wrap gap-2 overflow-hidden">
               {post.tags.slice(0, 3).map((tag) => (
                 <span
                   key={tag}

@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useRef, useEffect, useCallback } from 'react';
+import React, { useRef, useEffect, useCallback, useMemo } from 'react';
 import { useAccentColor } from '@/hooks/use-accent-color';
+import { useTheme } from 'next-themes';
 
 interface ClickSparkProps {
   sparkColor?: string;
@@ -33,7 +34,17 @@ const ClickSpark: React.FC<ClickSparkProps> = ({
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const { accentColor } = useAccentColor();
-  const sparkColor = providedSparkColor || `hsl(${accentColor.h}, ${accentColor.s}, ${accentColor.l})`;
+  const { resolvedTheme } = useTheme();
+  
+  // Use accent color if explicitly provided or as a fallback
+  // We adjust the lightness based on the theme to make it "show better"
+  const sparkColor = useMemo(() => {
+    if (providedSparkColor) return providedSparkColor;
+    
+    // In dark mode, we want a brighter spark. In light mode, a more vibrant one.
+    const lightness = resolvedTheme === 'dark' ? '65%' : '45%';
+    return `hsl(${accentColor.h}, ${accentColor.s}, ${lightness})`;
+  }, [providedSparkColor, accentColor, resolvedTheme]);
   const sparksRef = useRef<Spark[]>([]);
   const animationIdRef = useRef<number>(0);
 

@@ -272,7 +272,7 @@ export default function RootLayout({
               <BookmarksProvider>
                 <ViewTransitions>
                   <ClickSpark
-                    sparkColor="#ffffff"
+                    // sparkColor="#ffffff"
                     sparkSize={10}
                     sparkRadius={15}
                     sparkCount={8}
