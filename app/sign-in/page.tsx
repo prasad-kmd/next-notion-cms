@@ -20,7 +20,7 @@ export default function SignInPage() {
                 <CardContent className="flex flex-col items-center gap-6 py-8">
                     <SignInButtons />
                     
-                    <div className="w-full h-px bg-gradient-to-r from-transparent via-border to-transparent my-2" />
+                    <div className="w-full h-px bg-linear-to-r from-transparent via-border to-transparent my-2" />
                     
                     <p className="text-xs text-muted-foreground/60 text-center max-w-[280px] leading-relaxed">
                         By continuing, you agree to our <span className="text-primary/80 hover:underline cursor-pointer">Terms of Service</span> and <span className="text-primary/80 hover:underline cursor-pointer">Privacy Policy</span>.

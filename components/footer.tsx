@@ -20,11 +20,23 @@ export function Footer() {
 
   return (
     <footer className="relative border-t border-border bg-card/30 backdrop-blur-md overflow-hidden">
-      {/* Decorative background elements */}
-      <div className="absolute top-0 left-1/4 w-64 h-64 bg-primary/5 rounded-full blur-3xl -translate-y-1/2 pointer-events-none" />
-      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl translate-y-1/2 pointer-events-none" />
+      {/* Decorative background elements with animations */}
+      <div className="absolute inset-0 z-0 pointer-events-none opacity-40 dark:opacity-20">
+        <div 
+          className="absolute top-[-10%] left-[-10%] w-[40%] h-[60%] bg-primary/20 rounded-full blur-[120px] animate-blob" 
+          style={{ animationDuration: '25s' }}
+        />
+        <div 
+          className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[70%] bg-primary/10 rounded-full blur-[140px] animate-blob" 
+          style={{ animationDuration: '30s', animationDelay: '-10s' }}
+        />
+        <div 
+          className="absolute top-[20%] right-[10%] w-[30%] h-[40%] bg-primary/15 rounded-full blur-[100px] animate-blob" 
+          style={{ animationDuration: '35s', animationDelay: '-20s' }}
+        />
+      </div>
 
-      <div className="relative mx-auto max-w-7xl px-6 pt-16 pb-8">
+      <div className="relative mx-auto max-w-7xl px-6 pt-16 pb-8 z-10">
         <div className="grid grid-cols-1 gap-12 md:grid-cols-4 lg:grid-cols-5">
           {/* Logo and Brand Identity */}
           <div className="md:col-span-2 lg:col-span-2">

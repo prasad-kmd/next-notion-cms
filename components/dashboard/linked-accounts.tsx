@@ -5,17 +5,19 @@ import { authClient } from "@/lib/auth-client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { 
-    Github, 
-    Chrome, 
-    Facebook, 
-    Twitter, 
-    Ghost,
     AlertCircle,
     Loader2,
     Trash2,
-    Triangle,
-    Database
 } from "lucide-react";
+import { 
+    SiGoogle, 
+    SiGithub, 
+    SiFacebook, 
+    SiX, 
+    SiReddit, 
+    SiNotion, 
+    SiVercel 
+} from "react-icons/si";
 import { toast } from "sonner";
 import {
   Dialog,
@@ -37,13 +39,13 @@ interface LinkedAccountsProps {
 }
 
 const PROVIDERS = [
-    { id: "google", name: "Google", icon: Chrome, color: "hover:bg-blue-500/10 hover:text-blue-500" },
-    { id: "github", name: "GitHub", icon: Github, color: "hover:bg-zinc-500/10 hover:text-zinc-500" },
-    { id: "facebook", name: "Facebook", icon: Facebook, color: "hover:bg-blue-600/10 hover:text-blue-600" },
-    { id: "twitter", name: "Twitter", icon: Twitter, color: "hover:bg-sky-400/10 hover:text-sky-400" },
-    { id: "reddit", name: "Reddit", icon: Ghost, color: "hover:bg-orange-500/10 hover:text-orange-500" },
-    { id: "notion", name: "Notion", icon: Database, color: "hover:bg-zinc-800/10 hover:text-zinc-800" },
-    { id: "vercel", name: "Vercel", icon: Triangle, color: "hover:bg-zinc-900/10 hover:text-zinc-900" },
+    { id: "google", name: "Google", icon: SiGoogle, color: "hover:bg-blue-500/10 hover:text-blue-500" },
+    { id: "github", name: "GitHub", icon: SiGithub, color: "hover:bg-zinc-500/10 hover:text-zinc-500" },
+    { id: "facebook", name: "Facebook", icon: SiFacebook, color: "hover:bg-blue-600/10 hover:text-blue-600" },
+    { id: "twitter", name: "Twitter", icon: SiX, color: "hover:bg-zinc-500/10 hover:text-zinc-500" },
+    { id: "reddit", name: "Reddit", icon: SiReddit, color: "hover:bg-orange-500/10 hover:text-orange-500" },
+    { id: "notion", name: "Notion", icon: SiNotion, color: "hover:bg-zinc-800/10 hover:text-zinc-800" },
+    { id: "vercel", name: "Vercel", icon: SiVercel, color: "hover:bg-zinc-900/10 hover:text-zinc-900" },
 ];
 
 export function LinkedAccounts({ accounts }: LinkedAccountsProps) {

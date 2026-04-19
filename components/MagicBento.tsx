@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useState, useCallback } from "react"
 import { gsap } from "gsap"
 import Link from "next/link"
 import { FileText, BookOpen, GitBranch, Newspaper, Info, Github, Images, Users } from "lucide-react"
+import { useAccentColor } from "@/hooks/use-accent-color"
 
 export interface BentoCardProps {
   color?: string
@@ -499,7 +500,7 @@ const MagicBento: React.FC<BentoProps> = ({
   spotlightRadius = DEFAULT_SPOTLIGHT_RADIUS,
   particleCount = DEFAULT_PARTICLE_COUNT,
   enableTilt = false,
-  glowColor = DEFAULT_GLOW_COLOR,
+  glowColor: providedGlowColor,
   clickEffect = true,
   enableMagnetism = false,
   blogCount = 0,
@@ -511,6 +512,24 @@ const MagicBento: React.FC<BentoProps> = ({
   const gridRef = useRef<HTMLDivElement>(null)
   const isMobile = useMobileDetection()
   const shouldDisableAnimations = disableAnimations || isMobile
+  const { accentColor } = useAccentColor()
+  
+  // Convert HSL to RGB for the canvas/GSAP effects which use rgba(r, g, b, a)
+  const hslToRgb = (h: number, s: number, l: number) => {
+    s /= 100;
+    l /= 100;
+    const k = (n: number) => (n + h / 30) % 12;
+    const a = s * Math.min(l, 1 - l);
+    const f = (n: number) =>
+      l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1)));
+    return [
+      Math.round(255 * f(0)),
+      Math.round(255 * f(8)),
+      Math.round(255 * f(4))
+    ].join(", ");
+  };
+
+  const glowColor = providedGlowColor || hslToRgb(accentColor.h, parseInt(accentColor.s), parseInt(accentColor.l));
 
   const cardData: (BentoCardProps & { latest?: { title: string; description?: string } })[] = [
     {
@@ -576,7 +595,7 @@ const MagicBento: React.FC<BentoProps> = ({
             --glow-y: 50%;
             --glow-intensity: 0;
             --glow-radius: 200px;
-            --glow-color: ${glowColor};
+            --glow-color: ${glowColor.includes(',') ? glowColor : DEFAULT_GLOW_COLOR};
             --border-color: var(--border);
             --background-dark: var(--background);
           }

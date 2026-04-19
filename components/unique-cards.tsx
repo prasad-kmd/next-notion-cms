@@ -50,20 +50,20 @@ export function BlogCard({ post }: BlogCardProps) {
   return (
     <Link
       href={`/blog/${post.slug}`}
-      className="group relative flex flex-col h-full bg-card/30 backdrop-blur-xl border border-border/40 rounded-[2.5rem] overflow-hidden transition-all duration-700 hover:border-primary/40 hover:bg-card/50 hover:-translate-y-2 shadow-2xl dark:border-white/5"
+      className="group relative flex flex-col h-full bg-card/30 backdrop-blur-xl border border-border/40 rounded-3xl md:rounded-[2.5rem] overflow-hidden transition-all duration-700 hover:border-primary/40 hover:bg-card/50 hover:-translate-y-2 shadow-2xl dark:border-white/5"
     >
-      <div className="p-10 flex flex-col h-full">
-        <div className="flex items-center justify-between mb-10">
+      <div className="p-6 md:p-10 flex flex-col h-full">
+        <div className="flex items-center justify-between mb-6 md:mb-10">
           <div className="flex items-center gap-4">
-            <div className="flex flex-col items-center justify-center bg-primary/10 rounded-2xl p-3 min-w-[70px] border border-primary/20 group-hover:bg-primary group-hover:border-primary transition-all duration-500">
-              <span className="text-2xl font-black text-primary group-hover:text-primary-foreground amoriaregular leading-none py-1">
+            <div className="flex flex-col items-center justify-center bg-primary/10 rounded-xl md:rounded-2xl p-2 md:p-3 min-w-[60px] md:min-w-[70px] border border-primary/20 group-hover:bg-primary group-hover:border-primary transition-all duration-500">
+              <span className="text-xl md:text-2xl font-black text-primary group-hover:text-primary-foreground amoriaregular leading-none py-1">
                 {day}
               </span>
               <div className="flex flex-col items-center -mt-1">
-                <span className="text-[12px] font-black uppercase tracking-tighter text-primary/60 group-hover:text-primary-foreground/60 leading-none font-google-sans">
+                <span className="text-[10px] md:text-[12px] font-black uppercase tracking-tighter text-primary/60 group-hover:text-primary-foreground/60 leading-none font-google-sans">
                   {month}
                 </span>
-                <span className="text-[10px] font-bold text-primary/40 group-hover:text-primary-foreground/40 mt-0.5 font-local-jetbrains-mono">
+                <span className="text-[8px] md:text-[10px] font-bold text-primary/40 group-hover:text-primary-foreground/40 mt-0.5 font-local-jetbrains-mono">
                   {year}
                 </span>
               </div>
@@ -73,7 +73,7 @@ export function BlogCard({ post }: BlogCardProps) {
             {post.tags?.slice(0, 2).map((tag) => (
               <span
                 key={tag}
-                className="text-[10px] font-black text-primary/70 uppercase tracking-widest bg-primary/5 border border-primary/10 px-2 py-0.5 rounded-md group-hover:bg-primary/20 transition-colors font-local-inter"
+                className="text-[9px] md:text-[10px] font-black text-primary/70 uppercase tracking-widest bg-primary/5 border border-primary/10 px-2 py-0.5 rounded-md group-hover:bg-primary/20 transition-colors font-local-inter"
               >
                 {tag}
               </span>
@@ -81,15 +81,15 @@ export function BlogCard({ post }: BlogCardProps) {
           </div>
         </div>
 
-        <h3 className="text-3xl font-black mb-6 amoriaregular text-foreground group-hover:text-primary transition-colors line-clamp-2 leading-[1.1] tracking-tight">
+        <h3 className="text-2xl md:text-3xl font-black mb-4 md:mb-6 amoriaregular text-foreground group-hover:text-primary transition-colors line-clamp-2 leading-[1.1] tracking-tight">
           {post.title}
         </h3>
 
-        <p className="text-muted-foreground text-sm line-clamp-4 mb-10 google-sans leading-relaxed italic font-light">
+        <p className="text-muted-foreground text-xs md:text-sm line-clamp-3 md:line-clamp-4 mb-6 md:mb-10 google-sans leading-relaxed italic font-light">
           "{post.description}"
         </p>
 
-        <div className="mt-auto pt-8 border-t border-border/40 dark:border-white/5 flex items-center justify-between">
+        <div className="mt-auto pt-6 md:pt-8 border-t border-border/40 dark:border-white/5 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="h-9 w-9 rounded-xl overflow-hidden border border-border/40 dark:border-white/10 grayscale group-hover:grayscale-0 transition-all duration-500">
               {author?.avatar ? (
@@ -155,9 +155,9 @@ export function ArticleCard({ post }: ArticleCardProps) {
   return (
     <Link
       href={`/articles/${post.slug}`}
-      className="group relative flex flex-col h-full bg-card border border-border/40 dark:border-white/5 rounded-[1rem] overflow-hidden transition-all duration-500 hover:border-primary/40 hover:shadow-[0_0_50px_rgba(var(--primary-rgb),0.1)]"
+      className="group relative flex flex-col h-full bg-card border border-border/40 dark:border-white/5 rounded-2xl md:rounded-[1rem] overflow-hidden transition-all duration-500 hover:border-primary/40 hover:shadow-[0_0_50px_rgba(var(--primary-rgb),0.1)]"
     >
-      <div className="relative aspect-[16/9] overflow-hidden border-b border-border/40 dark:border-white/5">
+      <div className="relative aspect-video md:aspect-[16/9] overflow-hidden border-b border-border/40 dark:border-white/5">
         <Image
           src={post.firstImage || "/img/page/diary_page.webp"}
           alt={post.title}
@@ -175,19 +175,19 @@ export function ArticleCard({ post }: ArticleCardProps) {
         </div>
       </div>
 
-      <div className="p-8 flex flex-col flex-1 relative">
-        <div className="flex items-center gap-4 mb-6">
+      <div className="p-5 md:p-8 flex flex-col flex-1 relative">
+        <div className="flex items-center gap-4 mb-4 md:mb-6">
           <div className="h-0.5 w-6 bg-primary" />
-          <span className="text-[9px] font-black text-muted-foreground/60 uppercase tracking-[0.4em] local-jetbrains-mono">
+          <span className="text-[8px] md:text-[9px] font-black text-muted-foreground/60 uppercase tracking-[0.4em] local-jetbrains-mono">
             Technical Document
           </span>
         </div>
 
-        <h3 className="text-2xl font-black mb-4 amoriaregular text-foreground group-hover:text-primary transition-colors line-clamp-2 leading-tight tracking-tight">
+        <h3 className="text-xl md:text-2xl font-black mb-3 md:mb-4 amoriaregular text-foreground group-hover:text-primary transition-colors line-clamp-2 leading-tight tracking-tight">
           {post.title}
         </h3>
 
-        <p className="text-muted-foreground text-xs line-clamp-3 mb-6 google-sans leading-relaxed font-light">
+        <p className="text-muted-foreground text-[11px] md:text-xs line-clamp-3 mb-4 md:mb-6 google-sans leading-relaxed font-light">
           {post.description}
         </p>
 
@@ -247,9 +247,9 @@ export function ProjectCard({ post }: ProjectCardProps) {
   return (
     <Link
       href={`/projects/${post.slug}`}
-      className="group relative flex flex-col h-full bg-card border border-border/40 dark:border-white/10 rounded-[2.5rem] overflow-hidden transition-all duration-700 hover:border-primary/40 hover:translate-y-[-8px] shadow-2xl"
+      className="group relative flex flex-col h-full bg-card border border-border/40 dark:border-white/10 rounded-3xl md:rounded-[2.5rem] overflow-hidden transition-all duration-700 hover:border-primary/40 hover:translate-y-[-8px] shadow-2xl"
     >
-      <div className="relative aspect-[4/3] overflow-hidden m-4 rounded-[1.8rem]">
+      <div className="relative aspect-[4/3] overflow-hidden m-3 md:m-4 rounded-2xl md:rounded-[1.8rem]">
         <Image
           src={post.firstImage || "/img/page/workflow.webp"}
           alt={post.title}
@@ -271,23 +271,23 @@ export function ProjectCard({ post }: ProjectCardProps) {
         </div>
       </div>
 
-      <div className="px-8 pb-10 pt-4 flex flex-col flex-1">
-        <div className="flex items-center gap-4 mb-6">
+      <div className="px-6 md:px-8 pb-8 md:pb-10 pt-2 md:pt-4 flex flex-col flex-1">
+        <div className="flex items-center gap-4 mb-4 md:mb-6">
           <div className="flex gap-1.5">
             {[1, 2, 3].map((i) => (
               <div key={i} className="w-1.5 h-1.5 rounded-full bg-primary/40" />
             ))}
           </div>
-          <span className="text-[9px] font-black text-muted-foreground/40 uppercase tracking-[0.4em] local-jetbrains-mono">
+          <span className="text-[8px] md:text-[9px] font-black text-muted-foreground/40 uppercase tracking-[0.4em] local-jetbrains-mono">
             Project Blueprint
           </span>
         </div>
 
-        <h3 className="text-3xl font-black mb-6 amoriaregular text-foreground group-hover:text-primary transition-colors leading-[1.1] tracking-tight">
+        <h3 className="text-2xl md:text-3xl font-black mb-4 md:mb-6 amoriaregular text-foreground group-hover:text-primary transition-colors leading-[1.1] tracking-tight">
           {post.title}
         </h3>
 
-        <p className="text-muted-foreground text-sm line-clamp-3 mb-10 google-sans leading-relaxed font-light">
+        <p className="text-muted-foreground text-xs md:text-sm line-clamp-3 mb-6 md:mb-10 google-sans leading-relaxed font-light">
           {post.description}
         </p>
 

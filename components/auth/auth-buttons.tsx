@@ -3,16 +3,17 @@
 import { authClient } from "@/lib/auth-client";
 import { Button } from "@/components/ui/button";
 import { 
-    Github, 
-    Chrome, 
-    Facebook, 
-    Twitter, 
-    Database, 
     Layout, 
-    Ghost,
     LogOut,
     User
 } from "lucide-react";
+import { 
+    SiGoogle, 
+    SiGithub, 
+    SiFacebook, 
+    SiX, 
+    SiReddit 
+} from "react-icons/si";
 import { useState } from "react";
 import { toast } from "sonner";
 
@@ -40,20 +41,20 @@ export function SignInButtons() {
                 variant="outline" 
                 onClick={() => handleSignIn("google")}
                 disabled={!!isLoading}
-                className="flex items-center gap-2"
+                className="flex items-center gap-3 h-12 rounded-xl transition-all hover:bg-blue-500/5 hover:border-blue-500/30"
             >
-                <Chrome className="w-4 h-4" />
-                <span>Continue with Google</span>
+                <SiGoogle className="w-5 h-5 text-[#4285F4]" />
+                <span className="font-semibold">Continue with Google</span>
             </Button>
             
             <Button 
                 variant="outline" 
                 onClick={() => handleSignIn("github")}
                 disabled={!!isLoading}
-                className="flex items-center gap-2"
+                className="flex items-center gap-3 h-12 rounded-xl transition-all hover:bg-zinc-500/5 hover:border-zinc-500/30"
             >
-                <Github className="w-4 h-4" />
-                <span>Continue with GitHub</span>
+                <SiGithub className="w-5 h-5" />
+                <span className="font-semibold">Continue with GitHub</span>
             </Button>
 
             {/* Other providers can be added here, conditionally if desired */}

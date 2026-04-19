@@ -92,7 +92,7 @@ async function highlightCodeBlocks(html: string): Promise<string> {
 
       if (lang === "mermaid") {
         result += `
-<div class="mermaid-preview my-12 rounded-[1.5rem] border border-border/50 bg-card p-8 shadow-sm overflow-x-auto flex justify-center items-center">
+<div class="mermaid-preview my-12 rounded-3xl border border-border/50 bg-card p-8 shadow-sm overflow-x-auto flex justify-center items-center">
   <pre class="mermaid m-0 bg-transparent p-0">${decodedCode.trim()}</pre>
 </div>`;
         lastIndex = matchIndex + fullMatch.length;
@@ -135,7 +135,7 @@ async function highlightCodeBlocks(html: string): Promise<string> {
   <div class="absolute bottom-3 right-5 pointer-events-none opacity-20">
      <span class="text-[9px] font-black text-white uppercase tracking-[0.5em] select-none italic">Engineering Excellence</span>
   </div>
-  <div class="absolute top-[52px] right-0 bottom-0 w-8 bg-gradient-to-l from-[#1e1e1e] to-transparent pointer-events-none z-10 opacity-0 group-hover/code:opacity-100 transition-opacity"></div>
+  <div class="absolute top-[52px] right-0 bottom-0 w-8 bg-linear-to-l from-[#1e1e1e] to-transparent pointer-events-none z-10 opacity-0 group-hover/code:opacity-100 transition-opacity"></div>
 </div>`;
         result += enhancedHtml;
       } catch (e) {

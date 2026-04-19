@@ -76,9 +76,9 @@ export function ContentCard({ post, basePath }: ContentCardProps) {
       )}
 
       {/* Main Content Area */}
-      <div className="relative z-10 flex h-full flex-col p-6">
+      <div className="relative z-10 flex h-full flex-col p-5 md:p-6">
         {/* Top Bar: Categories and Arrow */}
-        <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center justify-between mb-3 md:mb-4">
           <div className="flex flex-wrap gap-2">
             {appendCategories(post.category, post.technical)
               .slice(0, 2)
@@ -113,7 +113,7 @@ export function ContentCard({ post, basePath }: ContentCardProps) {
         <div className="grow overflow-hidden">
           <h2
             className={`
-            mb-3 text-2xl font-bold transition-colors duration-300 line-clamp-2 mozilla-headline leading-[1.1] group-hover:text-primary
+            mb-2 md:mb-3 text-xl md:text-2xl font-bold transition-colors duration-300 line-clamp-2 mozilla-headline leading-[1.1] group-hover:text-primary
             ${post.firstImage ? "text-white" : "text-foreground"}
           `}
           >
@@ -123,7 +123,7 @@ export function ContentCard({ post, basePath }: ContentCardProps) {
           {post.description && (
             <p
               className={`
-              text-xs line-clamp-3 font-google-sans leading-relaxed opacity-80
+              text-[11px] md:text-xs line-clamp-2 md:line-clamp-3 font-google-sans leading-relaxed opacity-80
               ${post.firstImage ? "text-gray-300" : "text-muted-foreground"}
             `}
             >
@@ -135,7 +135,7 @@ export function ContentCard({ post, basePath }: ContentCardProps) {
         {/* Bottom Section: Author, Date, and Tags */}
         <div
           className={`
-          mt-4 pt-4 border-t flex flex-col gap-4
+          mt-3 md:mt-4 pt-3 md:pt-4 border-t flex flex-col gap-3 md:gap-4
           ${post.firstImage ? "border-white/10" : "border-border/50"}
         `}
         >

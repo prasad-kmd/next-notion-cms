@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useRef, useEffect, useCallback } from 'react';
+import { useAccentColor } from '@/hooks/use-accent-color';
 
 interface ClickSparkProps {
   sparkColor?: string;
@@ -21,7 +22,7 @@ interface Spark {
 }
 
 const ClickSpark: React.FC<ClickSparkProps> = ({
-  sparkColor = '#fff',
+  sparkColor: providedSparkColor,
   sparkSize = 10,
   sparkRadius = 15,
   sparkCount = 8,
@@ -31,6 +32,8 @@ const ClickSpark: React.FC<ClickSparkProps> = ({
   children
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const { accentColor } = useAccentColor();
+  const sparkColor = providedSparkColor || `hsl(${accentColor.h}, ${accentColor.s}, ${accentColor.l})`;
   const sparksRef = useRef<Spark[]>([]);
   const animationIdRef = useRef<number>(0);
 
