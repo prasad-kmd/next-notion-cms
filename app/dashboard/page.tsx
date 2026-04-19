@@ -56,13 +56,13 @@ export default async function DashboardPage() {
         <div className="relative min-h-screen">
             <TechnicalBackground />
             
-            <Container className="pt-32 pb-20 relative z-10">
-                <div className="max-w-4xl mx-auto space-y-12">
+            <Container className="pt-12 pb-20 relative z-10">
+                <div className="max-w-6xl mx-auto space-y-6">
                     <Breadcrumbs 
                         items={[
                             { label: "Dashboard", href: "/dashboard", active: true }
                         ]} 
-                        className="mb-8"
+                        className="mb-4"
                     />
                     
                     <DashboardFeedback />
@@ -75,8 +75,8 @@ export default async function DashboardPage() {
                         </p>
                     </header>
 
-                    <Tabs defaultValue="overview" className="w-full space-y-8">
-                        <TabsList className="w-full bg-muted/5 backdrop-blur-md p-1.5 rounded-2xl border border-border/40 h-auto gap-1">
+                    <Tabs defaultValue="overview" className="w-full space-y-4">
+                        <TabsList className="w-full bg-muted/10 backdrop-blur-md p-1.5 rounded-2xl border border-border/40 h-auto gap-1">
                             <TabsTrigger 
                                 value="overview" 
                                 className="flex-1 rounded-xl px-4 py-3 text-xs font-bold transition-all data-[state=active]:bg-background data-[state=active]:text-primary data-[state=active]:shadow-sm active:scale-[0.98] group"
