@@ -47,7 +47,7 @@ export default async function DashboardPage() {
         where: eq(user.id, sessionUser.id)
     });
 
-    const displayUser = dbUser || sessionUser;
+    const displayUser = (dbUser || sessionUser) as any;
 
     // Fetch accounts for the user
     const accounts = await getUserAccounts();
@@ -62,7 +62,7 @@ export default async function DashboardPage() {
                         items={[
                             { label: "Dashboard", href: "/dashboard", active: true }
                         ]} 
-                        className="mb-4"
+                        className="mb-4 font-local-inter"
                     />
                     
                     <DashboardFeedback />
