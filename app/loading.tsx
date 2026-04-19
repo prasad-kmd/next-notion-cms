@@ -6,8 +6,12 @@ export default function Loading() {
             <div className="relative">
                 {/* Pulsing ring around the icon */}
                 <div className="absolute inset-0 animate-ping rounded-full bg-primary/20" />
-                <div className="relative flex h-16 w-16 items-center justify-center rounded-full bg-card shadow-lg border border-border">
-                    <PanelLeft className="h-8 w-8 text-primary animate-pulse" />
+                <div className="relative flex h-16 w-16 items-center justify-center rounded-full bg-card shadow-lg border border-border overflow-hidden">
+                    <img 
+                        src="/favicon.ico" 
+                        alt="Logo" 
+                        className="h-10 w-10 animate-pulse object-contain"
+                    />
                 </div>
             </div>
 
