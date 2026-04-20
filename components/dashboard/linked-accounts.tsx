@@ -92,7 +92,7 @@ export function LinkedAccounts({ accounts }: LinkedAccountsProps) {
         <Card className="border-border/50 bg-card/30 backdrop-blur">
             <CardHeader>
                 <CardTitle className="google-sans">Connected Accounts</CardTitle>
-                <CardDescription>
+                <CardDescription className="font-local-inter">
                     Link your social accounts to sign in with multiple methods.
                 </CardDescription>
             </CardHeader>
@@ -108,7 +108,7 @@ export function LinkedAccounts({ accounts }: LinkedAccountsProps) {
                         >
                             <div className="flex items-center gap-3">
                                 <provider.icon className="w-5 h-5" />
-                                <span className="font-medium">{provider.name}</span>
+                                <span className="font-medium font-google-sans">{provider.name}</span>
                             </div>
 
                             {isLinked ? (

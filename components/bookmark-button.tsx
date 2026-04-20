@@ -17,7 +17,7 @@ export function BookmarkButton({ item, className }: BookmarkButtonProps) {
         <button
             onClick={() => toggleBookmark(item)}
             className={cn(
-                "inline-flex items-center gap-2 rounded-lg border px-4 py-2 text-sm font-medium transition-all hover:bg-muted relative group google-sans",
+                "inline-flex items-center gap-2 rounded-lg border px-4 py-2 text-sm font-medium transition-all hover:bg-primary/50 relative group google-sans",
                 bookmarked
                     ? "border-primary bg-primary/10 text-primary"
                     : "border-border text-muted-foreground",

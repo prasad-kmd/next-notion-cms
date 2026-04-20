@@ -35,7 +35,7 @@ export function CommentItem({ comment }: CommentItemProps) {
 
       <div className="flex-1 min-w-0">
         <div className="flex items-center justify-between gap-2 mb-1">
-          <span className="font-bold text-sm text-foreground truncate">
+          <span className="font-bold text-sm text-foreground truncate font-noto-sans-display">
             {parsed.author.name}
             {parsed.isBot && (
               <span className="ml-2 text-[10px] font-black uppercase tracking-widest text-muted-foreground/50">
@@ -43,11 +43,11 @@ export function CommentItem({ comment }: CommentItemProps) {
               </span>
             )}
           </span>
-          <span className="text-[10px] text-muted-foreground font-medium whitespace-nowrap">
+          <span className="text-[10px] text-muted-foreground font-medium whitespace-nowrap font-local-inter">
             {formatDistanceToNow(date, { addSuffix: true })}
           </span>
         </div>
-        <p className="text-sm text-muted-foreground leading-relaxed break-words whitespace-pre-wrap">
+        <p className="text-sm text-muted-foreground leading-relaxed wrap-break-word whitespace-pre-wrap font-noto-serif-sinhala">
           {parsed.content}
         </p>
       </div>

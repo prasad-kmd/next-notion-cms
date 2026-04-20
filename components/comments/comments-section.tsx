@@ -32,14 +32,14 @@ export function CommentsSection({ pageId, slug }: CommentsSectionProps) {
             </div>
             <div>
               <h3 className="text-xl font-bold font-google-sans">Discussion</h3>
-              <p className="text-xs text-muted-foreground font-medium">Native Notion Comments System</p>
+              <p className="text-xs text-muted-foreground font-medium font-local-inter">Native Notion Comments System</p>
             </div>
           </div>
 
           <button
             onClick={() => setIsOpen(!isOpen)}
             className={cn(
-              "flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-all",
+              "flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-all font-local-inter",
               isOpen 
                 ? "bg-primary/10 text-primary border border-primary/20" 
                 : "bg-muted/30 text-muted-foreground border border-border/40 hover:bg-muted/50"
@@ -77,9 +77,9 @@ export function CommentsSection({ pageId, slug }: CommentsSectionProps) {
               <div className="space-y-6">
                 <div className="flex items-center gap-3">
                     <div className="h-px flex-1 bg-border/40" />
-                    <span className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/40 flex items-center gap-2">
+                    <span className="text-[12px] font-black uppercase tracking-[0.2em] text-muted-foreground/40 flex items-center gap-2 font-local-inter">
                         <Database className="h-3 w-3" />
-                        Verified Records
+                        Recent Comments
                     </span>
                     <div className="h-px flex-1 bg-border/40" />
                 </div>

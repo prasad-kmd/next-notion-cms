@@ -295,6 +295,14 @@ const categories = [
         description: "Legal limitations and liabilities.",
       },
       {
+        name: "Licenses",
+        href: "/licenses",
+        icon: FileText,
+        color: "text-violet-500",
+        bgColor: "bg-violet-500/10",
+        description: "Third-party licenses and attributions.",
+      },
+      {
         name: "Accessibility",
         href: "/accessibility",
         icon: Accessibility,

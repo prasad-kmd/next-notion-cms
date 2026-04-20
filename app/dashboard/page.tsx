@@ -70,16 +70,16 @@ export default async function DashboardPage() {
                     {/* Simplified Header */}
                     <header className="space-y-3">
                         <h1 className="text-4xl font-bold google-sans tracking-tight">User Dashboard</h1>
-                        <p className="text-muted-foreground leading-relaxed text-sm md:text-base">
+                        <p className="text-muted-foreground leading-relaxed text-sm md:text-base font-local-inter">
                             Manage your profile, linked accounts, and view your activity.
                         </p>
                     </header>
 
-                    <Tabs defaultValue="overview" className="w-full space-y-4">
-                        <TabsList className="w-full bg-muted/10 backdrop-blur-md p-1.5 rounded-2xl border border-border/40 h-auto gap-1">
+                    <Tabs defaultValue="overview" className="w-full space-y-4 font-local-inter">
+                        <TabsList className="w-full bg-muted/10 backdrop-blur-md p-1 rounded-2xl border border-border/40 h-auto gap-1">
                             <TabsTrigger 
                                 value="overview" 
-                                className="flex-1 rounded-xl px-4 py-3 text-xs font-bold transition-all data-[state=active]:bg-background data-[state=active]:text-primary data-[state=active]:shadow-sm active:scale-[0.98] group"
+                                className="flex-1 rounded-xl px-4 py-3 text-sm font-bold transition-all data-[state=active]:bg-background data-[state=active]:text-primary data-[state=active]:shadow-sm active:scale-[0.98] group"
                             >
                                 <div className="flex items-center gap-2.5">
                                     <LayoutDashboard className="w-4 h-4 opacity-50 group-data-[state=active]:opacity-100 transition-opacity" />
@@ -88,7 +88,7 @@ export default async function DashboardPage() {
                             </TabsTrigger>
                             <TabsTrigger 
                                 value="accounts"
-                                className="flex-1 rounded-xl px-4 py-3 text-xs font-bold transition-all data-[state=active]:bg-background data-[state=active]:text-primary data-[state=active]:shadow-sm active:scale-[0.98] group"
+                                className="flex-1 rounded-xl px-4 py-3 text-sm font-bold transition-all data-[state=active]:bg-background data-[state=active]:text-primary data-[state=active]:shadow-sm active:scale-[0.98] group"
                             >
                                 <div className="flex items-center gap-2.5">
                                     <LinkIcon className="w-4 h-4 opacity-50 group-data-[state=active]:opacity-100 transition-opacity" />
@@ -97,7 +97,7 @@ export default async function DashboardPage() {
                             </TabsTrigger>
                             <TabsTrigger 
                                 value="activity"
-                                className="flex-1 rounded-xl px-4 py-3 text-xs font-bold transition-all data-[state=active]:bg-background data-[state=active]:text-primary data-[state=active]:shadow-sm active:scale-[0.98] group"
+                                className="flex-1 rounded-xl px-4 py-3 text-sm font-bold transition-all data-[state=active]:bg-background data-[state=active]:text-primary data-[state=active]:shadow-sm active:scale-[0.98] group"
                             >
                                 <div className="flex items-center gap-2.5">
                                     <Bookmark className="w-4 h-4 opacity-50 group-data-[state=active]:opacity-100 transition-opacity" />

@@ -77,14 +77,14 @@ export function ArticleSidebar({
 
   return (
     <aside className="hidden lg:block w-72 shrink-0">
-      <div className="sticky top-24 flex flex-col gap-10 max-h-[calc(100vh-8rem)]">
+      <div className="sticky top-20 flex flex-col gap-10 max-h-[calc(100vh-8rem)]">
         {author && <AuthorProfile author={author} lastUpdated={lastUpdated} />}
 
         {headings.length > 0 && (
           <div className="flex flex-col flex-1 min-h-0 overflow-hidden">
             <div className="flex items-center gap-2 mb-6 px-1 shrink-0">
               <div className="h-1.5 w-1.5 rounded-full bg-primary" />
-              <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-foreground/50">
+              <p className="text-[12px] font-bold uppercase tracking-[0.2em] text-foreground/50 font-google-sans">
                 Table of Contents
               </p>
             </div>
@@ -92,7 +92,7 @@ export function ArticleSidebar({
               ref={navRef}
               className="flex-1 overflow-y-auto custom-scrollbar pr-2 pb-8"
             >
-              <ul className="space-y-1 border-l border-border/40 ml-0.5">
+              <ul className="space-y-1 border-l border-border/40 ml-0.5 font-local-inter">
                 {headings.map((heading) => (
                   <li key={heading.id}>
                     <a

@@ -84,7 +84,7 @@ export function CommentList({
         <div className="h-12 w-12 rounded-full bg-muted flex items-center justify-center">
           <MessageSquare className="h-6 w-6" />
         </div>
-        <p className="text-sm font-medium">No comments yet. Be the first to share your thoughts!</p>
+        <p className="text-sm font-medium font-local-jetbrains-mono">No comments yet. Be the first to share your thoughts!</p>
       </div>
     );
   }
@@ -101,7 +101,7 @@ export function CommentList({
         <div ref={observerTarget} className="py-8 flex justify-center">
           {isLoading && (
             <div className="flex items-center gap-2 text-muted-foreground text-sm font-medium animate-pulse">
-              <Loader2 className="h-4 w-4 animate-spin text-primary" />
+              <Loader2 className="h-4 w-4 animate-spin text-primary font-space-mono" />
               Loading discussion...
             </div>
           )}
@@ -110,7 +110,7 @@ export function CommentList({
                 variant="ghost" 
                 size="sm" 
                 onClick={() => fetchComments(cursor || undefined)}
-                className="text-[10px] font-black uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors"
+                className="text-[10px] font-black uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors font-local-jetbrains-mono"
             >
                 <ArrowDown className="h-3 w-3 mr-2" />
                 Load More Comments

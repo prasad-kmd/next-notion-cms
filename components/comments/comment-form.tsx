@@ -58,14 +58,14 @@ export function CommentForm({ pageId, onSuccess }: CommentFormProps) {
           <Lock className="h-6 w-6" />
         </div>
         <div>
-          <h4 className="text-sm font-bold text-foreground mb-1">
+          <h4 className="text-sm font-bold text-foreground mb-1 font-local-inter">
             Sign in to join the discussion
           </h4>
-          <p className="text-xs text-muted-foreground">
+          <p className="text-xs text-muted-foreground font-local-inter">
             Share your thoughts and feedback on this article.
           </p>
         </div>
-        <Button asChild variant="outline" size="sm" className="rounded-xl px-6">
+        <Button asChild variant="outline" size="sm" className="rounded-xl px-6 font-mozilla-headline">
           <Link href={`/sign-in?callbackUrl=${encodeURIComponent(typeof window !== 'undefined' ? window.location.href : '')}`}>
             Sign In
           </Link>
@@ -92,7 +92,7 @@ export function CommentForm({ pageId, onSuccess }: CommentFormProps) {
           placeholder="Write a comment..."
           value={content}
           onChange={(e) => setContent(e.target.value)}
-          className="min-h-[120px] rounded-2xl bg-card/50 border-border/40 focus:border-primary/40 focus:ring-primary/10 transition-all resize-none p-4 text-sm"
+          className="min-h-[120px] rounded-2xl bg-card/50 border-border/40 focus:border-primary/40 focus:ring-primary/10 transition-all resize-none p-4 text-sm font-noto-serif-sinhala"
           disabled={isSubmitting}
         />
         <div className="absolute bottom-3 right-3 flex items-center gap-3">
@@ -100,7 +100,7 @@ export function CommentForm({ pageId, onSuccess }: CommentFormProps) {
                 {session.user.image && (
                     <img src={session.user.image} className="w-4 h-4 rounded-full border border-border/60" alt="" />
                 )}
-                <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">
+                <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground font-roboto">
                     {session.user.name}
                 </span>
              </div>
@@ -118,7 +118,7 @@ export function CommentForm({ pageId, onSuccess }: CommentFormProps) {
           </Button>
         </div>
       </div>
-      <p className="text-[10px] text-muted-foreground/60 px-2 italic">
+      <p className="text-[10px] text-muted-foreground/60 px-2 italic font-local-inter">
         Keep the discussion technical and respectful. Markdown is supported via Notion.
       </p>
     </form>
