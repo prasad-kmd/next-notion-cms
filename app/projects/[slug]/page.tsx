@@ -9,6 +9,7 @@ import { ScrollProgress } from "@/components/scroll-progress";
 import { RelatedContent } from "@/components/related-content";
 import { AIContentIndicator } from "@/components/ai-content-indicator";
 import { Breadcrumbs } from "@/components/breadcrumbs";
+import { CommentsSection } from "@/components/comments/comments-section";
 
 export async function generateMetadata({
   params,
@@ -88,6 +89,8 @@ export default async function ProjectPage({
 
           <ContentRenderer content={project.content} id={project.slug} />
         </article>
+
+        <CommentsSection pageId={project.id} slug={project.slug} />
 
         <RelatedContent type="projects" currentSlug={project.slug} />
       </div>

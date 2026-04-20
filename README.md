@@ -27,6 +27,7 @@ A modern, high-performance technical documentation and engineering portfolio pla
 - **🚀 Performance-First Architecture:** Built with **Next.js 16** (App Router) for lightning-fast server-side rendering and minimal client-side hydration.
 - **🔐 Robust Authentication & Dashboard:** Integrated **Better Auth** with **Supabase** (PostgreSQL) using **Drizzle ORM**. Supports multi-provider OAuth (Google, GitHub, Facebook, Twitter, Reddit, Notion, Vercel) with automatic account linking and stateless JWT sessions for free-tier optimization. Includes a comprehensive **User Dashboard** for profile management and account connectivity.
 - **📔 Notion CMS Integration:** Fully integrated with Notion as a headless CMS. Manage your blog, articles, projects, tutorials, and wiki directly from Notion.
+- **💬 Native Notion Comments:** Built-in commenting system using Notion's native Comments API. Features authentication gates (Better Auth), user attribution, infinite scrolling, and rate limiting.
 - **🎨 Unique Design Identity:** 
   - **Redesigned Hero (v7):** A technical "Engineering Excellence" dashboard with a timed carousel of latest works, code-focused aesthetics, and geometric grid systems.
   - **Specialized Cards:** Distinct visual identities for **Blog**, **Articles**, and **Projects** to distinguish different content types.

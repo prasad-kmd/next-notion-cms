@@ -167,6 +167,7 @@ export interface Author {
 }
 
 export interface ContentItem {
+  id?: string;
   slug: string;
   title: string;
   date?: string;
@@ -269,6 +270,7 @@ async function fetchNotionContentByType(type: string): Promise<ContentItem[]> {
         }
 
         return {
+          id: page.id,
           slug,
           title,
           date,
@@ -429,6 +431,7 @@ async function fetchNotionContentItem(
     const firstImage = extractFirstImage(mdString, true);
 
     return {
+      id: page.id,
       slug,
       title,
       date,

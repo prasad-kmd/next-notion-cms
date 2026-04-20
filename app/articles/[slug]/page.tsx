@@ -15,6 +15,7 @@ import { ArticleSidebar } from "@/components/article-sidebar";
 import { AIContentIndicator } from "@/components/ai-content-indicator";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { JsonLd, getContentSchema, getBreadcrumbSchema } from "@/components/json-ld";
+import { CommentsSection } from "@/components/comments/comments-section";
 
 export async function generateStaticParams() {
   const entries = await getContentByType("articles");
@@ -115,6 +116,8 @@ export default async function ArticlePage({
             lastUpdated={entry.date}
           />
         </div>
+
+        <CommentsSection pageId={entry.id} slug={entry.slug} />
 
         <RelatedContent type="articles" currentSlug={entry.slug} />
       </div>

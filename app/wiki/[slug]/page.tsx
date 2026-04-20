@@ -14,6 +14,7 @@ import { RelatedContent } from "@/components/related-content";
 import { ArticleSidebar } from "@/components/article-sidebar";
 import { AIContentIndicator } from "@/components/ai-content-indicator";
 import { Breadcrumbs } from "@/components/breadcrumbs";
+import { CommentsSection } from "@/components/comments/comments-section";
 
 export async function generateStaticParams() {
   const entries = await getContentByType("wiki");
@@ -108,6 +109,8 @@ export default async function WikiEntryPage({
 
           <ArticleSidebar content={entry.content} author={author} />
         </div>
+
+        <CommentsSection pageId={entry.id} slug={entry.slug} />
 
         <RelatedContent type="wiki" currentSlug={entry.slug} />
       </div>
