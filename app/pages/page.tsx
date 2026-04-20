@@ -437,7 +437,7 @@ export default function PagesOverview() {
                         {page.description}
                       </p>
                     </div>
-                    <div className="absolute inset-0 -z-10 rounded-2xl bg-gradient-to-br from-primary/5 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
+                    <div className="absolute inset-0 -z-10 rounded-2xl bg-linear-to-br from-primary/5 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
                   </Link>
                 ))}
               </div>
@@ -450,7 +450,7 @@ export default function PagesOverview() {
             Can&apos;t find what you&apos;re looking for? Use the Command
             Palette (Cmd + K) anywhere on the site.
           </p>
-          <div className="h-px w-32 bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
+          <div className="h-px w-32 bg-linear-to-r from-transparent via-primary/30 to-transparent" />
         </div>
       </div>
     </div>

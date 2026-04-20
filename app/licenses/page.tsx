@@ -74,7 +74,7 @@ export default function LicensesPage() {
       <section className="relative h-[50vh] min-h-[400px] flex items-center justify-center overflow-hidden border-b border-border/40">
         {/* Background Grid & Accents */}
         <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:32px_32px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)]" />
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-size-[32px_32px] mask-[radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)]" />
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-primary/5 rounded-full blur-[100px] opacity-40 overflow-hidden" />
           <div className="absolute top-0 right-0 w-full h-full bg-[radial-gradient(circle_at_80%_20%,rgba(var(--primary-rgb),0.03)_0%,transparent_40%)]" />
         </div>
@@ -198,7 +198,7 @@ export default function LicensesPage() {
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.9 }}
-                className="group relative flex flex-col rounded-[2rem] border border-border/40 bg-card/40 p-4 backdrop-blur-md transition-all hover:border-primary/40 hover:shadow-2xl hover:shadow-primary/5"
+                className="group relative flex flex-col rounded-4xl border border-border/40 bg-card/40 p-4 backdrop-blur-md transition-all hover:border-primary/40 hover:shadow-2xl hover:shadow-primary/5"
               >
                 <div className="flex items-start justify-between mb-4">
                   <div className="p-2.5 rounded-xl bg-muted/50 text-muted-foreground group-hover:bg-primary/10 group-hover:text-primary transition-colors">

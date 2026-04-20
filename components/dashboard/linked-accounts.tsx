@@ -149,7 +149,7 @@ export function LinkedAccounts({ accounts }: LinkedAccountsProps) {
 
                 {accounts.length === 1 && (
                     <div className="flex items-start gap-2 p-3 mt-4 text-xs text-amber-500 bg-amber-500/10 rounded-lg border border-amber-500/20">
-                        <AlertCircle className="w-4 h-4 mt-0.5 flex-shrink-0" />
+                        <AlertCircle className="w-4 h-4 mt-0.5 shrink-0" />
                         <p>
                             You only have one account linked. Connect another provider to enable disconnecting this one.
                         </p>
