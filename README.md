@@ -1,9 +1,10 @@
-# Engineering Workspace
+# Next Notion CMS ![Next Notion CMS](public/img/badges/next-notion-cms.svg) 
 
 A modern, high-performance technical documentation and engineering portfolio platform built with **Next.js 16**, **Tailwind CSS 4**, and **TypeScript**. Optimized for mechatronics research, digital architecture, and high-fidelity documentation.
 
 ---
-![Next Notion CMS](public/img/badges/next-notion-cms.svg)
+<!-- ![Next Notion CMS](public/img/badges/next-notion-cms.svg) -->
+![Vibe Code 80](public/img/badges/vibe-code-80.svg)
 ![Next.js 16](public/img/badges/next.js-16.svg)
 ![TypeScript](public/img/badges/typescript-5.svg)
 ![Tailwind CSS 4](public/img/badges/tailwind-css-4.svg)
@@ -56,7 +57,7 @@ A modern, high-performance technical documentation and engineering portfolio pla
 - **✍️ Authors System:** A comprehensive directory of contributors with high-fidelity "Dossier" profile pages, contribution metrics, and social integration.
 - **🛠️ Advanced Technical Pipeline:**
   - **Premium Shiki Highlighting:** VS Code-accurate syntax highlighting using Shiki themes (One Dark Pro) with a custom Mac-style window UI. Lazy-loaded languages for better performance.
-  - **LaTeX Support:** Full math notation rendering via KaTeX ($...$ and $$...$$).
+  - **LaTeX Support:** Full math notation rendering via KaTeX (Inline math: $F=ma$ and Block math: $$E=mc^2$$).
   - **Interactive Quizzes:** Dynamic, base64-encoded quiz components injectable directly into content.
   - **GitHub-style Alerts:** Support for `[!NOTE]`, `[!TIP]`, `[!WARNING]`, etc.
 - **🛡️ Enterprise-Grade Utilities:**
