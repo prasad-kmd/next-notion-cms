@@ -24,11 +24,33 @@ import { WebShareButton } from "./web-share-button";
 import { PushNotificationManager } from "./push-notification-manager";
 import { useSidebar } from "./sidebar-context";
 import { FloatingNavbar } from "./floating-navbar";
+import { MobileBottomNav } from "./mobile-bottom-nav";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { motion, AnimatePresence } from "framer-motion";
+
+function MobileTopBanner() {
+  return (
+    <div className="fixed top-0 left-0 right-0 z-40 lg:hidden px-4 py-3 bg-background/60 backdrop-blur-xl border-b border-border/40 flex items-center justify-center">
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ 
+          duration: 0.8, 
+          ease: "easeOut",
+          scale: { type: "spring", damping: 15, stiffness: 100 }
+        }}
+      >
+        <span className="text-sm font-bold tracking-[0.25rem] uppercase mozilla-headline bg-linear-to-r from-primary via-primary/80 to-primary bg-clip-text text-transparent">
+          PrasadM
+        </span>
+      </motion.div>
+    </div>
+  );
+}
 
 const primaryNav = [
   { name: "Home", href: "/", icon: LayoutPanelLeft },
@@ -98,27 +120,11 @@ export function Navigation() {
 
   return (
     <>
-      <div className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between border-b border-border bg-background/95 px-4 py-2 backdrop-blur supports-[backdrop-filter]:bg-background/60 lg:hidden">
-        <Link href="/" className="text-lg font-bold">
-          PrasadM
-        </Link>
-        <div className="flex items-center gap-2">
-          <FloatingNavbar
-            isMobileSidebar={true}
-            className="!relative !top-0 !right-0 !shadow-none !bg-transparent !p-0"
-          />
-          <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="rounded-lg p-2 hover:bg-muted ml-1"
-          >
-            {mobileMenuOpen ? (
-              <X className="h-6 w-6" />
-            ) : (
-              <Menu className="h-6 w-6" />
-            )}
-          </button>
-        </div>
-      </div>
+      <MobileTopBanner />
+      <MobileBottomNav 
+        isSidebarOpen={mobileMenuOpen}
+        onToggleSidebar={() => setMobileMenuOpen(!mobileMenuOpen)} 
+      />
 
       {/* Sidebar */}
       <aside
@@ -227,8 +233,8 @@ export function Navigation() {
         />
       )}
 
-      {/* Spacer for mobile */}
-      <div className="h-14 lg:hidden" />
+      {/* Spacer for mobile bottom navbar */}
+      <div className="h-24 lg:hidden" />
     </>
   );
 }

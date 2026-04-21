@@ -21,7 +21,7 @@ export function Footer() {
   return (
     <footer className="relative border-t border-border bg-card/30 backdrop-blur-md overflow-hidden">
       {/* Decorative background elements with animations */}
-      <div className="absolute inset-0 z-0 pointer-events-none opacity-40 dark:opacity-20">
+      <div className="absolute inset-0 z-0 pointer-events-none opacity-40 dark:opacity-20 overflow-hidden">
         <div 
           className="absolute top-[-10%] left-[-10%] w-[40%] h-[60%] bg-primary/20 rounded-full blur-[120px] animate-blob" 
           style={{ animationDuration: '25s' }}
@@ -36,7 +36,7 @@ export function Footer() {
         />
       </div>
 
-      <div className="relative mx-auto max-w-7xl px-6 pt-16 pb-8 z-10">
+      <div className="relative mx-auto max-w-7xl px-6 pt-16 lg:pb-8 pb-24 z-10">
         <div className="grid grid-cols-1 gap-12 md:grid-cols-4 lg:grid-cols-5">
           {/* Logo and Brand Identity */}
           <div className="md:col-span-2 lg:col-span-2">

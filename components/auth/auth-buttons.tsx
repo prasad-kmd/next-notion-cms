@@ -77,7 +77,13 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useRouter } from "next/navigation";
 
-export function UserMenu({ isMobile = false }: { isMobile?: boolean }) {
+export function UserMenu({ 
+    isMobile = false,
+    dropdownSide = "bottom"
+}: { 
+    isMobile?: boolean,
+    dropdownSide?: "top" | "bottom" | "left" | "right"
+}) {
     const { data: session, isPending } = authClient.useSession();
     const router = useRouter();
 
@@ -118,7 +124,7 @@ export function UserMenu({ isMobile = false }: { isMobile?: boolean }) {
                     />
                 </button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-56 google-sans">
+            <DropdownMenuContent align="end" side={dropdownSide} className="w-56 google-sans">
                 <DropdownMenuLabel className="font-normal">
                     <div className="flex flex-col space-y-1">
                         <p className="text-sm font-medium leading-none">{session.user.name}</p>

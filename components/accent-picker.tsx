@@ -11,7 +11,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 
-export function AccentPicker() {
+export function AccentPicker({ side = "bottom" }: { side?: "top" | "bottom" }) {
   const { accentColor, updateAccentColor } = useAccentColor();
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -46,7 +46,7 @@ export function AccentPicker() {
             />
           </button>
         </TooltipTrigger>
-        <TooltipContent side="bottom" sideOffset={8}>
+        <TooltipContent side={side} sideOffset={8}>
           Accent Color
         </TooltipContent>
       </Tooltip>
@@ -54,11 +54,16 @@ export function AccentPicker() {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, y: 10, scale: 0.95 }}
+            initial={{ opacity: 0, y: side === "bottom" ? 10 : -10, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 10, scale: 0.95 }}
+            exit={{ opacity: 0, y: side === "bottom" ? 10 : -10, scale: 0.95 }}
             transition={{ type: "spring", damping: 20, stiffness: 300 }}
-            className="absolute right-0 mt-3 p-3 rounded-2xl border border-border bg-background/80 backdrop-blur-xl shadow-2xl z-70 min-w-[200px]"
+            className={cn(
+              "absolute p-3 rounded-2xl border border-border bg-background/80 backdrop-blur-xl shadow-2xl z-70 min-w-[200px]",
+              side === "bottom" 
+                ? "top-full right-0 mt-3" 
+                : "bottom-full left-0 mb-3 top-auto"
+            )}
           >
             <div className="mb-2 px-1 text-center">
               <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground google-sans">
