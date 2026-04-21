@@ -18,7 +18,7 @@ export default async function NotAuthorizedPage() {
             <div className="max-w-md w-full text-center">
                 <div className="mb-8 flex justify-center">
                     <div className="relative">
-                        <div className="absolute -inset-1 bg-gradient-to-r from-primary/20 to-destructive/20 rounded-2xl blur opacity-20" />
+                        <div className="absolute -inset-1 bg-linear-to-r from-primary/20 to-destructive/20 rounded-2xl blur opacity-20" />
                         <div className="relative h-20 w-20 rounded-2xl bg-card border border-border flex items-center justify-center shadow-xl">
                             <ShieldAlert className="h-10 w-10 text-destructive/80" />
                         </div>
