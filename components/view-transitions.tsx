@@ -25,10 +25,23 @@ export function ViewTransitions({ children }: { children: React.ReactNode }) {
         if ("startViewTransition" in document) {
           const href = link.getAttribute("href");
           const url = new URL(link.href);
-          const isHashLink = href?.startsWith("#") || (url.pathname === window.location.pathname && url.hash !== "");
+          
+          // Normalize paths to handle trailing slashes during comparison
+          const currentPath = window.location.pathname.replace(/\/$/, "") || "/";
+          const targetPath = url.pathname.replace(/\/$/, "") || "/";
+          
+          const isHashLink = href?.startsWith("#") || (targetPath === currentPath && url.hash !== "");
           
           // Completely bypass view transitions for local hash jumps
           if (isHashLink) {
+            e.preventDefault();
+            const id = url.hash.substring(1);
+            const target = document.getElementById(id);
+            if (target) {
+              target.scrollIntoView({ behavior: "smooth" });
+              // Update URL without triggering a full navigation transition
+              window.history.pushState(null, "", link.href);
+            }
             return;
           }
 
