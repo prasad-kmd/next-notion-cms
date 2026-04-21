@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { ShieldAlert, ArrowLeft, LogIn, UserX, Home } from "lucide-react";
+import { ShieldAlert, ArrowLeft, LogIn, UserX, Home, LayoutDashboard } from "lucide-react";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { SignOutButton } from "@/components/auth/SignOutButton";
@@ -11,12 +11,12 @@ export default async function NotAuthorizedPage() {
     });
 
     return (
-        <div className="min-h-screen flex flex-col items-center justify-center px-6 relative overflow-hidden">
+        <div className="max-h-screen flex flex-col items-center justify-center px-6 relative overflow-hidden">
             {/* Background geometric element */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-primary/5 rounded-full blur-3xl -z-10" />
             
-            <div className="max-w-md w-full text-center">
-                <div className="mb-8 flex justify-center">
+            <div className="max-w-lg w-full text-center">
+                <div className="mb-4 mt-8 flex justify-center">
                     <div className="relative">
                         <div className="absolute -inset-1 bg-linear-to-r from-primary/20 to-destructive/20 rounded-2xl blur opacity-20" />
                         <div className="relative h-20 w-20 rounded-2xl bg-card border border-border flex items-center justify-center shadow-xl">
@@ -28,7 +28,7 @@ export default async function NotAuthorizedPage() {
                 <h1 className="text-3xl font-bold tracking-tight mb-2 philosopher amoriaregular">
                     Access Restricted
                 </h1>
-                <p className="text-muted-foreground mb-8 text-sm uppercase tracking-widest font-mono">
+                <p className="text-muted-foreground mb-4 text-sm uppercase tracking-widest font-mono">
                     Authorization Error 403
                 </p>
                 
@@ -71,7 +71,7 @@ export default async function NotAuthorizedPage() {
                             <p className="text-muted-foreground mb-8 text-sm leading-relaxed">
                                 Your current technical role does not have the permissions required to access this endpoint. Please contact the system administrator if you believe this is an error.
                             </p>
-                            <div className="grid grid-cols-2 gap-4">
+                            <div className="grid grid-cols-3 gap-4">
                                 <Link
                                     href="/"
                                     className="inline-flex items-center justify-center gap-2 rounded-xl border border-border bg-background px-4 py-2.5 text-sm font-semibold transition-all hover:bg-muted hover:scale-[1.02] active:scale-[0.98]"
@@ -80,18 +80,17 @@ export default async function NotAuthorizedPage() {
                                     Home
                                 </Link>
                                 <SignOutButton />
+                                <Link
+                                    href="/dashboard"
+                                    className="inline-flex items-center justify-center gap-2 rounded-xl border border-border bg-background px-4 py-2.5 text-sm font-semibold transition-all hover:bg-muted hover:scale-[1.02] active:scale-[0.98]"
+                                >
+                                    <LayoutDashboard className="h-4 w-4" />
+                                    Dashboard
+                                </Link>
                             </div>
                         </div>
                     )}
                 </div>
-
-                <Link
-                    href="/"
-                    className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors group"
-                >
-                    <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
-                    Return to dashboard
-                </Link>
             </div>
         </div>
     );
