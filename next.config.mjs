@@ -49,12 +49,13 @@ const nextConfig = {
   async headers() {
     const cspHeader = `
       default-src 'self';
-      script-src 'self' 'unsafe-eval' 'unsafe-inline' https://gist.github.com;
-      style-src 'self' 'unsafe-inline';
-      img-src 'self' blob: data: https://*.notion.so https://*.amazonaws.com https://i.pravatar.cc https://placehold.co https://images.unsplash.com https://*.unsplash.com https://lh3.googleusercontent.com https://avatars.githubusercontent.com https://avatar.vercel.sh https://*.githubusercontent.com https://*.googleusercontent.com https://*.githubusercontent.com;
-      font-src 'self';
-      connect-src 'self' https://api.notion.com https://api.telegram.org https://lh3.googleusercontent.com https://avatars.githubusercontent.com https://*.googleusercontent.com https://*.githubusercontent.com https://*.amazonaws.com https://i.pravatar.cc https://placehold.co https://images.unsplash.com https://*.unsplash.com;
-      frame-src 'self' https://www.youtube.com;
+      script-src 'self' 'unsafe-eval' 'unsafe-inline' https://gist.github.com https://challenges.cloudflare.com https://turnstile.cloudflare.com https://va.vercel-scripts.com;
+      style-src 'self' 'unsafe-inline' https://challenges.cloudflare.com;
+      img-src 'self' blob: data: https://*.notion.so https://*.amazonaws.com https://i.pravatar.cc https://placehold.co https://images.unsplash.com https://*.unsplash.com https://lh3.googleusercontent.com https://avatars.githubusercontent.com https://avatar.vercel.sh https://*.githubusercontent.com https://*.googleusercontent.com https://challenges.cloudflare.com;
+      font-src 'self' data:;
+      connect-src 'self' https://api.notion.com https://api.telegram.org https://lh3.googleusercontent.com https://avatars.githubusercontent.com https://*.googleusercontent.com https://*.githubusercontent.com https://*.amazonaws.com https://i.pravatar.cc https://placehold.co https://images.unsplash.com https://*.unsplash.com https://challenges.cloudflare.com https://turnstile.cloudflare.com https://vitals.vercel-analytics.com https://api.vercel.com;
+      frame-src 'self' https://www.youtube.com https://challenges.cloudflare.com https://turnstile.cloudflare.com;
+      worker-src 'self' blob: https://challenges.cloudflare.com;
       upgrade-insecure-requests;
     `.replace(/\s{2,}/g, " ").trim();
 

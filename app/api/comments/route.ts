@@ -4,6 +4,7 @@ import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { formatComment, containsProfanity } from "@/lib/comments";
 import { isRateLimited } from "@/lib/rate-limit";
+import { env } from "@/lib/env";
 
 const RATE_LIMIT_CONFIG = {
   limit: 5,
@@ -69,11 +70,41 @@ export async function POST(req: NextRequest) {
 
   try {
     const body = await req.json();
-    const { pageId, content } = body;
+    const { pageId, content, turnstileToken } = body;
 
     if (!pageId || !content) {
       return NextResponse.json(
         { error: "Missing pageId or content" },
+        { status: 400 }
+      );
+    }
+
+    // Turnstile verification
+    if (!turnstileToken) {
+      return NextResponse.json(
+        { error: "Security verification missing" },
+        { status: 400 }
+      );
+    }
+
+    const secretKey = env.TURNSTILE_SECRET_KEY || "1x0000000000000000000000000000000AA";
+    
+    const verifyRes = await fetch(
+      "https://challenges.cloudflare.com/turnstile/v0/siteverify",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: `secret=${encodeURIComponent(secretKey)}&response=${encodeURIComponent(turnstileToken)}`,
+      }
+    );
+
+    const verifyData = await verifyRes.json();
+    if (!verifyData.success) {
+      console.error("Turnstile verification failed:", verifyData["error-codes"]);
+      return NextResponse.json(
+        { error: "Security verification failed" },
         { status: 400 }
       );
     }

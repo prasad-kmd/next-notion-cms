@@ -121,6 +121,7 @@ import { ViewTransitions } from "@/components/view-transitions";
 import ClickSpark from "@/components/ClickSpark";
 import { AccentColorInitializer } from "@/components/accent-color-initializer";
 import { AuthInitializer } from "@/components/auth/auth-initializer";
+import Script from "next/script";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),

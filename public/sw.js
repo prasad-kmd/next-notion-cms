@@ -43,13 +43,16 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
+  const isCloudflareTurnstile = url.hostname === 'challenges.cloudflare.com';
+
   // Static assets (images, fonts, scripts, styles): Cache-first
   const isStaticAsset =
-    request.destination === 'image' ||
+    (request.destination === 'image' ||
     request.destination === 'font' ||
     request.destination === 'script' ||
     request.destination === 'style' ||
-    url.pathname.startsWith('/_next/static/');
+    url.pathname.startsWith('/_next/static/')) &&
+    !isCloudflareTurnstile;
 
   if (isStaticAsset) {
     event.respondWith(

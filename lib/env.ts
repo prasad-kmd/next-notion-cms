@@ -43,6 +43,10 @@ const envSchema = z.object({
   VERCEL_CLIENT_SECRET: z.string().optional(),
   REDDIT_CLIENT_ID: z.string().optional(),
   REDDIT_CLIENT_SECRET: z.string().optional(),
+
+  // Cloudflare Turnstile
+  NEXT_PUBLIC_TURNSTILE_SITE_KEY: z.string().optional(),
+  TURNSTILE_SECRET_KEY: z.string().optional(),
   
   // Node Env
   NODE_ENV: z.enum(["development", "test", "production"]).default("development"),

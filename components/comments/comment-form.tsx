@@ -1,12 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { authClient } from "@/lib/auth-client";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Send, Loader2, Lock } from "lucide-react";
 import Link from "next/link";
 import { toast } from "sonner";
+import { TurnstileWidget, type TurnstileWidgetRef } from "./turnstile-widget";
 
 interface CommentFormProps {
   pageId: string;
@@ -18,23 +19,31 @@ export function CommentForm({ pageId, onSuccess }: CommentFormProps) {
   const [content, setContent] = useState("");
   const [honeypot, setHoneypot] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
+  const turnstileRef = useRef<TurnstileWidgetRef>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!content.trim() || isSubmitting || honeypot) return;
+    if (!content.trim() || isSubmitting || honeypot || !turnstileToken) return;
 
     setIsSubmitting(true);
     try {
       const res = await fetch("/api/comments", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ pageId, content: content.trim() }),
+        body: JSON.stringify({ 
+          pageId, 
+          content: content.trim(),
+          turnstileToken 
+        }),
       });
 
       if (!res.ok) throw new Error("Failed to post comment");
 
       const newComment = await res.json();
       setContent("");
+      setTurnstileToken(null);
+      turnstileRef.current?.reset();
       onSuccess(newComment);
       toast.success("Comment posted successfully!");
     } catch (error) {
@@ -95,6 +104,19 @@ export function CommentForm({ pageId, onSuccess }: CommentFormProps) {
           className="min-h-[120px] rounded-2xl bg-card/50 border-border/40 focus:border-primary/40 focus:ring-primary/10 transition-all resize-none p-4 text-sm font-noto-serif-sinhala"
           disabled={isSubmitting}
         />
+        
+        {content.trim().length > 0 && (
+          <TurnstileWidget 
+            ref={turnstileRef}
+            onVerify={(token) => setTurnstileToken(token)}
+            onExpire={() => setTurnstileToken(null)}
+            onError={() => {
+              setTurnstileToken(null);
+              toast.error("Security verification failed. Please try again.");
+            }}
+          />
+        )}
+
         <div className="absolute bottom-3 right-3 flex items-center gap-3">
              <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-background/50 border border-border/40 backdrop-blur-sm">
                 {session.user.image && (
@@ -106,7 +128,7 @@ export function CommentForm({ pageId, onSuccess }: CommentFormProps) {
              </div>
           <Button
             type="submit"
-            disabled={!content.trim() || isSubmitting}
+            disabled={!content.trim() || isSubmitting || !turnstileToken}
             size="sm"
             className="rounded-xl shadow-lg shadow-primary/20"
           >
