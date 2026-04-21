@@ -10,6 +10,7 @@ import { RelatedContent } from "@/components/related-content";
 import { AIContentIndicator } from "@/components/ai-content-indicator";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { CommentsSection } from "@/components/comments/comments-section";
+import { CommentScrollButton } from "@/components/comment-scroll-button";
 
 export async function generateMetadata({
   params,
@@ -74,15 +75,18 @@ export default async function ProjectPage({
                     day: "numeric",
                   })}
                 </div>
-                <BookmarkButton
-                  key={project.slug}
-                  item={{
-                    slug: project.slug,
-                    title: project.title,
-                    date: project.date,
-                    type: "projects",
-                  }}
-                />
+                <div className="flex items-center gap-2">
+                  <CommentScrollButton />
+                  <BookmarkButton
+                    key={project.slug}
+                    item={{
+                      slug: project.slug,
+                      title: project.title,
+                      date: project.date,
+                      type: "projects",
+                    }}
+                  />
+                </div>
               </div>
             )}
           </header>

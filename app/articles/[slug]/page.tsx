@@ -16,6 +16,7 @@ import { AIContentIndicator } from "@/components/ai-content-indicator";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { JsonLd, getContentSchema, getBreadcrumbSchema } from "@/components/json-ld";
 import { CommentsSection } from "@/components/comments/comments-section";
+import { CommentScrollButton } from "@/components/comment-scroll-button";
 
 export async function generateStaticParams() {
   const entries = await getContentByType("articles");
@@ -94,15 +95,18 @@ export default async function ArticlePage({
                       </span>
                     )}
                   </div>
-                  <BookmarkButton
-                    key={entry.slug}
-                    item={{
-                      slug: entry.slug,
-                      title: entry.title,
-                      date: entry.date,
-                      type: "articles",
-                    }}
-                  />
+                  <div className="flex items-center gap-2">
+                    <CommentScrollButton />
+                    <BookmarkButton
+                      key={entry.slug}
+                      item={{
+                        slug: entry.slug,
+                        title: entry.title,
+                        date: entry.date,
+                        type: "articles",
+                      }}
+                    />
+                  </div>
                 </div>
               )}
             </header>

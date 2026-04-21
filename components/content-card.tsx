@@ -178,7 +178,7 @@ export function ContentCard({ post, basePath }: ContentCardProps) {
                `}
               >
                 <Calendar className="h-3 w-3" />
-                {new Date(post.date).toLocaleDateString("en-US", {
+                {new Date(post.date).toLocaleDateString("en-UK", {
                   month: "short",
                   day: "numeric",
                 })}

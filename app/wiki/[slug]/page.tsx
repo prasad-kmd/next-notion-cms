@@ -15,6 +15,7 @@ import { ArticleSidebar } from "@/components/article-sidebar";
 import { AIContentIndicator } from "@/components/ai-content-indicator";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { CommentsSection } from "@/components/comments/comments-section";
+import { CommentScrollButton } from "@/components/comment-scroll-button";
 
 export async function generateStaticParams() {
   const entries = await getContentByType("wiki");
@@ -93,14 +94,17 @@ export default async function WikiEntryPage({
                     </span>
                   )}
                 </div>
-                <BookmarkButton
-                  key={entry.slug}
-                  item={{
-                    slug: entry.slug,
-                    title: entry.title,
-                    type: "wiki",
-                  }}
-                />
+                <div className="flex items-center gap-2">
+                  <CommentScrollButton />
+                  <BookmarkButton
+                    key={entry.slug}
+                    item={{
+                      slug: entry.slug,
+                      title: entry.title,
+                      type: "wiki",
+                    }}
+                  />
+                </div>
               </div>
             </header>
 

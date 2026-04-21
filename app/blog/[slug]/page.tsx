@@ -16,6 +16,7 @@ import { AIContentIndicator } from "@/components/ai-content-indicator";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { JsonLd, getContentSchema, getBreadcrumbSchema } from "@/components/json-ld";
 import { CommentsSection } from "@/components/comments/comments-section";
+import { CommentScrollButton } from "@/components/comment-scroll-button";
 
 export async function generateStaticParams() {
   const blogPosts = await getContentByType("blog");
@@ -82,7 +83,7 @@ export default async function BlogPostPage({
                 <div className="flex flex-wrap items-center justify-between gap-4 text-muted-foreground">
                   <div className="flex items-center gap-2 font-google-sans">
                     <Calendar className="h-4 w-4" />
-                    {new Date(post.date).toLocaleDateString("en-US", {
+                    {new Date(post.date).toLocaleDateString("en-UK", {
                       year: "numeric",
                       month: "long",
                       day: "numeric",
@@ -94,15 +95,18 @@ export default async function BlogPostPage({
                       </span>
                     )}
                   </div>
-                  <BookmarkButton
-                    key={post.slug}
-                    item={{
-                      slug: post.slug,
-                      title: post.title,
-                      date: post.date,
-                      type: "blog",
-                    }}
-                  />
+                  <div className="flex items-center gap-2">
+                    <CommentScrollButton />
+                    <BookmarkButton
+                      key={post.slug}
+                      item={{
+                        slug: post.slug,
+                        title: post.title,
+                        date: post.date,
+                        type: "blog",
+                      }}
+                    />
+                  </div>
                 </div>
               )}
             </header>

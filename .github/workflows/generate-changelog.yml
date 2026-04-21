@@ -68,7 +68,7 @@ jobs:
           dayKeys.forEach(dateKey => {
             const commits = groupedByDay[dateKey];
             const date = new Date(dateKey);
-            const formattedDate = date.toLocaleDateString('en-US', { 
+            const formattedDate = date.toLocaleDateString('en-UK', { 
               year: 'numeric', 
               month: 'long', 
               day: '2-digit' 
