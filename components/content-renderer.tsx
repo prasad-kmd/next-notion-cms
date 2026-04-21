@@ -192,8 +192,8 @@ export function ContentRenderer({ content, id }: ContentRendererProps) {
       className="prose prose-neutral dark:prose-invert max-w-none 
         prose-headings:font-bold prose-headings:tracking-tight
         prose-h1:text-4xl prose-h1:mb-6 amoriaregular
-        prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-4 prose-h2:border-b prose-h2:border-border prose-h2:pb-2 amoriaregular
-        prose-h3:text-2xl prose-h3:mt-8 prose-h3:mb-3 amoriaregular
+        prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-4 prose-h2:border-b prose-h2:border-border prose-h2:pb-2 prose-h2:scroll-mt-24 amoriaregular
+        prose-h3:text-2xl prose-h3:mt-8 prose-h3:mb-3 prose-h3:scroll-mt-24 amoriaregular
         prose-p:leading-relaxed prose-p:text-muted-foreground google-sans
         prose-a:text-primary prose-a:no-underline hover:prose-a:underline prose-a:font-medium
         prose-strong:text-foreground prose-strong:font-semibold

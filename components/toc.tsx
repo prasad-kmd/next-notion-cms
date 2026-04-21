@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { List, ChevronRight, ChevronLeft, ChevronRight as ChevronRightIcon } from "lucide-react"
 import { cn } from "@/lib/utils"
 
@@ -18,6 +18,8 @@ export function TOC({ content }: TOCProps) {
   const [headings, setHeadings] = useState<TOCItem[]>([])
   const [activeId, setActiveId] = useState<string>("")
   const [isCollapsed, setIsCollapsed] = useState(true)
+  const isScrollingFromClick = useRef(false)
+  const scrollTimeoutRef = useRef<any>(null)
 
   useEffect(() => {
     // Extract headings from HTML content
@@ -35,24 +37,74 @@ export function TOC({ content }: TOCProps) {
   }, [content])
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveId(entry.target.id)
-          }
-        })
-      },
-      { rootMargin: "0% 0% -80% 0%" }
-    )
+    if (headings.length === 0) return
 
-    headings.forEach((heading) => {
-      const element = document.getElementById(heading.id)
-      if (element) observer.observe(element)
-    })
+    const setupObserver = () => {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          // If we're scrolling as a result of a click, don't let the observer change the activeId
+          // until the jump is mostly complete.
+          if (isScrollingFromClick.current) return
 
-    return () => observer.disconnect()
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              setActiveId(entry.target.id)
+            }
+          })
+        },
+        { 
+          // Match the scroll-margin-top in globals.css (100px)
+          // We use a narrow band near the top of the viewport
+          rootMargin: "-110px 0% -70% 0%" 
+        }
+      )
+
+      headings.forEach((heading) => {
+        const element = document.getElementById(heading.id)
+        if (element) observer.observe(element)
+      })
+
+      return observer
+    }
+
+    const observer = setupObserver()
+
+    // Handle initial hash on load
+    if (window.location.hash) {
+      const hash = window.location.hash.substring(1)
+      if (headings.some(h => h.id === hash)) {
+        setActiveId(hash)
+      }
+    }
+
+    const handleHashChange = () => {
+      if (window.location.hash) {
+        const hash = window.location.hash.substring(1)
+        if (headings.some(h => h.id === hash)) {
+          setActiveId(hash)
+        }
+      }
+    }
+    window.addEventListener("hashchange", handleHashChange)
+
+    return () => {
+      observer.disconnect()
+      window.removeEventListener("hashchange", handleHashChange)
+    }
   }, [headings])
+
+  // Auto-scroll TOC sidebar to keep active item in view
+  useEffect(() => {
+    if (activeId && !isCollapsed) {
+      const activeElement = document.querySelector(`nav a[href="#${activeId}"]`)
+      if (activeElement) {
+        activeElement.scrollIntoView({
+          behavior: "smooth",
+          block: "nearest",
+        })
+      }
+    }
+  }, [activeId, isCollapsed])
 
   if (headings.length === 0) return null
 
@@ -100,6 +152,21 @@ export function TOC({ content }: TOCProps) {
             <li key={heading.id}>
               <a
                 href={`#${heading.id}`}
+                onClick={(e) => {
+                  // Explicitly set activeId on click
+                  setActiveId(heading.id)
+                  
+                  // Set flag to prevent observer from overriding this immediately
+                  isScrollingFromClick.current = true
+                  
+                  // Clear existing timeout
+                  if (scrollTimeoutRef.current) clearTimeout(scrollTimeoutRef.current)
+                  
+                  // Allow observer to take back control after jump is finished
+                  scrollTimeoutRef.current = setTimeout(() => {
+                    isScrollingFromClick.current = false
+                  }, 1000)
+                }}
                 className={cn(
                   "group flex items-center py-2 pr-4 transition-all hover:text-primary relative",
                   heading.level === 3 ? "pl-8 text-xs" : "pl-4 text-sm font-medium",

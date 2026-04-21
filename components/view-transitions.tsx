@@ -23,6 +23,15 @@ export function ViewTransitions({ children }: { children: React.ReactNode }) {
       ) {
         // Only trigger if View Transitions API is supported
         if ("startViewTransition" in document) {
+          const href = link.getAttribute("href");
+          const url = new URL(link.href);
+          const isHashLink = href?.startsWith("#") || (url.pathname === window.location.pathname && url.hash !== "");
+          
+          // Completely bypass view transitions for local hash jumps
+          if (isHashLink) {
+            return;
+          }
+
           e.preventDefault();
 
           // @ts-ignore - View Transition API might not be in the TS types yet
