@@ -3,26 +3,43 @@
 A modern, high-performance technical documentation and engineering portfolio platform built with **Next.js 16**, **Tailwind CSS 4**, and **TypeScript**. Optimized for mechatronics research, digital architecture, and high-fidelity documentation.
 
 ---
-![Next.js](https://img.shields.io/badge/Next.js-16-black?style=for-the-badge&logo=next.js)
-![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?style=for-the-badge&logo=typescript)
-![Tailwind](https://img.shields.io/badge/Tailwind_CSS-4-38B2AC?style=for-the-badge&logo=tailwind-css)
-![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)
-![Notion](https://img.shields.io/badge/Notion-CMS-black?style=for-the-badge&logo=notion)
-![Auth](https://img.shields.io/badge/Better_Auth-Supabase-blue?style=for-the-badge)
-![Database](https://img.shields.io/badge/Drizzle-PostgreSQL-green?style=for-the-badge&logo=postgresql)
-![GitHub License](https://img.shields.io/github/license/prasad-kmd/next-notion-cms?style=for-the-badge)
+![Next Notion CMS](public/img/badges/next-notion-cms.svg)
+![Next.js 16](public/img/badges/next.js-16.svg)
+![TypeScript](public/img/badges/typescript-5.svg)
+![Tailwind CSS 4](public/img/badges/tailwind-css-4.svg)
+![Deploy on Vercel](public/img/badges/deploy-on-vercel.svg)
+![Notion Based CMS](public/img/badges/notion-based-cms.svg)
+![Better Auth Authentication](public/img/badges/better-auth-authentication.svg)
+![Supabase PostgreSQL](public/img/badges/supabase-postgresql.svg)
+![Drizzle ORM](public/img/badges/drizzle-orm.svg)
+![Cloudflare Turnstile Comment Protection](public/img/badges/cloudflare-turnstile-comment-protection.svg)
+![License AGPL-3.0](public/img/badges/license-agpl-3.0.svg)
+![NodeJS 20.x](public/img/badges/node.js-20.x.svg)
+![pnpm 9](public/img/badges/pnpm-9.svg)
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/w/prasad-kmd/next-notion-cms?style=for-the-badge&logo=github&logoColor=black)
 ![GitHub deployments](https://img.shields.io/github/deployments/prasad-kmd/next-notion-cms/Production?logo=Vercel&style=for-the-badge)
-![Node.js](https://img.shields.io/badge/Node.js-20.x-green?style=for-the-badge&logo=node.js)
-![pnpm](https://img.shields.io/badge/pnpm-Recommended-orange?style=for-the-badge&logo=pnpm)
 ![GitHub stars](https://img.shields.io/github/stars/prasad-kmd/next-notion-cms?style=for-the-badge&logo=github)
 ![GitHub forks](https://img.shields.io/github/forks/prasad-kmd/next-notion-cms?style=for-the-badge&logo=github)
 ![GitHub issues](https://img.shields.io/github/issues/prasad-kmd/next-notion-cms?style=for-the-badge&logo=github)
 ![GitHub pull requests](https://img.shields.io/github/issues-pr/prasad-kmd/next-notion-cms?style=for-the-badge&logo=github)
-![Static Badge](https://img.shields.io/badge/Next%20Notion%20CMS-CMS-brightgreen?style=for-the-badge&logo=nextdotjs&labelColor=black&link=https%3A%2F%2Fgithub.com%2Fprasad-kmd%2Fnext-notion-cms)
 ![Dynamic JSON Badge](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fgithub.com%2Fprasad-kmd%2Fnext-notion-cms%2Fraw%2Fmain%2Fpackage.json&query=%24.author&style=for-the-badge&logo=pnpm&label=Author&labelColor=black&link=https%3A%2F%2Fgithub.com%2Fprasad-kmd%2Fnext-notion-cms%2Fblob%2Fmain%2Fpackage.json)
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/t/prasad-kmd/next-notion-cms?style=for-the-badge&logo=git&labelColor=black)
-![GitHub License](https://img.shields.io/github/license/prasad-kmd/next-notion-cms?style=for-the-badge&logo=gplv3&labelColor=black)
+<!-- ![Next.js](https://img.shields.io/badge/Next.js-16-black?style=for-the-badge&logo=next.js) -->
+<!-- ![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?style=for-the-badge&logo=typescript) -->
+<!-- ![Tailwind](https://img.shields.io/badge/Tailwind_CSS-4-38B2AC?style=for-the-badge&logo=tailwind-css) -->
+<!-- ![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white) -->
+<!-- ![Notion](https://img.shields.io/badge/Notion-CMS-black?style=for-the-badge&logo=notion) -->
+<!-- ![Auth](https://img.shields.io/badge/Better_Auth-Supabase-blue?style=for-the-badge) -->
+<!-- ![Database](https://img.shields.io/badge/Drizzle-PostgreSQL-green?style=for-the-badge&logo=postgresql) -->
+<!-- ![GitHub License](https://img.shields.io/github/license/prasad-kmd/next-notion-cms?style=for-the-badge) -->
+<!-- ![Node.js](https://img.shields.io/badge/Node.js-20.x-green?style=for-the-badge&logo=node.js) -->
+<!-- ![pnpm](https://img.shields.io/badge/pnpm-Recommended-orange?style=for-the-badge&logo=pnpm) -->
+<!-- ![Static Badge](https://img.shields.io/badge/Next%20Notion%20CMS-CMS-brightgreen?style=for-the-badge&logo=nextdotjs&labelColor=black&link=https%3A%2F%2Fgithub.com%2Fprasad-kmd%2Fnext-notion-cms) -->
+<!-- ![GitHub License](https://img.shields.io/github/license/prasad-kmd/next-notion-cms?style=for-the-badge&logo=gplv3&labelColor=black) -->
+
+
+
+
 
 ---
 
