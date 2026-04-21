@@ -206,4 +206,8 @@ The site will be available at `http://localhost:3000`.
 
 ---
 
+## Star History
+
+![Star History Chart](https://api.star-history.com/chart?repos=prasad-kmd/next-notion-cms&type=date&legend=top-left)
+
 Built with ❤️ by PrasadM.

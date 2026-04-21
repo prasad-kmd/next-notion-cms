@@ -601,7 +601,7 @@ pre {
 
 /* Quotes / Blockquotes */
 .prose blockquote {
-  @apply relative my-8 pl-8 pr-4 py-4 border-l-4 border-primary/80 bg-gradient-to-r from-primary/5 to-transparent rounded-r-2xl italic text-muted-foreground;
+  @apply relative my-8 pl-8 pr-4 py-4 border-l-4 border-primary/80 bg-linear-to-r from-primary/5 to-transparent rounded-r-2xl italic text-muted-foreground;
 }
 
 .prose blockquote::before {

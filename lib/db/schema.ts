@@ -8,6 +8,7 @@ export const user = pgTable("user", {
 	image: text("image"),
 	createdAt: timestamp("created_at").notNull(),
 	updatedAt: timestamp("updated_at").notNull(),
+	role: text("role").notNull().default("user"),
     // Added for future extensibility and localstorage sync
     preferences: jsonb("preferences").default({}),
 });

@@ -47,6 +47,10 @@ Once your `DATABASE_URL` is set, you need to push the schema to Supabase:
 ```bash
 # Push the schema directly to the database
 pnpm db:push
+
+# Or generate and run migrations manually
+pnpm drizzle-kit generate
+# Then run the SQL in your database dashboard
 ```
 
 ## 5. Summary of Environment Variables
@@ -71,3 +75,33 @@ GITHUB_CLIENT_SECRET=...
 *   **Stateless Sessions:** Uses JWT strategy to reduce database lookups on every request, staying within Supabase's free tier quotas.
 *   **Auto-Sync:** Upon sign-in, the `useAuthSync` hook detects local bookmarks/preferences and merges them into the `user.preferences` JSONB column in the database.
 *   **Account Linking:** Better Auth is configured to automatically link accounts with the same email across different providers.
+
+## 7. Role-Based Access Control (RBAC)
+
+The system supports `user` and `admin` roles. By default, all new users are assigned the `user` role.
+
+### Designating an Admin
+Currently, admin designation is a manual process via the database.
+
+1.  Connect to your Supabase SQL Editor.
+2.  Identify the user's email you want to promote.
+3.  Run the following SQL:
+    ```sql
+    UPDATE "user" SET role = 'admin' WHERE email = 'target@example.com';
+    ```
+4.  The change will take effect on the user's next session refresh or re-authentication.
+
+### Protecting Routes
+Route protection is managed in `proxy.ts` (Next.js 16 Middleware replacement).
+
+To protect a new route, add it to the `PROTECTED_ROUTES` array in `proxy.ts`:
+```typescript
+const PROTECTED_ROUTES = [
+    { path: "/roadmap", exact: true, role: "admin" },
+    { path: "/new-protected-page", pattern: "/new-protected-page/*", role: "admin" },
+];
+```
+
+### Authorization Utilities
+*   **Server Side:** Use `requireAdmin()` in server components to block access.
+*   **Client Side:** Use `useIsAdmin()` hook or the `<AdminOnly>` component.

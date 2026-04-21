@@ -1,7 +1,8 @@
 import React from "react"
 import type { Metadata } from "next"
 import Roadmap from "@/components/roadmap"
-import { Calendar, Target, Flag } from "lucide-react"
+import { Calendar, Target, Flag, ShieldCheck } from "lucide-react"
+import { requireAdmin } from "@/lib/auth-utils"
 
 const title = "Project Roadmap"
 const description = "A public roadmap showing the progress and future plans for my engineering projects and this platform."
@@ -16,14 +17,22 @@ export const metadata: Metadata = {
   },
 }
 
-export default function RoadmapPage() {
+export default async function RoadmapPage() {
+  await requireAdmin();
+
   return (
     <div className="min-h-screen pb-20 px-6 lg:px-8 pt-12">
       <div className="mx-auto max-w-4xl">
         <header className="mb-16 text-center">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-widest mb-4">
-            <Flag className="h-3 w-3" />
-            Public Roadmap
+          <div className="flex flex-col items-center gap-4 mb-4">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-widest">
+              <Flag className="h-3 w-3" />
+              Project Roadmap
+            </div>
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md border border-amber-500/20 bg-amber-500/10 text-amber-500 text-[10px] font-medium uppercase tracking-tighter">
+              <ShieldCheck className="h-3 w-3" />
+              Admin Preview
+            </div>
           </div>
           <h1 className="text-4xl font-bold tracking-tight lg:text-5xl mb-4 amoriaregular">Project Roadmap</h1>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">

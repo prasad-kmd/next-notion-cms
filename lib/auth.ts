@@ -72,6 +72,15 @@ export const auth = betterAuth({
         window: 60, // 60 seconds
         max: 50, // max 50 requests per window
     },
+    user: {
+        additionalFields: {
+            role: {
+                type: "string",
+                required: false,
+                defaultValue: "user",
+            },
+        },
+    },
     // Trusted origins for security
     trustedOrigins: [process.env.SITE_URL || "http://localhost:3000"],
 });
