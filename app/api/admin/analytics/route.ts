@@ -15,7 +15,8 @@ export async function POST(req: NextRequest) {
     }
 
     const body = await req.json();
-    const { insightType, params } = body;
+    const { insightType, params = {} } = body;
+    const { timeRange = "-30d", contentType, limit = 10 } = params;
 
     const POSTHOG_PERSONAL_API_KEY = process.env.POSTHOG_PERSONAL_API_KEY;
     const POSTHOG_PROJECT_ID = process.env.POSTHOG_PROJECT_ID;
@@ -43,7 +44,53 @@ export async function POST(req: NextRequest) {
             },
           ],
           dateRange: {
-            date_from: "-30d",
+            date_from: timeRange,
+          },
+        };
+        break;
+      case "top_content":
+        {
+          const contentTypeFilter = contentType
+            ? `AND properties.content_type = '${contentType}'`
+            : "AND properties.page_slug IS NOT NULL";
+          
+          queryObj = {
+            kind: "HogQLQuery",
+            query: `
+              SELECT 
+                properties.page_slug as slug, 
+                any(properties.page_title) as title, 
+                any(properties.content_type) as type,
+                count() as views
+              FROM events 
+              WHERE 
+                event = '$pageview' 
+                ${contentTypeFilter}
+                AND timestamp >= now() - interval ${timeRange.replace("-", "")}
+              GROUP BY slug 
+              ORDER BY views DESC 
+              LIMIT ${limit}
+            `
+          };
+        }
+        break;
+      case "content_trends":
+        queryObj = {
+          kind: "TrendsQuery",
+          series: [
+            {
+              kind: "EventsNode",
+              event: "$pageview",
+              name: "$pageview",
+              math: "total",
+            },
+          ],
+          breakdownFilter: {
+            breakdown: "content_type",
+            breakdown_type: "event",
+          },
+          dateRange: {
+            date_from: timeRange,
           },
         };
         break;
@@ -98,8 +145,21 @@ export async function POST(req: NextRequest) {
     const json = await response.json();
     // Normalize response to maintain compatibility with existing chart code
     // The query API returns `.results` instead of `.result`
+    // For HogQLQuery, it returns results as an array of arrays
+    let normalizedResult = json.results || json.result || [];
+    
+    if (insightType === "top_content" && json.types) {
+      // It's a HogQL query, map it to objects
+      normalizedResult = normalizedResult.map((row: any[]) => ({
+        slug: row[0],
+        title: row[1] || row[0],
+        type: row[2],
+        views: row[3]
+      }));
+    }
+
     const data = {
-      result: json.results || json.result || [],
+      result: normalizedResult,
     };
 
 

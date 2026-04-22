@@ -14,18 +14,23 @@ import {
     SiX, 
     SiReddit 
 } from "react-icons/si";
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import { toast } from "sonner";
+import { useSearchParams } from "next/navigation";
 
-export function SignInButtons() {
+function SignInButtonsInternal() {
     const [isLoading, setIsLoading] = useState<string | null>(null);
+    const searchParams = useSearchParams();
+    const callbackUrl = searchParams.get("callbackUrl") || "/dashboard";
 
     const handleSignIn = async (provider: "google" | "github" | "facebook" | "twitter" | "reddit") => {
         setIsLoading(provider);
         try {
             await authClient.signIn.social({
                 provider,
-                callbackURL: window.location.origin,
+                callbackURL: callbackUrl.startsWith("/") 
+                    ? `${window.location.origin}${callbackUrl}` 
+                    : callbackUrl,
             });
         } catch (error) {
             toast.error(`Failed to sign in with ${provider}`);
@@ -59,6 +64,17 @@ export function SignInButtons() {
 
             {/* Other providers can be added here, conditionally if desired */}
         </div>
+    );
+}
+
+export function SignInButtons() {
+    return (
+        <Suspense fallback={<div className="flex flex-col gap-3 w-full max-w-sm animate-pulse">
+            <div className="h-12 w-full bg-muted rounded-xl" />
+            <div className="h-12 w-full bg-muted rounded-xl" />
+        </div>}>
+            <SignInButtonsInternal />
+        </Suspense>
     );
 }
 

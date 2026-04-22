@@ -12,7 +12,9 @@ export function initPostHog() {
         api_host: "/ingest",
         ui_host: host,
         person_profiles: "identified_only",
-        capture_pageview: false, // We handle this manually in PostHogProvider to support App Router transitions
+        capture_pageview: false, // Disabling automatic tracking to prevent double-counting with manual triggers
+        capture_performance: true,
+        defaults: "2026-01-30",
         autocapture: true,
         persistence: "localStorage",
         // Enable session recording if host is configured

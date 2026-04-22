@@ -6,6 +6,7 @@ This document provides complete instructions for setting up and configuring Post
 
 We use PostHog for both client-side user tracking and a custom server-side admin dashboard.
 - **Client-side:** Automatically captures pageviews and interactions.
+- **Enhanced Tracking:** Specific components track content views with rich metadata (content type, slug, author).
 - **Admin Dashboard:** Uses PostHog's REST API to display insights directly in your site's dashboard.
 
 ---
@@ -80,7 +81,18 @@ To prevent ad-blockers from blocking analytics, we have configured a reverse pro
 
 ---
 
-## 6. Troubleshooting
+## 6. Page View Tracking
+
+The system implements individual page view tracking for all content types (Blog, Articles, Tutorials, Projects, and Wiki).
+
+### How it works:
+1.  **PageViewTracker:** A client component placed on content pages that captures a `$pageview` event with custom properties: `content_type`, `page_slug`, `page_title`, and `author_id`.
+2.  **ViewCounter:** A client component that fetches the total view count for a specific slug from our internal API (`/api/views/[slug]`).
+3.  **API Proxy:** The view count API queries PostHog's Trend API to get aggregated totals, with built-in caching (1 hour) to ensure performance.
+
+---
+
+## 7. Troubleshooting
 
 - **No data in dashboard:** Ensure `POSTHOG_PERSONAL_API_KEY` and `POSTHOG_PROJECT_ID` are correct. Check server logs for API errors.
 - **Events not appearing:** Check the browser console for CSP (Content Security Policy) errors or network failures.
