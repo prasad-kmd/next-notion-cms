@@ -141,7 +141,7 @@ export async function POST(req: NextRequest) {
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
-      console.error(`PostHog API response error (${insightType}):`, {
+      console.error("PostHog API response error (%s):", insightType, {
         status: response.status,
         endpoint: endpoint.split("?")[0],
         errorData,
