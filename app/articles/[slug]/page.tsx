@@ -17,6 +17,8 @@ import { Breadcrumbs } from "@/components/breadcrumbs";
 import { JsonLd, getContentSchema, getBreadcrumbSchema } from "@/components/json-ld";
 import { CommentsSection } from "@/components/comments/comments-section";
 import { CommentScrollButton } from "@/components/comment-scroll-button";
+import { PageViewTracker } from "@/components/analytics/PageViewTracker";
+import { ViewCounter } from "@/components/content/ViewCounter";
 
 export async function generateStaticParams() {
   const entries = await getContentByType("articles");
@@ -59,6 +61,12 @@ export default async function ArticlePage({
 
   return (
     <div className="min-h-screen px-6 py-12 lg:px-8 articles_item img_grad_pm">
+      <PageViewTracker
+        contentType="article"
+        slug={entry.slug}
+        title={entry.title}
+        authorId={entry.author}
+      />
       <JsonLd data={getContentSchema({ ...entry, authorName: author?.name }, "articles")} />
       <JsonLd data={getBreadcrumbSchema([
         { label: "Articles", href: "/articles" },
@@ -94,6 +102,9 @@ export default async function ArticlePage({
                         {entry.readingTime} min read
                       </span>
                     )}
+                    <span className="flex items-center gap-1.5 ml-4 border-l border-border pl-4">
+                      <ViewCounter slug={entry.slug} contentType="article" />
+                    </span>
                   </div>
                   <div className="flex items-center gap-2">
                     <CommentScrollButton />

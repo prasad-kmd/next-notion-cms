@@ -8,6 +8,7 @@ import { Breadcrumbs } from "@/components/breadcrumbs";
 import { PageviewsChart } from "@/components/analytics/PageviewsChart";
 import { StatCard } from "@/components/analytics/StatCard";
 import { AnalyticsNotConfigured } from "@/components/analytics/AnalyticsNotConfigured";
+import { AnalyticsDashboardFilters } from "@/components/analytics/AnalyticsDashboardFilters";
 import {
   Users,
   MousePointer2,
@@ -172,6 +173,8 @@ export default async function AnalyticsPage() {
                   <PageviewsChart />
                 </div>
               </div>
+
+              <AnalyticsDashboardFilters />
             </div>
           )}
         </div>

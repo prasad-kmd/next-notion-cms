@@ -16,21 +16,24 @@ import { AIContentIndicator } from "@/components/ai-content-indicator";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { CommentsSection } from "@/components/comments/comments-section";
 import { CommentScrollButton } from "@/components/comment-scroll-button";
+import { PageViewTracker } from "@/components/analytics/PageViewTracker";
+import { ViewCounter } from "@/components/content/ViewCounter";
 
 export async function generateStaticParams() {
   const entries = await getContentByType("wiki");
   return entries.map((entry) => ({
-    slug: entry.slug,
+    slug: entry.slug.split("/"),
   }));
 }
 
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ slug: string[] }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const entry = await getContentItem("wiki", slug);
+  const slugPath = slug.join("/");
+  const entry = await getContentItem("wiki", slugPath);
 
   if (!entry) {
     return {};
@@ -45,10 +48,11 @@ export async function generateMetadata({
 export default async function WikiEntryPage({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ slug: string[] }>;
 }) {
   const { slug } = await params;
-  const entry = await getContentItem("wiki", slug);
+  const slugPath = slug.join("/");
+  const entry = await getContentItem("wiki", slugPath);
 
   if (!entry) {
     notFound();
@@ -58,6 +62,12 @@ export default async function WikiEntryPage({
 
   return (
     <div className="min-h-screen px-6 py-12 lg:px-8 wiki_item img_grad_pm">
+      <PageViewTracker
+        contentType="wiki"
+        slug={entry.slug}
+        title={entry.title}
+        authorId={entry.author}
+      />
       <ScrollProgress />
       <div className="mx-auto max-w-6xl">
         <Breadcrumbs 
@@ -93,6 +103,9 @@ export default async function WikiEntryPage({
                       {entry.readingTime} min read
                     </span>
                   )}
+                  <span className="flex items-center gap-1.5 border-l border-border pl-4 font-local-inter">
+                    <ViewCounter slug={entry.slug} contentType="wiki" />
+                  </span>
                 </div>
                 <div className="flex items-center gap-2">
                   <CommentScrollButton />

@@ -11,6 +11,8 @@ import { AIContentIndicator } from "@/components/ai-content-indicator";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { CommentsSection } from "@/components/comments/comments-section";
 import { CommentScrollButton } from "@/components/comment-scroll-button";
+import { PageViewTracker } from "@/components/analytics/PageViewTracker";
+import { ViewCounter } from "@/components/content/ViewCounter";
 
 export async function generateMetadata({
   params,
@@ -51,6 +53,12 @@ export default async function ProjectPage({
 
   return (
     <div className="min-h-screen px-6 py-12 lg:px-8 projects_item img_grad_pm">
+      <PageViewTracker
+        contentType="project"
+        slug={project.slug}
+        title={project.title}
+        authorId={project.author}
+      />
       <ScrollProgress />
       <div className="mx-auto max-w-4xl">
         <Breadcrumbs 
@@ -74,6 +82,9 @@ export default async function ProjectPage({
                     month: "long",
                     day: "numeric",
                   })}
+                  <span className="flex items-center gap-1.5 ml-4 border-l border-border pl-4">
+                    <ViewCounter slug={project.slug} contentType="project" />
+                  </span>
                 </div>
                 <div className="flex items-center gap-2">
                   <CommentScrollButton />

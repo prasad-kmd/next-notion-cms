@@ -17,6 +17,8 @@ import { Breadcrumbs } from "@/components/breadcrumbs";
 import { JsonLd, getContentSchema, getBreadcrumbSchema } from "@/components/json-ld";
 import { CommentsSection } from "@/components/comments/comments-section";
 import { CommentScrollButton } from "@/components/comment-scroll-button";
+import { PageViewTracker } from "@/components/analytics/PageViewTracker";
+import { ViewCounter } from "@/components/content/ViewCounter";
 
 export async function generateStaticParams() {
   const blogPosts = await getContentByType("blog");
@@ -59,6 +61,12 @@ export default async function BlogPostPage({
 
   return (
     <div className="min-h-screen px-6 py-12 lg:px-8 blog_item img_grad_pm">
+      <PageViewTracker
+        contentType="blog"
+        slug={post.slug}
+        title={post.title}
+        authorId={post.author}
+      />
       <JsonLd data={getContentSchema({ ...post, authorName: author?.name }, "blog")} />
       <JsonLd data={getBreadcrumbSchema([
         { label: "Blog", href: "/blog" },
@@ -94,6 +102,9 @@ export default async function BlogPostPage({
                         {post.readingTime} min read
                       </span>
                     )}
+                    <span className="flex items-center gap-1.5 ml-4 border-l border-border pl-4">
+                      <ViewCounter slug={post.slug} contentType="blog" />
+                    </span>
                   </div>
                   <div className="flex items-center gap-2">
                     <CommentScrollButton />

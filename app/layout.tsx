@@ -122,6 +122,7 @@ import ClickSpark from "@/components/ClickSpark";
 import { AccentColorInitializer } from "@/components/accent-color-initializer";
 import { AuthInitializer } from "@/components/auth/auth-initializer";
 import { PostHogProvider } from "@/components/posthog-provider";
+import PostHogPageviewWrapper from "@/components/analytics/PostHogPageview";
 import Script from "next/script";
 
 export const metadata: Metadata = {
@@ -268,6 +269,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <PostHogProvider>
+            <PostHogPageviewWrapper />
             <AccentColorInitializer />
             <AuthInitializer />
             <TooltipProvider>
