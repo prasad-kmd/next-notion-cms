@@ -75,7 +75,8 @@ export const BarChart = ({
                 hide={!showXAxis}
                 tickLine={false}
                 axisLine={false}
-                className="text-xs font-local-inter text-muted-foreground"
+                tick={{ fill: "currentColor" }}
+                className="text-[10px] font-local-inter text-muted-foreground"
                 interval="preserveStartEnd"
                 minTickGap={5}
               />
@@ -84,7 +85,8 @@ export const BarChart = ({
                 tickLine={false}
                 axisLine={false}
                 tickFormatter={valueFormatter}
-                className="text-xs font-local-inter text-muted-foreground"
+                tick={{ fill: "currentColor" }}
+                className="text-[10px] font-local-inter text-muted-foreground"
               />
             </>
           ) : (
@@ -95,7 +97,8 @@ export const BarChart = ({
                 tickLine={false}
                 axisLine={false}
                 tickFormatter={valueFormatter}
-                className="text-xs font-local-inter text-muted-foreground"
+                tick={{ fill: "currentColor" }}
+                className="text-[10px] font-local-inter text-muted-foreground"
               />
               <YAxis
                 type="category"
@@ -104,7 +107,8 @@ export const BarChart = ({
                 tickLine={false}
                 axisLine={false}
                 width={100}
-                className="text-xs font-local-inter text-muted-foreground"
+                tick={{ fill: "currentColor" }}
+                className="text-[10px] font-local-inter text-muted-foreground"
                 tickFormatter={(value) => (value.length > 15 ? `${value.substring(0, 15)}...` : value)}
               />
             </>

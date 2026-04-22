@@ -67,7 +67,7 @@ export function TopContentChart({ timeRange, contentType }: TopContentChartProps
         <CardTitle className="text-lg font-google-sans">Top Content (Views)</CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="h-[300px] w-full">
+        <div className="h-[300px] w-full min-h-[300px]">
           <BarChart
             data={chartData}
             index="name"

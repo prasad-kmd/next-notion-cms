@@ -63,15 +63,15 @@ export const AreaChart = ({
           <XAxis
             hide={!showXAxis}
             dataKey={index}
-            tick={{ transform: "translate(0, 6)" }}
+            tick={{ transform: "translate(0, 6)", fill: "currentColor" }}
             ticks={
               startEndOnly
                 ? [data[0][index], data[data.length - 1][index]]
                 : undefined
             }
-            fill=""
-            stroke=""
-            className="text-xs font-local-inter text-muted-foreground"
+            axisLine={false}
+            tickLine={false}
+            className="text-[10px] font-local-inter text-muted-foreground"
             interval="preserveStartEnd"
             minTickGap={5}
           />
@@ -80,9 +80,8 @@ export const AreaChart = ({
             axisLine={false}
             tickLine={false}
             tickFormatter={valueFormatter}
-            fill=""
-            stroke=""
-            className="text-xs font-local-inter text-muted-foreground"
+            tick={{ fill: "currentColor" }}
+            className="text-[10px] font-local-inter text-muted-foreground"
           />
           {showTooltip && (
             <Tooltip

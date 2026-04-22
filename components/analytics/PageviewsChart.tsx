@@ -40,7 +40,7 @@ export function PageviewsChart() {
   }));
 
   return (
-    <div className="h-64 w-full">
+    <div className="h-64 w-full min-h-[256px]">
       <AreaChart
         data={chartData}
         index="date"
