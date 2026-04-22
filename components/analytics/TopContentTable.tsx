@@ -1,18 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Skeleton } from "@/components/ui/skeleton";
 import Link from "next/link";
 import { ExternalLink } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface TopContentTableProps {
   timeRange: string;
@@ -52,14 +44,14 @@ export function TopContentTable({ timeRange, contentType }: TopContentTableProps
 
   if (isLoading) {
     return (
-      <Card className="col-span-full">
+      <Card className="col-span-full border-border/50 bg-card/50 backdrop-blur-sm">
         <CardHeader>
-          <CardTitle>Content Performance Details</CardTitle>
+          <CardTitle className="text-lg font-google-sans">Content Performance Details</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="space-y-2">
+          <div className="space-y-4">
             {[...Array(5)].map((_, i) => (
-              <Skeleton key={i} className="h-12 w-full" />
+              <div key={i} className="h-12 w-full rounded-xl bg-muted/20 animate-pulse" />
             ))}
           </div>
         </CardContent>
@@ -73,67 +65,69 @@ export function TopContentTable({ timeRange, contentType }: TopContentTableProps
         <CardTitle className="text-lg font-google-sans">Content Performance Details</CardTitle>
       </CardHeader>
       <CardContent>
-        <Table>
-          <TableHeader>
-            <TableRow className="hover:bg-transparent border-border/50">
-              <TableHead className="w-[60px]">Rank</TableHead>
-              <TableHead>Title / Slug</TableHead>
-              <TableHead className="hidden md:table-cell">Type</TableHead>
-              <TableHead className="text-right">Views</TableHead>
-              <TableHead className="w-[60px]"></TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {data.length > 0 ? (
-              data.map((item, index) => {
-                const type = item.type || contentType || 'unknown';
-                const href = `/${type === 'article' ? 'articles' : type === 'blog' ? 'blog' : type === 'tutorial' ? 'tutorials' : type === 'project' ? 'projects' : 'wiki'}/${item.slug}`;
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm text-left border-collapse">
+            <thead>
+              <tr className="border-b border-border/50 text-muted-foreground font-medium">
+                <th className="py-3 px-4 w-[60px]">Rank</th>
+                <th className="py-3 px-4">Title / Slug</th>
+                <th className="py-3 px-4 hidden md:table-cell">Type</th>
+                <th className="py-3 px-4 text-right">Views</th>
+                <th className="py-3 px-4 w-[60px]"></th>
+              </tr>
+            </thead>
+            <tbody>
+              {data.length > 0 ? (
+                data.map((item, index) => {
+                  const type = item.type || contentType || 'unknown';
+                  const href = `/${type === 'article' ? 'articles' : type === 'blog' ? 'blog' : type === 'tutorial' ? 'tutorials' : type === 'project' ? 'projects' : 'wiki'}/${item.slug}`;
 
-                return (
-                  <TableRow key={item.slug} className="border-border/40">
-                    <TableCell className="font-medium text-muted-foreground">
-                      #{index + 1}
-                    </TableCell>
-                    <TableCell>
-                      <div className="flex flex-col">
-                        <span className="font-bold text-sm truncate max-w-[200px] lg:max-w-[400px]">
-                          {item.title}
+                  return (
+                    <tr key={item.slug} className="border-b border-border/40 hover:bg-muted/5 transition-colors">
+                      <td className="py-4 px-4 font-medium text-muted-foreground">
+                        #{index + 1}
+                      </td>
+                      <td className="py-4 px-4">
+                        <div className="flex flex-col">
+                          <span className="font-bold text-sm truncate max-w-[200px] lg:max-w-[400px]">
+                            {item.title}
+                          </span>
+                          <span className="font-local-jetbrains-mono text-[10px] text-muted-foreground truncate max-w-[200px] lg:max-w-[400px]">
+                            {item.slug}
+                          </span>
+                        </div>
+                      </td>
+                      <td className="py-4 px-4 hidden md:table-cell">
+                        <span className="px-2 py-0.5 rounded-full bg-primary/10 text-primary text-[10px] uppercase font-bold">
+                          {type}
                         </span>
-                        <span className="font-local-jetbrains-mono text-[10px] text-muted-foreground truncate max-w-[200px] lg:max-w-[400px]">
-                          {item.slug}
-                        </span>
-                      </div>
-                    </TableCell>
-                    <TableCell className="hidden md:table-cell">
-                      <span className="px-2 py-0.5 rounded-full bg-primary/10 text-primary text-[10px] uppercase font-bold">
-                        {type}
-                      </span>
-                    </TableCell>
-                    <TableCell className="text-right font-semibold">
-                      {item.views.toLocaleString()}
-                    </TableCell>
-                    <TableCell className="text-right">
-                      <Link
-                        href={href}
-                        target="_blank"
-                        className="inline-flex items-center justify-center h-8 w-8 rounded-lg hover:bg-primary/10 text-primary transition-colors"
-                        title="View Page"
-                      >
-                        <ExternalLink className="h-4 w-4" />
-                      </Link>
-                    </TableCell>
-                  </TableRow>
-                );
-              })
-            ) : (
-              <TableRow>
-                <TableCell colSpan={4} className="h-24 text-center text-muted-foreground">
-                  No data available for this selection.
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
+                      </td>
+                      <td className="py-4 px-4 text-right font-semibold">
+                        {item.views.toLocaleString()}
+                      </td>
+                      <td className="py-4 px-4 text-right">
+                        <Link
+                          href={href}
+                          target="_blank"
+                          className="inline-flex items-center justify-center h-8 w-8 rounded-lg hover:bg-primary/10 text-primary transition-colors"
+                          title="View Page"
+                        >
+                          <ExternalLink className="h-4 w-4" />
+                        </Link>
+                      </td>
+                    </tr>
+                  );
+                })
+              ) : (
+                <tr>
+                  <td colSpan={5} className="py-12 text-center text-muted-foreground">
+                    No data available for this selection.
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
       </CardContent>
     </Card>
   );
