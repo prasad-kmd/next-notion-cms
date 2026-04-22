@@ -48,31 +48,50 @@ export default async function AnalyticsPage() {
       const POSTHOG_API_HOST =
         process.env.POSTHOG_API_HOST || "https://us.posthog.com";
 
-      const trendRes = await fetch(
-        `${POSTHOG_API_HOST}/api/projects/${POSTHOG_PROJECT_ID}/insights/trend/?events=[{"id":"$pageview","name":"$pageview","type":"events"}]&date_from=-30d`,
-        {
-          headers: { Authorization: `Bearer ${POSTHOG_PERSONAL_API_KEY}` },
-          next: { revalidate: 300 },
+      const queryEndpoint = `${POSTHOG_API_HOST}/api/projects/${POSTHOG_PROJECT_ID}/query/`;
+
+      const trendRes = await fetch(queryEndpoint, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${POSTHOG_PERSONAL_API_KEY}`,
+          "Content-Type": "application/json",
         },
-      );
+        body: JSON.stringify({
+          query: {
+            kind: "TrendsQuery",
+            series: [{ kind: "EventsNode", event: "$pageview", name: "$pageview", math: "total" }],
+            dateRange: { date_from: "-30d" },
+          },
+        }),
+        next: { revalidate: 300 },
+      });
 
       if (trendRes.ok) {
         const trendData = await trendRes.json();
-        totalPageviews =
-          trendData?.result?.[0]?.count?.toLocaleString() || "--";
+        const results = trendData.results || trendData.result || [];
+        totalPageviews = results[0]?.count?.toLocaleString() || "--";
       }
 
-      const dauRes = await fetch(
-        `${POSTHOG_API_HOST}/api/projects/${POSTHOG_PROJECT_ID}/insights/trend/?events=[{"id":"$pageview","name":"$pageview","type":"events","math":"dau"}]&date_from=-30d`,
-        {
-          headers: { Authorization: `Bearer ${POSTHOG_PERSONAL_API_KEY}` },
-          next: { revalidate: 300 },
+      const dauRes = await fetch(queryEndpoint, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${POSTHOG_PERSONAL_API_KEY}`,
+          "Content-Type": "application/json",
         },
-      );
+        body: JSON.stringify({
+          query: {
+            kind: "TrendsQuery",
+            series: [{ kind: "EventsNode", event: "$pageview", name: "$pageview", math: "dau" }],
+            dateRange: { date_from: "-30d" },
+          },
+        }),
+        next: { revalidate: 300 },
+      });
 
       if (dauRes.ok) {
         const dauData = await dauRes.json();
-        const series = dauData?.result?.[0]?.data;
+        const results = dauData.results || dauData.result || [];
+        const series = results[0]?.data;
         activeUsers = series?.[series.length - 1]?.toString() || "--";
       }
     } catch (e) {

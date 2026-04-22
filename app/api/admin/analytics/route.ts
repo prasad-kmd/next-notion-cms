@@ -29,13 +29,43 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    let endpoint = "";
+    let queryObj = {};
     switch (insightType) {
       case "total_pageviews":
-        endpoint = `${POSTHOG_API_HOST}/api/projects/${POSTHOG_PROJECT_ID}/insights/trend/?events=[{"id":"$pageview","name":"$pageview","type":"events"}]&date_from=-30d&period=day`;
+        queryObj = {
+          kind: "TrendsQuery",
+          series: [
+            {
+              kind: "EventsNode",
+              event: "$pageview",
+              name: "$pageview",
+              math: "total",
+            },
+          ],
+          dateRange: {
+            date_from: "-30d",
+          },
+        };
         break;
       case "top_pages":
-        endpoint = `${POSTHOG_API_HOST}/api/projects/${POSTHOG_PROJECT_ID}/insights/trend/?events=[{"id":"$pageview","name":"$pageview","type":"events","math":"dau"}]&breakdown=$current_url&date_from=-30d`;
+        queryObj = {
+          kind: "TrendsQuery",
+          series: [
+            {
+              kind: "EventsNode",
+              event: "$pageview",
+              name: "$pageview",
+              math: "dau",
+            },
+          ],
+          breakdownFilter: {
+            breakdown: "$current_url",
+            breakdown_type: "event",
+          },
+          dateRange: {
+            date_from: "-30d",
+          },
+        };
         break;
       default:
         return NextResponse.json(
@@ -44,10 +74,15 @@ export async function POST(req: NextRequest) {
         );
     }
 
+    const endpoint = `${POSTHOG_API_HOST}/api/projects/${POSTHOG_PROJECT_ID}/query/`;
+
     const response = await fetch(endpoint, {
+      method: "POST",
       headers: {
         Authorization: `Bearer ${POSTHOG_PERSONAL_API_KEY}`,
+        "Content-Type": "application/json",
       },
+      body: JSON.stringify({ query: queryObj }),
     });
 
     if (!response.ok) {
@@ -60,7 +95,13 @@ export async function POST(req: NextRequest) {
       return NextResponse.json(errorData, { status: response.status });
     }
 
-    const data = await response.json();
+    const json = await response.json();
+    // Normalize response to maintain compatibility with existing chart code
+    // The query API returns `.results` instead of `.result`
+    const data = {
+      result: json.results || json.result || [],
+    };
+
 
     return NextResponse.json(data, {
       headers: {
