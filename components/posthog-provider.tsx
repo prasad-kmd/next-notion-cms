@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, Suspense } from "react";
-import { initPostHog, posthog } from "@/lib/posthog-client";
+import { posthog } from "@/lib/posthog-client";
+import { initPostHog } from "@/instrumentation-client";
 import { authClient } from "@/lib/auth-client";
 import { usePathname, useSearchParams } from "next/navigation";
 

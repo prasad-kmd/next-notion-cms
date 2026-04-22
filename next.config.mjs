@@ -4,6 +4,26 @@ const nextConfig = {
     // Enable strict type checking during build
     ignoreBuildErrors: true, 
   },
+  async rewrites() {
+    const isEu = process.env.NEXT_PUBLIC_POSTHOG_HOST?.includes('eu');
+    const ingestHost = isEu ? "https://eu.i.posthog.com" : "https://us.i.posthog.com";
+    const assetsHost = isEu ? "https://eu-assets.i.posthog.com" : "https://us-assets.i.posthog.com";
+
+    return [
+      {
+        source: "/ingest/static/:path*",
+        destination: `${assetsHost}/static/:path*`,
+      },
+      {
+        source: "/ingest/:path*",
+        destination: `${ingestHost}/:path*`,
+      },
+      {
+        source: "/ingest/decide",
+        destination: `${ingestHost}/decide`,
+      },
+    ];
+  },
   images: {
     // Enable Next.js image optimization
     unoptimized: false, // Keeping true to avoid complex localPattern issues with query strings during build
@@ -49,11 +69,11 @@ const nextConfig = {
   async headers() {
     const cspHeader = `
       default-src 'self';
-      script-src 'self' 'unsafe-eval' 'unsafe-inline' https://gist.github.com https://challenges.cloudflare.com https://turnstile.cloudflare.com https://va.vercel-scripts.com;
+      script-src 'self' 'unsafe-eval' 'unsafe-inline' https://gist.github.com https://challenges.cloudflare.com https://turnstile.cloudflare.com https://va.vercel-scripts.com https://us-assets.i.posthog.com https://eu-assets.i.posthog.com;
       style-src 'self' 'unsafe-inline' https://challenges.cloudflare.com;
-      img-src 'self' blob: data: https://*.notion.so https://*.amazonaws.com https://i.pravatar.cc https://placehold.co https://images.unsplash.com https://*.unsplash.com https://lh3.googleusercontent.com https://avatars.githubusercontent.com https://avatar.vercel.sh https://*.githubusercontent.com https://*.googleusercontent.com https://challenges.cloudflare.com;
+      img-src 'self' blob: data: https://*.notion.so https://*.amazonaws.com https://i.pravatar.cc https://placehold.co https://images.unsplash.com https://*.unsplash.com https://lh3.googleusercontent.com https://avatars.githubusercontent.com https://avatar.vercel.sh https://*.githubusercontent.com https://*.googleusercontent.com https://challenges.cloudflare.com https://us-assets.i.posthog.com https://eu-assets.i.posthog.com;
       font-src 'self' data:;
-      connect-src 'self' https://api.notion.com https://api.telegram.org https://lh3.googleusercontent.com https://avatars.githubusercontent.com https://*.googleusercontent.com https://*.githubusercontent.com https://*.amazonaws.com https://i.pravatar.cc https://placehold.co https://images.unsplash.com https://*.unsplash.com https://challenges.cloudflare.com https://turnstile.cloudflare.com https://vitals.vercel-analytics.com https://api.vercel.com;
+      connect-src 'self' https://api.notion.com https://api.telegram.org https://lh3.googleusercontent.com https://avatars.githubusercontent.com https://*.googleusercontent.com https://*.githubusercontent.com https://*.amazonaws.com https://i.pravatar.cc https://placehold.co https://images.unsplash.com https://*.unsplash.com https://challenges.cloudflare.com https://turnstile.cloudflare.com https://vitals.vercel-analytics.com https://api.vercel.com https://us.i.posthog.com https://eu.i.posthog.com;
       frame-src 'self' https://www.youtube.com https://challenges.cloudflare.com https://turnstile.cloudflare.com;
       worker-src 'self' blob: https://challenges.cloudflare.com;
       upgrade-insecure-requests;

@@ -1,6 +1,7 @@
 import { SignInButtons } from "@/components/auth/auth-buttons";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { TechnicalBackground } from "@/components/technical-background";
+import Link from "next/link";
 
 export default function SignInPage() {
     return (
@@ -23,7 +24,7 @@ export default function SignInPage() {
                     <div className="w-full h-px bg-linear-to-r from-transparent via-border to-transparent my-2" />
                     
                     <p className="text-xs text-muted-foreground/60 text-center max-w-[280px] leading-relaxed">
-                        By continuing, you agree to our <span className="text-primary/80 hover:underline cursor-pointer">Terms of Service</span> and <span className="text-primary/80 hover:underline cursor-pointer">Privacy Policy</span>.
+                        By continuing, you agree to our <Link href="/terms-and-conditions" className="text-primary/80 hover:underline cursor-pointer">Terms of Service</Link> and <Link href="/privacy-policy" className="text-primary/80 hover:underline cursor-pointer">Privacy Policy</Link>.
                     </p>
                 </CardContent>
             </Card>
