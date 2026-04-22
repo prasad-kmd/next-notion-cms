@@ -1,27 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { 
-  Chart as ChartJS, 
-  CategoryScale, 
-  LinearScale, 
-  BarElement, 
-  Title, 
-  Tooltip, 
-  Legend 
-} from "chart.js";
-import { Bar } from "react-chartjs-2";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useTheme } from "next-themes";
-
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend
-);
+import { BarChart } from "@/components/ui/charts/BarChart";
 
 interface TopContentChartProps {
   timeRange: string;
@@ -29,7 +10,6 @@ interface TopContentChartProps {
 }
 
 export function TopContentChart({ timeRange, contentType }: TopContentChartProps) {
-  const { theme } = useTheme();
   const [data, setData] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -62,12 +42,12 @@ export function TopContentChart({ timeRange, contentType }: TopContentChartProps
 
   if (isLoading) {
     return (
-      <Card className="col-span-1 border-border/50 bg-card/50 backdrop-blur-sm">
+      <Card className="col-span-1 border-border/50 bg-card/50 backdrop-blur-sm rounded-[2rem]">
         <CardHeader>
           <CardTitle className="text-lg font-google-sans">Top Content (Views)</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="h-[300px] w-full flex items-center justify-center bg-card/5 rounded-2xl border border-border/40 animate-pulse">
+          <div className="h-[300px] w-full flex items-center justify-center bg-card/5 rounded-2xl border border-border/40 animate-pulse font-local-inter">
             Loading Chart...
           </div>
         </CardContent>
@@ -75,75 +55,28 @@ export function TopContentChart({ timeRange, contentType }: TopContentChartProps
     );
   }
 
-  const isDark = theme === "dark";
-
-  const chartData = {
-    labels: data.map(item => item.title || item.slug),
-    datasets: [
-      {
-        label: "Views",
-        data: data.map(item => item.views),
-        backgroundColor: isDark ? "rgba(59, 130, 246, 0.6)" : "rgba(37, 99, 235, 0.6)",
-        borderColor: isDark ? "#3b82f6" : "#2563eb",
-        borderWidth: 1,
-        borderRadius: 4,
-      },
-    ],
-  };
-
-  const options = {
-    indexAxis: 'y' as const,
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      legend: {
-        display: false,
-      },
-      tooltip: {
-        backgroundColor: isDark ? "rgba(15, 15, 15, 0.9)" : "rgba(255, 255, 255, 0.9)",
-        titleColor: isDark ? "#fff" : "#000",
-        bodyColor: isDark ? "#fff" : "#000",
-        borderColor: "rgba(120, 120, 120, 0.2)",
-        borderWidth: 1,
-        padding: 10,
-        cornerRadius: 8,
-      },
-    },
-    scales: {
-      x: {
-        grid: {
-          color: isDark ? "rgba(255, 255, 255, 0.05)" : "rgba(0, 0, 0, 0.05)",
-        },
-        ticks: {
-          color: isDark ? "rgba(255, 255, 255, 0.5)" : "rgba(0, 0, 0, 0.5)",
-        }
-      },
-      y: {
-        grid: {
-          display: false,
-        },
-        ticks: {
-          color: isDark ? "rgba(255, 255, 255, 0.7)" : "rgba(0, 0, 0, 0.7)",
-          font: {
-            size: 11,
-          },
-          callback: function(value: any, index: number) {
-            const label = data[index]?.title || data[index]?.slug || "";
-            return label.length > 20 ? label.substring(0, 20) + "..." : label;
-          }
-        }
-      },
-    },
-  };
+  // Transform data for Recharts
+  const chartData = data.map(item => ({
+    name: item.title || item.slug,
+    Views: item.views,
+  }));
 
   return (
-    <Card className="col-span-1 border-border/50 bg-card/50 backdrop-blur-sm">
+    <Card className="col-span-1 border-border/50 bg-card/50 backdrop-blur-sm rounded-[2rem]">
       <CardHeader>
         <CardTitle className="text-lg font-google-sans">Top Content (Views)</CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="h-[300px] w-full">
-          <Bar data={chartData} options={options} />
+        <div className="h-[300px] w-full min-h-[300px]">
+          <BarChart
+            data={chartData}
+            index="name"
+            categories={["Views"]}
+            colors={["blue"]}
+            layout="vertical"
+            showGridLines={false}
+            className="h-full"
+          />
         </div>
       </CardContent>
     </Card>
