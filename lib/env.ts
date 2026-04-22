@@ -47,6 +47,13 @@ const envSchema = z.object({
   // Cloudflare Turnstile
   NEXT_PUBLIC_TURNSTILE_SITE_KEY: z.string().optional(),
   TURNSTILE_SECRET_KEY: z.string().optional(),
+
+  // PostHog
+  NEXT_PUBLIC_POSTHOG_KEY: z.string().optional(),
+  NEXT_PUBLIC_POSTHOG_HOST: z.string().optional(),
+  POSTHOG_PERSONAL_API_KEY: z.string().optional(),
+  POSTHOG_PROJECT_ID: z.string().optional(),
+  POSTHOG_API_HOST: z.string().optional(),
   
   // Node Env
   NODE_ENV: z.enum(["development", "test", "production"]).default("development"),

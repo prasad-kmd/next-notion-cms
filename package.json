@@ -66,6 +66,8 @@
     "notion-to-md": "^3.1.9",
     "path": "latest",
     "postgres": "^3.4.9",
+    "posthog-js": "^1.369.5",
+    "posthog-node": "^5.29.4",
     "radix-ui": "^1.4.3",
     "react": "19.2.4",
     "react-chartjs-2": "latest",
