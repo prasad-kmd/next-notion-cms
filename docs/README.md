@@ -17,7 +17,8 @@ Welcome to the comprehensive documentation for Next Notion CMS. This wiki contai
 | Document | Description | Difficulty |
 |----------|-------------|------------|
 | [Authentication](authentication.md) | OAuth setup and user management | Intermediate |
-| [Database Guide](database.md) | Supabase and Drizzle ORM setup | Intermediate |
+| [Architecture](architecture.md) | System design and technical deep-dive | Advanced |
+| [Components](components.md) | UI component library reference | Intermediate |
 | [Content Management](content-management.md) | Creating and managing content | Beginner |
 
 ### Advanced Topics
