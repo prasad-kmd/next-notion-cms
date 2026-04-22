@@ -18,6 +18,21 @@ export async function POST(req: NextRequest) {
     const { insightType, params = {} } = body;
     const { timeRange = "-30d", contentType, limit = 10 } = params;
 
+    // Helper to convert PostHog time range to HogQL interval
+    const formatHogQLInterval = (range: string) => {
+      const value = range.replace(/^-/, "");
+      const num = parseInt(value) || 30;
+      const unit = value.replace(/^\d+/, "").toLowerCase();
+
+      switch (unit) {
+        case "h": return `${num} HOUR`;
+        case "d": return `${num} DAY`;
+        case "w": return `${num} WEEK`;
+        case "m": return `${num} MONTH`;
+        default: return `${num} DAY`;
+      }
+    };
+
     const POSTHOG_PERSONAL_API_KEY = process.env.POSTHOG_PERSONAL_API_KEY;
     const POSTHOG_PROJECT_ID = process.env.POSTHOG_PROJECT_ID;
     const POSTHOG_API_HOST =
@@ -54,23 +69,11 @@ export async function POST(req: NextRequest) {
             ? `AND properties.content_type = '${contentType}'`
             : "AND properties.page_slug IS NOT NULL";
 
+          const interval = formatHogQLInterval(timeRange);
+
           queryObj = {
             kind: "HogQLQuery",
-            query: `
-              SELECT
-                properties.page_slug as slug,
-                any(properties.page_title) as title,
-                any(properties.content_type) as type,
-                count() as views
-              FROM events
-              WHERE
-                event = '$pageview'
-                ${contentTypeFilter}
-                AND timestamp >= now() - interval ${timeRange.replace("-", "")}
-              GROUP BY slug
-              ORDER BY views DESC
-              LIMIT ${limit}
-            `
+            query: `SELECT properties.page_slug AS slug, any(properties.page_title) AS title, any(properties.content_type) AS type, count() AS views FROM events WHERE event = '$pageview' ${contentTypeFilter} AND timestamp >= now() - INTERVAL ${interval} GROUP BY slug ORDER BY views DESC LIMIT ${limit}`
           };
         }
         break;
@@ -123,6 +126,10 @@ export async function POST(req: NextRequest) {
 
     const endpoint = `${POSTHOG_API_HOST}/api/projects/${POSTHOG_PROJECT_ID}/query/`;
 
+    if (process.env.NODE_ENV === "development") {
+      console.log(`Analytics API: Fetching ${insightType}`, { queryObj });
+    }
+
     const response = await fetch(endpoint, {
       method: "POST",
       headers: {
@@ -134,10 +141,11 @@ export async function POST(req: NextRequest) {
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
-      console.error("PostHog API response error:", {
+      console.error(`PostHog API response error (${insightType}):`, {
         status: response.status,
-        endpoint: endpoint.split("?")[0], // Log endpoint without sensitive query params if any
+        endpoint: endpoint.split("?")[0],
         errorData,
+        sentQuery: queryObj,
       });
       return NextResponse.json(errorData, { status: response.status });
     }
@@ -148,14 +156,16 @@ export async function POST(req: NextRequest) {
     // For HogQLQuery, it returns results as an array of arrays
     let normalizedResult = json.results || json.result || [];
 
-    if (insightType === "top_content" && json.types) {
-      // It's a HogQL query, map it to objects
-      normalizedResult = normalizedResult.map((row: any[]) => ({
-        slug: row[0],
-        title: row[1] || row[0],
-        type: row[2],
-        views: row[3]
-      }));
+    if (insightType === "top_content") {
+      // For HogQL queries, results are an array of arrays
+      if (Array.isArray(normalizedResult) && normalizedResult.length > 0 && Array.isArray(normalizedResult[0])) {
+        normalizedResult = normalizedResult.map((row: any[]) => ({
+          slug: row[0],
+          title: row[1] || row[0],
+          type: row[2],
+          views: row[3]
+        }));
+      }
     }
 
     const data = {
