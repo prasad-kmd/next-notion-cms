@@ -127,7 +127,7 @@ export async function POST(req: NextRequest) {
     const endpoint = `${POSTHOG_API_HOST}/api/projects/${POSTHOG_PROJECT_ID}/query/`;
 
     if (process.env.NODE_ENV === "development") {
-      console.log(`Analytics API: Fetching ${insightType}`, { queryObj });
+      console.log("Analytics API: Fetching %s", insightType, { queryObj });
     }
 
     const response = await fetch(endpoint, {
