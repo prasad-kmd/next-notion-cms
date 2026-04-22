@@ -286,7 +286,7 @@ export default function RootLayout({
                       <CustomContextMenu />
                       <FloatingNavbar className="hidden lg:flex" />
                       <Navigation />
-                      <main className="transition-[padding] duration-300 lg:pl-(--sidebar-width,256px) overflow-x-hidden">
+                      <main className="transition-[padding] duration-300 lg:pl-(--sidebar-width,256px) overflow-x-clip">
                         {children}
                         <Footer />
                       </main>

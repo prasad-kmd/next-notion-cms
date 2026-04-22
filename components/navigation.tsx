@@ -234,7 +234,7 @@ export function Navigation() {
       )}
 
       {/* Spacer for mobile bottom navbar */}
-      <div className="h-24 lg:hidden" />
+      <div className="h-12 lg:hidden" />
     </>
   );
 }
