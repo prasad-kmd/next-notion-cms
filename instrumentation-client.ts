@@ -19,7 +19,12 @@ export function initPostHog() {
         session_recording: {
           maskAllInputs: true,
           maskTextSelector: ".mask-text",
-        }
+        },
+        loaded: (ph: any) => {
+          if (typeof window !== "undefined") {
+            (window as any).posthog = ph;
+          }
+        },
       });
     } else {
       console.warn("PostHog key missing. Analytics disabled.");

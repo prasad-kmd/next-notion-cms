@@ -69,15 +69,15 @@ const nextConfig = {
   async headers() {
     const cspHeader = `
       default-src 'self';
-      script-src 'self' 'unsafe-eval' 'unsafe-inline' https://gist.github.com https://challenges.cloudflare.com https://turnstile.cloudflare.com https://va.vercel-scripts.com https://us-assets.i.posthog.com https://eu-assets.i.posthog.com;
+      script-src 'self' 'unsafe-eval' 'unsafe-inline' https://gist.github.com https://challenges.cloudflare.com https://turnstile.cloudflare.com https://va.vercel-scripts.com https://*.posthog.com;
       style-src 'self' 'unsafe-inline' https://challenges.cloudflare.com;
-      img-src 'self' blob: data: https://*.notion.so https://*.amazonaws.com https://i.pravatar.cc https://placehold.co https://images.unsplash.com https://*.unsplash.com https://lh3.googleusercontent.com https://avatars.githubusercontent.com https://avatar.vercel.sh https://*.githubusercontent.com https://*.googleusercontent.com https://challenges.cloudflare.com https://us-assets.i.posthog.com https://eu-assets.i.posthog.com;
+      img-src 'self' blob: data: https://*.notion.so https://*.amazonaws.com https://i.pravatar.cc https://placehold.co https://images.unsplash.com https://*.unsplash.com https://lh3.googleusercontent.com https://avatars.githubusercontent.com https://avatar.vercel.sh https://*.githubusercontent.com https://*.googleusercontent.com https://challenges.cloudflare.com https://*.posthog.com;
       font-src 'self' data:;
-      connect-src 'self' https://api.notion.com https://api.telegram.org https://lh3.googleusercontent.com https://avatars.githubusercontent.com https://*.googleusercontent.com https://*.githubusercontent.com https://*.amazonaws.com https://i.pravatar.cc https://placehold.co https://images.unsplash.com https://*.unsplash.com https://challenges.cloudflare.com https://turnstile.cloudflare.com https://vitals.vercel-analytics.com https://api.vercel.com https://us.i.posthog.com https://eu.i.posthog.com;
+      connect-src 'self' https://api.notion.com https://api.telegram.org https://lh3.googleusercontent.com https://avatars.githubusercontent.com https://*.googleusercontent.com https://*.githubusercontent.com https://*.amazonaws.com https://i.pravatar.cc https://placehold.co https://images.unsplash.com https://*.unsplash.com https://challenges.cloudflare.com https://turnstile.cloudflare.com https://vitals.vercel-analytics.com https://api.vercel.com https://*.posthog.com http://localhost:3000 https://localhost:3000 ws://localhost:3000 wss://localhost:3000;
       frame-src 'self' https://www.youtube.com https://challenges.cloudflare.com https://turnstile.cloudflare.com;
       worker-src 'self' blob: https://challenges.cloudflare.com;
-      upgrade-insecure-requests;
-    `.replace(/\s{2,}/g, " ").trim();
+      ${process.env.NODE_ENV === 'production' ? 'upgrade-insecure-requests;' : ''}
+    `.replace(/\s{2,}/g, ' ').trim();
 
     return [
       {

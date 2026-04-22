@@ -121,6 +121,7 @@ import { ViewTransitions } from "@/components/view-transitions";
 import ClickSpark from "@/components/ClickSpark";
 import { AccentColorInitializer } from "@/components/accent-color-initializer";
 import { AuthInitializer } from "@/components/auth/auth-initializer";
+import { PostHogProvider } from "@/components/posthog-provider";
 import Script from "next/script";
 
 export const metadata: Metadata = {
@@ -266,38 +267,40 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <AccentColorInitializer />
-          <AuthInitializer />
-          <TooltipProvider>
-            <SidebarProvider>
-              <BookmarksProvider>
-                <ViewTransitions>
-                  <ClickSpark
-                    // sparkColor="#ffffff"
-                    sparkSize={10}
-                    sparkRadius={15}
-                    sparkCount={8}
-                    duration={400}
-                    easing="linear"
-                    extraScale={1.5}
-                  >
-                    <CustomContextMenu />
-                    <FloatingNavbar className="hidden lg:flex" />
-                    <Navigation />
-                    <main className="transition-[padding] duration-300 lg:pl-(--sidebar-width,256px) overflow-x-hidden">
-                      {children}
-                      <Footer />
-                    </main>
-                    <ScrollToTop />
-                    <Toaster position="bottom-right" richColors />
-                    <ConnectivityListener />
-                    <SpeedInsights />
-                    <ServiceWorkerRegistrar />
-                  </ClickSpark>
-                </ViewTransitions>
-              </BookmarksProvider>
-            </SidebarProvider>
-          </TooltipProvider>
+          <PostHogProvider>
+            <AccentColorInitializer />
+            <AuthInitializer />
+            <TooltipProvider>
+              <SidebarProvider>
+                <BookmarksProvider>
+                  <ViewTransitions>
+                    <ClickSpark
+                      // sparkColor="#ffffff"
+                      sparkSize={10}
+                      sparkRadius={15}
+                      sparkCount={8}
+                      duration={400}
+                      easing="linear"
+                      extraScale={1.5}
+                    >
+                      <CustomContextMenu />
+                      <FloatingNavbar className="hidden lg:flex" />
+                      <Navigation />
+                      <main className="transition-[padding] duration-300 lg:pl-(--sidebar-width,256px) overflow-x-hidden">
+                        {children}
+                        <Footer />
+                      </main>
+                      <ScrollToTop />
+                      <Toaster position="bottom-right" richColors />
+                      <ConnectivityListener />
+                      <SpeedInsights />
+                      <ServiceWorkerRegistrar />
+                    </ClickSpark>
+                  </ViewTransitions>
+                </BookmarksProvider>
+              </SidebarProvider>
+            </TooltipProvider>
+          </PostHogProvider>
         </ThemeProvider>
       </body>
     </html>
