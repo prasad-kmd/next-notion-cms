@@ -36,7 +36,7 @@ export async function proxy(request: NextRequest) {
 			return pathname === route.path;
 		}
 		if (route.pattern) {
-			const pattern = route.pattern.replace("*", ".*");
+			const pattern = route.pattern.replace(/\*/g, ".*");
 			const regex = new RegExp(`^${pattern}$`);
 			return regex.test(pathname);
 		}
