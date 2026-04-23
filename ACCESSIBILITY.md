@@ -25,4 +25,3 @@ This project includes a custom accessibility controller specifically designed fo
 - **Local Fonts Only**: We use only high-quality local fonts configured within the project to ensure performance and privacy.
 - **Persistence**: Preferences are stored in `localStorage` under the key `accessibility-preferences`.
 - **Keyboard Navigation**: The control panel is fully accessible via keyboard. Use `Tab` to navigate and `Space`/`Enter` to toggle or adjust settings. Press `Escape` to close the panel.
-- **Draggable Interface**: On desktop, you can drag the accessibility button to any position on the screen if it obstructs your view.

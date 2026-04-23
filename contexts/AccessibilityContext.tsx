@@ -27,8 +27,6 @@ export interface AccessibilitySettings {
   letterSpacing: number;
   isHighContrast: boolean;
   isPanelOpen: boolean;
-  isCollapsed: boolean;
-  buttonPosition: { x: number; y: number } | null;
 }
 
 interface AccessibilityContextType extends AccessibilitySettings {
@@ -47,8 +45,6 @@ const DEFAULT_SETTINGS: AccessibilitySettings = {
   letterSpacing: 1.0,
   isHighContrast: false,
   isPanelOpen: false,
-  isCollapsed: false,
-  buttonPosition: null,
 };
 
 const AccessibilityContext = createContext<AccessibilityContextType | undefined>(
@@ -83,7 +79,7 @@ export const AccessibilityProvider: React.FC<{ children: React.ReactNode }> = ({
 
   useEffect(() => {
     if (mounted) {
-      const { isPanelOpen, isCollapsed, ...persistSettings } = settings;
+      const { isPanelOpen, ...persistSettings } = settings;
       localStorage.setItem("accessibility-preferences", JSON.stringify(persistSettings));
     }
   }, [settings, mounted]);
@@ -96,10 +92,7 @@ export const AccessibilityProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   const resetAllSettings = () => {
-    setSettings({
-      ...DEFAULT_SETTINGS,
-      buttonPosition: settings.buttonPosition, // Keep button position
-    });
+    setSettings(DEFAULT_SETTINGS);
   };
 
   return (
