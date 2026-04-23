@@ -281,7 +281,7 @@ export function SystemMonitorManager({ initialStatus, initialLogs }: SystemMonit
                   </div>
                   <div className="flex flex-col items-start text-left whitespace-normal">
                     <span className="text-sm font-bold font-google-sans text-foreground group-hover:text-primary transition-colors">Run Health Check</span>
-                    <span className="text-[10px] text-muted-foreground font-local-inter uppercase tracking-widest mt-0.5 leading-tight break-words">Verify all external services</span>
+                    <span className="text-[10px] text-muted-foreground font-local-inter uppercase tracking-widest mt-0.5 leading-tight wrap-break-word">Verify all external services</span>
                   </div>
                 </div>
               </Button>
@@ -299,7 +299,7 @@ export function SystemMonitorManager({ initialStatus, initialLogs }: SystemMonit
                   </div>
                   <div className="flex flex-col items-start text-left whitespace-normal">
                     <span className="text-sm font-bold font-google-sans text-foreground group-hover:text-yellow-600 transition-colors">Purge Notion Cache</span>
-                    <span className="text-[10px] text-muted-foreground font-local-inter uppercase tracking-widest mt-0.5 leading-tight break-words">Force refresh content from API</span>
+                    <span className="text-[10px] text-muted-foreground font-local-inter uppercase tracking-widest mt-0.5 leading-tight wrap-break-word">Force refresh content from API</span>
                   </div>
                 </div>
               </Button>
@@ -317,7 +317,7 @@ export function SystemMonitorManager({ initialStatus, initialLogs }: SystemMonit
                   </div>
                   <div className="flex flex-col items-start text-left whitespace-normal">
                     <span className="text-sm font-bold font-google-sans text-foreground group-hover:text-red-500 transition-colors">Cleanup Old Logs</span>
-                    <span className="text-[10px] text-muted-foreground font-local-inter uppercase tracking-widest mt-0.5 leading-tight break-words">Remove logs older than 7 days</span>
+                    <span className="text-[10px] text-muted-foreground font-local-inter uppercase tracking-widest mt-0.5 leading-tight wrap-break-word">Remove logs older than 7 days</span>
                   </div>
                 </div>
               </Button>
