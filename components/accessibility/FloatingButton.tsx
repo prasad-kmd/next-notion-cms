@@ -33,23 +33,6 @@ export function FloatingButton() {
     }
   }, [buttonPosition]);
 
-  // Handle scroll collapse
-  useEffect(() => {
-    let scrollTimeout: NodeJS.Timeout;
-    const handleScroll = () => {
-      updateSetting("isCollapsed", true);
-      clearTimeout(scrollTimeout);
-      scrollTimeout = setTimeout(() => {
-        updateSetting("isCollapsed", false);
-      }, 1000);
-    };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      clearTimeout(scrollTimeout);
-    };
-  }, [updateSetting]);
 
   const onMouseDown = (e: React.MouseEvent | React.TouchEvent) => {
     const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
@@ -121,10 +104,7 @@ export function FloatingButton() {
         left: 0,
         zIndex: 100,
       }}
-      className={cn(
-        "group flex items-center gap-2 rounded-xl border border-border bg-background/80 p-1.5 shadow-lg backdrop-blur-md",
-        isCollapsed && !isPanelOpen ? "w-12 h-12 overflow-hidden opacity-50 hover:opacity-100" : "w-auto"
-      )}
+      className="group flex items-center gap-2 rounded-xl border border-border bg-background/80 p-1.5 shadow-lg backdrop-blur-md w-auto"
     >
       <div
         onMouseDown={onMouseDown}
@@ -140,9 +120,7 @@ export function FloatingButton() {
         aria-expanded={isPanelOpen}
       >
         <Accessibility className="h-5 w-5" />
-        {(!isCollapsed || isPanelOpen) && (
-          <span className="pr-2 text-sm font-medium font-mono">A11Y</span>
-        )}
+        <span className="pr-2 text-sm font-medium font-mono">A11Y</span>
       </button>
     </div>
   );

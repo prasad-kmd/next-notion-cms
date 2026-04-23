@@ -35,9 +35,18 @@ export function ControlPanel() {
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (panelRef.current && !panelRef.current.contains(event.target as Node)) {
-        updateSetting("isPanelOpen", false);
-      }
+      const target = event.target as HTMLElement;
+
+      // Don't close if clicking the panel itself
+      if (panelRef.current?.contains(target)) return;
+
+      // Don't close if clicking elements inside Radix UI portals (like the Select dropdown)
+      if (target.closest('[data-radix-portal]')) return;
+
+      // Don't close if clicking the floating button (to avoid double toggle)
+      if (target.closest('button[aria-label="Toggle Accessibility Panel"]')) return;
+
+      updateSetting("isPanelOpen", false);
     };
 
     const handleEscape = (event: KeyboardEvent) => {
