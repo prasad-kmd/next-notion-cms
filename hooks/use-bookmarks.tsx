@@ -2,6 +2,7 @@
 
 import React, { createContext, useContext, useState, useEffect, useCallback } from "react"
 import { toast } from "sonner"
+import { posthog } from "@/lib/posthog-client"
 
 export interface BookmarkedItem {
     slug: string
@@ -97,8 +98,22 @@ export function BookmarksProvider({ children }: { children: React.ReactNode }) {
 
             if (action === "added") {
                 toast.success("Added to bookmarks")
+                if (posthog) {
+                    posthog.capture("bookmark_added", {
+                        post_slug: item.slug,
+                        post_title: item.title,
+                        content_type: item.type,
+                    })
+                }
             } else {
                 toast.success("Removed from bookmarks")
+                if (posthog) {
+                    posthog.capture("bookmark_removed", {
+                        post_slug: item.slug,
+                        post_title: item.title,
+                        content_type: item.type,
+                    })
+                }
             }
         },
         []
@@ -110,7 +125,17 @@ export function BookmarksProvider({ children }: { children: React.ReactNode }) {
 
     const removeBookmark = useCallback((slug: string, type: string) => {
         if (!slug || !type) return
-        setBookmarks((prev) => prev.filter((item) => !(item.slug === slug && item.type === type)))
+        setBookmarks((prev) => {
+            const itemToRemove = prev.find((item) => item.slug === slug && item.type === type)
+            if (itemToRemove && posthog) {
+                posthog.capture("bookmark_removed", {
+                    post_slug: itemToRemove.slug,
+                    post_title: itemToRemove.title,
+                    content_type: itemToRemove.type,
+                })
+            }
+            return prev.filter((item) => !(item.slug === slug && item.type === type))
+        })
         toast.success("Removed from bookmarks")
     }, [])
 

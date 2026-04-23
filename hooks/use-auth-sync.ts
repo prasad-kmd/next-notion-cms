@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import { authClient } from "@/lib/auth-client";
 import { toast } from "sonner";
+import { posthog } from "@/lib/posthog-client";
 
 export function useAuthSync() {
   const { data: session } = authClient.useSession();
@@ -101,6 +102,13 @@ export function useAuthSync() {
           
           if (data.synced) {
             toast.success("Preferences synced to your account");
+            if (posthog) {
+              const bookmarks = localBookmarks ? JSON.parse(localBookmarks) : [];
+              posthog.capture("bookmark_synced", {
+                total_bookmarks_count: bookmarks.length,
+                direction: "push",
+              });
+            }
           }
         }
       } catch (error) {

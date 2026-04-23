@@ -1,6 +1,9 @@
+"use client";
+
 import Link from "next/link"
 import React from "react"
 import { siteConfig } from "@/lib/config"
+import { posthog } from "@/lib/posthog-client"
 
 interface SafeLinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
   href: string
@@ -43,6 +46,25 @@ export const SafeLink = ({
   }
 
   const external = isExternal(href)
+
+  const handleLinkClick = () => {
+    if (external && posthog) {
+      try {
+        const urlObj = new URL(href);
+        posthog.capture("outgoing_link_clicked", {
+          target_domain: urlObj.hostname,
+          link_url: href,
+          source_page: typeof window !== 'undefined' ? window.location.pathname : undefined,
+        });
+      } catch (e) {
+        // Fallback for relative or invalid URLs that were still flagged as external
+        posthog.capture("outgoing_link_clicked", {
+          link_url: href,
+          source_page: typeof window !== 'undefined' ? window.location.pathname : undefined,
+        });
+      }
+    }
+  };
   
   if (external && !bypassSafeRedirect) {
     const safeUrl = `/external-link?url=${encodeURIComponent(href)}`
@@ -53,6 +75,7 @@ export const SafeLink = ({
         className={className}
         target="_blank" 
         rel="noopener noreferrer"
+        onClick={handleLinkClick}
         {...props}
       >
         {children}
@@ -67,6 +90,7 @@ export const SafeLink = ({
       className={className}
       target={target} // Allow original target for internal links if specified
       rel={rel}
+      onClick={handleLinkClick}
       {...props}
     >
       {children}
