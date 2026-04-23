@@ -68,6 +68,7 @@ A modern, high-performance technical documentation and engineering portfolio pla
   - **Smart TOC:** Automatically generated Table of Contents with active-state scroll tracking.
   - **Search & Command Palette:** Global `Cmd+K` search modal for quick navigation.
 - **⚡ Optimizations & SEO:**
+  - **🩺 System Health Monitoring:** Integrated **System Monitor** with real-time health checks for Notion, Supabase, and PostHog. Features a historical **Logging Engine** with automatic 7-day retention, performance metrics tracking, and a public-facing **Status Page** (`/status`).
   - **Image Excellence:** Next.js optimized images with LQIP, blur-up effects, and native lazy loading.
   - **Dynamic Sitemap:** Recursively generated sitemap including all content types and authors.
   - **Semantic SEO:** Full Schema.org (JSON-LD) integration for articles, blog posts, and breadcrumbs.

@@ -131,24 +131,46 @@ export default async function DashboardPage() {
                                     </div>
 
                                     {displayUser.role === "admin" && (
-                                        <div className="p-1 rounded-3xl border border-border/40 bg-card/10 backdrop-blur-md shadow-sm overflow-hidden group">
-                                            <Link 
-                                                href="/dashboard/analytics"
-                                                className="flex items-center justify-between p-4 hover:bg-primary/5 transition-colors group"
-                                            >
-                                                <div className="flex items-center gap-3">
-                                                    <div className="p-2.5 rounded-2xl bg-primary/10 text-primary group-hover:scale-110 transition-transform">
-                                                        <BarChart className="w-4 h-4" />
+                                        <div className="space-y-4">
+                                            <div className="p-1 rounded-3xl border border-border/40 bg-card/10 backdrop-blur-md shadow-sm overflow-hidden group">
+                                                <Link
+                                                    href="/dashboard/analytics"
+                                                    className="flex items-center justify-between p-4 hover:bg-primary/5 transition-colors group"
+                                                >
+                                                    <div className="flex items-center gap-3">
+                                                        <div className="p-2.5 rounded-2xl bg-primary/10 text-primary group-hover:scale-110 transition-transform">
+                                                            <BarChart className="w-4 h-4" />
+                                                        </div>
+                                                        <div>
+                                                            <h4 className="text-sm font-bold google-sans">Analytics</h4>
+                                                            <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-local-inter">Admin Only</p>
+                                                        </div>
                                                     </div>
-                                                    <div>
-                                                        <h4 className="text-sm font-bold google-sans">System Analytics</h4>
-                                                        <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-local-inter">Admin Only</p>
+                                                    <div className="p-2 rounded-full border border-border/40 opacity-0 group-hover:opacity-100 transition-all -translate-x-2 group-hover:translate-x-0">
+                                                        <ArrowUpRight className="w-3.5 h-3.5 text-muted-foreground" />
                                                     </div>
-                                                </div>
-                                                <div className="p-2 rounded-full border border-border/40 opacity-0 group-hover:opacity-100 transition-all -translate-x-2 group-hover:translate-x-0">
-                                                    <ArrowUpRight className="w-3.5 h-3.5 text-muted-foreground" />
-                                                </div>
-                                            </Link>
+                                                </Link>
+                                            </div>
+
+                                            <div className="p-1 rounded-3xl border border-border/40 bg-card/10 backdrop-blur-md shadow-sm overflow-hidden group">
+                                                <Link
+                                                    href="/dashboard/system-monitor"
+                                                    className="flex items-center justify-between p-4 hover:bg-primary/5 transition-colors group"
+                                                >
+                                                    <div className="flex items-center gap-3">
+                                                        <div className="p-2.5 rounded-2xl bg-primary/10 text-primary group-hover:scale-110 transition-transform">
+                                                            <Activity className="w-4 h-4" />
+                                                        </div>
+                                                        <div>
+                                                            <h4 className="text-sm font-bold google-sans">System Monitor</h4>
+                                                            <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-local-inter">Admin Only</p>
+                                                        </div>
+                                                    </div>
+                                                    <div className="p-2 rounded-full border border-border/40 opacity-0 group-hover:opacity-100 transition-all -translate-x-2 group-hover:translate-x-0">
+                                                        <ArrowUpRight className="w-3.5 h-3.5 text-muted-foreground" />
+                                                    </div>
+                                                </Link>
+                                            </div>
                                         </div>
                                     )}
                                 </div>

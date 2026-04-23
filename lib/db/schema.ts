@@ -1,4 +1,5 @@
-import { pgTable, text, timestamp, boolean, jsonb } from "drizzle-orm/pg-core";
+import { pgTable, text, timestamp, boolean, jsonb, uuid, index } from "drizzle-orm/pg-core";
+import { sql } from "drizzle-orm";
 
 export const user = pgTable("user", {
 	id: text("id").primaryKey(),
@@ -47,4 +48,18 @@ export const verification = pgTable("verification", {
 	expiresAt: timestamp("expires_at").notNull(),
 	createdAt: timestamp("created_at"),
 	updatedAt: timestamp("updated_at"),
+});
+
+export const systemLogs = pgTable("system_logs", {
+	id: uuid("id").primaryKey().defaultRandom(),
+	service: text("service").notNull(), // 'notion', 'supabase', 'posthog', 'system'
+	level: text("level").notNull(), // 'info', 'warning', 'error'
+	message: text("message").notNull(),
+	metadata: jsonb("metadata").default({}),
+	createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+}, (table) => {
+	return {
+		createdAtIndex: index("created_at_idx").on(table.createdAt),
+		serviceCreatedAtIndex: index("service_created_at_idx").on(table.service, table.createdAt),
+	};
 });
