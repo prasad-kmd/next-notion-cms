@@ -41,7 +41,14 @@ export function ControlPanel() {
       if (panelRef.current?.contains(target)) return;
 
       // Don't close if clicking elements inside Radix UI portals (like the Select dropdown)
-      if (target.closest('[data-radix-portal]')) return;
+      // We also check for attributes commonly used by Radix Select
+      if (
+        target.closest('[data-radix-portal]') ||
+        target.closest('[role="option"]') ||
+        target.closest('[role="listbox"]')
+      ) {
+        return;
+      }
 
       // Don't close if clicking the floating button (to avoid double toggle)
       if (target.closest('button[aria-label="Toggle Accessibility Panel"]')) return;
@@ -56,11 +63,12 @@ export function ControlPanel() {
     };
 
     if (isPanelOpen) {
-      document.addEventListener("mousedown", handleClickOutside);
+      // Use click instead of mousedown to avoid race conditions with Select interactions
+      document.addEventListener("click", handleClickOutside, true);
       document.addEventListener("keydown", handleEscape);
     }
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("click", handleClickOutside, true);
       document.removeEventListener("keydown", handleEscape);
     };
   }, [isPanelOpen, updateSetting]);

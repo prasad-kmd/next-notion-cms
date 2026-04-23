@@ -19,8 +19,10 @@ export function FloatingButton() {
   const pathname = usePathname();
   const [position, setPosition] = useState(buttonPosition || { x: -1, y: -1 });
   const [isDragging, setIsDragging] = useState(false);
+  const [hasMoved, setHasMoved] = useState(false);
   const buttonRef = useRef<HTMLDivElement>(null);
   const dragStartPos = useRef({ x: 0, y: 0 });
+  const startMousePos = useRef({ x: 0, y: 0 });
 
   const isVisible = CONTENT_ROUTES.some((route) => pathname?.startsWith(route));
 
@@ -39,6 +41,8 @@ export function FloatingButton() {
     const clientY = 'touches' in e ? e.touches[0].clientY : e.clientY;
 
     setIsDragging(true);
+    setHasMoved(false);
+    startMousePos.current = { x: clientX, y: clientY };
     dragStartPos.current = {
       x: clientX - position.x,
       y: clientY - position.y,
@@ -50,6 +54,17 @@ export function FloatingButton() {
 
     const clientX = 'touches' in e ? e.touches[0].clientX : (e as MouseEvent).clientX;
     const clientY = 'touches' in e ? e.touches[0].clientY : (e as MouseEvent).clientY;
+
+    // Check if we've moved enough to be considered a drag
+    const dx = clientX - startMousePos.current.x;
+    const dy = clientY - startMousePos.current.y;
+    const distance = Math.sqrt(dx * dx + dy * dy);
+
+    if (distance > 5) {
+      setHasMoved(true);
+    }
+
+    if (!hasMoved && distance <= 5) return;
 
     let newX = clientX - dragStartPos.current.x;
     let newY = clientY - dragStartPos.current.y;
@@ -68,9 +83,11 @@ export function FloatingButton() {
   const onMouseUp = useCallback(() => {
     if (isDragging) {
       setIsDragging(false);
-      updateSetting("buttonPosition", position);
+      if (hasMoved) {
+        updateSetting("buttonPosition", position);
+      }
     }
-  }, [isDragging, position, updateSetting]);
+  }, [isDragging, hasMoved, position, updateSetting]);
 
   useEffect(() => {
     if (isDragging) {
