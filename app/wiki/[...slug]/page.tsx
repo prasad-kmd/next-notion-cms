@@ -18,6 +18,7 @@ import { CommentsSection } from "@/components/comments/comments-section";
 import { CommentScrollButton } from "@/components/comment-scroll-button";
 import { PageViewTracker } from "@/components/analytics/PageViewTracker";
 import { ViewCounter } from "@/components/content/ViewCounter";
+import { ContentArea } from "@/components/accessibility/ContentArea";
 
 export async function generateStaticParams() {
   const entries = await getContentByType("wiki");
@@ -121,7 +122,9 @@ export default async function WikiEntryPage({
               </div>
             </header>
 
-            <ContentRenderer content={entry.content} id={entry.slug} />
+            <ContentArea>
+              <ContentRenderer content={entry.content} id={entry.slug} />
+            </ContentArea>
           </article>
 
           <ArticleSidebar content={entry.content} author={author} />
