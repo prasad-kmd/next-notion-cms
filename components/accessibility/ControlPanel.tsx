@@ -95,7 +95,7 @@ export function ControlPanel() {
     <Card
       ref={panelRef}
       style={panelStyle}
-      className="w-80 shadow-2xl border-primary/20 backdrop-blur-xl bg-background/95 animate-in fade-in zoom-in duration-200"
+      className="w-80 shadow-2xl border-primary/20 backdrop-blur-xl bg-background/95 animate-in fade-in zoom-in duration-200 z-[101]"
     >
       <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
         <CardTitle className="text-sm font-bold font-mono uppercase tracking-wider flex items-center gap-2">

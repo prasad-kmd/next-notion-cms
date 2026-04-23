@@ -122,7 +122,7 @@ export function FloatingButton() {
         zIndex: 100,
       }}
       className={cn(
-        "group flex items-center gap-2 rounded-full border border-border bg-background/80 p-2 shadow-lg backdrop-blur-md transition-all duration-300 hover:scale-105 active:scale-95",
+        "group flex items-center gap-2 rounded-xl border border-border bg-background/80 p-1.5 shadow-lg backdrop-blur-md transition-all duration-300 active:scale-95",
         isCollapsed && !isPanelOpen ? "w-12 h-12 overflow-hidden opacity-50 hover:opacity-100" : "w-auto"
       )}
     >
@@ -135,7 +135,7 @@ export function FloatingButton() {
       </div>
       <button
         onClick={() => updateSetting("isPanelOpen", !isPanelOpen)}
-        className="flex items-center gap-2 rounded-full bg-primary p-2 text-primary-foreground shadow-sm transition-colors hover:bg-primary/90"
+        className="flex items-center gap-2 rounded-lg bg-primary p-2 text-primary-foreground shadow-sm transition-colors hover:bg-primary/90"
         aria-label="Toggle Accessibility Panel"
         aria-expanded={isPanelOpen}
       >

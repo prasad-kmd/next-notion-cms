@@ -41,27 +41,30 @@ export function ContentArea({ children, className = "" }: ContentAreaProps) {
       } as React.CSSProperties}
     >
       <style jsx global>{`
+        .accessibility-content-area,
+        .accessibility-content-area * {
+          font-family: var(--a11y-font-family, inherit) !important;
+        }
+      `}</style>
+      <style jsx global>{`
         .a11y-high-contrast {
           --foreground: oklch(0% 0 0) !important;
           --background: oklch(100% 0 0) !important;
           --muted-foreground: oklch(20% 0 0) !important;
+          background-color: var(--background) !important;
+          color: var(--foreground) !important;
         }
-        .dark .a11y-high-contrast {
+        :is(.dark *) .a11y-high-contrast {
           --foreground: oklch(100% 0 0) !important;
           --background: oklch(0% 0 0) !important;
           --muted-foreground: oklch(80% 0 0) !important;
-        }
-        .accessibility-content-area.a11y-high-contrast p,
-        .accessibility-content-area.a11y-high-contrast span,
-        .accessibility-content-area.a11y-high-contrast h1,
-        .accessibility-content-area.a11y-high-contrast h2,
-        .accessibility-content-area.a11y-high-contrast h3,
-        .accessibility-content-area.a11y-high-contrast h4,
-        .accessibility-content-area.a11y-high-contrast h5,
-        .accessibility-content-area.a11y-high-contrast h6,
-        .accessibility-content-area.a11y-high-contrast li {
+          background-color: var(--background) !important;
           color: var(--foreground) !important;
-          background-color: transparent !important;
+        }
+        .accessibility-content-area.a11y-high-contrast,
+        .accessibility-content-area.a11y-high-contrast * {
+          color: var(--foreground) !important;
+          border-color: var(--foreground) !important;
         }
       `}</style>
       {children}
