@@ -62,10 +62,10 @@ export function LogsManager({ initialLogs, initialTotal }: LogsManagerProps) {
                 <ChevronLeft className="w-4 h-4" />
               </Button>
             </Link>
-            <h1 className="text-3xl font-black amoriaregular tracking-tight">System Logs</h1>
-            <Badge variant="outline" className="font-mono text-[10px]">{total} TOTAL</Badge>
+            <h1 className="text-3xl font-black font-google-sans tracking-tight">System Logs</h1>
+            <Badge variant="outline" className="text-[10px] font-local-jetbrains-mono">{total} TOTAL</Badge>
           </div>
-          <p className="text-xs font-mono text-muted-foreground ml-10">
+          <p className="text-xs font-local-inter text-muted-foreground ml-10">
             Historical activity and error logs for all platform services.
           </p>
         </div>
@@ -76,12 +76,12 @@ export function LogsManager({ initialLogs, initialTotal }: LogsManagerProps) {
           onClick={fetchLogs} 
           disabled={loading}
         >
-          <RefreshCw className={`w-4 h-4 mr-2 ${loading ? "animate-spin" : ""}`} />
+          <RefreshCw className={`w-4 h-4 mr-2 font-local-inter ${loading ? "animate-spin" : ""}`} />
           Refresh Logs
         </Button>
       </div>
 
-      <div className="flex flex-col md:flex-row items-start md:items-center gap-4 bg-card/30 p-4 rounded-2xl border border-border/40">
+      <div className="flex flex-col md:flex-row items-start md:items-center gap-4 bg-card/30 p-4 rounded-2xl border border-border/40 font-local-inter">
         <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-muted-foreground">
           <Filter className="w-3 h-3" />
           Filters
@@ -117,15 +117,15 @@ export function LogsManager({ initialLogs, initialTotal }: LogsManagerProps) {
         ) : (
           <div className="py-24 flex flex-col items-center justify-center text-muted-foreground gap-2">
             <Terminal className="w-12 h-12 opacity-20" />
-            <p className="text-sm font-mono">No logs found matching your criteria</p>
-            <Button variant="link" onClick={() => {setLogFilter('all'); setLevelFilter('all');}} className="text-primary text-xs">
+            <p className="text-sm font-local-jetbrains-mono">No logs found matching your criteria</p>
+            <Button variant="link" onClick={() => {setLogFilter('all'); setLevelFilter('all');}} className="text-primary text-xs font-local-inter">
               Clear Filters
             </Button>
           </div>
         )}
       </div>
 
-      <div className="flex items-center justify-between text-xs font-mono text-muted-foreground">
+      <div className="flex items-center justify-between text-xs text-muted-foreground font-roboto">
         <span>Showing {logs.length} of {total} logs</span>
         <div className="flex items-center gap-2">
           <Button variant="outline" size="icon" disabled className="h-8 w-8 rounded-xl opacity-50"><ChevronLeft className="w-4 h-4" /></Button>

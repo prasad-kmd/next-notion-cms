@@ -39,8 +39,8 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({
     <div className="relative group overflow-hidden rounded-2xl border border-border/50 bg-card/50 p-6 transition-all hover:border-primary/30 hover:shadow-lg">
       <div className="flex items-start justify-between mb-4">
         <div>
-          <h3 className="text-lg font-bold tracking-tight text-foreground">{title}</h3>
-          <p className="text-sm text-muted-foreground mt-1">{description}</p>
+          <h3 className="text-lg font-bold tracking-tight text-foreground font-google-sans">{title}</h3>
+          <p className="text-sm text-muted-foreground mt-1 font-local-inter">{description}</p>
         </div>
         <StatusIndicator status={loading ? 'checking' : status} withLabel />
       </div>
@@ -48,10 +48,10 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({
       <div className="grid grid-cols-2 gap-4 my-6">
         {metrics.map((metric, index) => (
           <div key={index} className="flex flex-col">
-            <span className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold">
+            <span className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold font-roboto">
               {metric.label}
             </span>
-            <span className="text-lg font-mono text-foreground">
+            <span className="text-lg text-foreground font-local-jetbrains-mono">
               {metric.value ?? 'N/A'}
             </span>
           </div>
@@ -75,7 +75,7 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({
       </div>
 
       {lastChecked && (
-        <div className="mt-4 text-[10px] text-muted-foreground/60 font-mono italic">
+        <div className="mt-4 text-[10px] text-muted-foreground/60 font-space-mono italic">
           Last checked: {new Date(lastChecked).toLocaleTimeString()}
         </div>
       )}

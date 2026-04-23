@@ -31,7 +31,7 @@ export const LogEntry: React.FC<LogEntryProps> = ({ log }) => {
   };
 
   return (
-    <div className="group border-b border-border/40 last:border-0">
+    <div className="group border-b border-border/40 last:border-0 font-local-inter">
       <div 
         className="flex items-center gap-4 py-3 px-2 hover:bg-muted/30 transition-colors cursor-pointer"
         onClick={() => setIsExpanded(!isExpanded)}
@@ -52,7 +52,7 @@ export const LogEntry: React.FC<LogEntryProps> = ({ log }) => {
           {log.message}
         </div>
 
-        <div className="text-[10px] text-muted-foreground font-mono whitespace-nowrap">
+        <div className="text-[10px] text-muted-foreground font-local-jetbrains-mono whitespace-nowrap">
           {formatDistanceToNow(new Date(log.createdAt), { addSuffix: true })}
         </div>
 
@@ -64,8 +64,8 @@ export const LogEntry: React.FC<LogEntryProps> = ({ log }) => {
       {isExpanded && (
         <div className="px-14 pb-4 animate-in slide-in-from-top-1 duration-200">
           <div className="bg-muted/50 rounded-xl p-4 border border-border/50">
-            <h4 className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground mb-2">Metadata</h4>
-            <pre className="text-xs font-mono text-muted-foreground overflow-x-auto p-2 bg-background/50 rounded-lg">
+            <h4 className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground mb-2 font-local-inter">Metadata</h4>
+            <pre className="text-xs text-muted-foreground overflow-x-auto p-2 bg-background/50 rounded-lg font-local-jetbrains-mono">
               {JSON.stringify(log.metadata, null, 2)}
             </pre>
           </div>
