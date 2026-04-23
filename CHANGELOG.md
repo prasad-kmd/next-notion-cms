@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 ## [1.6.0] - 2025-05-22
 
 ### Added
+- **Custom Accessibility Controller:** Implemented a scoped controller for content areas allowing users to adjust font size, family, line height, and spacing.
 - **Breadcrumbs:** Added navigation breadcrumbs to all content detail pages for better UX.
 - **Native Notion Search:** Integrated real-time search using the Notion API, augmenting the local content index.
 - **Schema.org Markup:** Implemented JSON-LD structured data for BlogPosting, TechArticle, and BreadcrumbList to improve SEO.

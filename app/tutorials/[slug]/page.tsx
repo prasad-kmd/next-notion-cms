@@ -19,6 +19,7 @@ import { CommentsSection } from "@/components/comments/comments-section";
 import { CommentScrollButton } from "@/components/comment-scroll-button";
 import { PageViewTracker } from "@/components/analytics/PageViewTracker";
 import { ViewCounter } from "@/components/content/ViewCounter";
+import { ContentArea } from "@/components/accessibility/ContentArea";
 
 export async function generateMetadata({
   params,
@@ -144,7 +145,9 @@ export default async function TutorialPage({
               )}
             </header>
 
-            <ContentRenderer content={post.content} id={post.slug} />
+            <ContentArea>
+              <ContentRenderer content={post.content} id={post.slug} />
+            </ContentArea>
           </article>
 
           <ArticleSidebar

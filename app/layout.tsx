@@ -124,6 +124,9 @@ import { AuthInitializer } from "@/components/auth/auth-initializer";
 import { PostHogProvider } from "@/components/posthog-provider";
 import PostHogPageviewWrapper from "@/components/analytics/PostHogPageview";
 import Script from "next/script";
+import { AccessibilityProvider } from "@/providers/AccessibilityProvider";
+import { FloatingButton } from "@/components/accessibility/FloatingButton";
+import { ControlPanel } from "@/components/accessibility/ControlPanel";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
@@ -269,39 +272,43 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <PostHogProvider>
-            <PostHogPageviewWrapper />
-            <AccentColorInitializer />
-            <AuthInitializer />
-            <TooltipProvider>
-              <SidebarProvider>
-                <BookmarksProvider>
-                  <ViewTransitions>
-                    <ClickSpark
-                      // sparkColor="#ffffff"
-                      sparkSize={10}
-                      sparkRadius={15}
-                      sparkCount={8}
-                      duration={400}
-                      easing="linear"
-                      extraScale={1.5}
-                    >
-                      <CustomContextMenu />
-                      <FloatingNavbar className="hidden lg:flex" />
-                      <Navigation />
-                      <main className="transition-[padding] duration-300 lg:pl-(--sidebar-width,256px) overflow-x-clip">
-                        {children}
-                        <Footer />
-                      </main>
-                      <ScrollToTop />
-                      <Toaster position="bottom-right" richColors />
-                      <ConnectivityListener />
-                      <SpeedInsights />
-                      <ServiceWorkerRegistrar />
-                    </ClickSpark>
-                  </ViewTransitions>
-                </BookmarksProvider>
-              </SidebarProvider>
-            </TooltipProvider>
+            <AccessibilityProvider>
+              <PostHogPageviewWrapper />
+              <AccentColorInitializer />
+              <AuthInitializer />
+              <TooltipProvider>
+                <SidebarProvider>
+                  <BookmarksProvider>
+                    <ViewTransitions>
+                      <ClickSpark
+                        // sparkColor="#ffffff"
+                        sparkSize={10}
+                        sparkRadius={15}
+                        sparkCount={8}
+                        duration={400}
+                        easing="linear"
+                        extraScale={1.5}
+                      >
+                        <CustomContextMenu />
+                        <FloatingNavbar className="hidden lg:flex" />
+                        <Navigation />
+                        <main className="transition-[padding] duration-300 lg:pl-(--sidebar-width,256px) overflow-x-clip">
+                          {children}
+                          <Footer />
+                        </main>
+                        <FloatingButton />
+                        <ControlPanel />
+                        <ScrollToTop />
+                        <Toaster position="bottom-right" richColors />
+                        <ConnectivityListener />
+                        <SpeedInsights />
+                        <ServiceWorkerRegistrar />
+                      </ClickSpark>
+                    </ViewTransitions>
+                  </BookmarksProvider>
+                </SidebarProvider>
+              </TooltipProvider>
+            </AccessibilityProvider>
           </PostHogProvider>
         </ThemeProvider>
       </body>
