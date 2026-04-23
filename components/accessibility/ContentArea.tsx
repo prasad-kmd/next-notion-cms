@@ -42,7 +42,7 @@ export function ContentArea({ children, className = "" }: ContentAreaProps) {
     >
       <style jsx global>{`
         .accessibility-content-area,
-        .accessibility-content-area * {
+        .accessibility-content-area *:not(pre):not(code):not(pre *) {
           font-family: var(--a11y-font-family, inherit) !important;
         }
       `}</style>

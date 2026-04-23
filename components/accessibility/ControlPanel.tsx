@@ -67,7 +67,7 @@ export function ControlPanel() {
 
   const panelStyle: React.CSSProperties = {
     position: 'fixed',
-    zIndex: 101,
+    zIndex: 150,
   };
 
   if (buttonPosition) {

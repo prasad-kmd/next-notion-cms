@@ -122,7 +122,7 @@ export function FloatingButton() {
         zIndex: 100,
       }}
       className={cn(
-        "group flex items-center gap-2 rounded-xl border border-border bg-background/80 p-1.5 shadow-lg backdrop-blur-md transition-all duration-300 active:scale-95",
+        "group flex items-center gap-2 rounded-xl border border-border bg-background/80 p-1.5 shadow-lg backdrop-blur-md",
         isCollapsed && !isPanelOpen ? "w-12 h-12 overflow-hidden opacity-50 hover:opacity-100" : "w-auto"
       )}
     >
