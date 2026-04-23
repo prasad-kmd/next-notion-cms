@@ -72,7 +72,7 @@ export function TopContentTable({ timeRange, contentType }: TopContentTableProps
       </CardHeader>
       <CardContent>
         <div className="overflow-x-auto">
-          <table className="w-full text-sm text-left border-collapse">
+          <table className="w-full text-sm text-left border-collapse font-local-inter">
             <thead>
               <tr className="border-b border-border/50 text-muted-foreground font-medium">
                 <th className="py-3 px-4 w-[60px]">Rank</th>

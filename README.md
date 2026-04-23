@@ -208,6 +208,16 @@ The site will be available at `http://localhost:3000`.
 
 ---
 
+## Contributors
+
+<a href="https://github.com/prasad-kmd/next-notion-cms/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=prasad-kmd/next-notion-cms" />
+</a>
+
+## Contributor Stats
+
+![Alt](https://repobeats.axiom.co/api/embed/51f033246640a32a01738785ea4be0a6ff38d844.svg "Repobeats analytics image")
+
 ## Star History
 
 ![Star History Chart](https://api.star-history.com/chart?repos=prasad-kmd/next-notion-cms&type=date&legend=top-left)

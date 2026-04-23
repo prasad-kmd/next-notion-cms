@@ -33,8 +33,8 @@ export function AnalyticsDashboardManager() {
             <Layout className="w-4 h-4 text-primary" />
             <span className="text-sm font-bold google-sans">Analytics Dashboard</span>
         </div>
-        <div className="flex items-center gap-2">
-          <span className="text-xs font-medium text-muted-foreground font-local-inter">Time Period:</span>
+        <div className="flex items-center gap-2 font-local-inter">
+          <span className="text-xs font-medium text-muted-foreground">Time Period:</span>
           <Select value={timeRange} onValueChange={setTimeRange}>
             <SelectTrigger className="w-[160px] rounded-xl border-border/50 bg-background/50">
               <SelectValue placeholder="Select range" />
