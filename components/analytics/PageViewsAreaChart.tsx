@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useHasMounted } from "@/hooks/use-has-mounted";
 import {
   AreaChart,
   Area,
@@ -23,6 +24,7 @@ interface PageViewsAreaChartProps {
 export function PageViewsAreaChart({ timeRange }: PageViewsAreaChartProps) {
   const [data, setData] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const hasMounted = useHasMounted();
   const { theme } = useTheme();
   const chartTheme = getRechartsTheme(theme);
 
@@ -58,12 +60,12 @@ export function PageViewsAreaChart({ timeRange }: PageViewsAreaChartProps) {
     fetchData();
   }, [timeRange]);
 
-  if (loading) return <div className="h-64 flex items-center justify-center animate-pulse bg-muted/10 rounded-3xl">Loading trend...</div>;
+  if (loading || !hasMounted) return <div className="h-[320px] flex items-center justify-center animate-pulse bg-muted/10 rounded-3xl">Loading trend...</div>;
 
   const color = getColorCode("blue");
 
   return (
-    <div className="h-80 w-full">
+    <div className="h-[320px] w-full relative">
       <ResponsiveContainer width="100%" height="100%">
         <AreaChart data={data}>
           <defs>

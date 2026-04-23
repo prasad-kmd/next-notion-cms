@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useHasMounted } from "@/hooks/use-has-mounted";
 import {
   PieChart,
   Pie,
@@ -22,6 +23,7 @@ interface BreakdownChartProps {
 export function BreakdownChart({ timeRange, insightType, title }: BreakdownChartProps) {
   const [data, setData] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const hasMounted = useHasMounted();
   const { theme } = useTheme();
   const chartTheme = getRechartsTheme(theme);
 
@@ -50,10 +52,10 @@ export function BreakdownChart({ timeRange, insightType, title }: BreakdownChart
     fetchData();
   }, [timeRange, insightType]);
 
-  if (loading) return <div className="h-64 flex items-center justify-center animate-pulse bg-muted/10 rounded-3xl">Loading {title}...</div>;
+  if (loading || !hasMounted) return <div className="h-[320px] flex items-center justify-center animate-pulse bg-muted/10 rounded-3xl">Loading {title}...</div>;
 
   return (
-    <div className="h-80 w-full">
+    <div className="h-[320px] w-full relative">
       <ResponsiveContainer width="100%" height="100%">
         <PieChart>
           <Pie

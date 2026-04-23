@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useHasMounted } from "@/hooks/use-has-mounted";
 import {
   BarChart,
   Bar,
@@ -22,6 +23,7 @@ interface CountryBreakdownChartProps {
 export function CountryBreakdownChart({ timeRange }: CountryBreakdownChartProps) {
   const [data, setData] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const hasMounted = useHasMounted();
   const { theme } = useTheme();
   const chartTheme = getRechartsTheme(theme);
 
@@ -50,10 +52,10 @@ export function CountryBreakdownChart({ timeRange }: CountryBreakdownChartProps)
     fetchData();
   }, [timeRange]);
 
-  if (loading) return <div className="h-64 flex items-center justify-center animate-pulse bg-muted/10 rounded-3xl">Loading countries...</div>;
+  if (loading || !hasMounted) return <div className="h-[320px] flex items-center justify-center animate-pulse bg-muted/10 rounded-3xl">Loading countries...</div>;
 
   return (
-    <div className="h-80 w-full">
+    <div className="h-[320px] w-full relative">
       <ResponsiveContainer width="100%" height="100%">
         <BarChart
           data={data}

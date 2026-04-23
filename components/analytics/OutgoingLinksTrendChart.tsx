@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useHasMounted } from "@/hooks/use-has-mounted";
 import {
   AreaChart,
   Area,
@@ -23,6 +24,7 @@ export function OutgoingLinksTrendChart({ timeRange }: OutgoingLinksTrendChartPr
   const [data, setData] = useState<any[]>([]);
   const [domains, setDomains] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
+  const hasMounted = useHasMounted();
   const { theme } = useTheme();
   const chartTheme = getRechartsTheme(theme);
 
@@ -55,13 +57,20 @@ export function OutgoingLinksTrendChart({ timeRange }: OutgoingLinksTrendChartPr
           const transformed = allLabels.map((label: string, i: number) => {
             const point: any = { date: label };
             topSeries.forEach((series: any) => {
-              point[series.breakdown_value || "Other"] = series.data[i];
+              const key = series.breakdown_value === "$$_posthog_breakdown_null_$$" || !series.breakdown_value
+                ? "Unknown"
+                : series.breakdown_value;
+              point[key] = series.data[i];
             });
             return point;
           });
 
           setData(transformed);
-          setDomains(topSeries.map((s: any) => s.breakdown_value || "Other"));
+          setDomains(topSeries.map((s: any) =>
+            s.breakdown_value === "$$_posthog_breakdown_null_$$" || !s.breakdown_value
+            ? "Unknown"
+            : s.breakdown_value
+          ));
         }
       } catch (err) {
         console.error(err);
@@ -72,10 +81,10 @@ export function OutgoingLinksTrendChart({ timeRange }: OutgoingLinksTrendChartPr
     fetchData();
   }, [timeRange]);
 
-  if (loading) return <div className="h-64 flex items-center justify-center animate-pulse bg-muted/10 rounded-3xl">Loading link trends...</div>;
+  if (loading || !hasMounted) return <div className="h-[320px] flex items-center justify-center animate-pulse bg-muted/10 rounded-3xl">Loading link trends...</div>;
 
   return (
-    <div className="h-80 w-full">
+    <div className="h-[320px] w-full relative">
       <ResponsiveContainer width="100%" height="100%">
         <AreaChart data={data}>
           <CartesianGrid {...chartTheme.grid} vertical={false} />

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useHasMounted } from "@/hooks/use-has-mounted";
 import {
   BarChart,
   Bar,
@@ -25,6 +26,7 @@ interface MatrixChartProps {
 export function MatrixChart({ timeRange, primaryDimension, secondaryDimension, title }: MatrixChartProps) {
   const [data, setData] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const hasMounted = useHasMounted();
   const { theme } = useTheme();
   const chartTheme = getRechartsTheme(theme);
 
@@ -76,10 +78,10 @@ export function MatrixChart({ timeRange, primaryDimension, secondaryDimension, t
     fetchData();
   }, [timeRange, primaryDimension, secondaryDimension]);
 
-  if (loading) return <div className="h-64 flex items-center justify-center animate-pulse bg-muted/10 rounded-3xl">Loading {title}...</div>;
+  if (loading || !hasMounted) return <div className="h-[320px] flex items-center justify-center animate-pulse bg-muted/10 rounded-3xl">Loading {title}...</div>;
 
   return (
-    <div className="h-80 w-full">
+    <div className="h-[320px] w-full relative">
       <ResponsiveContainer width="100%" height="100%">
         <BarChart data={data}>
           <CartesianGrid {...chartTheme.grid} vertical={false} />
