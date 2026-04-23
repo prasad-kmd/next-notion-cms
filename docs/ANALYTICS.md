@@ -92,7 +92,39 @@ The system implements individual page view tracking for all content types (Blog,
 
 ---
 
-## 7. Troubleshooting
+## 7. Enhanced Event Tracking
+
+The system tracks several custom events to provide deeper insights:
+
+### 7.1 Comments and Interactions
+- `comment_submitted`: Captured when a user successfully posts a comment. 
+  - Properties: `page_id`, `content_length`, `author_id`.
+- `bookmark_added` / `bookmark_removed`: Captured when users manage their saved content.
+  - Properties: `post_slug`, `post_title`, `content_type`.
+- `bookmark_synced`: Captured when local bookmarks are synchronized with the user's account.
+
+### 7.2 Outbound Links
+- `outgoing_link_clicked`: Captured via the `SafeLink` component and `ContentRenderer`.
+  - Properties: `target_domain`, `link_url`, `source_page`.
+
+---
+
+## 8. Recharts Dashboard Features
+
+The Admin Analytics Dashboard at `/dashboard/analytics` has been enhanced with Recharts visualizations:
+
+- **Summary Metrics:** Key performance indicators including unique visitors, average views per post, and total interaction counts.
+- **Traffic Trends:** Area charts with smooth interpolation showing pageview growth.
+- **Breakdowns:** 
+  - **Sources:** Referrer-based breakdown (Direct, Google, GitHub, etc.).
+  - **Geo:** Top 10 countries by traffic volume.
+  - **Technical:** Device, Browser, and OS distribution using pie and bar charts.
+- **Outbound Link Analysis:** Tracking which external domains your users are interested in.
+- **Multi-Variable Analysis:** Stacked area charts showing traffic composition over time (e.g., by content type).
+
+---
+
+## 9. Troubleshooting
 
 - **No data in dashboard:** Ensure `POSTHOG_PERSONAL_API_KEY` and `POSTHOG_PROJECT_ID` are correct. Check server logs for API errors.
 - **Events not appearing:** Check the browser console for CSP (Content Security Policy) errors or network failures.

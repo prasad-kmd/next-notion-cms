@@ -5,16 +5,8 @@ import { cache } from "react";
 import { Container } from "@/components/container";
 import { TechnicalBackground } from "@/components/technical-background";
 import { Breadcrumbs } from "@/components/breadcrumbs";
-import { PageviewsChart } from "@/components/analytics/PageviewsChart";
-import { StatCard } from "@/components/analytics/StatCard";
 import { AnalyticsNotConfigured } from "@/components/analytics/AnalyticsNotConfigured";
-import { AnalyticsDashboardFilters } from "@/components/analytics/AnalyticsDashboardFilters";
-import {
-  Users,
-  MousePointer2,
-  BarChart as BarChartIcon,
-  Activity,
-} from "lucide-react";
+import { AnalyticsDashboardManager } from "@/components/analytics/AnalyticsDashboardManager";
 
 const getSession = cache(async () => {
   return await auth.api.getSession({
@@ -38,67 +30,6 @@ export default async function AnalyticsPage() {
     process.env.POSTHOG_PERSONAL_API_KEY &&
     process.env.POSTHOG_PROJECT_ID
   );
-
-  let totalPageviews = "--";
-  let activeUsers = "--";
-
-  if (isConfigured) {
-    try {
-      const POSTHOG_PERSONAL_API_KEY = process.env.POSTHOG_PERSONAL_API_KEY;
-      const POSTHOG_PROJECT_ID = process.env.POSTHOG_PROJECT_ID;
-      const POSTHOG_API_HOST =
-        process.env.POSTHOG_API_HOST || "https://us.posthog.com";
-
-      const queryEndpoint = `${POSTHOG_API_HOST}/api/projects/${POSTHOG_PROJECT_ID}/query/`;
-
-      const trendRes = await fetch(queryEndpoint, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${POSTHOG_PERSONAL_API_KEY}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          query: {
-            kind: "TrendsQuery",
-            series: [{ kind: "EventsNode", event: "$pageview", name: "$pageview", math: "total" }],
-            dateRange: { date_from: "-30d" },
-          },
-        }),
-        next: { revalidate: 300 },
-      });
-
-      if (trendRes.ok) {
-        const trendData = await trendRes.json();
-        const results = trendData.results || trendData.result || [];
-        totalPageviews = results[0]?.count?.toLocaleString() || "--";
-      }
-
-      const dauRes = await fetch(queryEndpoint, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${POSTHOG_PERSONAL_API_KEY}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          query: {
-            kind: "TrendsQuery",
-            series: [{ kind: "EventsNode", event: "$pageview", name: "$pageview", math: "dau" }],
-            dateRange: { date_from: "-30d" },
-          },
-        }),
-        next: { revalidate: 300 },
-      });
-
-      if (dauRes.ok) {
-        const dauData = await dauRes.json();
-        const results = dauData.results || dauData.result || [];
-        const series = results[0]?.data;
-        activeUsers = series?.[series.length - 1]?.toString() || "--";
-      }
-    } catch (e) {
-      console.error("Failed to fetch dashboard stats:", e);
-    }
-  }
 
   return (
     <div className="relative min-h-screen">
@@ -130,52 +61,7 @@ export default async function AnalyticsPage() {
           {!isConfigured ? (
             <AnalyticsNotConfigured />
           ) : (
-            <div className="space-y-8">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <StatCard
-                  title="Total Pageviews"
-                  value={totalPageviews}
-                  icon={<BarChartIcon className="w-4 h-4" />}
-                  description="Last 30 days"
-                />
-                <StatCard
-                  title="Active Users"
-                  value={activeUsers}
-                  icon={<Users className="w-4 h-4" />}
-                  description="Daily active users (today)"
-                />
-                <StatCard
-                  title="Engagement"
-                  value="--"
-                  icon={<Activity className="w-4 h-4" />}
-                  description="Events per user"
-                />
-                <StatCard
-                  title="Conversion"
-                  value="--"
-                  icon={<MousePointer2 className="w-4 h-4" />}
-                  description="Sign-up rate"
-                />
-              </div>
-
-              <div className="p-8 rounded-3xl border border-border/40 bg-card/10 backdrop-blur-md">
-                <div className="flex items-center justify-between mb-8">
-                  <div>
-                    <h3 className="text-lg font-bold google-sans">
-                      Traffic Trend
-                    </h3>
-                    <p className="text-xs text-muted-foreground">
-                      Pageviews over the last 30 days
-                    </p>
-                  </div>
-                </div>
-                <div className="h-[350px]">
-                  <PageviewsChart />
-                </div>
-              </div>
-
-              <AnalyticsDashboardFilters />
-            </div>
+            <AnalyticsDashboardManager />
           )}
         </div>
       </Container>

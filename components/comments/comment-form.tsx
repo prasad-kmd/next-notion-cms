@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { authClient } from "@/lib/auth-client";
+import { posthog } from "@/lib/posthog-client";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Send, Loader2, Lock } from "lucide-react";
@@ -41,6 +42,17 @@ export function CommentForm({ pageId, onSuccess }: CommentFormProps) {
       if (!res.ok) throw new Error("Failed to post comment");
 
       const newComment = await res.json();
+      
+      // Track comment submission in PostHog
+      if (posthog) {
+        posthog.capture("comment_submitted", {
+          page_id: pageId,
+          content_length: content.trim().length,
+          author_id: session?.user?.id,
+          // Extract info from page if possible, otherwise rely on backend or previous registration
+        });
+      }
+
       setContent("");
       setTurnstileToken(null);
       turnstileRef.current?.reset();

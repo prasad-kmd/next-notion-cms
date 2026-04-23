@@ -5,6 +5,12 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
 import { ExternalLink } from "lucide-react";
 import { cn } from "@/lib/utils";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 interface TopContentTableProps {
   timeRange: string;
@@ -106,14 +112,22 @@ export function TopContentTable({ timeRange, contentType }: TopContentTableProps
                         {item.views.toLocaleString()}
                       </td>
                       <td className="py-4 px-4 text-right">
-                        <Link
-                          href={href}
-                          target="_blank"
-                          className="inline-flex items-center justify-center h-8 w-8 rounded-lg hover:bg-primary/10 text-primary transition-colors"
-                          title="View Page"
-                        >
-                          <ExternalLink className="h-4 w-4" />
-                        </Link>
+                        <TooltipProvider>
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <Link
+                                href={href}
+                                target="_blank"
+                                className="inline-flex items-center justify-center h-8 w-8 rounded-lg hover:bg-primary/10 text-primary transition-colors"
+                              >
+                                <ExternalLink className="h-4 w-4" />
+                              </Link>
+                            </TooltipTrigger>
+                            <TooltipContent className="rounded-xl border-border/50 bg-card/90 backdrop-blur-md px-3 py-1.5 shadow-xl">
+                              <p className="text-xs font-bold google-sans">View Page</p>
+                            </TooltipContent>
+                          </Tooltip>
+                        </TooltipProvider>
                       </td>
                     </tr>
                   );

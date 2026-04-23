@@ -1,14 +1,20 @@
 import { ReactNode } from "react";
 
+import { ArrowDown, ArrowUp } from "lucide-react";
+
 interface StatCardProps {
   title: string;
   value: string | number;
   icon: ReactNode;
   description?: string;
   loading?: boolean;
+  trend?: {
+    value: number;
+    isUp: boolean;
+  };
 }
 
-export function StatCard({ title, value, icon, description, loading }: StatCardProps) {
+export function StatCard({ title, value, icon, description, loading, trend }: StatCardProps) {
   if (loading) {
     return (
       <div className="p-6 rounded-3xl border border-border/40 bg-card/10 backdrop-blur-md space-y-4 animate-pulse">
@@ -29,9 +35,17 @@ export function StatCard({ title, value, icon, description, loading }: StatCardP
         </div>
       </div>
       <div>
-        <div className="text-3xl font-bold google-sans tracking-tight">{value}</div>
+        <div className="flex items-baseline gap-2">
+          <div className="text-3xl font-bold google-sans tracking-tight">{value}</div>
+          {trend && (
+            <div className={`flex items-center text-xs font-bold ${trend.isUp ? 'text-emerald-500' : 'text-rose-500'}`}>
+              {trend.isUp ? <ArrowUp className="w-3 h-3 mr-0.5" /> : <ArrowDown className="w-3 h-3 mr-0.5" />}
+              {trend.value}%
+            </div>
+          )}
+        </div>
         {description && (
-          <p className="text-xs text-muted-foreground mt-1">{description}</p>
+          <p className="text-xs text-muted-foreground mt-1 font-local-inter">{description}</p>
         )}
       </div>
     </div>
