@@ -264,7 +264,7 @@ export async function GET(req: NextRequest) {
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src={`${env.SITE_URL || req.nextUrl.origin}/img/blogfolios_og_icon.png`}
+                src={`${env.SITE_URL}/img/blogfolios_og_icon.png`}
                 alt="Logo"
                 style={{
                   width: "100%",
