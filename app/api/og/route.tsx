@@ -5,25 +5,69 @@ import { env } from "@/lib/env";
 export const runtime = "edge";
 
 /**
- * Strips HTML tags from a string to prevent XSS.
+ * Strips HTML tags from a string using a simple state machine.
+ * Completely avoids ReDoS vulnerabilities flagged by CodeQL.
+ * Safe for user-controlled query parameters.
+ */
+function stripTags(html: string): string {
+  if (typeof html !== "string") return "";
+  
+  let result = "";
+  let inTag = false;
+  
+  for (let i = 0; i < html.length; i++) {
+    const char = html[i];
+    if (char === "<" && !inTag) {
+      inTag = true;
+    } else if (char === ">" && inTag) {
+      inTag = false;
+      continue;
+    } else if (!inTag) {
+      result += char;
+    }
+  }
+  return result.trim();
+}
+
+/**
+ * Sanitizes text for use in OG image generation.
+ * Uses the safe stripTags implementation.
  */
 function sanitizeText(text: string): string {
-  let cleanText = text;
-  while (/<[^>]*>/g.test(cleanText)) {
-    cleanText = cleanText.replace(/<[^>]*>/g, "");
-  }
-  return cleanText;
+  const stripped = stripTags(text);
+  // Additional escaping for defense-in-depth (ImageResponse JSX will also escape, but we sanitize early)
+  return stripped
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
 }
 
 export async function GET(req: NextRequest) {
   const { searchParams } = req.nextUrl;
 
-  const title = sanitizeText(searchParams.get("title") || "PrasadM's Blogfolio");
+  const title = sanitizeText(
+    searchParams.get("title") || "PrasadM's Blogfolio"
+  );
   const description = sanitizeText(
     searchParams.get("description") ||
-    "Personal blogfolio documenting my engineering and development journey."
+      "Personal blogfolio documenting my engineering and development journey."
   );
-  const type = searchParams.get("type") || "default";
+
+  // Explicit allow-list to prevent tainted data from searchParams flowing into dynamic values
+  const rawType = searchParams.get("type") || "default";
+  const allowedTypes = new Set([
+    "research",
+    "articles",
+    "blog",
+    "projects",
+    "tools",
+    "tutorials",
+    "wiki",
+    "snippets",
+    "pages",
+    "default",
+  ]);
+  const type = allowedTypes.has(rawType) ? rawType : "default";
 
   const typeLabels: Record<string, string> = {
     research: "Research Article",
