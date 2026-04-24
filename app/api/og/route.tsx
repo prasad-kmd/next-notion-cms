@@ -1,14 +1,28 @@
 import { ImageResponse } from "next/og";
 import { NextRequest } from "next/server";
+import { env } from "@/lib/env";
 
 export const runtime = "edge";
 
+/**
+ * Strips HTML tags from a string to prevent XSS.
+ */
+function sanitizeText(text: string): string {
+  let cleanText = text;
+  while (/<[^>]*>/g.test(cleanText)) {
+    cleanText = cleanText.replace(/<[^>]*>/g, "");
+  }
+  return cleanText;
+}
+
 export async function GET(req: NextRequest) {
   const { searchParams } = req.nextUrl;
-  const title = searchParams.get("title") || "PrasadM's Blogfolio";
-  const description =
+
+  const title = sanitizeText(searchParams.get("title") || "PrasadM's Blogfolio");
+  const description = sanitizeText(
     searchParams.get("description") ||
-    "Personal blogfolio documenting my engineering and development journey.";
+    "Personal blogfolio documenting my engineering and development journey."
+  );
   const type = searchParams.get("type") || "default";
 
   const typeLabels: Record<string, string> = {
@@ -206,7 +220,7 @@ export async function GET(req: NextRequest) {
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src={`${req.nextUrl.origin}/img/blogfolios_og_icon.png`}
+                src={`${env.SITE_URL || req.nextUrl.origin}/img/blogfolios_og_icon.png`}
                 alt="Logo"
                 style={{
                   width: "100%",

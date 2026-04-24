@@ -6,11 +6,14 @@
  */
 export function injectHeadingIds(html: string): string {
   return html.replace(
-    /<h([2-4])([^>]*)>(.*?)<\/h\1>/gi,
+    /<h([2-4])([^>]*)>(.*?)<\/h\1\s*>/gi,
     (match, level, attrs, text) => {
       if (attrs.toLowerCase().includes("id=")) return match;
-      const id = text
-        .replace(/<[^>]*>/g, "")
+      let cleanText = text;
+      while (/<[^>]*>/g.test(cleanText)) {
+        cleanText = cleanText.replace(/<[^>]*>/g, "");
+      }
+      const id = cleanText
         .toLowerCase()
         .replace(/[^\w]+/g, "-")
         .replace(/^-+|-+$/g, "");
@@ -29,7 +32,7 @@ export function injectHeadingIds(html: string): string {
 export function injectQuiz(html: string): string {
   const placeholders: string[] = [];
   // Protect pre/code blocks from quiz regex to avoid accidental matches inside code
-  const protectedHtml = html.replace(/<(pre|code)[\s\S]*?<\/\1>/gi, (match) => {
+  const protectedHtml = html.replace(/<(pre|code)[\s\S]*?<\/\1\s*>/gi, (match) => {
     placeholders.push(match);
     return `__QUIZ_PROTECTED_BLOCK_${placeholders.length - 1}__`;
   });
@@ -38,7 +41,11 @@ export function injectQuiz(html: string): string {
     /\[quiz\]([\s\S]*?)\[\/quiz\]/g,
     (match, jsonContent) => {
       try {
-        let cleanJson = jsonContent.replace(/<[^>]*>/g, "").trim();
+        let cleanJson = jsonContent;
+        while (/<[^>]*>/g.test(cleanJson)) {
+          cleanJson = cleanJson.replace(/<[^>]*>/g, "");
+        }
+        cleanJson = cleanJson.trim();
         cleanJson = cleanJson.replace(/[\r\n\t]+/g, " ");
         
         // Escape backslashes while preserving valid JSON escape sequences
@@ -124,8 +131,33 @@ export function injectAlerts(html: string): string {
  * @returns Sanitized HTML string
  */
 export function sanitizeContent(html: string): string {
-  return html.replace(/<script\b[^>]*>([\s\S]*?)<\/script>/gim, (match) => {
-    if (match.includes("gist.github.com")) return match;
+  const gists: string[] = [];
+  // First pass: identify and protect valid GitHub Gists
+  let processedHtml = html.replace(/<script\b[^>]*>([\s\S]*?)<\/script\s*>/gim, (match) => {
+    const srcMatch = match.match(/src=["']([^"']+)["']/i);
+    if (srcMatch) {
+      try {
+        const url = new URL(srcMatch[1]);
+        if (url.hostname === "gist.github.com") {
+          gists.push(match);
+          return `__GIST_PLACEHOLDER_${gists.length - 1}__`;
+        }
+      } catch {
+        // Invalid URL in src
+      }
+    }
     return "";
+  });
+
+  // Second pass: aggressively remove any remaining script tags, including nested ones
+  let prevHtml;
+  do {
+    prevHtml = processedHtml;
+    processedHtml = processedHtml.replace(/<script\b[^>]*>([\s\S]*?)<\/script\s*>/gim, "");
+  } while (processedHtml !== prevHtml);
+
+  // Restore the protected Gists
+  return processedHtml.replace(/__GIST_PLACEHOLDER_(\d+)__/g, (match, index) => {
+    return gists[parseInt(index)];
   });
 }
