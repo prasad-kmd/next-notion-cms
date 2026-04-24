@@ -24,14 +24,20 @@ export function TOC({ content }: TOCProps) {
   useEffect(() => {
     // Extract headings from HTML content
     // Improved regex to be more flexible with attribute order and case sensitivity
-    const headingRegex = /<h([2-3])\s+[^>]*id=["']([^"']+)["'][^>]*>(.*?)<\/h\1>/gi
+    const headingRegex = /<h([2-3])\s+[^>]*id=["']([^"']+)["'][^>]*>(.*?)<\/h\1\s*>/gi
     const matches = Array.from(content.matchAll(headingRegex))
     
-    const extractedHeadings = matches.map((match) => ({
-      level: parseInt(match[1]),
-      id: match[2],
-      text: match[3].replace(/<[^>]*>/g, "").trim(), // Remove any nested HTML tags in heading
-    }))
+    const extractedHeadings = matches.map((match) => {
+      let cleanText = match[3];
+      while (/<[^>]*>/g.test(cleanText)) {
+        cleanText = cleanText.replace(/<[^>]*>/g, "");
+      }
+      return {
+        level: parseInt(match[1]),
+        id: match[2],
+        text: cleanText.trim(), // Remove any nested HTML tags in heading
+      };
+    })
 
     setHeadings(extractedHeadings)
   }, [content])
