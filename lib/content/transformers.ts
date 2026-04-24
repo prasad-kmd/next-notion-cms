@@ -1,3 +1,5 @@
+import sanitizeHtml from "sanitize-html";
+
 /**
  * Strips HTML tags from a string using a simple state machine.
  * Completely avoids ReDoS vulnerabilities flagged by CodeQL.
@@ -127,49 +129,45 @@ export function injectAlerts(html: string): string {
 
 /**
  * Sanitizes HTML content by removing dangerous script/style tags while preserving GitHub Gists.
- * Addresses CodeQL "Bad HTML filtering regexp" and "Incomplete multi-character sanitization".
+ * Uses a parser-based sanitizer instead of regex-based HTML filtering.
  */
 export function sanitizeContent(html: string): string {
   if (typeof html !== "string") return "";
 
-  const gists: string[] = [];
-  
-  // First pass: Protect valid GitHub Gists
-  let processedHtml = html.replace(
-    /<script\b[^>]*>([\s\S]*?)<\/script\s*>/gim,
-    (match) => {
-      const srcMatch = match.match(/src=["']([^"']+)["']/i);
-      if (srcMatch?.[1]) {
+  return sanitizeHtml(html, {
+    allowedTags: sanitizeHtml.defaults.allowedTags.concat(["img"]),
+    allowedAttributes: {
+      ...sanitizeHtml.defaults.allowedAttributes,
+      a: [...(sanitizeHtml.defaults.allowedAttributes.a || []), "target", "rel"],
+      img: ["src", "alt", "title", "width", "height", "loading"],
+      script: ["src"],
+    },
+    allowedSchemes: ["http", "https", "mailto"],
+    transformTags: {
+      script: (tagName, attribs) => {
+        const src = attribs?.src;
+        if (!src) {
+          return { tagName: "noscript", text: "" };
+        }
+
         try {
-          const url = new URL(
-            srcMatch[1].startsWith("//") ? "https:" + srcMatch[1] : srcMatch[1]
-          );
-          if (url.hostname === "gist.github.com" || url.hostname.endsWith(".github.com")) {
-            gists.push(match);
-            return `__GIST_PLACEHOLDER_${gists.length - 1}__`;
+          const parsed = new URL(src.startsWith("//") ? `https:${src}` : src);
+          const host = parsed.hostname.toLowerCase();
+          const isAllowedGistHost =
+            host === "gist.github.com" || host.endsWith(".github.com");
+
+          if (isAllowedGistHost) {
+            return {
+              tagName,
+              attribs: { src: attribs.src },
+            };
           }
         } catch {
-          // Invalid URL
+          // Invalid URL; drop script.
         }
-      }
-      return match; // Will be removed in next pass if not a gist
-    }
-  );
 
-  // Aggressively remove script and style tags with improved regex
-  // This pattern is more robust against variations of </script> tags
-  const dangerousTagRegex = /<(script|style)\b[^>]*>[\s\S]*?<\/\1\s*>/gi;
-  processedHtml = processedHtml.replace(dangerousTagRegex, "");
-
-  // Final safety pass: encode any remaining "<script" fragments that might have survived
-  // This directly addresses the "incomplete multi-character sanitization" warning
-  processedHtml = processedHtml
-    .replace(/<script/gi, "&lt;script")
-    .replace(/<\/script/gi, "&lt;/script");
-
-  // Restore protected Gists
-  return processedHtml.replace(
-    /__GIST_PLACEHOLDER_(\d+)__/g,
-    (_, index) => gists[parseInt(index)] ?? ""
-  );
+        return { tagName: "noscript", text: "" };
+      },
+    },
+  });
 }

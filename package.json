@@ -81,7 +81,8 @@
     "temml": "^0.13.1",
     "tw-animate-css": "latest",
     "unified": "^11.0.5",
-    "zod": "^3.24.2"
+    "zod": "^3.24.2",
+    "sanitize-html": "^2.17.3"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.14",
