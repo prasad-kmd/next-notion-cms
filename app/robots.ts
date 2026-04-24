@@ -19,6 +19,12 @@ export default function robots(): MetadataRoute.Robots {
           "/external-link",
           "/quiz/*",
         ],
+        // @ts-ignore
+        "Content-Signal": [
+          "search=yes",
+          "ai-input=yes",
+          "ai-train=no",
+        ],
       },
       {
         userAgent: "GPTBot",
