@@ -29,14 +29,20 @@ export function ArticleSidebar({
 
   useEffect(() => {
     const headingRegex =
-      /<h([2-4])\s+[^>]*id=["']([^"']+)["'][^>]*>([\s\S]*?)<\/h\1>/gi;
+      /<h([2-4])\s+[^>]*id=["']([^"']+)["'][^>]*>([\s\S]*?)<\/h\1\s*>/gi;
     const matches = Array.from(content.matchAll(headingRegex));
 
-    const extractedHeadings = matches.map((match) => ({
-      level: parseInt(match[1]),
-      id: match[2],
-      text: match[3].replace(/<[^>]*>/g, "").trim(),
-    }));
+    const extractedHeadings = matches.map((match) => {
+      let cleanText = match[3];
+      while (/<[^>]*>/g.test(cleanText)) {
+        cleanText = cleanText.replace(/<[^>]*>/g, "");
+      }
+      return {
+        level: parseInt(match[1]),
+        id: match[2],
+        text: cleanText.trim(),
+      };
+    });
 
     setHeadings(extractedHeadings);
   }, [content]);

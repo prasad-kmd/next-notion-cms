@@ -108,11 +108,16 @@ n2m.setCustomTransformer("embed", async (block) => {
   const { embed } = block as any;
   const url = embed.url;
 
-  if (url.includes("gist.github.com")) {
-    return `
-    <div class="gist-wrapper my-8 relative rounded-2xl overflow-hidden border border-border/40 shadow-sm">
-      <script src="${url}.js"></script>
-    </div>`;
+  try {
+    const urlObj = new URL(url);
+    if (urlObj.hostname === "gist.github.com") {
+      return `
+      <div class="gist-wrapper my-8 relative rounded-2xl overflow-hidden border border-border/40 shadow-sm">
+        <script src="${url}.js"></script>
+      </div>`;
+    }
+  } catch {
+    // Invalid URL, fall through to default embed
   }
 
   return `
