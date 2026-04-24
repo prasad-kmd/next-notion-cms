@@ -12,7 +12,7 @@ import { TurnstileWidget, type TurnstileWidgetRef } from "./turnstile-widget";
 
 interface CommentFormProps {
   pageId: string;
-  onSuccess: (newComment: any) => void;
+  onSuccess: (newComment: unknown) => void;
 }
 
 export function CommentForm({ pageId, onSuccess }: CommentFormProps) {

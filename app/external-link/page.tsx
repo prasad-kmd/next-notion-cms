@@ -9,7 +9,7 @@ const REDIRECT_DELAY = 5 // seconds
 
 function ExternalLinkContent() {
   const searchParams = useSearchParams()
-  const router = useRouter()
+  // const router = useRouter()
   const url = searchParams.get("url")
   const [countdown, setCountdown] = useState(REDIRECT_DELAY)
   const [isRedirecting, setIsRedirecting] = useState(false)

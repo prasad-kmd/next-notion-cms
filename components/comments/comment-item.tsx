@@ -6,13 +6,13 @@ import { User } from "lucide-react";
 import Image from "next/image";
 
 interface CommentItemProps {
-  comment: any; // Notion comment object
+  comment: unknown; // Notion comment object
 }
 
 export function CommentItem({ comment }: CommentItemProps) {
-  const plainText = comment.rich_text.map((t: any) => t.plain_text).join("");
+  const plainText = (comment as { rich_text: { plain_text: string }[] }).rich_text.map((t: unknown) => (t as { plain_text: string }).plain_text).join("");
   const parsed = parseComment(plainText);
-  const date = new Date(comment.created_time);
+  const date = new Date((comment as { created_time: string }).created_time);
 
   return (
     <div className="flex gap-4 p-4 rounded-2xl border border-border/40 bg-card/50 hover:bg-card/80 transition-colors group">

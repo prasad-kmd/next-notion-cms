@@ -18,8 +18,8 @@ export function PageviewsChart() {
         if (!response.ok) throw new Error("Failed to fetch analytics");
         const json = await response.json();
         setData(json);
-      } catch (err: any) {
-        setError(err.message);
+      } catch (err: unknown) {
+        setError((err as Error).message);
       } finally {
         setLoading(false);
       }

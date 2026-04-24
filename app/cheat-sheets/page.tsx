@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import {
   Printer,
   Download,
-  Search,
   Layout,
   Cpu,
   Code2,

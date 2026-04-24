@@ -20,8 +20,8 @@ import { Badge } from "@/components/ui/badge";
 import Link from 'next/link';
 
 interface SystemMonitorManagerProps {
-  initialStatus: any;
-  initialLogs: any[];
+  initialStatus: unknown;
+  initialLogs: unknown[];
 }
 
 export function SystemMonitorManager({ initialStatus, initialLogs }: SystemMonitorManagerProps) {

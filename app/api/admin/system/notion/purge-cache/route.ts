@@ -8,13 +8,13 @@ export async function POST() {
         const session = await requireAdmin();
         
         // Purge Notion-related caches
-        revalidateTag("notion-content");
-        revalidateTag("comments");
+        revalidateTag("notion-content", "fetch");
+        revalidateTag("comments", "fetch");
         
         await logInfo('notion', 'Cache purged manually', { admin: session.user.email });
 
         return NextResponse.json({ success: true });
-    } catch (error: any) {
+    } catch (error: unknown) {
         return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 }

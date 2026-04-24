@@ -1,4 +1,4 @@
-import { createHighlighter, type Highlighter } from "shiki";
+import { createHighlighter, type Highlighter, type BundledLanguage } from "shiki";
 
 let highlighter: Highlighter | null = null;
 
@@ -29,7 +29,7 @@ export async function highlightCode(code: string, lang: string): Promise<string>
   // Ensure language is loaded
   if (normalizedLang !== 'text' && !sh.getLoadedLanguages().includes(normalizedLang)) {
     try {
-      await sh.loadLanguage(normalizedLang as any);
+      await sh.loadLanguage(normalizedLang as BundledLanguage);
     } catch (e) {
       console.warn(`Failed to load Shiki language: ${normalizedLang}, falling back to text.`);
       lang = 'text';
@@ -41,9 +41,9 @@ export async function highlightCode(code: string, lang: string): Promise<string>
     theme: "one-dark-pro",
     transformers: [
       {
-        line(node: any, line: number) {
-          node.properties.class = (node.properties.class || "") + " line";
-          node.properties["data-line"] = line;
+        line(node: unknown, line: number) {
+          (node as { properties: { class?: string } }).properties.class = ((node as { properties: { class?: string } }).properties.class || "") + " line";
+          (node as { properties: { "data-line"?: number } }).properties["data-line"] = line;
         },
       },
     ],

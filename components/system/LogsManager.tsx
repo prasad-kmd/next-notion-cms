@@ -17,7 +17,7 @@ import { Badge } from "@/components/ui/badge";
 import Link from 'next/link';
 
 interface LogsManagerProps {
-  initialLogs: any[];
+  initialLogs: unknown[];
   initialTotal: number;
 }
 

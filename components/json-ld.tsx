@@ -1,6 +1,6 @@
 import { siteConfig } from "@/lib/config";
 
-export function JsonLd({ data }: { data: any }) {
+export function JsonLd({ data }: { data: unknown }) {
   return (
     <script
       type="application/ld+json"
@@ -37,20 +37,20 @@ export function getBreadcrumbSchema(items: { label: string; href: string }[]) {
   };
 }
 
-export function getContentSchema(post: any, type: string) {
+export function getContentSchema(post: unknown, type: string) {
   const schemaType = type === "articles" ? "TechArticle" : "BlogPosting";
   
   return {
     "@context": "https://schema.org",
     "@type": schemaType,
-    "headline": post.title,
-    "description": post.description,
-    "image": post.firstImage || `${siteConfig.url}/api/og?title=${encodeURIComponent(post.title)}`,
-    "datePublished": post.date,
+    "headline": (post as { title: string }).title,
+    "description": (post as { description: string }).description,
+    "image": (post as { firstImage: string }).firstImage || `${siteConfig.url}/api/og?title=${encodeURIComponent((post as { title: string }).title)}`,
+    "datePublished": (post as { date: string }).date,
     "author": {
       "@type": "Person",
-      "name": post.authorName || siteConfig.author,
-      "url": `${siteConfig.url}/authors/${post.author}`
+      "name": (post as { authorName: string }).authorName || siteConfig.author,
+      "url": `${siteConfig.url}/authors/{(post as { author: string }).author}`
     },
     "publisher": {
       "@type": "Organization",
@@ -62,7 +62,7 @@ export function getContentSchema(post: any, type: string) {
     },
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id": `${siteConfig.url}/${type}/${post.slug}`
+      "@id": `${siteConfig.url}/${type}/${(post as { slug: string }).slug}`
     }
   };
 }

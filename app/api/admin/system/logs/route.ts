@@ -27,8 +27,8 @@ export async function GET(req: NextRequest) {
         if (conditions.length > 0) {
             const combined = and(...conditions);
             if (combined) {
-                query = query.where(combined) as any;
-                countQuery = countQuery.where(combined) as any;
+                query = query.where(combined) as unknown as typeof query;
+                countQuery = countQuery.where(combined) as unknown as typeof countQuery;
             }
         }
         
@@ -41,7 +41,7 @@ export async function GET(req: NextRequest) {
             logs,
             total: Number(totalResult[0]?.count || 0)
         });
-    } catch (error: any) {
+    } catch (error: unknown) {
         return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 }

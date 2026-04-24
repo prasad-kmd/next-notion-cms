@@ -57,11 +57,11 @@ export function LinkedAccounts({ accounts }: LinkedAccountsProps) {
         setIsLoading(providerId);
         try {
             await authClient.linkSocial({
-                provider: providerId as any,
+                provider: providerId as unknown as never,
                 callbackURL: window.location.origin + "/dashboard",
             });
-        } catch (error: any) {
-            toast.error(error.message || `Failed to link ${providerId}`);
+        } catch (error: unknown) {
+            toast.error((error as Error).message || `Failed to link ${providerId}`);
         } finally {
             setIsLoading(null);
         }
@@ -75,13 +75,14 @@ export function LinkedAccounts({ accounts }: LinkedAccountsProps) {
 
         setIsUnlinking(id);
         try {
+            const account = accounts.find(a => a.id === id);
             await authClient.unlinkAccount({
-                accountID: id,
+                providerId: account?.providerId ?? id,
             });
             toast.success("Account disconnected successfully");
             window.location.reload();
-        } catch (error: any) {
-            toast.error(error.message || "Failed to disconnect account");
+        } catch (error: unknown) {
+            toast.error((error as Error).message || "Failed to disconnect account");
         } finally {
             setIsUnlinking(null);
             setConfirmUnlink(null);

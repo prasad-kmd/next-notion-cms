@@ -29,12 +29,9 @@ import { contentConfig, notionConfig } from "./constants";
 // Custom renderer to add IDs to headings for TOC
 const renderer = new marked.Renderer();
 renderer.heading = ({ text, depth }) => {
-  let cleanText = text;
-  while (/<[^>]*>/g.test(cleanText)) {
-    cleanText = cleanText.replace(/<[^>]*>/g, "");
-  }
-  const id = cleanText
+  const id = text
     .toLowerCase()
+    .replace(/<[^>]*>/g, "")
     .replace(/[^\w]+/g, "-")
     .replace(/^-+|-+$/g, "");
   return `<h${depth} id="${id}">${text}</h${depth}>`;
@@ -55,15 +52,15 @@ const quizExtension = {
       };
     }
   },
-  renderer(token: any) {
-    return `[quiz]${token.json}[/quiz]`;
+  renderer(token: unknown) {
+    return `[quiz]${(token as { json: string }).json}[/quiz]`;
   },
 };
 
 marked.use({
   renderer,
   async: true,
-  extensions: [quizExtension as any],
+  extensions: [quizExtension] as Parameters<typeof marked.use>[0]["extensions"],
 });
 
 /**
@@ -72,7 +69,7 @@ marked.use({
 async function highlightCodeBlocks(html: string): Promise<string> {
   try {
     const codeRegex =
-      /<pre[^>]*><code(?:\s+class="language-([^"]+)")?[^>]*>([\s\S]*?)<\/code\s*><\/pre\s*>/g;
+      /<pre[^>]*><code(?:\s+class="language-([^"]+)")?[^>]*>([\s\S]*?)<\/code><\/pre>/g;
     const matches = Array.from(html.matchAll(codeRegex));
     if (matches.length === 0) return html;
 
@@ -222,17 +219,20 @@ function extractFirstImage(
 
 const contentDirectory = path.join(process.cwd(), "content");
 
+/** Shape of a Notion page's properties object used throughout content fetching. */
+type NotionProps = Record<string, unknown>;
+
 /**
  * Low-level fetcher for Notion content list.
  */
 async function fetchNotionContentByType(type: string): Promise<ContentItem[]> {
-  const databaseId = (DATABASE_IDS as any)[type];
+  const databaseId = (DATABASE_IDS as unknown as { [key: string]: string })[type];
   if (!databaseId) return [];
 
   try {
     const dbObj = await notion.databases.retrieve({ database_id: databaseId });
-    const dataSourceId = (dbObj as any).data_sources?.[0]?.id || databaseId;
-    const response: any = await notion.dataSources.query({
+    const dataSourceId = (dbObj as unknown as { data_sources: { id: string }[] }).data_sources?.[0]?.id || databaseId;
+    const response: unknown = await notion.dataSources.query({
       data_source_id: dataSourceId,
       filter: {
         property: "Status",
@@ -249,7 +249,7 @@ async function fetchNotionContentByType(type: string): Promise<ContentItem[]> {
     });
 
     const items = await Promise.all(
-      response.results.map(async (page: any) => {
+      (response as { results: { id: string; properties: NotionProps }[] }).results.map(async (page) => {
         const props = page.properties;
         const slug = getPlainText(props.Slug);
         const title = getPlainText(props.Name || props.Title);
@@ -261,15 +261,12 @@ async function fetchNotionContentByType(type: string): Promise<ContentItem[]> {
         const technical = getMultiSelect(props.Technical).join(", ");
 
         let authorSlug = "";
-        if (
-          props.Authors &&
-          props.Authors.relation &&
-          props.Authors.relation.length > 0
-        ) {
-          const authorPage: any = await notion.pages.retrieve({
-            page_id: props.Authors.relation[0].id,
+        const authors = props.Authors as { relation?: { id: string }[] } | undefined;
+        if (authors?.relation && authors.relation.length > 0) {
+          const authorPage = await notion.pages.retrieve({
+            page_id: authors.relation[0].id,
           });
-          authorSlug = getPlainText(authorPage.properties.Slug);
+          authorSlug = getPlainText((authorPage as { properties: NotionProps }).properties.Slug);
         }
 
         return {
@@ -288,7 +285,7 @@ async function fetchNotionContentByType(type: string): Promise<ContentItem[]> {
           tags,
           aiAssisted,
           author: authorSlug,
-          type: type as any,
+          type: type as ContentItem["type"],
         };
       }),
     );
@@ -378,13 +375,13 @@ async function fetchNotionContentItem(
   type: string,
   slug: string,
 ): Promise<ContentItem | null> {
-  const databaseId = (DATABASE_IDS as any)[type];
+  const databaseId = (DATABASE_IDS as unknown as { [key: string]: string })[type];
   if (!databaseId) return null;
 
   try {
     const dbObj = await notion.databases.retrieve({ database_id: databaseId });
-    const dataSourceId = (dbObj as any).data_sources?.[0]?.id || databaseId;
-    const response: any = await notion.dataSources.query({
+    const dataSourceId = (dbObj as unknown as { data_sources: { id: string }[] }).data_sources?.[0]?.id || databaseId;
+    const response: unknown = await notion.dataSources.query({
       data_source_id: dataSourceId,
       filter: {
         property: "Slug",
@@ -394,9 +391,9 @@ async function fetchNotionContentItem(
       },
     });
 
-    if (response.results.length === 0) return null;
+    if ((response as { results: unknown[] }).results.length === 0) return null;
 
-    const page: any = response.results[0];
+    const page = (response as { results: { id: string; properties: NotionProps }[] }).results[0];
     const props = page.properties;
 
     const mdblocks = await n2m.pageToMarkdown(page.id);
@@ -411,15 +408,12 @@ async function fetchNotionContentItem(
     const technical = getMultiSelect(props.Technical).join(", ");
 
     let authorSlug = "";
-    if (
-      props.Authors &&
-      props.Authors.relation &&
-      props.Authors.relation.length > 0
-    ) {
-      const authorPage: any = await notion.pages.retrieve({
-        page_id: props.Authors.relation[0].id,
+    const authors = props.Authors as { relation?: { id: string }[] } | undefined;
+    if (authors?.relation && authors.relation.length > 0) {
+      const authorPage = await notion.pages.retrieve({
+        page_id: authors.relation[0].id,
       });
-      authorSlug = getPlainText(authorPage.properties.Slug);
+      authorSlug = getPlainText((authorPage as { properties: NotionProps }).properties.Slug);
     }
 
     const protectedContent = mdString.replace(
@@ -434,7 +428,7 @@ async function fetchNotionContentItem(
     const firstImage = extractFirstImage(mdString, true);
 
     return {
-      id: page.id,
+      id: (page as { id: string }).id,
       slug,
       title,
       date,
@@ -451,7 +445,7 @@ async function fetchNotionContentItem(
       tags,
       aiAssisted,
       author: authorSlug,
-      type: type as any,
+      type: type as ContentItem["type"],
     };
   } catch (error) {
     console.error(`Error fetching Notion item ${slug} for ${type}:`, error);
@@ -591,8 +585,8 @@ export const getAuthorBasic = cache(async function (
         const dbObj = await notion.databases.retrieve({
           database_id: databaseId,
         });
-        const dataSourceId = (dbObj as any).data_sources?.[0]?.id || databaseId;
-        const response: any = await notion.dataSources.query({
+        const dataSourceId = (dbObj as unknown as { data_sources: { id: string }[] }).data_sources?.[0]?.id || databaseId;
+        const response: unknown = await notion.dataSources.query({
           data_source_id: dataSourceId,
           filter: {
             property: "Slug",
@@ -601,8 +595,8 @@ export const getAuthorBasic = cache(async function (
             },
           },
         });
-        if (response.results.length === 0) return null;
-        const page: any = response.results[0];
+        if ((response as { results: unknown[] }).results.length === 0) return null;
+        const page = (response as { results: { properties: NotionProps }[] }).results[0];
         const props = page.properties;
         return {
           name: getPlainText(props.Name || props.Title),
@@ -651,8 +645,8 @@ export const getAuthorBySlug = cache(async function (
         const dbObj = await notion.databases.retrieve({
           database_id: databaseId,
         });
-        const dataSourceId = (dbObj as any).data_sources?.[0]?.id || databaseId;
-        const response: any = await notion.dataSources.query({
+        const dataSourceId = (dbObj as unknown as { data_sources: { id: string }[] }).data_sources?.[0]?.id || databaseId;
+        const response: unknown = await notion.dataSources.query({
           data_source_id: dataSourceId,
           filter: {
             property: "Slug",
@@ -661,8 +655,8 @@ export const getAuthorBySlug = cache(async function (
             },
           },
         });
-        if (response.results.length === 0) return null;
-        const page: any = response.results[0];
+        if ((response as { results: unknown[] }).results.length === 0) return null;
+        const page = (response as { results: { id: string; properties: NotionProps }[] }).results[0];
         const props = page.properties;
 
         const mdblocks = await n2m.pageToMarkdown(page.id);
@@ -737,8 +731,8 @@ export const getAllAuthors = cache(async function (): Promise<Author[]> {
         const dbObj = await notion.databases.retrieve({
           database_id: databaseId,
         });
-        const dataSourceId = (dbObj as any).data_sources?.[0]?.id || databaseId;
-        const response: any = await notion.dataSources.query({
+        const dataSourceId = (dbObj as unknown as { data_sources: { id: string }[] }).data_sources?.[0]?.id || databaseId;
+        const response: unknown = await notion.dataSources.query({
           data_source_id: dataSourceId,
           filter: {
             property: "Status",
@@ -748,7 +742,7 @@ export const getAllAuthors = cache(async function (): Promise<Author[]> {
           },
         });
 
-        return response.results.map((page: any) => {
+        return (response as { results: { properties: NotionProps }[] }).results.map((page) => {
           const props = page.properties;
           return {
             name: getPlainText(props.Name || props.Title),

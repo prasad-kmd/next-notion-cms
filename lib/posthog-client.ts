@@ -3,7 +3,7 @@
 import posthog from "posthog-js";
 
 if (typeof window !== "undefined") {
-  (window as any).posthog = posthog;
+  (window as unknown as { posthog: typeof posthog }).posthog = posthog;
 }
 
 // The initialization logic is now handled in instrumentation-client.ts in the root

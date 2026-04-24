@@ -51,7 +51,15 @@ export default async function DashboardPage() {
         where: eq(user.id, sessionUser.id)
     });
 
-    const displayUser = (dbUser || sessionUser) as any;
+    type DashboardUser = {
+        name: string;
+        email: string;
+        image?: string | null;
+        role?: string;
+        preferences: { bookmarks?: unknown[]; accentColor?: string; [key: string]: unknown } | null;
+        [key: string]: unknown;
+    };
+    const displayUser = (dbUser || sessionUser) as unknown as DashboardUser;
 
     // Fetch accounts for the user
     const accounts = await getUserAccounts();
@@ -113,8 +121,8 @@ export default async function DashboardPage() {
                         <TabsContent value="overview" className="space-y-10 mt-0 focus-visible:outline-none">
                             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                                 <div className="lg:col-span-2 space-y-8">
-                                    <ProfileOverview user={displayUser as any} />
-                                    <StatsSummary preferences={displayUser.preferences as any} />
+                                    <ProfileOverview user={displayUser} />
+                                    <StatsSummary preferences={displayUser.preferences} />
                                 </div>
                                 <div className="space-y-6">
                                     <div className="p-6 rounded-3xl border border-border/40 bg-card/10 backdrop-blur-md space-y-4 shadow-sm">
@@ -189,7 +197,7 @@ export default async function DashboardPage() {
                         </TabsContent>
 
                         <TabsContent value="activity" className="mt-0 focus-visible:outline-none">
-                            <ActivityTab bookmarkCount={(displayUser.preferences as any)?.bookmarks?.length || 0} />
+                            <ActivityTab bookmarkCount={displayUser.preferences?.bookmarks?.length || 0} />
                         </TabsContent>
                     </Tabs>
                 </div>

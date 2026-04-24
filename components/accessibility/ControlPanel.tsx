@@ -35,7 +35,7 @@ export function ControlPanel() {
     isHighContrast,
   } = useAccessibility();
 
-  const trackEvent = (setting: string, value: any) => {
+  const trackEvent = (setting: string, value: unknown) => {
     posthog.capture("accessibility_setting_changed", {
       setting,
       value,

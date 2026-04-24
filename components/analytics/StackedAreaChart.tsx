@@ -48,21 +48,21 @@ export function StackedAreaChart({ timeRange, breakdownBy, title }: StackedAreaC
           
           const allLabels = results[0]?.labels || [];
           const transformed = allLabels.map((label: string, i: number) => {
-            const point: any = { date: label };
-            results.forEach((series: any) => {
-              const key = series.breakdown_value === "$$_posthog_breakdown_null_$$" || !series.breakdown_value 
+            const point: unknown = { date: label };
+            results.forEach((series: unknown) => {
+              const key = (series as { breakdown_value: string }).breakdown_value === "$$_posthog_breakdown_null_$$" || !(series as { breakdown_value: string }).breakdown_value 
                 ? "Unknown" 
-                : series.breakdown_value;
-              point[key] = series.data[i];
+                : (series as { breakdown_value: string }).breakdown_value;
+              (point as Record<string, unknown>)[key] = (series as { data: number[] }).data[i];
             });
             return point;
           });
           
           setData(transformed);
-          setCategories(results.map((s: any) => 
-            s.breakdown_value === "$$_posthog_breakdown_null_$$" || !s.breakdown_value 
+          setCategories(results.map((s: unknown) => 
+            (s as { breakdown_value: string }).breakdown_value === "$$_posthog_breakdown_null_$$" || !(s as { breakdown_value: string }).breakdown_value 
             ? "Unknown" 
-            : s.breakdown_value
+            : (s as { breakdown_value: string }).breakdown_value
           ));
         }
       } catch (err) {

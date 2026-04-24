@@ -11,7 +11,7 @@ interface RelatedContentProps {
 export async function RelatedContent({ type, currentSlug }: RelatedContentProps) {
   const allItems = await getContentByType(type);
   const relatedItems = allItems
-    .filter((item: any) => item.slug !== currentSlug)
+    .filter((item: unknown) => (item as { slug: string }).slug !== currentSlug)
     .slice(0, 3);
 
   if (relatedItems.length === 0) {

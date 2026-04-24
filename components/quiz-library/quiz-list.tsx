@@ -9,7 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/componen
 import { Input } from "@/components/ui/input"
 
 interface QuizListProps {
-  quizzes: any[]
+  quizzes: unknown[]
 }
 
 export function QuizList({ quizzes }: QuizListProps) {
@@ -20,9 +20,9 @@ export function QuizList({ quizzes }: QuizListProps) {
   const loadStatuses = () => {
     const statuses: Record<string, any> = {}
     quizzes.forEach(q => {
-      const stored = localStorage.getItem(`quiz_status_${q.slug}`)
+      const stored = localStorage.getItem(`quiz_status_${(q as { slug: string }).slug}`)
       if (stored) {
-        statuses[q.slug] = JSON.parse(stored)
+        statuses[(q as { slug: string }).slug] = JSON.parse(stored)
       }
     })
     setQuizStatuses(statuses)
@@ -35,12 +35,12 @@ export function QuizList({ quizzes }: QuizListProps) {
     return () => window.removeEventListener('quiz_updated', handleUpdate)
   }, [quizzes])
 
-  const categories = ["All", ...Array.from(new Set(quizzes.map(q => q.category || "General")))]
+  const categories = ["All", ...Array.from(new Set(quizzes.map(q => (q as { category: string }).category || "General")))]
 
   const filteredQuizzes = quizzes.filter(q => {
-    const matchesSearch = q.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                          q.description.toLowerCase().includes(searchQuery.toLowerCase())
-    const matchesCategory = selectedCategory === "All" || (q.category || "General") === selectedCategory
+    const matchesSearch = (q as { title: string }).title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                          (q as { description: string }).description.toLowerCase().includes(searchQuery.toLowerCase())
+    const matchesCategory = selectedCategory === "All" || ((q as { category: string }).category || "General") === selectedCategory
     return matchesSearch && matchesCategory
   })
 
@@ -74,15 +74,15 @@ export function QuizList({ quizzes }: QuizListProps) {
 
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {filteredQuizzes.map((quiz) => {
-          const status = quizStatuses[quiz.slug]
+          const status = quizStatuses[(quiz as { slug: string }).slug]
           const isCompleted = status?.completed
 
           return (
-            <Card key={quiz.slug} className="group flex flex-col overflow-hidden border-border bg-card transition-all hover:border-primary/50 hover:shadow-lg">
+            <Card key={(quiz as { slug: string }).slug} className="group flex flex-col overflow-hidden border-border bg-card transition-all hover:border-primary/50 hover:shadow-lg">
               <CardHeader className="pb-4">
                 <div className="flex items-start justify-between mb-2">
                   <Badge variant="secondary" className="font-google-sans">
-                    {quiz.category || "General"}
+                    {(quiz as { category: string }).category || "General"}
                   </Badge>
                   {isCompleted && (
                     <Badge variant="outline" className="bg-green-500/10 text-green-600 border-green-500/20 gap-1">
@@ -92,12 +92,12 @@ export function QuizList({ quizzes }: QuizListProps) {
                   )}
                 </div>
                 <CardTitle className="text-xl font-google-sans group-hover:text-primary transition-colors">
-                  {quiz.title}
+                  {(quiz as { title: string }).title}
                 </CardTitle>
               </CardHeader>
               <CardContent className="flex-1">
                 <p className="text-sm text-muted-foreground line-clamp-3 mb-4 local-inter">
-                  {quiz.description}
+                  {(quiz as { description: string }).description}
                 </p>
 
                 {isCompleted && (
@@ -112,7 +112,7 @@ export function QuizList({ quizzes }: QuizListProps) {
               </CardContent>
               <CardFooter className="pt-0 pb-6 border-t-0">
                 <Button asChild className="w-full gap-2 font-google-sans">
-                  <Link href={`/quiz/${quiz.slug}`}>
+                  <Link href={`/quiz/${(quiz as { slug: string }).slug}`}>
                     {isCompleted ? "Retake Quiz" : "Start Quiz"}
                     <ArrowRight className="h-4 w-4" />
                   </Link>

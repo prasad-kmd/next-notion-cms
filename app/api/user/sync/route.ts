@@ -51,15 +51,16 @@ export async function POST(req: Request) {
             where: eq(user.id, session.user.id),
         });
 
-        const currentPrefs = (currentUser?.preferences as any) || {};
+        const currentPrefs = (currentUser?.preferences as unknown as Record<string, unknown>) || {};
         
         // Strategy: Merge local data with database data
         // For bookmarks, we merge and deduplicate by slug + type
-        let mergedBookmarks = currentPrefs.bookmarks || [];
+        type BookmarkItem = { type?: string; slug?: string; [key: string]: unknown };
+        let mergedBookmarks = (currentPrefs.bookmarks as BookmarkItem[]) || [];
         if (bookmarks && Array.isArray(bookmarks)) {
-            const existingSlugs = new Set(mergedBookmarks.map((b: any) => `${b.type}:${b.slug}`));
+            const existingSlugs = new Set(mergedBookmarks.map((b) => `${b.type}:${b.slug}`));
             
-            for (const b of bookmarks) {
+            for (const b of bookmarks as BookmarkItem[]) {
                 if (!existingSlugs.has(`${b.type}:${b.slug}`)) {
                     mergedBookmarks.push(b);
                 }

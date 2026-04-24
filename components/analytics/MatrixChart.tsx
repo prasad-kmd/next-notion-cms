@@ -62,10 +62,10 @@ export function MatrixChart({ timeRange, primaryDimension, secondaryDimension, t
           
           // For now, let's just show a breakdown of primary dimension
           // because true 2D matrix needs a specific HogQL query shape.
-          const transformed = results.map((s: any, i: number) => ({
-            label: s.breakdown_value || "Other",
-            value: s.data.reduce((acc: number, v: number) => acc + v, 0)
-          })).sort((a: any, b: any) => b.value - a.value).slice(0, 10);
+          const transformed = results.map((s: unknown, i: number) => ({
+            label: (s as { breakdown_value: string }).breakdown_value || "Other",
+            value: (s as { data: number[] }).data.reduce((acc: number, v: number) => acc + v, 0)
+          })).sort((a: unknown, b: unknown) => (b as { value: number }).value - (a as { value: number }).value).slice(0, 10);
           
           setData(transformed);
         }

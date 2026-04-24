@@ -26,7 +26,7 @@ export default function ContactForm() {
     } else if (state?.success === false) {
       toast.error(state.message);
       if (state.errors) {
-        Object.values(state.errors).flat().forEach((err: any) => toast.error(err));
+        Object.values(state.errors).flat().forEach((err: unknown) => toast.error(err as string));
       }
     }
   }, [state]);
@@ -52,7 +52,7 @@ export default function ContactForm() {
     <form
       ref={formRef}
       action={formAction}
-      className="group relative space-y-8 overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-card/80 to-card/40 p-1 md:p-1.5"
+      className="group relative space-y-8 overflow-hidden rounded-2xl border border-white/10 bg-linear-to-br from-card/80 to-card/40 p-1 md:p-1.5"
     >
       {/* Decorative background effect */}
       <div className="absolute -right-24 -top-24 h-48 w-48 rounded-full bg-primary/10 blur-3xl transition-all group-hover:bg-primary/20" />

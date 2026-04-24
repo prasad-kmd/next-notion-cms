@@ -1,4 +1,4 @@
-import { getAllAuthors, Author } from "@/lib/content";
+import { getAllAuthors } from "@/lib/content";
 import { Container } from "@/components/container";
 import { FadeIn } from "@/components/fade-in";
 import Image from "next/image";

@@ -1,5 +1,5 @@
 import React from 'react';
-import { StatusIndicator } from "@/components/system/StatusIndicator";
+import { StatusIndicator, StatusType } from "@/components/system/StatusIndicator";
 import { Badge } from "@/components/ui/badge";
 import { 
   ShieldCheck, 
@@ -126,13 +126,13 @@ export default async function PublicStatusPage() {
 
         {/* Services Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {data.services.map((service: any) => (
-            <div key={service.name} className="group rounded-[1.5rem] border border-border/50 bg-card/40 p-6 flex flex-col gap-4 hover:border-primary/30 transition-all hover:shadow-md backdrop-blur-sm">
+          {(data.services as { name: string; status: string; description: string }[]).map((service) => (
+            <div key={service.name} className="group rounded-3xl border border-border/50 bg-card/40 p-6 flex flex-col gap-4 hover:border-primary/30 transition-all hover:shadow-md backdrop-blur-sm">
               <div className="flex items-start justify-between">
                 <div className="p-3 rounded-2xl bg-muted/50 text-muted-foreground group-hover:text-primary transition-colors border border-border/40">
                   {serviceIcons[service.name as keyof typeof serviceIcons] || <Database className="w-5 h-5" />}
                 </div>
-                <StatusIndicator status={service.status} withLabel size="md" />
+                <StatusIndicator status={service.status as StatusType} withLabel size="md" />
               </div>
               
               <div className="space-y-1">

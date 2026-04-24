@@ -5,19 +5,19 @@ import { sql } from "drizzle-orm";
 export type LogService = 'notion' | 'supabase' | 'posthog' | 'system';
 export type LogLevel = 'info' | 'warning' | 'error';
 
-export async function logInfo(service: LogService, message: string, metadata: any = {}) {
+export async function logInfo(service: LogService, message: string, metadata: unknown = {}) {
     return log('info', service, message, metadata);
 }
 
-export async function logWarning(service: LogService, message: string, metadata: any = {}) {
+export async function logWarning(service: LogService, message: string, metadata: unknown = {}) {
     return log('warning', service, message, metadata);
 }
 
-export async function logError(service: LogService, message: string, metadata: any = {}) {
+export async function logError(service: LogService, message: string, metadata: unknown = {}) {
     return log('error', service, message, metadata);
 }
 
-async function log(level: LogLevel, service: LogService, message: string, metadata: any = {}) {
+async function log(level: LogLevel, service: LogService, message: string, metadata: unknown = {}) {
     try {
         await db.insert(systemLogs).values({
             service,
