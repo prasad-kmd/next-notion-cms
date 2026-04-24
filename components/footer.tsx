@@ -185,7 +185,7 @@ export function Footer() {
               © {currentYear} PrasadM. Documenting Engineering Excellence.
             </p>
             <p className="text-[10px] text-muted-foreground/60 font-mono tracking-tight uppercase">
-              Built with Next.js 15 & Tailwind CSS 4
+              Built with Next.js 16 & Tailwind CSS 4
             </p>
           </div>
 
