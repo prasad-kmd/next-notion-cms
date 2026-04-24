@@ -124,7 +124,7 @@ export function injectAlerts(html: string): string {
  * @returns Sanitized HTML string
  */
 export function sanitizeContent(html: string): string {
-  return html.replace(/<script\b[^>]*>([\s\S]*?)<\/script\b[^>]*>/gim, (match) => {
+  return html.replace(/<script\b[^>]*>([\s\S]*?)<\/script>/gim, (match) => {
     if (match.includes("gist.github.com")) return match;
     return "";
   });
