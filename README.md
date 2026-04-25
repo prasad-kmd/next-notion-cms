@@ -87,39 +87,39 @@ Perfect for researchers, engineers, and developers who need a robust, scalable, 
 
 ---
 
-## 📸 Screenshots / Gallery
+## 📸 Screenshots / Gallery (To be updated)
 
 ### Hero & Landing
-![Hero Dashboard](public/img/hero/1.webp)
+<!-- ![Hero Dashboard](public/img/hero/1.webp) -->
 *Engineering Excellence Dashboard with timed carousel of latest works*
 
-![Features Overview](public/img/hero/2.webp)
+<!-- ![Features Overview](public/img/hero/2.webp) -->
 *Technical features showcase with code-focused aesthetics*
 
-![Content Display](public/img/hero/3.webp)
+<!-- ![Content Display](public/img/hero/3.webp) -->
 *Specialized content cards for blogs, articles, and projects*
 
-![Documentation View](public/img/hero/4.webp)
+<!-- ![Documentation View](public/img/hero/4.webp) -->
 *High-fidelity documentation layout with syntax highlighting*
 
 ### Page Previews
-![Blog Posts](public/img/page/posts.webp)
+<!-- ![Blog Posts](public/img/page/posts.webp) -->
 *Blog listing with specialized card design*
 
-![Diary Page](public/img/page/diary.webp)
+<!-- ![Diary Page](public/img/page/diary.webp) -->
 *Personal diary section with clean typography*
 
-![Ideas Board](public/img/page/ideas.webp)
+<!-- ![Ideas Board](public/img/page/ideas.webp) -->
 *Ideas and concepts visualization*
 
-![Workflow Diagram](public/img/page/workflow.webp)
+<!-- ![Workflow Diagram](public/img/page/workflow.webp) -->
 *Technical workflow illustrations*
 
 ### About & Contact
-![About Us](public/img/about_us.webp)
+<!-- ![About Us](public/img/about_us.webp) -->
 *Team and contributors showcase*
 
-![Contact Form](public/img/contact_us.webp)
+<!-- ![Contact Form](public/img/contact_us.webp) -->
 *Secure contact form with Telegram integration*
 
 ---
