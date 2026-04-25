@@ -1,23 +1,6 @@
 "use server";
 
-import { z } from "zod";
-import fs from "fs";
-import path from "path";
-
-const contactSchema = z.object({
-  name: z.string().min(2, "Name must be at least 2 characters").max(100),
-  email: z.string().email("Invalid email address"),
-  phone: z
-    .string()
-    .optional()
-    .refine((val) => !val || /^\+?[\d\s-]{8,}$/.test(val), {
-      message: "Invalid phone number format",
-    }),
-  message: z
-    .string()
-    .min(10, "Message must be at least 10 characters")
-    .max(5000, "Message is too long"),
-});
+import { validateContactForm } from "@/lib/validation/validate";
 
 // Simple in-memory rate limiting (Note: This will reset on server restart/re-deploy)
 // For a more robust solution, use Redis or a similar store.
@@ -42,47 +25,39 @@ function isRateLimited(identifier: string): boolean {
 export async function submitContactForm(prevState: unknown, formData: FormData) {
   // We don't have easy access to IP in Server Actions without headers()
   // But we can use email as a simple identifier for rate limiting
-  const email = formData.get("email") as string;
+  const emailInput = formData.get("email") as string;
+  const turnstileToken = formData.get("cf-turnstile-response") as string;
 
-  if (email && isRateLimited(email)) {
+  if (emailInput && isRateLimited(emailInput)) {
     return {
       success: false,
       message: "Too many requests. Please try again later.",
+      validationError: {
+        type: "rate_limit",
+        message: "Too many requests. Please try again later.",
+      }
     };
   }
 
-  const validatedFields = contactSchema.safeParse({
+  const validationResult = await validateContactForm({
     name: formData.get("name"),
     email: formData.get("email"),
     phone: formData.get("phone"),
     message: formData.get("message"),
-  });
+  }, turnstileToken);
 
-  if (!validatedFields.success) {
+  if (!validationResult.success) {
     return {
       success: false,
-      message: "Validation failed",
-      errors: validatedFields.error.flatten().fieldErrors,
+      message: validationResult.error.message,
+      errors: validationResult.error.errors, // For Zod field errors
+      validationError: validationResult.error, // Unified error object
     };
   }
 
-  const { name, email: validatedEmail, phone, message } = validatedFields.data;
+  const { name, email: validatedEmail, phone, message } = validationResult.data;
 
   try {
-    // Check temp mail
-    const tempMailPath = path.join(process.cwd(), "public/data/tempmail.json");
-    const tempMailData = JSON.parse(fs.readFileSync(tempMailPath, "utf8"));
-    const domainSet = new Set(tempMailData.domains);
-    const emailDomain = validatedEmail.split("@")[1]?.toLowerCase();
-
-    if (emailDomain && domainSet.has(emailDomain)) {
-      return {
-        success: false,
-        message:
-          "Temporary email domains are not allowed. Please use a valid email address.",
-      };
-    }
-
     const telegramToken = process.env.TELEGRAM_TOKEN;
     const telegramChatId = process.env.TELEGRAM_CHAT_ID;
 

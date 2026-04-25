@@ -4,12 +4,14 @@ import { useState, useRef } from "react";
 import { authClient } from "@/lib/auth-client";
 import { posthog } from "@/lib/posthog-client";
 import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
+import { HighlightedTextArea } from "@/components/ui/HighlightedTextArea";
 import { Send, Loader2, Lock } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { toast } from "sonner";
 import { TurnstileWidget, type TurnstileWidgetRef } from "./turnstile-widget";
+import { BlockedWord } from "@/types/validation";
+import { showProfanityError } from "@/lib/validation/notifications";
 
 interface Comment {
   id: string;
@@ -28,6 +30,7 @@ export function CommentForm({ pageId, onSuccess }: CommentFormProps) {
   const [honeypot, setHoneypot] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
+  const [blockedWords, setBlockedWords] = useState<BlockedWord[]>([]);
   const turnstileRef = useRef<TurnstileWidgetRef>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -46,9 +49,18 @@ export function CommentForm({ pageId, onSuccess }: CommentFormProps) {
         }),
       });
 
-      if (!res.ok) throw new Error("Failed to post comment");
+      const data = await res.json();
 
-      const newComment = await res.json();
+      if (!res.ok) {
+        if (data.type === "profanity" && data.blockedWords) {
+          setBlockedWords(data.blockedWords);
+          showProfanityError(data.blockedWords.length);
+          return;
+        }
+        throw new Error(data.error || "Failed to post comment");
+      }
+
+      const newComment = data;
       
       // Track comment submission in PostHog
       if (posthog) {
@@ -56,18 +68,19 @@ export function CommentForm({ pageId, onSuccess }: CommentFormProps) {
           page_id: pageId,
           content_length: content.trim().length,
           author_id: session?.user?.id,
-          // Extract info from page if possible, otherwise rely on backend or previous registration
         });
       }
 
       setContent("");
+      setBlockedWords([]);
       setTurnstileToken(null);
       turnstileRef.current?.reset();
       onSuccess(newComment);
       toast.success("Comment posted successfully!");
-    } catch (error) {
+    } catch (error: unknown) {
       console.error(error);
-      toast.error("Failed to post comment. Please try again.");
+      const errorMessage = error instanceof Error ? error.message : "Failed to post comment. Please try again.";
+      toast.error(errorMessage);
     } finally {
       setIsSubmitting(false);
     }
@@ -116,12 +129,13 @@ export function CommentForm({ pageId, onSuccess }: CommentFormProps) {
       </div>
 
       <div className="relative group">
-        <Textarea
+        <HighlightedTextArea
           placeholder="Write a comment..."
           value={content}
           onChange={(e) => setContent(e.target.value)}
-          className="min-h-[120px] rounded-2xl bg-card/50 border-border/40 focus:border-primary/40 focus:ring-primary/10 transition-all resize-none p-4 text-sm font-noto-serif-sinhala"
+          className="min-h-[120px] rounded-2xl bg-card/50 border-border/40 focus:border-primary/40 focus:ring-primary/10 transition-all p-4 text-sm font-noto-serif-sinhala"
           disabled={isSubmitting}
+          blockedWords={blockedWords}
         />
         
         {content.trim().length > 0 && (

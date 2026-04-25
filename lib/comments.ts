@@ -64,15 +64,3 @@ export function parseComment(text: string): ParsedComment {
     isBot: true,
   };
 }
-
-/**
- * Basic profanity filter
- */
-const BLACKLIST = [
-  "spam", "scam", "offensive", "badword", // Placeholder words
-];
-
-export function containsProfanity(text: string): boolean {
-  const lowercaseText = text.toLowerCase();
-  return BLACKLIST.some((word) => lowercaseText.includes(word));
-}

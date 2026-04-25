@@ -2,13 +2,14 @@ import { NextRequest, NextResponse } from "next/server";
 import { notion } from "@/lib/notion";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
-import { formatComment, containsProfanity } from "@/lib/comments";
+import { formatComment } from "@/lib/comments";
 import { isRateLimited } from "@/lib/rate-limit";
-import { env } from "@/lib/env";
+// import { env } from "@/lib/env";
+import { validateComment, verifyTurnstile } from "@/lib/validation/validate";
 
 const RATE_LIMIT_CONFIG = {
-  limit: 5,
-  window: 60 * 1000, // 5 comments per minute
+  limit: 3,
+  window: 60 * 1000, // 3 comments per minute
 };
 
 /**
@@ -63,7 +64,7 @@ export async function POST(req: NextRequest) {
   const userId = session.user.id;
   if (isRateLimited(userId, RATE_LIMIT_CONFIG)) {
     return NextResponse.json(
-      { error: "Too many comments. Please wait a moment." },
+      { error: "Too many comments. Please wait a moment.", type: "rate_limit" },
       { status: 429 }
     );
   }
@@ -82,36 +83,30 @@ export async function POST(req: NextRequest) {
     // Turnstile verification
     if (!turnstileToken) {
       return NextResponse.json(
-        { error: "Security verification missing" },
+        { error: "Security verification missing", type: "turnstile" },
         { status: 400 }
       );
     }
 
-    const secretKey = env.TURNSTILE_SECRET_KEY || "1x0000000000000000000000000000000AA";
-    
-    const verifyRes = await fetch(
-      "https://challenges.cloudflare.com/turnstile/v0/siteverify",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
+    const isTurnstileValid = await verifyTurnstile(turnstileToken);
+    if (!isTurnstileValid) {
+      return NextResponse.json(
+        { error: "Security verification failed", type: "turnstile" },
+        { status: 400 }
+      );
+    }
+
+    const validationResult = await validateComment(content);
+    if (!validationResult.success) {
+      // Log blocked attempt (counts/patterns only)
+      console.log(`[Profanity Blocked] User: ${userId}, Count: ${validationResult.error.blockedWords?.length}`);
+      
+      return NextResponse.json(
+        { 
+          error: validationResult.error.message,
+          type: validationResult.error.type,
+          blockedWords: validationResult.error.blockedWords
         },
-        body: `secret=${encodeURIComponent(secretKey)}&response=${encodeURIComponent(turnstileToken)}`,
-      }
-    );
-
-    const verifyData = await verifyRes.json();
-    if (!verifyData.success) {
-      console.error("Turnstile verification failed:", verifyData["error-codes"]);
-      return NextResponse.json(
-        { error: "Security verification failed" },
-        { status: 400 }
-      );
-    }
-
-    if (containsProfanity(content)) {
-      return NextResponse.json(
-        { error: "Comment contains prohibited content." },
         { status: 400 }
       );
     }
