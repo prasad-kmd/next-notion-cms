@@ -30,7 +30,7 @@ export async function highlightCode(code: string, lang: string): Promise<string>
   if (normalizedLang !== 'text' && !sh.getLoadedLanguages().includes(normalizedLang)) {
     try {
       await sh.loadLanguage(normalizedLang as unknown);
-    } catch (e) {
+    } catch {
       console.warn(`Failed to load Shiki language: ${normalizedLang}, falling back to text.`);
       lang = 'text';
     }

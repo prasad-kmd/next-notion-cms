@@ -2,7 +2,7 @@
 
 import { useState, useEffect, startTransition } from "react";
 import { createPortal } from "react-dom";
-import { X, Calendar, Trash2, Bookmark, Play } from "lucide-react";
+import { X, Calendar, Trash2, Bookmark } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useBookmarks } from "@/hooks/use-bookmarks";
 // import { useEntertainmentBookmarks } from "@/hooks/use-entertainment-bookmarks";

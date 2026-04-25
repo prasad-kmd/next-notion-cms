@@ -41,7 +41,7 @@ async function fetchOpengraphMetadata(url: string) {
       image: imageMatch ? imageMatch[1] : "",
       url,
     };
-  } catch (e) {
+  } catch {
     return { title: url, description: "", image: "", url };
   }
 }

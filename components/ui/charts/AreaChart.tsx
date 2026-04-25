@@ -42,6 +42,7 @@ export const AreaChart = ({
   showGridLines = true,
   startEndOnly = false,
   showTooltip = true,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   showLegend = true,
   className,
   ...other

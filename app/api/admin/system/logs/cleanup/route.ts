@@ -12,7 +12,7 @@ export async function POST() {
         await logInfo('system', `Manual log cleanup performed. Deleted ${deletedCount} old logs.`);
 
         return NextResponse.json({ success: true, deletedCount });
-    } catch (error: unknown) {
+    } catch {
         return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
     }
 }

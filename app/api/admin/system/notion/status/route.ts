@@ -15,7 +15,7 @@ export async function GET() {
         }
 
         return NextResponse.json(health);
-    } catch (error: unknown) {
+    } catch {
         return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 }

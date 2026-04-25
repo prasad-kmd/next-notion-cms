@@ -88,9 +88,9 @@ export function ContentRenderer({ content, id }: ContentRendererProps) {
 
         pre.classList.add("group");
 
-        button.onclick = (e) => {
-          e.preventDefault();
-          e.stopPropagation();
+        button.onclick = (event) => {
+          event.preventDefault();
+          event.stopPropagation();
           const code =
             pre.querySelector("code")?.innerText || pre.innerText || "";
           navigator.clipboard
@@ -156,7 +156,7 @@ export function ContentRenderer({ content, id }: ContentRendererProps) {
                 }
               };
             }
-          } catch (e) {
+          } catch {
             // Ignore invalid URLs
           }
         }
@@ -183,8 +183,8 @@ export function ContentRenderer({ content, id }: ContentRendererProps) {
           ],
           throwOnError: false,
         });
-      } catch (e) {
-        console.error("KaTeX auto-render error:", e);
+      } catch (error) {
+        console.error("KaTeX auto-render error:", error);
       }
     };
 
