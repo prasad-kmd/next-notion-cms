@@ -25,6 +25,7 @@ export async function GET() {
             posthog,
             timestamp: new Date().toISOString()
         });
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
         return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }

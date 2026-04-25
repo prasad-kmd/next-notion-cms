@@ -35,6 +35,7 @@ export function ControlPanel() {
     isHighContrast,
   } = useAccessibility();
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const trackEvent = (setting: string, value: any) => {
     posthog.capture("accessibility_setting_changed", {
       setting,

@@ -6,10 +6,12 @@ import { User } from "lucide-react";
 import Image from "next/image";
 
 interface CommentItemProps {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   comment: any; // Notion comment object
 }
 
 export function CommentItem({ comment }: CommentItemProps) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const plainText = comment.rich_text.map((t: any) => t.plain_text).join("");
   const parsed = parseComment(plainText);
   const date = new Date(comment.created_time);

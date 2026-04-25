@@ -21,6 +21,7 @@ interface OutgoingLinksChartProps {
 }
 
 export function OutgoingLinksChart({ timeRange }: OutgoingLinksChartProps) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [data, setData] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const hasMounted = useHasMounted();

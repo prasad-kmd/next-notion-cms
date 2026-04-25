@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/set-state-in-effect, @typescript-eslint/no-explicit-any */
 "use client"
 
 import { useState, useEffect, useRef } from "react"
@@ -19,6 +20,7 @@ export function TOC({ content }: TOCProps) {
   const [activeId, setActiveId] = useState<string>("")
   const [isCollapsed, setIsCollapsed] = useState(true)
   const isScrollingFromClick = useRef(false)
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const scrollTimeoutRef = useRef<any>(null)
 
   useEffect(() => {

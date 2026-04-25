@@ -9,6 +9,7 @@ interface LogEntryProps {
     service: string;
     level: string;
     message: string;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     metadata: any;
     createdAt: string;
   };

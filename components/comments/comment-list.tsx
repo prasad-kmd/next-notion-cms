@@ -7,7 +7,9 @@ import { Button } from "@/components/ui/button";
 
 interface CommentListProps {
   pageId: string;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   initialComments?: any[];
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   newComments?: any[];
   onCountUpdate?: (count: number) => void;
 }
@@ -18,6 +20,7 @@ export function CommentList({
   newComments = [],
   onCountUpdate
 }: CommentListProps) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [comments, setComments] = useState<any[]>(initialComments);
   const [cursor, setCursor] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);

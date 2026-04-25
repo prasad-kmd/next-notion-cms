@@ -10,6 +10,7 @@ interface TopContentChartProps {
 }
 
 export function TopContentChart({ timeRange, contentType }: TopContentChartProps) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [data, setData] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 

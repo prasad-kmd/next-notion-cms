@@ -97,7 +97,7 @@ const ClickSpark: React.FC<ClickSparkProps> = ({
     [easing]
   );
 
-  const draw = useCallback((timestamp: number) => {
+  const draw = useCallback(function draw(timestamp: number) {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');

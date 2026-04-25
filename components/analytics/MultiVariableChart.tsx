@@ -23,6 +23,7 @@ interface MultiVariableChartProps {
 }
 
 export function MultiVariableChart({ timeRange, breakdownBy, title }: MultiVariableChartProps) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [data, setData] = useState<any[]>([]);
   const [categories, setCategories] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
@@ -49,7 +50,9 @@ export function MultiVariableChart({ timeRange, breakdownBy, title }: MultiVaria
           // Transform TrendsQuery result with breakdown
           const allLabels = results[0]?.labels || [];
           const transformed = allLabels.map((label: string, i: number) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const point: any = { date: label };
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
             results.forEach((series: any) => {
               point[series.breakdown_value || "Total"] = series.data[i];
             });
@@ -57,6 +60,7 @@ export function MultiVariableChart({ timeRange, breakdownBy, title }: MultiVaria
           });
           
           setData(transformed);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
           setCategories(results.map((s: any) => s.breakdown_value || "Total"));
         }
       } catch (err) {

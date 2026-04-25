@@ -7,6 +7,7 @@ import { env } from "@/lib/env";
 
 interface TurnstileWidgetProps {
   onVerify: (token: string) => void;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onError?: (error?: any) => void;
   onExpire?: () => void;
 }

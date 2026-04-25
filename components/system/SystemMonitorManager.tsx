@@ -20,7 +20,9 @@ import { Badge } from "@/components/ui/badge";
 import Link from 'next/link';
 
 interface SystemMonitorManagerProps {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   initialStatus: any;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   initialLogs: any[];
 }
 
@@ -29,7 +31,9 @@ export function SystemMonitorManager({ initialStatus, initialLogs }: SystemMonit
   const [purging, setPurging] = useState(false);
   const [cleaning, setCleaning] = useState(false);
   const [autoRefresh, setAutoRefresh] = useState(false);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [status, setStatus] = useState<any>(initialStatus);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [logs, setLogs] = useState<any[]>(initialLogs);
   const [logFilter, setLogFilter] = useState('all');
   const [lastUpdated, setLastUpdated] = useState<Date>(new Date());

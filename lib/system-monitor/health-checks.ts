@@ -25,6 +25,7 @@ export async function checkNotionHealth() {
             last_sync: new Date().toISOString(), // In a real app, this might come from a sync log
             error_message: null
         };
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
         const latency = performance.now() - start;
         return {
@@ -50,6 +51,7 @@ export async function checkSupabaseHealth() {
         let dbSize = null;
         try {
             const sizeResult = await db.execute(sql`SELECT pg_database_size(current_database())`);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
             dbSize = Number((sizeResult as any)[0]?.pg_database_size || 0);
         } catch (e) {
             // Ignore size fetch error
@@ -59,6 +61,7 @@ export async function checkSupabaseHealth() {
         let activeConnections = null;
         try {
             const connResult = await db.execute(sql`SELECT count(*) as count FROM pg_stat_activity`);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
             activeConnections = Number((connResult as any)[0]?.count || 0);
         } catch (e) {
             // Ignore connection fetch error
@@ -74,6 +77,7 @@ export async function checkSupabaseHealth() {
             active_connections: activeConnections,
             error_message: null
         };
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
         const latency = performance.now() - start;
         return {
@@ -124,6 +128,7 @@ export async function checkPostHogHealth() {
             project_id: projectId,
             error_message: null
         };
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
         const latency = performance.now() - start;
         return {

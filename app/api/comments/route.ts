@@ -36,6 +36,7 @@ export async function GET(req: NextRequest) {
         "Cache-Control": "public, s-maxage=60, stale-while-revalidate=30",
       },
     });
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     console.error("Error fetching comments:", error);
     return NextResponse.json(
@@ -138,6 +139,7 @@ export async function POST(req: NextRequest) {
     });
 
     return NextResponse.json(response);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     console.error("Error creating comment:", error);
     return NextResponse.json(

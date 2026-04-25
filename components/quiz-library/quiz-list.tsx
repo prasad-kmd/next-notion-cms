@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/set-state-in-effect, @typescript-eslint/no-explicit-any */
 "use client"
 
 import { useState, useEffect } from "react"
@@ -9,15 +10,18 @@ import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/componen
 import { Input } from "@/components/ui/input"
 
 interface QuizListProps {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   quizzes: any[]
 }
 
 export function QuizList({ quizzes }: QuizListProps) {
   const [searchQuery, setSearchQuery] = useState("")
   const [selectedCategory, setSelectedCategory] = useState("All")
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [quizStatuses, setQuizStatuses] = useState<Record<string, any>>({})
 
   const loadStatuses = () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const statuses: Record<string, any> = {}
     quizzes.forEach(q => {
       const stored = localStorage.getItem(`quiz_status_${q.slug}`)

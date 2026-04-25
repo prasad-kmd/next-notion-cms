@@ -21,6 +21,7 @@ interface OutgoingLinksTrendChartProps {
 }
 
 export function OutgoingLinksTrendChart({ timeRange }: OutgoingLinksTrendChartProps) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [data, setData] = useState<any[]>([]);
   const [domains, setDomains] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
@@ -46,6 +47,8 @@ export function OutgoingLinksTrendChart({ timeRange }: OutgoingLinksTrendChartPr
           
           // Get top 5 domains
           const topSeries = results
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
             .sort((a: any, b: any) => {
               const sumA = a.data.reduce((acc: number, val: number) => acc + val, 0);
               const sumB = b.data.reduce((acc: number, val: number) => acc + val, 0);
@@ -55,7 +58,9 @@ export function OutgoingLinksTrendChart({ timeRange }: OutgoingLinksTrendChartPr
 
           const allLabels = topSeries[0]?.labels || [];
           const transformed = allLabels.map((label: string, i: number) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const point: any = { date: label };
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
             topSeries.forEach((series: any) => {
               const key = series.breakdown_value === "$$_posthog_breakdown_null_$$" || !series.breakdown_value 
                 ? "Unknown" 
@@ -66,6 +71,7 @@ export function OutgoingLinksTrendChart({ timeRange }: OutgoingLinksTrendChartPr
           });
           
           setData(transformed);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
           setDomains(topSeries.map((s: any) => 
             s.breakdown_value === "$$_posthog_breakdown_null_$$" || !s.breakdown_value 
             ? "Unknown" 

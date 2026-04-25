@@ -11,6 +11,7 @@ interface RelatedContentProps {
 export async function RelatedContent({ type, currentSlug }: RelatedContentProps) {
   const allItems = await getContentByType(type);
   const relatedItems = allItems
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     .filter((item: any) => item.slug !== currentSlug)
     .slice(0, 3);
 

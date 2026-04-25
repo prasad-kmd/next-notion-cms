@@ -15,7 +15,9 @@ export async function GET(request: NextRequest) {
       // This is a bit tricky as notion.search doesn't allow filtering by database ID easily
       // So we'll map them and try to infer the type
       const results = notionResults
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .filter((page: any) => page.object === "page" && page.parent?.type === "database_id")
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .map((page: any) => {
           const props = page.properties;
           const title = getPlainText(props.Name || props.Title);

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { AreaChart } from "@/components/ui/charts/AreaChart";
 
 export function PageviewsChart() {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -18,6 +19,7 @@ export function PageviewsChart() {
         if (!response.ok) throw new Error("Failed to fetch analytics");
         const json = await response.json();
         setData(json);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (err: any) {
         setError(err.message);
       } finally {

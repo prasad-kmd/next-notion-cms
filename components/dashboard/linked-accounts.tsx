@@ -57,9 +57,11 @@ export function LinkedAccounts({ accounts }: LinkedAccountsProps) {
         setIsLoading(providerId);
         try {
             await authClient.linkSocial({
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 provider: providerId as any,
                 callbackURL: window.location.origin + "/dashboard",
             });
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (error: any) {
             toast.error(error.message || `Failed to link ${providerId}`);
         } finally {
@@ -80,6 +82,7 @@ export function LinkedAccounts({ accounts }: LinkedAccountsProps) {
             });
             toast.success("Account disconnected successfully");
             window.location.reload();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (error: any) {
             toast.error(error.message || "Failed to disconnect account");
         } finally {

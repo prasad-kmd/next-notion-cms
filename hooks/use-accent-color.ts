@@ -24,17 +24,6 @@ export const ACCENT_COLORS: AccentColor[] = [
 export function useAccentColor() {
   const [accentColor, setAccentColor] = useState<AccentColor>(ACCENT_COLORS[0]);
 
-  useEffect(() => {
-    const saved = localStorage.getItem("accent-color");
-    if (saved) {
-      const found = ACCENT_COLORS.find((c) => c.name === saved);
-      if (found) {
-        setAccentColor(found);
-        applyAccentColor(found);
-      }
-    }
-  }, []);
-
   const applyAccentColor = (color: AccentColor) => {
     const root = document.documentElement;
     root.style.setProperty("--primary-h", color.h.toString());
@@ -42,6 +31,18 @@ export function useAccentColor() {
     root.style.setProperty("--primary-l", color.l);
     localStorage.setItem("accent-color", color.name);
   };
+
+  useEffect(() => {
+    const saved = localStorage.getItem("accent-color");
+    if (saved) {
+      const found = ACCENT_COLORS.find((c) => c.name === saved);
+      if (found) {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        setAccentColor(found);
+        applyAccentColor(found);
+      }
+    }
+  }, []);
 
   const updateAccentColor = (color: AccentColor) => {
     setAccentColor(color);

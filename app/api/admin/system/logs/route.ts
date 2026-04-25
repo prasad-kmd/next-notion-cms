@@ -27,7 +27,9 @@ export async function GET(req: NextRequest) {
         if (conditions.length > 0) {
             const combined = and(...conditions);
             if (combined) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 query = query.where(combined) as any;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 countQuery = countQuery.where(combined) as any;
             }
         }
@@ -41,6 +43,7 @@ export async function GET(req: NextRequest) {
             logs,
             total: Number(totalResult[0]?.count || 0)
         });
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
         return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }

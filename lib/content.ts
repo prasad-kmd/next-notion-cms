@@ -55,6 +55,7 @@ const quizExtension = {
       };
     }
   },
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   renderer(token: any) {
     return `[quiz]${token.json}[/quiz]`;
   },
@@ -63,6 +64,7 @@ const quizExtension = {
 marked.use({
   renderer,
   async: true,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   extensions: [quizExtension as any],
 });
 
@@ -226,12 +228,15 @@ const contentDirectory = path.join(process.cwd(), "content");
  * Low-level fetcher for Notion content list.
  */
 async function fetchNotionContentByType(type: string): Promise<ContentItem[]> {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const databaseId = (DATABASE_IDS as any)[type];
   if (!databaseId) return [];
 
   try {
     const dbObj = await notion.databases.retrieve({ database_id: databaseId });
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const dataSourceId = (dbObj as any).data_sources?.[0]?.id || databaseId;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const response: any = await notion.dataSources.query({
       data_source_id: dataSourceId,
       filter: {
@@ -249,6 +254,7 @@ async function fetchNotionContentByType(type: string): Promise<ContentItem[]> {
     });
 
     const items = await Promise.all(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
       response.results.map(async (page: any) => {
         const props = page.properties;
         const slug = getPlainText(props.Slug);
@@ -266,6 +272,7 @@ async function fetchNotionContentByType(type: string): Promise<ContentItem[]> {
           props.Authors.relation &&
           props.Authors.relation.length > 0
         ) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const authorPage: any = await notion.pages.retrieve({
             page_id: props.Authors.relation[0].id,
           });
@@ -288,6 +295,7 @@ async function fetchNotionContentByType(type: string): Promise<ContentItem[]> {
           tags,
           aiAssisted,
           author: authorSlug,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
           type: type as any,
         };
       }),
@@ -378,12 +386,15 @@ async function fetchNotionContentItem(
   type: string,
   slug: string,
 ): Promise<ContentItem | null> {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const databaseId = (DATABASE_IDS as any)[type];
   if (!databaseId) return null;
 
   try {
     const dbObj = await notion.databases.retrieve({ database_id: databaseId });
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const dataSourceId = (dbObj as any).data_sources?.[0]?.id || databaseId;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const response: any = await notion.dataSources.query({
       data_source_id: dataSourceId,
       filter: {
@@ -396,6 +407,7 @@ async function fetchNotionContentItem(
 
     if (response.results.length === 0) return null;
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const page: any = response.results[0];
     const props = page.properties;
 
@@ -416,6 +428,7 @@ async function fetchNotionContentItem(
       props.Authors.relation &&
       props.Authors.relation.length > 0
     ) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const authorPage: any = await notion.pages.retrieve({
         page_id: props.Authors.relation[0].id,
       });
@@ -451,6 +464,7 @@ async function fetchNotionContentItem(
       tags,
       aiAssisted,
       author: authorSlug,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
       type: type as any,
     };
   } catch (error) {
@@ -591,7 +605,9 @@ export const getAuthorBasic = cache(async function (
         const dbObj = await notion.databases.retrieve({
           database_id: databaseId,
         });
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const dataSourceId = (dbObj as any).data_sources?.[0]?.id || databaseId;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const response: any = await notion.dataSources.query({
           data_source_id: dataSourceId,
           filter: {
@@ -602,6 +618,7 @@ export const getAuthorBasic = cache(async function (
           },
         });
         if (response.results.length === 0) return null;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const page: any = response.results[0];
         const props = page.properties;
         return {
@@ -651,7 +668,9 @@ export const getAuthorBySlug = cache(async function (
         const dbObj = await notion.databases.retrieve({
           database_id: databaseId,
         });
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const dataSourceId = (dbObj as any).data_sources?.[0]?.id || databaseId;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const response: any = await notion.dataSources.query({
           data_source_id: dataSourceId,
           filter: {
@@ -662,6 +681,7 @@ export const getAuthorBySlug = cache(async function (
           },
         });
         if (response.results.length === 0) return null;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const page: any = response.results[0];
         const props = page.properties;
 
@@ -737,7 +757,9 @@ export const getAllAuthors = cache(async function (): Promise<Author[]> {
         const dbObj = await notion.databases.retrieve({
           database_id: databaseId,
         });
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const dataSourceId = (dbObj as any).data_sources?.[0]?.id || databaseId;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const response: any = await notion.dataSources.query({
           data_source_id: dataSourceId,
           filter: {
@@ -748,6 +770,7 @@ export const getAllAuthors = cache(async function (): Promise<Author[]> {
           },
         });
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
         return response.results.map((page: any) => {
           const props = page.properties;
           return {

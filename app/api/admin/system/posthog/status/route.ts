@@ -15,6 +15,7 @@ export async function GET() {
         }
 
         return NextResponse.json(health);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
         return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }

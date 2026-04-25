@@ -11,6 +11,7 @@ interface OutgoingLinksTableProps {
 }
 
 export function OutgoingLinksTable({ timeRange }: OutgoingLinksTableProps) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [data, setData] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");

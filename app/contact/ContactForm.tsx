@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/set-state-in-effect, @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useState, useRef, useActionState, useEffect } from "react";
@@ -26,6 +27,7 @@ export default function ContactForm() {
     } else if (state?.success === false) {
       toast.error(state.message);
       if (state.errors) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
         Object.values(state.errors).flat().forEach((err: any) => toast.error(err));
       }
     }

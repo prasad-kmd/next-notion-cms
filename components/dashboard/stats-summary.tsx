@@ -3,6 +3,7 @@ import { Bookmark, Palette, Zap } from "lucide-react";
 
 interface StatsSummaryProps {
     preferences: {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
         bookmarks?: any[];
         accentColor?: string;
     } | null;

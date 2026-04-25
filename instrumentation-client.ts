@@ -22,8 +22,10 @@ export function initPostHog() {
           maskAllInputs: true,
           maskTextSelector: ".mask-text",
         },
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
         loaded: (ph: any) => {
           if (typeof window !== "undefined") {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
             (window as any).posthog = ph;
           }
         },

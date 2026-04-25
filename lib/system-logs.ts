@@ -5,18 +5,22 @@ import { sql } from "drizzle-orm";
 export type LogService = 'notion' | 'supabase' | 'posthog' | 'system';
 export type LogLevel = 'info' | 'warning' | 'error';
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function logInfo(service: LogService, message: string, metadata: any = {}) {
     return log('info', service, message, metadata);
 }
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function logWarning(service: LogService, message: string, metadata: any = {}) {
     return log('warning', service, message, metadata);
 }
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function logError(service: LogService, message: string, metadata: any = {}) {
     return log('error', service, message, metadata);
 }
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
 async function log(level: LogLevel, service: LogService, message: string, metadata: any = {}) {
     try {
         await db.insert(systemLogs).values({

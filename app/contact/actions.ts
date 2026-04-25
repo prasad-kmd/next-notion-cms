@@ -39,6 +39,7 @@ function isRateLimited(identifier: string): boolean {
   return false;
 }
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function submitContactForm(prevState: any, formData: FormData) {
   // We don't have easy access to IP in Server Actions without headers()
   // But we can use email as a simple identifier for rate limiting

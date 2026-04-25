@@ -283,6 +283,7 @@ export async function POST(req: NextRequest) {
     if (insightType === "top_content") {
       // For HogQL queries, results are an array of arrays
       if (Array.isArray(normalizedResult) && normalizedResult.length > 0 && Array.isArray(normalizedResult[0])) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
         normalizedResult = normalizedResult.map((row: any[]) => ({
           slug: row[0],
           title: row[1] || row[0],
@@ -321,6 +322,7 @@ export async function POST(req: NextRequest) {
       }
     } else if (["traffic_sources", "device_breakdown", "browser_breakdown", "os_breakdown", "country_breakdown", "outgoing_links"].includes(insightType)) {
       if (Array.isArray(normalizedResult) && normalizedResult.length > 0 && Array.isArray(normalizedResult[0])) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
         normalizedResult = normalizedResult.map((row: any[]) => ({
           label: row[0] || "Unknown",
           value: row[1]
@@ -344,6 +346,7 @@ export async function POST(req: NextRequest) {
         "Cache-Control": `public, s-maxage=${cacheMaxAge}, stale-while-revalidate=${cacheMaxAge * 2}`,
       },
     });
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     console.error("Analytics API error:", error);
     // Ensure we return a NextResponse even in the catch block

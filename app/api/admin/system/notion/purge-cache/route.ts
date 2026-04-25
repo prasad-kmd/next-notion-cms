@@ -14,6 +14,7 @@ export async function POST() {
         await logInfo('notion', 'Cache purged manually', { admin: session.user.email });
 
         return NextResponse.json({ success: true });
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
         return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }

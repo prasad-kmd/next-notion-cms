@@ -18,6 +18,7 @@ interface TopContentTableProps {
 }
 
 export function TopContentTable({ timeRange, contentType }: TopContentTableProps) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [data, setData] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 

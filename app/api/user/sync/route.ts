@@ -51,12 +51,14 @@ export async function POST(req: Request) {
             where: eq(user.id, session.user.id),
         });
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const currentPrefs = (currentUser?.preferences as any) || {};
         
         // Strategy: Merge local data with database data
         // For bookmarks, we merge and deduplicate by slug + type
         let mergedBookmarks = currentPrefs.bookmarks || [];
         if (bookmarks && Array.isArray(bookmarks)) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const existingSlugs = new Set(mergedBookmarks.map((b: any) => `${b.type}:${b.slug}`));
             
             for (const b of bookmarks) {

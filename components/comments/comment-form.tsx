@@ -12,6 +12,7 @@ import { TurnstileWidget, type TurnstileWidgetRef } from "./turnstile-widget";
 
 interface CommentFormProps {
   pageId: string;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onSuccess: (newComment: any) => void;
 }
 

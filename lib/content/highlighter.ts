@@ -29,6 +29,7 @@ export async function highlightCode(code: string, lang: string): Promise<string>
   // Ensure language is loaded
   if (normalizedLang !== 'text' && !sh.getLoadedLanguages().includes(normalizedLang)) {
     try {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
       await sh.loadLanguage(normalizedLang as any);
     } catch (e) {
       console.warn(`Failed to load Shiki language: ${normalizedLang}, falling back to text.`);
@@ -41,6 +42,7 @@ export async function highlightCode(code: string, lang: string): Promise<string>
     theme: "one-dark-pro",
     transformers: [
       {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
         line(node: any, line: number) {
           node.properties.class = (node.properties.class || "") + " line";
           node.properties["data-line"] = line;

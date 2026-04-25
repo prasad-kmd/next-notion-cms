@@ -17,12 +17,14 @@ import { Badge } from "@/components/ui/badge";
 import Link from 'next/link';
 
 interface LogsManagerProps {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   initialLogs: any[];
   initialTotal: number;
 }
 
 export function LogsManager({ initialLogs, initialTotal }: LogsManagerProps) {
   const [loading, setLoading] = useState(false);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [logs, setLogs] = useState<any[]>(initialLogs);
   const [total, setTotal] = useState(initialTotal);
   const [logFilter, setLogFilter] = useState('all');

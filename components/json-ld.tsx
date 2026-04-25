@@ -1,5 +1,6 @@
 import { siteConfig } from "@/lib/config";
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function JsonLd({ data }: { data: any }) {
   return (
     <script
@@ -37,6 +38,7 @@ export function getBreadcrumbSchema(items: { label: string; href: string }[]) {
   };
 }
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function getContentSchema(post: any, type: string) {
   const schemaType = type === "articles" ? "TechArticle" : "BlogPosting";
   

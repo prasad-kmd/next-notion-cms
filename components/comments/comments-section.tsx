@@ -14,6 +14,7 @@ interface CommentsSectionProps {
 
 export function CommentsSection({ pageId, slug }: CommentsSectionProps) {
   const [isOpen, setIsOpen] = useState(false);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [newComments, setNewComments] = useState<any[]>([]);
   const [commentCount, setCommentCount] = useState<number | null>(null);
 

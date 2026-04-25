@@ -47,7 +47,7 @@ export function ViewTransitions({ children }: { children: React.ReactNode }) {
 
           e.preventDefault();
 
-          // @ts-ignore - View Transition API might not be in the TS types yet
+          // @ts-expect-error - View Transition API might not be in the TS types yet
           document.startViewTransition(() => {
             router.push(link.href);
           });

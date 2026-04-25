@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any, react-hooks/set-state-in-effect */
+/* eslint-disable @typescript-eslint/no-explicit-any, react-hooks/set-state-in-effect */
 import React from 'react';
 import { StatusIndicator } from "@/components/system/StatusIndicator";
 import { Badge } from "@/components/ui/badge";

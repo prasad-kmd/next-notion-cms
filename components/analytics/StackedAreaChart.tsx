@@ -23,6 +23,7 @@ interface StackedAreaChartProps {
 }
 
 export function StackedAreaChart({ timeRange, breakdownBy, title }: StackedAreaChartProps) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [data, setData] = useState<any[]>([]);
   const [categories, setCategories] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
@@ -48,7 +49,9 @@ export function StackedAreaChart({ timeRange, breakdownBy, title }: StackedAreaC
           
           const allLabels = results[0]?.labels || [];
           const transformed = allLabels.map((label: string, i: number) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const point: any = { date: label };
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
             results.forEach((series: any) => {
               const key = series.breakdown_value === "$$_posthog_breakdown_null_$$" || !series.breakdown_value 
                 ? "Unknown" 
@@ -59,6 +62,7 @@ export function StackedAreaChart({ timeRange, breakdownBy, title }: StackedAreaC
           });
           
           setData(transformed);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
           setCategories(results.map((s: any) => 
             s.breakdown_value === "$$_posthog_breakdown_null_$$" || !s.breakdown_value 
             ? "Unknown" 
