@@ -159,7 +159,13 @@ export function sanitizeContent(html: string): string {
   // Aggressively remove script and style tags with improved regex
   // This pattern is more robust against variations of </script> tags
   const dangerousTagRegex = /<(script|style)\b[^>]*>[\s\S]*?<\/\1[^>]*>/gi;
-  processedHtml = processedHtml.replace(dangerousTagRegex, "");
+  // Apply repeatedly until no more matches are removed to avoid
+  // incomplete multi-character sanitization bypasses.
+  let previousHtml: string;
+  do {
+    previousHtml = processedHtml;
+    processedHtml = processedHtml.replace(dangerousTagRegex, "");
+  } while (processedHtml !== previousHtml);
 
   // Final safety pass: encode any remaining "<script" fragments that might have survived
   // Using a recursive loop to handle nested or obfuscated script tags
