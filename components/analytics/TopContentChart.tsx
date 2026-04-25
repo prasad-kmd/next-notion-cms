@@ -42,7 +42,7 @@ export function TopContentChart({ timeRange, contentType }: TopContentChartProps
 
   if (isLoading) {
     return (
-      <Card className="col-span-1 border-border/50 bg-card/50 backdrop-blur-sm rounded-[2rem]">
+      <Card className="col-span-1 border-border/50 bg-card/50 backdrop-blur-sm rounded-4xl">
         <CardHeader>
           <CardTitle className="text-lg font-google-sans">Top Content (Views)</CardTitle>
         </CardHeader>
@@ -62,7 +62,7 @@ export function TopContentChart({ timeRange, contentType }: TopContentChartProps
   }));
 
   return (
-    <Card className="col-span-1 border-border/50 bg-card/50 backdrop-blur-sm rounded-[2rem]">
+    <Card className="col-span-1 border-border/50 bg-card/50 backdrop-blur-sm rounded-4xl">
       <CardHeader>
         <CardTitle className="text-lg font-google-sans">Top Content (Views)</CardTitle>
       </CardHeader>

@@ -42,7 +42,7 @@ export function FloatingButton() {
         aria-expanded={isPanelOpen}
       >
         <Accessibility className="h-5 w-5 transition-transform group-hover:rotate-12" />
-        <span className="text-xs font-bold font-mono tracking-wider uppercase">A11Y</span>
+        <span className="text-xs font-bold font-local-jetbrains-mono tracking-wider uppercase">A11Y</span>
       </button>
     </div>
   );

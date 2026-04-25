@@ -84,7 +84,7 @@ export const HighlightedTextArea = React.forwardRef<
         ref={backdropRef}
         aria-hidden="true"
         className={cn(
-          "absolute inset-0 pointer-events-none whitespace-pre-wrap break-words overflow-auto text-transparent",
+          "absolute inset-0 pointer-events-none whitespace-pre-wrap wrap-break-word overflow-auto text-transparent",
           "px-3 py-2 text-sm leading-relaxed border border-transparent",
           className
         )}

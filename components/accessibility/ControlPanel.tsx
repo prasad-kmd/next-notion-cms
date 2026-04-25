@@ -46,7 +46,7 @@ export function ControlPanel() {
     <Dialog open={isPanelOpen} onOpenChange={(open) => updateSetting("isPanelOpen", open)}>
       <DialogContent className="sm:max-w-md backdrop-blur-xl bg-background/95 border-primary/20 shadow-2xl overflow-hidden">
         <DialogHeader className="flex flex-row items-center justify-between border-b border-border pb-4 mb-4">
-          <DialogTitle className="text-lg font-bold font-mono uppercase tracking-widest flex items-center gap-3">
+          <DialogTitle className="text-lg font-bold uppercase tracking-widest flex items-center gap-3 font-google-sans">
             <AccessibilityIcon className="h-5 w-5 text-primary" />
             Reading Experience
           </DialogTitle>
@@ -58,7 +58,7 @@ export function ControlPanel() {
               resetAllSettings();
               trackEvent("all", "reset");
             }}
-            title="Reset all settings"
+            // title="Reset all settings"
           >
             <RotateCcw className="h-4 w-4" />
           </Button>
@@ -67,8 +67,7 @@ export function ControlPanel() {
         <div className="space-y-8 py-2">
           {/* Font Family */}
           <div className="space-y-4">
-            <Label className="text-[10px] font-black uppercase text-muted-foreground tracking-[0.2em] flex items-center gap-2">
-              <Type className="h-3 w-3" />
+            <Label className="text-[10px] font-black uppercase text-muted-foreground tracking-[0.2em] flex items-center gap-2 font-local-inter">
               Typography Style
             </Label>
             <Select
@@ -78,12 +77,12 @@ export function ControlPanel() {
                 trackEvent("fontFamily", value);
               }}
             >
-              <SelectTrigger className="font-mono text-xs border-primary/10 bg-muted/30">
+              <SelectTrigger className="font-local-jetbrains-mono text-xs border-primary/10 bg-muted/30">
                 <SelectValue placeholder="Select font style" />
               </SelectTrigger>
-              <SelectContent className="z-[300]">
+              <SelectContent className="z-300">
                 {AVAILABLE_FONTS.map((font) => (
-                  <SelectItem key={font.name} value={font.name} className="font-mono text-xs">
+                  <SelectItem key={font.name} value={font.name} className="font-local-jetbrains-mono text-xs">
                     {font.label}
                   </SelectItem>
                 ))}
@@ -96,7 +95,7 @@ export function ControlPanel() {
             {/* Text Size */}
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <Label className="text-[10px] font-black uppercase text-muted-foreground tracking-[0.2em] flex items-center gap-2">
+                <Label className="text-[10px] font-black uppercase text-muted-foreground tracking-[0.2em] flex items-center gap-2 font-local-inter">
                   <Type className="h-3 w-3" />
                   Text Size
                 </Label>
@@ -115,7 +114,7 @@ export function ControlPanel() {
             {/* Line Height */}
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <Label className="text-[10px] font-black uppercase text-muted-foreground tracking-[0.2em] flex items-center gap-2">
+                <Label className="text-[10px] font-black uppercase text-muted-foreground tracking-[0.2em] flex items-center gap-2 font-local-inter">
                   <AlignLeft className="h-3 w-3" />
                   Line Spacing
                 </Label>
@@ -134,7 +133,7 @@ export function ControlPanel() {
             {/* Word Spacing */}
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <Label className="text-[10px] font-black uppercase text-muted-foreground tracking-[0.2em] flex items-center gap-2">
+                <Label className="text-[10px] font-black uppercase text-muted-foreground tracking-[0.2em] flex items-center gap-2 font-local-inter">
                   <List className="h-3 w-3" />
                   Word Spacing
                 </Label>
@@ -153,7 +152,7 @@ export function ControlPanel() {
             {/* Letter Spacing */}
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <Label className="text-[10px] font-black uppercase text-muted-foreground tracking-[0.2em] flex items-center gap-2">
+                <Label className="text-[10px] font-black uppercase text-muted-foreground tracking-[0.2em] flex items-center gap-2 font-local-inter">
                   <LetterText className="h-3 w-3" />
                   Letter Spacing
                 </Label>
@@ -173,11 +172,11 @@ export function ControlPanel() {
           {/* High Contrast */}
           <div className="flex items-center justify-between pt-6 border-t border-border/50">
             <div className="space-y-0.5">
-              <Label className="text-[10px] font-black uppercase text-muted-foreground tracking-[0.2em] flex items-center gap-2">
+              <Label className="text-[10px] font-black uppercase text-muted-foreground tracking-[0.2em] flex items-center gap-2 font-local-inter">
                 <Contrast className="h-3 w-3" />
                 High Contrast Content
               </Label>
-              <p className="text-[9px] text-muted-foreground font-mono">Maximize text-to-background contrast</p>
+              <p className="text-[9px] text-muted-foreground font-roboto">Maximize text-to-background contrast</p>
             </div>
             <Switch
               checked={isHighContrast}
@@ -191,7 +190,7 @@ export function ControlPanel() {
 
         <div className="mt-8 pt-4 border-t border-border flex justify-end">
            <Button 
-            className="font-mono text-[10px] font-black uppercase tracking-widest px-8 rounded-xl"
+            className="text-[10px] font-black uppercase tracking-widest px-8 rounded-xl font-local-jetbrains-mono"
             onClick={() => updateSetting("isPanelOpen", false)}
           >
             Apply & Close
