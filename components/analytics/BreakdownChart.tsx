@@ -21,7 +21,7 @@ interface BreakdownChartProps {
 }
 
 export function BreakdownChart({ timeRange, insightType, title }: BreakdownChartProps) {
-  const [data, setData] = useState<any[]>([]);
+  const [data, setData] = useState<Record<string, unknown>[]>([]);
   const [loading, setLoading] = useState(true);
   const hasMounted = useHasMounted();
   const { theme } = useTheme();

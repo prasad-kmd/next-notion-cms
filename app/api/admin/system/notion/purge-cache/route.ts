@@ -14,7 +14,7 @@ export async function POST() {
         await logInfo('notion', 'Cache purged manually', { admin: session.user.email });
 
         return NextResponse.json({ success: true });
-    } catch (error: any) {
+    } catch (error: unknown) {
         return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 }

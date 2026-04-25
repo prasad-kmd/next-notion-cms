@@ -18,7 +18,7 @@ import {
 } from "./ChartUtils";
 
 interface BarChartProps extends React.HTMLAttributes<HTMLDivElement> {
-  data: any[];
+  data: Record<string, unknown>[];
   categories: string[];
   index: string;
   colors?: AvailableChartColorsKeys[];
@@ -123,17 +123,17 @@ export const BarChart = ({
                       <p className="text-xs font-medium text-muted-foreground mb-2">
                         {label}
                       </p>
-                      {payload.map((entry: any, index: number) => (
+                      {payload.map((entry, index: number) => (
                         <div
                           key={`item-${index}`}
                           className="flex items-center gap-2"
                         >
                           <div
                             className="h-2 w-2 rounded-full"
-                            style={{ backgroundColor: entry.color }}
+                            style={{ backgroundColor: (entry as unknown).color }}
                           />
                           <p className="text-sm font-bold google-sans">
-                            {entry.name}: {valueFormatter(entry.value)}
+                            {(entry as unknown).name}: {valueFormatter((entry as unknown).value)}
                           </p>
                         </div>
                       ))}

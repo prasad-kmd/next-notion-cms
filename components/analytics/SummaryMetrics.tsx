@@ -16,8 +16,17 @@ interface SummaryMetricsProps {
   timeRange: string;
 }
 
+interface SummaryData {
+  total_pageviews: number;
+  unique_visitors: number;
+  avg_views_per_post: number;
+  total_comments: number;
+  total_bookmarks: number;
+  total_content: number;
+}
+
 export function SummaryMetrics({ timeRange }: SummaryMetricsProps) {
-  const [data, setData] = useState<any>(null);
+  const [data, setData] = useState<SummaryData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -36,8 +45,8 @@ export function SummaryMetrics({ timeRange }: SummaryMetricsProps) {
         if (!response.ok) throw new Error("Failed to fetch summary metrics");
         const json = await response.json();
         setData(json.result);
-      } catch (err: any) {
-        setError(err.message);
+      } catch (err: unknown) {
+        setError(err instanceof Error ? err.message : "Unknown error");
       } finally {
         setLoading(false);
       }

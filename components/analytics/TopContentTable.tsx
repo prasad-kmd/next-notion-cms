@@ -18,7 +18,7 @@ interface TopContentTableProps {
 }
 
 export function TopContentTable({ timeRange, contentType }: TopContentTableProps) {
-  const [data, setData] = useState<any[]>([]);
+  const [data, setData] = useState<Record<string, unknown>[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {

@@ -21,7 +21,7 @@ interface OutgoingLinksTrendChartProps {
 }
 
 export function OutgoingLinksTrendChart({ timeRange }: OutgoingLinksTrendChartProps) {
-  const [data, setData] = useState<any[]>([]);
+  const [data, setData] = useState<Record<string, unknown>[]>([]);
   const [domains, setDomains] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   const hasMounted = useHasMounted();
@@ -46,7 +46,7 @@ export function OutgoingLinksTrendChart({ timeRange }: OutgoingLinksTrendChartPr
           
           // Get top 5 domains
           const topSeries = results
-            .sort((a: any, b: any) => {
+            .sort((a: unknown, b: unknown) => {
               const sumA = a.data.reduce((acc: number, val: number) => acc + val, 0);
               const sumB = b.data.reduce((acc: number, val: number) => acc + val, 0);
               return sumB - sumA;
@@ -55,8 +55,8 @@ export function OutgoingLinksTrendChart({ timeRange }: OutgoingLinksTrendChartPr
 
           const allLabels = topSeries[0]?.labels || [];
           const transformed = allLabels.map((label: string, i: number) => {
-            const point: any = { date: label };
-            topSeries.forEach((series: any) => {
+            const point: unknown = { date: label };
+            topSeries.forEach((series: unknown) => {
               const key = series.breakdown_value === "$$_posthog_breakdown_null_$$" || !series.breakdown_value 
                 ? "Unknown" 
                 : series.breakdown_value;
@@ -66,7 +66,7 @@ export function OutgoingLinksTrendChart({ timeRange }: OutgoingLinksTrendChartPr
           });
           
           setData(transformed);
-          setDomains(topSeries.map((s: any) => 
+          setDomains(topSeries.map((s: unknown) =>
             s.breakdown_value === "$$_posthog_breakdown_null_$$" || !s.breakdown_value 
             ? "Unknown" 
             : s.breakdown_value

@@ -1,6 +1,6 @@
 import { siteConfig } from "@/lib/config";
 
-export function JsonLd({ data }: { data: any }) {
+export function JsonLd({ data }: { data: unknown }) {
   return (
     <script
       type="application/ld+json"
@@ -37,7 +37,7 @@ export function getBreadcrumbSchema(items: { label: string; href: string }[]) {
   };
 }
 
-export function getContentSchema(post: any, type: string) {
+export function getContentSchema(post: unknown, type: string) {
   const schemaType = type === "articles" ? "TechArticle" : "BlogPosting";
   
   return {

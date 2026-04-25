@@ -12,9 +12,15 @@ interface CommentsSectionProps {
   slug: string;
 }
 
+interface Comment {
+  id: string;
+  rich_text: Array<{ plain_text: string }>;
+  created_time: string;
+}
+
 export function CommentsSection({ pageId }: CommentsSectionProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [newComments, setNewComments] = useState<any[]>([]);
+  const [newComments, setNewComments] = useState<Comment[]>([]);
   const [commentCount, setCommentCount] = useState<number | null>(null);
 
   if (!pageId) return null;

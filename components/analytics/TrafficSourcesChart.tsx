@@ -21,7 +21,7 @@ interface TrafficSourcesChartProps {
 }
 
 export function TrafficSourcesChart({ timeRange }: TrafficSourcesChartProps) {
-  const [data, setData] = useState<any[]>([]);
+  const [data, setData] = useState<Record<string, unknown>[]>([]);
   const [loading, setLoading] = useState(true);
   const hasMounted = useHasMounted();
   const { theme } = useTheme();

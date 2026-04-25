@@ -15,14 +15,23 @@ import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge";
 import Link from 'next/link';
 
+interface Log {
+  id: string;
+  service: string;
+  level: string;
+  message: string;
+  metadata: unknown;
+  createdAt: string;
+}
+
 interface LogsManagerProps {
-  initialLogs: any[];
+  initialLogs: Log[];
   initialTotal: number;
 }
 
 export function LogsManager({ initialLogs, initialTotal }: LogsManagerProps) {
   const [loading, setLoading] = useState(false);
-  const [logs, setLogs] = useState<any[]>(initialLogs);
+  const [logs, setLogs] = useState<Log[]>(initialLogs);
   const [total, setTotal] = useState(initialTotal);
   const [logFilter, setLogFilter] = useState('all');
   const [levelFilter, setLevelFilter] = useState('all');

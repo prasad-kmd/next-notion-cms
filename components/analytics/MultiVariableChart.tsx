@@ -23,7 +23,7 @@ interface MultiVariableChartProps {
 }
 
 export function MultiVariableChart({ timeRange, breakdownBy, title }: MultiVariableChartProps) {
-  const [data, setData] = useState<any[]>([]);
+  const [data, setData] = useState<Record<string, unknown>[]>([]);
   const [categories, setCategories] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   const hasMounted = useHasMounted();
@@ -49,15 +49,15 @@ export function MultiVariableChart({ timeRange, breakdownBy, title }: MultiVaria
           // Transform TrendsQuery result with breakdown
           const allLabels = results[0]?.labels || [];
           const transformed = allLabels.map((label: string, i: number) => {
-            const point: any = { date: label };
-            results.forEach((series: any) => {
+            const point: unknown = { date: label };
+            results.forEach((series: unknown) => {
               point[series.breakdown_value || "Total"] = series.data[i];
             });
             return point;
           });
           
           setData(transformed);
-          setCategories(results.map((s: any) => s.breakdown_value || "Total"));
+          setCategories(results.map((s: unknown) => s.breakdown_value || "Total"));
         }
       } catch (err) {
         console.error(err);

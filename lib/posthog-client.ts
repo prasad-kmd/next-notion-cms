@@ -3,7 +3,8 @@
 import posthog from "posthog-js";
 
 if (typeof window !== "undefined") {
-  (window as any).posthog = posthog;
+  // @ts-expect-error - PostHog instance on window for debugging
+  window.posthog = posthog;
 }
 
 // The initialization logic is now handled in instrumentation-client.ts in the root

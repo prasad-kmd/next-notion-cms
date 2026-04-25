@@ -39,7 +39,7 @@ function isRateLimited(identifier: string): boolean {
   return false;
 }
 
-export async function submitContactForm(prevState: any, formData: FormData) {
+export async function submitContactForm(prevState: unknown, formData: FormData) {
   // We don't have easy access to IP in Server Actions without headers()
   // But we can use email as a simple identifier for rate limiting
   const email = formData.get("email") as string;

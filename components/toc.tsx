@@ -1,14 +1,14 @@
 "use client"
 
-import { useState, useEffect, useRef, useMemo } from "react"
+import { useState, useEffect, useRef, useMemo, startTransition } from "react"
 import { List, ChevronRight, ChevronRight as ChevronRightIcon } from "lucide-react"
 import { cn } from "@/lib/utils"
 
-// interface TOCItem {
-//   id: string
-//   text: string
-//   level: number
-// }
+interface TOCItem {
+  id: string
+  text: string
+  level: number
+}
 
 interface TOCProps {
   content: string
@@ -18,9 +18,9 @@ export function TOC({ content }: TOCProps) {
   const [activeId, setActiveId] = useState<string>("")
   const [isCollapsed, setIsCollapsed] = useState(true)
   const isScrollingFromClick = useRef(false)
-  const scrollTimeoutRef = useRef<any>(null)
+  const scrollTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
-  const headings = useMemo(() => {
+  const headings = useMemo<TOCItem[]>(() => {
     // Extract headings from HTML content
     // Improved regex to be more flexible with attribute order and case sensitivity
     const headingRegex = /<h([2-3])\s+[^>]*id=["']([^"']+)["'][^>]*>(.*?)<\/h\1\s*>/gi
@@ -76,7 +76,9 @@ export function TOC({ content }: TOCProps) {
     if (window.location.hash) {
       const hash = window.location.hash.substring(1)
       if (headings.some(h => h.id === hash)) {
-        setActiveId(hash)
+        startTransition(() => {
+          setActiveId(hash)
+        })
       }
     }
 
@@ -84,7 +86,9 @@ export function TOC({ content }: TOCProps) {
       if (window.location.hash) {
         const hash = window.location.hash.substring(1)
         if (headings.some(h => h.id === hash)) {
-          setActiveId(hash)
+          startTransition(() => {
+            setActiveId(hash)
+          })
         }
       }
     }

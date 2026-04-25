@@ -55,7 +55,7 @@ const quizExtension = {
       };
     }
   },
-  renderer(token: any) {
+  renderer(token: { json: string }) {
     return `[quiz]${token.json}[/quiz]`;
   },
 };
@@ -63,7 +63,7 @@ const quizExtension = {
 marked.use({
   renderer,
   async: true,
-  extensions: [quizExtension as any],
+  extensions: [quizExtension],
 });
 
 /**
@@ -225,14 +225,15 @@ const contentDirectory = path.join(process.cwd(), "content");
 /**
  * Low-level fetcher for Notion content list.
  */
-async function fetchNotionContentByType(type: string): Promise<ContentItem[]> {
-  const databaseId = (DATABASE_IDS as any)[type];
+async function fetchNotionContentByType(type: "blog" | "articles" | "projects" | "tutorials" | "wiki" | "quizzes"): Promise<ContentItem[]> {
+  const databaseId = DATABASE_IDS[type];
   if (!databaseId) return [];
 
   try {
     const dbObj = await notion.databases.retrieve({ database_id: databaseId });
-    const dataSourceId = (dbObj as any).data_sources?.[0]?.id || databaseId;
-    const response: any = await notion.dataSources.query({
+    // @ts-expect-error - Notion SDK might not have data_sources yet
+    const dataSourceId = dbObj.data_sources?.[0]?.id || databaseId;
+    const response = await (notion as unknown).dataSources.query({
       data_source_id: dataSourceId,
       filter: {
         property: "Status",
@@ -249,7 +250,7 @@ async function fetchNotionContentByType(type: string): Promise<ContentItem[]> {
     });
 
     const items = await Promise.all(
-      response.results.map(async (page: any) => {
+      (response as unknown).results.map(async (page: unknown) => {
         const props = page.properties;
         const slug = getPlainText(props.Slug);
         const title = getPlainText(props.Name || props.Title);
@@ -266,14 +267,14 @@ async function fetchNotionContentByType(type: string): Promise<ContentItem[]> {
           props.Authors.relation &&
           props.Authors.relation.length > 0
         ) {
-          const authorPage: any = await notion.pages.retrieve({
+          const authorPage = await notion.pages.retrieve({
             page_id: props.Authors.relation[0].id,
           });
-          authorSlug = getPlainText(authorPage.properties.Slug);
+          authorSlug = getPlainText((authorPage as unknown).properties.Slug);
         }
 
         return {
-          id: page.id,
+          id: page.id as string,
           slug,
           title,
           date,
@@ -288,7 +289,7 @@ async function fetchNotionContentByType(type: string): Promise<ContentItem[]> {
           tags,
           aiAssisted,
           author: authorSlug,
-          type: type as any,
+          type: type,
         };
       }),
     );
@@ -375,16 +376,17 @@ export const getContentByType = cache(async function (
  * Low-level fetcher for a single Notion content item.
  */
 async function fetchNotionContentItem(
-  type: string,
+  type: "blog" | "articles" | "projects" | "tutorials" | "wiki" | "quizzes",
   slug: string,
 ): Promise<ContentItem | null> {
-  const databaseId = (DATABASE_IDS as any)[type];
+  const databaseId = DATABASE_IDS[type];
   if (!databaseId) return null;
 
   try {
     const dbObj = await notion.databases.retrieve({ database_id: databaseId });
-    const dataSourceId = (dbObj as any).data_sources?.[0]?.id || databaseId;
-    const response: any = await notion.dataSources.query({
+    // @ts-expect-error - Notion SDK might not have data_sources yet
+    const dataSourceId = dbObj.data_sources?.[0]?.id || databaseId;
+    const response = await (notion as unknown).dataSources.query({
       data_source_id: dataSourceId,
       filter: {
         property: "Slug",
@@ -394,9 +396,9 @@ async function fetchNotionContentItem(
       },
     });
 
-    if (response.results.length === 0) return null;
+    if ((response as unknown).results.length === 0) return null;
 
-    const page: any = response.results[0];
+    const page = (response as unknown).results[0];
     const props = page.properties;
 
     const mdblocks = await n2m.pageToMarkdown(page.id);
@@ -416,10 +418,10 @@ async function fetchNotionContentItem(
       props.Authors.relation &&
       props.Authors.relation.length > 0
     ) {
-      const authorPage: any = await notion.pages.retrieve({
+      const authorPage = await notion.pages.retrieve({
         page_id: props.Authors.relation[0].id,
       });
-      authorSlug = getPlainText(authorPage.properties.Slug);
+      authorSlug = getPlainText((authorPage as unknown).properties.Slug);
     }
 
     const protectedContent = mdString.replace(
@@ -434,7 +436,7 @@ async function fetchNotionContentItem(
     const firstImage = extractFirstImage(mdString, true);
 
     return {
-      id: page.id,
+      id: page.id as string,
       slug,
       title,
       date,
@@ -451,7 +453,7 @@ async function fetchNotionContentItem(
       tags,
       aiAssisted,
       author: authorSlug,
-      type: type as any,
+      type: type,
     };
   } catch (error) {
     console.error(`Error fetching Notion item ${slug} for ${type}:`, error);
@@ -591,8 +593,9 @@ export const getAuthorBasic = cache(async function (
         const dbObj = await notion.databases.retrieve({
           database_id: databaseId,
         });
-        const dataSourceId = (dbObj as any).data_sources?.[0]?.id || databaseId;
-        const response: any = await notion.dataSources.query({
+        // @ts-expect-error - Notion SDK might not have data_sources yet
+        const dataSourceId = dbObj.data_sources?.[0]?.id || databaseId;
+        const response = await (notion as unknown).dataSources.query({
           data_source_id: dataSourceId,
           filter: {
             property: "Slug",
@@ -601,8 +604,8 @@ export const getAuthorBasic = cache(async function (
             },
           },
         });
-        if (response.results.length === 0) return null;
-        const page: any = response.results[0];
+        if ((response as unknown).results.length === 0) return null;
+        const page = (response as unknown).results[0];
         const props = page.properties;
         return {
           name: getPlainText(props.Name || props.Title),
@@ -651,8 +654,9 @@ export const getAuthorBySlug = cache(async function (
         const dbObj = await notion.databases.retrieve({
           database_id: databaseId,
         });
-        const dataSourceId = (dbObj as any).data_sources?.[0]?.id || databaseId;
-        const response: any = await notion.dataSources.query({
+        // @ts-expect-error - Notion SDK might not have data_sources yet
+        const dataSourceId = dbObj.data_sources?.[0]?.id || databaseId;
+        const response = await (notion as unknown).dataSources.query({
           data_source_id: dataSourceId,
           filter: {
             property: "Slug",
@@ -661,8 +665,8 @@ export const getAuthorBySlug = cache(async function (
             },
           },
         });
-        if (response.results.length === 0) return null;
-        const page: any = response.results[0];
+        if ((response as unknown).results.length === 0) return null;
+        const page = (response as unknown).results[0];
         const props = page.properties;
 
         const mdblocks = await n2m.pageToMarkdown(page.id);
@@ -737,8 +741,9 @@ export const getAllAuthors = cache(async function (): Promise<Author[]> {
         const dbObj = await notion.databases.retrieve({
           database_id: databaseId,
         });
-        const dataSourceId = (dbObj as any).data_sources?.[0]?.id || databaseId;
-        const response: any = await notion.dataSources.query({
+        // @ts-expect-error - Notion SDK might not have data_sources yet
+        const dataSourceId = dbObj.data_sources?.[0]?.id || databaseId;
+        const response = await (notion as unknown).dataSources.query({
           data_source_id: dataSourceId,
           filter: {
             property: "Status",
@@ -748,7 +753,7 @@ export const getAllAuthors = cache(async function (): Promise<Author[]> {
           },
         });
 
-        return response.results.map((page: any) => {
+        return (response as unknown).results.map((page: unknown) => {
           const props = page.properties;
           return {
             name: getPlainText(props.Name || props.Title),

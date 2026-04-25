@@ -402,7 +402,7 @@ const readingTime = Math.ceil(words / contentConfig.wordsPerMinute);
  * @example
  * const title = getPlainText(page.properties.Name);
  */
-export function getPlainText(property: any): string {
+export function getPlainText(property: unknown): string {
   // ...
 }
 ```
@@ -441,7 +441,7 @@ rules: {
 
 **Problem:** Extensive use of `any` type:
 ```typescript
-const { bookmark } = block as any;  // ❌
+const { bookmark } = block as unknown;  // ❌
 const props = page.properties;  // ❌ Implicit any
 ```
 

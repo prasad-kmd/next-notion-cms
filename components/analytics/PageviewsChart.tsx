@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { AreaChart } from "@/components/ui/charts/AreaChart";
 
 export function PageviewsChart() {
-  const [data, setData] = useState<any>(null);
+  const [data, setData] = useState<unknown>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -18,8 +18,8 @@ export function PageviewsChart() {
         if (!response.ok) throw new Error("Failed to fetch analytics");
         const json = await response.json();
         setData(json);
-      } catch (err: any) {
-        setError(err.message);
+      } catch (err: unknown) {
+        setError(err instanceof Error ? err.message : "Unknown error");
       } finally {
         setLoading(false);
       }
@@ -31,10 +31,11 @@ export function PageviewsChart() {
   if (error) return <div className="h-64 flex items-center justify-center text-destructive font-local-inter">{error}</div>;
 
   // Transform data for Recharts
-  const labels = data?.result?.[0]?.labels || [];
-  const values = data?.result?.[0]?.data || [];
+  const d = data as { result?: Array<{ labels?: string[]; data?: number[] }> } | null;
+  const labels = d?.result?.[0]?.labels || [];
+  const values = d?.result?.[0]?.data || [];
   
-  const chartData = labels.map((label: string, index: number) => ({
+  const chartData = labels.map((label, index) => ({
     date: label,
     Pageviews: values[index],
   }));

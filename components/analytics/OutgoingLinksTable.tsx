@@ -11,7 +11,7 @@ interface OutgoingLinksTableProps {
 }
 
 export function OutgoingLinksTable({ timeRange }: OutgoingLinksTableProps) {
-  const [data, setData] = useState<any[]>([]);
+  const [data, setData] = useState<Record<string, unknown>[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
 

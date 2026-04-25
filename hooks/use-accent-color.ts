@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, startTransition } from "react";
 
 export type AccentColor = {
   name: string;
@@ -37,7 +37,9 @@ export function useAccentColor() {
     if (saved) {
       const found = ACCENT_COLORS.find((c) => c.name === saved);
       if (found) {
-        setAccentColor(found);
+        startTransition(() => {
+          setAccentColor(found);
+        });
         applyAccentColor(found);
       }
     }

@@ -22,9 +22,10 @@ export function initPostHog() {
           maskAllInputs: true,
           maskTextSelector: ".mask-text",
         },
-        loaded: (ph: any) => {
+        loaded: (ph) => {
           if (typeof window !== "undefined") {
-            (window as any).posthog = ph;
+            // @ts-expect-error - PostHog instance on window for debugging
+            window.posthog = ph;
           }
         },
       });
