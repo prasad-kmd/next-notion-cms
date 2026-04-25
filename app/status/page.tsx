@@ -126,19 +126,19 @@ export default async function PublicStatusPage() {
 
         {/* Services Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {data.services.map((service: any) => (
-            <div key={service.name} className="group rounded-[1.5rem] border border-border/50 bg-card/40 p-6 flex flex-col gap-4 hover:border-primary/30 transition-all hover:shadow-md backdrop-blur-sm">
+          {data.services.map((service: unknown) => (
+            <div key={(service as { name: string }).name} className="group rounded-3xl border border-border/50 bg-card/40 p-6 flex flex-col gap-4 hover:border-primary/30 transition-all hover:shadow-md backdrop-blur-sm">
               <div className="flex items-start justify-between">
                 <div className="p-3 rounded-2xl bg-muted/50 text-muted-foreground group-hover:text-primary transition-colors border border-border/40">
-                  {serviceIcons[service.name as keyof typeof serviceIcons] || <Database className="w-5 h-5" />}
+                  {serviceIcons[(service as { name: string }).name as keyof typeof serviceIcons] || <Database className="w-5 h-5" />}
                 </div>
-                <StatusIndicator status={service.status} withLabel size="md" />
+                <StatusIndicator status={(service as { status: string }).status} withLabel size="md" />
               </div>
               
               <div className="space-y-1">
-                <h3 className="text-lg font-bold tracking-tight text-foreground">{service.name}</h3>
+                <h3 className="text-lg font-bold tracking-tight text-foreground">{(service as { name: string }).name}</h3>
                 <p className="text-sm text-muted-foreground leading-relaxed font-medium">
-                  {service.description}
+                  {(service as { description: string }).description}
                 </p>
               </div>
             </div>

@@ -9,7 +9,7 @@ interface LogEntryProps {
     service: string;
     level: string;
     message: string;
-    metadata: any;
+    metadata: unknown;
     createdAt: string;
   };
 }

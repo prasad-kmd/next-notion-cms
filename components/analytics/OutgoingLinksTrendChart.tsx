@@ -21,7 +21,7 @@ interface OutgoingLinksTrendChartProps {
 }
 
 export function OutgoingLinksTrendChart({ timeRange }: OutgoingLinksTrendChartProps) {
-  const [data, setData] = useState<any[]>([]);
+  const [data, setData] = useState<Record<string, unknown>[]>([]);
   const [domains, setDomains] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   const hasMounted = useHasMounted();
@@ -46,30 +46,30 @@ export function OutgoingLinksTrendChart({ timeRange }: OutgoingLinksTrendChartPr
           
           // Get top 5 domains
           const topSeries = results
-            .sort((a: any, b: any) => {
-              const sumA = a.data.reduce((acc: number, val: number) => acc + val, 0);
-              const sumB = b.data.reduce((acc: number, val: number) => acc + val, 0);
+            .sort((a: unknown, b: unknown) => {
+              const sumA = (a as { data: number[] }).data.reduce((acc: number, val: number) => acc + val, 0);
+              const sumB = (b as { data: number[] }).data.reduce((acc: number, val: number) => acc + val, 0);
               return sumB - sumA;
             })
             .slice(0, 5);
 
           const allLabels = topSeries[0]?.labels || [];
           const transformed = allLabels.map((label: string, i: number) => {
-            const point: any = { date: label };
-            topSeries.forEach((series: any) => {
-              const key = series.breakdown_value === "$$_posthog_breakdown_null_$$" || !series.breakdown_value 
+            const point: unknown = { date: label };
+            topSeries.forEach((series: unknown) => {
+              const key = (series as { breakdown_value: string }).breakdown_value === "$$_posthog_breakdown_null_$$" || !(series as { breakdown_value: string }).breakdown_value 
                 ? "Unknown" 
-                : series.breakdown_value;
-              point[key] = series.data[i];
+                : (series as { breakdown_value: string }).breakdown_value;
+              (point as Record<string, unknown>)[key] = (series as { data: number[] }).data[i];
             });
             return point;
           });
           
           setData(transformed);
-          setDomains(topSeries.map((s: any) => 
-            s.breakdown_value === "$$_posthog_breakdown_null_$$" || !s.breakdown_value 
+          setDomains(topSeries.map((s: unknown) => 
+            (s as { breakdown_value: string }).breakdown_value === "$$_posthog_breakdown_null_$$" || !(s as { breakdown_value: string }).breakdown_value 
             ? "Unknown" 
-            : s.breakdown_value
+            : (s as { breakdown_value: string }).breakdown_value
           ));
         }
       } catch (err) {

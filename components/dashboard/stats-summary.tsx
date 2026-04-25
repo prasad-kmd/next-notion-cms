@@ -3,7 +3,7 @@ import { Bookmark, Palette, Zap } from "lucide-react";
 
 interface StatsSummaryProps {
     preferences: {
-        bookmarks?: any[];
+        bookmarks?: unknown[];
         accentColor?: string;
     } | null;
 }

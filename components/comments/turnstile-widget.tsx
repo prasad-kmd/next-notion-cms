@@ -7,7 +7,7 @@ import { env } from "@/lib/env";
 
 interface TurnstileWidgetProps {
   onVerify: (token: string) => void;
-  onError?: (error?: any) => void;
+  onError?: (error?: unknown) => void;
   onExpire?: () => void;
 }
 

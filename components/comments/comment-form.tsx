@@ -11,9 +11,15 @@ import Image from "next/image";
 import { toast } from "sonner";
 import { TurnstileWidget, type TurnstileWidgetRef } from "./turnstile-widget";
 
+interface Comment {
+  id: string;
+  rich_text: Array<{ plain_text: string }>;
+  created_time: string;
+}
+
 interface CommentFormProps {
   pageId: string;
-  onSuccess: (newComment: any) => void;
+  onSuccess: (newComment: Comment) => void;
 }
 
 export function CommentForm({ pageId, onSuccess }: CommentFormProps) {

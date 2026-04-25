@@ -15,16 +15,16 @@ export async function GET(request: NextRequest) {
       // This is a bit tricky as notion.search doesn't allow filtering by database ID easily
       // So we'll map them and try to infer the type
       const results = notionResults
-        .filter((page: any) => page.object === "page" && page.parent?.type === "database_id")
-        .map((page: any) => {
-          const props = page.properties;
+        .filter((page: unknown) => (page as unknown).object === "page" && (page as unknown).parent?.type === "database_id")
+        .map((page: unknown) => {
+          const props = (page as unknown).properties;
           const title = getPlainText(props.Name || props.Title);
           const slug = getPlainText(props.Slug);
           const date = getDate(props.Date);
           const description = getPlainText(props.Description);
           
           // Map database ID to type
-          const dbId = page.parent.database_id.replace(/-/g, "");
+          const dbId = (page as unknown).parent.database_id.replace(/-/g, "");
           let type = "content";
           
           Object.entries(DATABASE_IDS).forEach(([key, value]) => {

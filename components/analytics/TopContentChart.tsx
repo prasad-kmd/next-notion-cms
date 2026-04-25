@@ -10,7 +10,7 @@ interface TopContentChartProps {
 }
 
 export function TopContentChart({ timeRange, contentType }: TopContentChartProps) {
-  const [data, setData] = useState<any[]>([]);
+  const [data, setData] = useState<Record<string, unknown>[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {

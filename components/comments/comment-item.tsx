@@ -5,12 +5,18 @@ import { formatDistanceToNow } from "date-fns";
 import { User } from "lucide-react";
 import Image from "next/image";
 
+interface Comment {
+  id: string;
+  rich_text: Array<{ plain_text: string }>;
+  created_time: string;
+}
+
 interface CommentItemProps {
-  comment: any; // Notion comment object
+  comment: Comment; // Notion comment object
 }
 
 export function CommentItem({ comment }: CommentItemProps) {
-  const plainText = comment.rich_text.map((t: any) => t.plain_text).join("");
+  const plainText = comment.rich_text.map((t) => t.plain_text).join("");
   const parsed = parseComment(plainText);
   const date = new Date(comment.created_time);
 

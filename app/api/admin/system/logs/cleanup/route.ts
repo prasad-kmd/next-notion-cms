@@ -7,12 +7,12 @@ export async function POST() {
         await requireAdmin();
         
         const result = await cleanupOldLogs();
-        const deletedCount = (result as any).count || 0;
+        const deletedCount = (result as unknown).count || 0;
         
         await logInfo('system', `Manual log cleanup performed. Deleted ${deletedCount} old logs.`);
 
         return NextResponse.json({ success: true, deletedCount });
-    } catch (error: any) {
+    } catch (error: unknown) {
         return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
     }
 }

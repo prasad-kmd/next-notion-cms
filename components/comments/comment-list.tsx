@@ -5,10 +5,16 @@ import { CommentItem } from "./comment-item";
 import { Loader2, MessageSquare, ArrowDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
+interface Comment {
+  id: string;
+  rich_text: Array<{ plain_text: string }>;
+  created_time: string;
+}
+
 interface CommentListProps {
   pageId: string;
-  initialComments?: any[];
-  newComments?: any[];
+  initialComments?: Comment[];
+  newComments?: Comment[];
   onCountUpdate?: (count: number) => void;
 }
 
@@ -18,7 +24,7 @@ export function CommentList({
   newComments = [],
   onCountUpdate
 }: CommentListProps) {
-  const [comments, setComments] = useState<any[]>(initialComments);
+  const [comments, setComments] = useState<Comment[]>(initialComments);
   const [cursor, setCursor] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);

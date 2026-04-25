@@ -19,9 +19,35 @@ import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge";
 import Link from 'next/link';
 
+interface ServiceStatus {
+  status: 'operational' | 'degraded' | 'error' | 'checking';
+  latency_ms?: number;
+  databases_connected?: number;
+  total_users?: number;
+  active_connections?: number | string;
+  database_size_bytes?: number;
+  project_name?: string;
+}
+
+interface SystemStatus {
+  timestamp: string;
+  notion?: ServiceStatus;
+  supabase?: ServiceStatus;
+  posthog?: ServiceStatus;
+}
+
+interface Log {
+  id: string;
+  service: string;
+  level: string;
+  message: string;
+  metadata: unknown;
+  createdAt: string;
+}
+
 interface SystemMonitorManagerProps {
-  initialStatus: any;
-  initialLogs: any[];
+  initialStatus: SystemStatus;
+  initialLogs: Log[];
 }
 
 export function SystemMonitorManager({ initialStatus, initialLogs }: SystemMonitorManagerProps) {
@@ -29,8 +55,8 @@ export function SystemMonitorManager({ initialStatus, initialLogs }: SystemMonit
   const [purging, setPurging] = useState(false);
   const [cleaning, setCleaning] = useState(false);
   const [autoRefresh, setAutoRefresh] = useState(false);
-  const [status, setStatus] = useState<any>(initialStatus);
-  const [logs, setLogs] = useState<any[]>(initialLogs);
+  const [status, setStatus] = useState<SystemStatus>(initialStatus);
+  const [logs, setLogs] = useState<Log[]>(initialLogs);
   const [logFilter, setLogFilter] = useState('all');
   const [lastUpdated, setLastUpdated] = useState<Date>(new Date());
 

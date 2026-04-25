@@ -36,7 +36,7 @@ export async function GET(req: NextRequest) {
         "Cache-Control": "public, s-maxage=60, stale-while-revalidate=30",
       },
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Error fetching comments:", error);
     return NextResponse.json(
       { error: "Failed to fetch comments" },
@@ -138,7 +138,7 @@ export async function POST(req: NextRequest) {
     });
 
     return NextResponse.json(response);
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Error creating comment:", error);
     return NextResponse.json(
       { error: "Failed to create comment" },

@@ -18,7 +18,7 @@ interface TopContentTableProps {
 }
 
 export function TopContentTable({ timeRange, contentType }: TopContentTableProps) {
-  const [data, setData] = useState<any[]>([]);
+  const [data, setData] = useState<Record<string, unknown>[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -109,7 +109,7 @@ export function TopContentTable({ timeRange, contentType }: TopContentTableProps
                         </span>
                       </td>
                       <td className="py-4 px-4 text-right font-semibold">
-                        {item.views.toLocaleString()}
+                        {(item.views as number).toLocaleString()}
                       </td>
                       <td className="py-4 px-4 text-right">
                         <TooltipProvider>

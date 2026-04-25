@@ -306,7 +306,7 @@ async function createPreviewImage(
         if (cachedPreviewImage) {
           return cachedPreviewImage
         }
-      } catch (err: any) {
+      } catch (err: unknown) {
         console.warn(`redis error get "${cacheKey}"`, err.message)
       }
     }
@@ -327,13 +327,13 @@ async function createPreviewImage(
     if (isRedisEnabled) {
       try {
         await db.set(cacheKey, previewImage)
-      } catch (err: any) {
+      } catch (err: unknown) {
         console.warn(`redis error set "${cacheKey}"`, err.message)
       }
     }
 
     return previewImage
-  } catch (err: any) {
+  } catch (err: unknown) {
     console.warn('failed to create preview image', url, err.message)
     return null
   }
@@ -401,7 +401,7 @@ import { getPreviewImageMap } from './preview-images'
 // In your Notion fetch functions, after getting recordMap:
 if (isPreviewImageSupportEnabled) {
   const previewImageMap = await getPreviewImageMap(recordMap)
-  ;(recordMap as any).preview_images = previewImageMap
+  ;(recordMap as unknown).preview_images = previewImageMap
 }
 ```
 
@@ -552,7 +552,7 @@ const getAllPages = pMemoize(getAllPagesImpl, {
   cacheKey: (...args) => JSON.stringify(args)
 })
 
-const getPage = async (pageId: string, opts?: any) => {
+const getPage = async (pageId: string, opts?: unknown) => {
   console.log('\nnotion getPage', uuidToId(pageId))
   return notion.getPage(pageId, {
     kyOptions: {
@@ -983,7 +983,7 @@ async function searchNotionImpl(
     })
 
     return {
-      results: results.results.map((page: any) => ({
+      results: results.results.map((page: unknown) => ({
         id: page.id,
         title: page.properties.Name?.title?.[0]?.plain_text || 'Untitled',
         url: page.url,
@@ -1259,8 +1259,8 @@ function FathomAnalytics() {
   }, [])
 
   useEffect(() => {
-    if (typeof window !== 'undefined' && (window as any).fathom) {
-      (window as any).fathom.trackPageview()
+    if (typeof window !== 'undefined' && (window as unknown).fathom) {
+      (window as unknown).fathom.trackPageview()
     }
   }, [pathname, searchParams])
 

@@ -9,16 +9,16 @@ import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/componen
 import { Input } from "@/components/ui/input"
 
 interface Quiz {
-  slug: string
-  title: string
-  description: string
-  category?: string
+  slug: string;
+  title: string;
+  description: string;
+  category?: string;
 }
 
 interface QuizStatus {
-  completed: boolean
-  score: number
-  total: number
+  completed: boolean;
+  score: number;
+  total: number;
 }
 
 interface QuizListProps {
