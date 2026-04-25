@@ -2,9 +2,10 @@ import { NextRequest, NextResponse } from "next/server";
 import { notion } from "@/lib/notion";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
-import { formatComment, containsProfanity } from "@/lib/comments";
+import { formatComment } from "@/lib/comments";
 import { isRateLimited } from "@/lib/rate-limit";
 import { env } from "@/lib/env";
+import { validateComment } from "@/lib/validation/validate";
 
 const RATE_LIMIT_CONFIG = {
   limit: 5,
@@ -63,7 +64,7 @@ export async function POST(req: NextRequest) {
   const userId = session.user.id;
   if (isRateLimited(userId, RATE_LIMIT_CONFIG)) {
     return NextResponse.json(
-      { error: "Too many comments. Please wait a moment." },
+      { error: "Too many comments. Please wait a moment.", type: "rate_limit" },
       { status: 429 }
     );
   }
@@ -82,7 +83,7 @@ export async function POST(req: NextRequest) {
     // Turnstile verification
     if (!turnstileToken) {
       return NextResponse.json(
-        { error: "Security verification missing" },
+        { error: "Security verification missing", type: "turnstile" },
         { status: 400 }
       );
     }
@@ -104,14 +105,22 @@ export async function POST(req: NextRequest) {
     if (!verifyData.success) {
       console.error("Turnstile verification failed:", verifyData["error-codes"]);
       return NextResponse.json(
-        { error: "Security verification failed" },
+        { error: "Security verification failed", type: "turnstile" },
         { status: 400 }
       );
     }
 
-    if (containsProfanity(content)) {
+    const validationResult = await validateComment(content);
+    if (!validationResult.success) {
+      // Log blocked attempt (counts/patterns only)
+      console.log(`[Profanity Blocked] User: ${userId}, Pattern: ${validationResult.error.blockedWords?.map(w => w.word).join(', ')}`);
+
       return NextResponse.json(
-        { error: "Comment contains prohibited content." },
+        {
+          error: validationResult.error.message,
+          type: validationResult.error.type,
+          blockedWords: validationResult.error.blockedWords
+        },
         { status: 400 }
       );
     }

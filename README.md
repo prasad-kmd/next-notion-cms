@@ -74,7 +74,7 @@ Perfect for researchers, engineers, and developers who need a robust, scalable, 
 - **🌐 Multi-Provider OAuth** - Google, GitHub, Facebook, Twitter, Reddit, Notion, Vercel with automatic account linking
 - **🛡️ Stateless JWT Sessions** - Free-tier optimization with secure session management
 - **👤 User Dashboard** - Comprehensive profile management and account connectivity
-- **🛡️ Spam Protection** - Temp-mail domain blocker and rate limiting on contact form submissions
+- **🛡️ Spam Protection** - Automated disposable email detection via `fakeout` and rate limiting on contact form submissions
 
 ### ⚡ Performance & SEO
 - **🚀 Performance-First Architecture** - Next.js 16 (App Router) for lightning-fast SSR and minimal client-side hydration
@@ -221,7 +221,8 @@ For detailed schema and setup steps, refer to the Notion configuration guide.
 | **Charts** | Recharts | Data visualization (Tremor style) |
 | **Syntax Highlighting** | Shiki | VS Code-accurate code highlighting |
 | **Animations** | Framer Motion + GSAP | Smooth UI animations |
-| **Validation** | Zod | TypeScript-first schema validation |
+| **Validation** | Zod + Obscenity | Type-safe schema validation and profanity filtering |
+| **Email Detection** | Fakeout | Automated disposable email blocking |
 | **Analytics** | PostHog | Product analytics platform |
 | **Security** | Cloudflare Turnstile | CAPTCHA alternative |
 | **Package Manager** | pnpm 9 | Fast, disk-efficient package manager |

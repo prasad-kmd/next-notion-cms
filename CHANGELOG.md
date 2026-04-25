@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.7.0] - 2025-05-29
+
+### Added
+- **Automated Disposable Email Detection**: Replaced manual `tempmail.json` with `fakeout` npm package for automated, up-to-date disposable email blocking on the contact form.
+- **Profanity Filtering**: Integrated `obscenity` npm package for automated profanity detection on both contact form and comments.
+- **Visual Word Highlighting**: New `HighlightedTextArea` component that visually marks blocked words after a failed validation attempt.
+- **Sonner Validation Notifications**: Enhanced user feedback with specific, timed toast notifications for disposable email and profanity errors.
+- **Unified Validation Pipeline**: Centralized validation logic in `lib/validation/validate.ts` for consistent form handling.
+
+### Removed
+- **Legacy Temp-Mail Data**: Deleted `public/data/tempmail.json` and associated manual lookup logic.
+- **Basic Profanity Filter**: Removed the static `BLACKLIST` approach in `lib/comments.ts` in favor of the more robust `obscenity` matcher.
+
 ## [1.6.0] - 2025-05-22
 
 ### Added

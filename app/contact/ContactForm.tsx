@@ -6,15 +6,18 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
+import { HighlightedTextArea } from "@/components/ui/HighlightedTextArea";
 import { cn } from "@/lib/utils";
 import { submitContactForm } from "./actions";
+import { showTempMailError, showProfanityError } from "@/lib/validation/notifications";
+import { BlockedWord } from "@/types/validation";
 
 const MAX_FILE_SIZE = 20 * 1024 * 1024; // 20 MB
 
 export default function ContactForm() {
   const [state, formAction, isPending] = useActionState(submitContactForm, null);
   const [file, setFile] = useState<File | null>(null);
+  const [blockedWords, setBlockedWords] = useState<BlockedWord[]>([]);
   const formRef = useRef<HTMLFormElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -23,12 +26,28 @@ export default function ContactForm() {
       toast.success(state.message);
       formRef.current?.reset();
       startTransition(() => {
+        setBlockedWords([]);
         setFile(null);
       });
     } else if (state?.success === false) {
-      toast.error(state.message);
+      if (state.validationError) {
+        const { type, blockedWords: words } = state.validationError;
+        if (type === "temp_mail") {
+          showTempMailError();
+        } else if (type === "profanity" && words) {
+          startTransition(() => {
+            setBlockedWords(words);
+          });
+          showProfanityError(words.length);
+        } else {
+          toast.error(state.message);
+        }
+      } else {
+        toast.error(state.message);
+      }
+
       if (state.errors) {
-        Object.values(state.errors).flat().forEach((err: unknown) => toast.error(err));
+        Object.values(state.errors).flat().forEach((err: unknown) => toast.error(err as string));
       }
     }
   }, [state]);
@@ -120,13 +139,14 @@ export default function ContactForm() {
           >
             Your Message
           </Label>
-          <Textarea
+          <HighlightedTextArea
             id="message"
             name="message"
             placeholder="Tell me about your project..."
-            className="min-h-[120px] resize-none bg-muted/50 transition-all focus:bg-background focus:ring-2 focus:ring-primary/20"
+            className="min-h-[120px] bg-muted/50 transition-all focus:bg-background focus:ring-2 focus:ring-primary/20"
             required
             disabled={isPending}
+            blockedWords={blockedWords}
           />
         </div>
 
