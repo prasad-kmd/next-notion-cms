@@ -1,18 +1,209 @@
 [
   {
     "version": "0.0",
-    "date": "April 10, 2026",
-    "title": "Add Authors database support to Notion CMS configuration and documentation",
+    "date": "25 April 2026",
+    "title": "Add project rules and contribution guidelines in RULES.md",
     "description": "",
     "changes": [
-      "Add Authors database support to Notion CMS configuration and documentation"
+      "Add project rules and contribution guidelines in RULES.md",
+      "Apply consistent markdown formatting and code syntax highlighting to RULES.md",
+      "Update formatting of checklist items in RULES.md",
+      "Critical linting errors",
+      "Critical linting errors",
+      "Applied fixes for `@typescript-eslint/no-unused-vars`",
+      "Add fixes to `react-hooks/set-state-in-effect` related issues."
+    ],
+    "type": "fix",
+    "automated": true
+  },
+  {
+    "version": "0.0",
+    "date": "24 April 2026",
+    "title": "Potential fix for code scanning alert no. 16: Bad HTML filtering regexp",
+    "description": "",
+    "changes": [
+      "Potential fix for code scanning alert no. 16: Bad HTML filtering regexp - Co-authored-by: Copilot Autofix powered by AI <62310815+github-advanced-security[bot]@users.noreply.github.com>",
+      "Potential fix for code scanning alert no. 16: Bad HTML filtering regexp (#24) - Potential fix for",
+      "Revert \"Potential fix for code scanning alert no. 16: Bad HTML filtering regexp\"",
+      "Revert \"Potential fix for code scanning alert no. 16: Bad HTML filtering regexp\" (#25) - Reverts prasad-kmd/next-notion-cms#24",
+      "Implement robots.txt configuration and dynamic route handler for SEO and AI crawler control",
+      "Remove unused file and associated references",
+      "Modified Footer component, configured lint workflow, and bump version to 2.0.0",
+      "Ci: modified GitHub Actions workflow for linting with job summary reporting",
+      "Migrate to flat ESLint configuration and update lint script to use next lint",
+      "Update lint script to target all files using eslint",
+      "Migrate eslint configuration to use direct imports from eslint-config-next",
+      "Address GitHub Security CodeQL warnings - - Fixed incomplete URL substring sanitization by using robust URL hostname checks for GitHub Gist embeds.",
+      "Address GitHub Security CodeQL warnings (#26) in issue #15 - - Fixed incomplete URL substring sanitization by using robust URL",
+      "Ci: add CodeQL advanced security scanning workflow",
+      "Merge branch 'main' of https://github.com/prasad-kmd/next-notion-cms",
+      "Add advanced CodeQL workflow configuration",
+      "Remove unused files and associated references",
+      "Rewrite DESIGN.md to define comprehensive frontend visual tokens, layout specifications, and component styling patterns",
+      "Resolve all CodeQL vulnerabilities in OG route and content transformers - - Replace vulnerable regex-based tag stripping with safe state-machine `stripTags()`",
+      "Modified dynamic Open Graph image generation route with secure text sanitization",
+      "Add sanitize-html and corresponding types to dependencies"
     ],
     "type": "feature",
     "automated": true
   },
   {
     "version": "0.0",
-    "date": "April 09, 2026",
+    "date": "23 April 2026",
+    "title": "Modified content renderer with interactive features and add analytics dashboard components",
+    "description": "",
+    "changes": [
+      "Modified content renderer with interactive features and add analytics dashboard components",
+      "Implement AnalyticsDashboardManager and TopContentTable components for comprehensive site traffic visualization",
+      "Implement comprehensive system monitoring dashboard with health checks for Notion, Supabase, and PostHog",
+      "Potential fix for code scanning alert no. 19: Use of externally-controlled format string - Co-authored-by: Copilot Autofix powered by AI <62310815+github-advanced-security[bot]@users.noreply.github.com>",
+      "Potential fix for code scanning alert no. 19: Use of externally-controlled format string (#23) - Potential fix for",
+      "Modified system monitoring dashboard with log management and service status tracking",
+      "Modified SystemMonitorManager component for real-time service health tracking and log management",
+      "Implement accessibility framework with custom provider, control panel, and content pages"
+    ],
+    "type": "feature",
+    "automated": true
+  },
+  {
+    "version": "0.0",
+    "date": "22 April 2026",
+    "title": "Implement PostHog analytics integration with admin dashboard and pageviews visualization",
+    "description": "",
+    "changes": [
+      "Implement PostHog analytics integration with admin dashboard and pageviews visualization",
+      "Potential fix for code scanning alert no. 18: Incomplete string escaping or encoding - Co-authored-by: Copilot Autofix powered by AI <62310815+github-advanced-security[bot]@users.noreply.github.com>",
+      "Potential fix for code scanning alert no. 18: Incomplete string escaping or encoding (#18) - Potential fix for",
+      "Add comprehensive documentation and initial dashboard page scaffold",
+      "Merge branch 'main' of https://github.com/prasad-kmd/next-notion-cms",
+      "Modified PostHog analytics dashboard with server-side integration and authentication protection",
+      "Modified PostHog analytics dashboard page and admin API route",
+      "Integrate PostHog analytics with provider setup and CSP updates",
+      "Potential fix for code scanning alert no. 8: Double escaping or unescaping - Co-authored-by: Copilot Autofix powered by AI <62310815+github-advanced-security[bot]@users.noreply.github.com>",
+      "Potential fix for code scanning alert no. 8: Double escaping or unescaping (#19) - Potential fix for",
+      "Modified root layout with global providers and updated navigation component",
+      "Modified PostHog analytics integration with page view tracking and dashboard components",
+      "Add secure admin analytics API route for PostHog data retrieval",
+      "Implement Recharts-based visualization components and integrate analytics charts into the dashboard",
+      "Potential fix for code scanning alert no. 20: Use of externally-controlled format string - Co-authored-by: Copilot Autofix powered by AI <62310815+github-advanced-security[bot]@users.noreply.github.com>",
+      "Potential fix for code scanning alert no. 20: Use of externally-controlled format string (#21) - Potential fix for"
+    ],
+    "type": "feature",
+    "automated": true
+  },
+  {
+    "version": "0.0",
+    "date": "21 April 2026",
+    "title": "Implement comment system with Cloudflare Turnstile verification, rate limiting, and service worker caching",
+    "description": "",
+    "changes": [
+      "Implement comment system with Cloudflare Turnstile verification, rate limiting, and service worker caching",
+      "Add new technology stack badges and update README documentation",
+      "Add Vibe Code 80 badge and update README documentation",
+      "Modified modular comment system and add dynamic content pages for projects, blog, tutorials, articles, and wiki.",
+      "Modified View Transitions API, global CSS theme, and content rendering components",
+      "Add robots.txt configuration to define search engine crawling rules and sitemap location",
+      "Implement role-based access control with admin-only routes, authorization utilities, and protected page components.",
+      "Modified View Transitions API component and define global Tailwind CSS theme variables",
+      "Modifed responsive navigation component in sidebar and new licenses and not-authorized pages",
+      "Modified custom 403 not-authorized page with conditional sign-in and navigation options",
+      "Optimized responsive navigation system with sidebar, mobile bottom bar, and aesthetic background components"
+    ],
+    "type": "feature",
+    "automated": true
+  },
+  {
+    "version": "0.0",
+    "date": "20 April 2026",
+    "title": "Add date-fns dependency to package.json",
+    "description": "",
+    "changes": [
+      "Add date-fns dependency to package.json",
+      "Add various badges to README.md",
+      "Implement native Notion comments system with authentication, rate limiting, and UI components",
+      "Merge branch 'main' of https://github.com/prasad-kmd/next-notion-cms",
+      "Modified modular UI components for author profiles, comment sections, and social account management.",
+      "Modified licenses page, site directory, and linked accounts dashboard component"
+    ],
+    "type": "feature",
+    "automated": true
+  },
+  {
+    "version": "0.0",
+    "date": "19 April 2026",
+    "title": "Implement Better Auth integration with database schema, user preference synchronization, and authentication UI",
+    "description": "",
+    "changes": [
+      "Implement Better Auth integration with database schema, user preference synchronization, and authentication UI",
+      "Implement cross-device user preference synchronization for bookmarks and accent colors",
+      "Update CSP connect-src directive to include image and asset domains",
+      "Implement user dashboard with profile, account management, and activity tracking components",
+      "Modified dashboard layout with profile overview, activity tracking, and stats summary components",
+      "Modified dashboard page with profile, account, and activity tabs",
+      "Dashboard error fixed",
+      "Add issue templates, pull request template, and contributing guidelines",
+      "Modified interactive bento grid components with GSAP animations and spotlight effects",
+      "Modified interactive ClickSpark component and new content card UI elements"
+    ],
+    "type": "feature",
+    "automated": true
+  },
+  {
+    "version": "0.0",
+    "date": "18 April 2026",
+    "title": "Merge pull request #11 from prasad-kmd/NotionCMS-integration-20260410",
+    "description": "",
+    "changes": [
+      "Merge pull request #11 from prasad-kmd/NotionCMS-integration-20260410 - Notion CMS integration 20260410",
+      "Add integration analysis and task tracking for Notion starter kit features",
+      "Modified global layout, floating navbar, and accent color customization system",
+      "Modified custom error handling, global layout, and UI components for the documentation platform",
+      "Add project status and environment badges to README",
+      "Implement native Notion search, breadcrumbs, JSON-LD SEO, and image optimizations across content pages",
+      "Add comprehensive codebase improvement suggestions for security, performance, and code quality",
+      "Typo fix",
+      "Build(deps): bump dompurify in the npm_and_yarn group across 1 directory - Bumps the npm_and_yarn group with 1 update in the / directory: [dompurify](https://github.com/cure53/DOMPurify).",
+      "Build(deps): bump lodash in the npm_and_yarn group across 1 directory - Bumps the npm_and_yarn group with 1 update in the / directory: [lodash](https://github.com/lodash/lodash).",
+      "Modified Notion integration with custom block transformers and add contact form functionality",
+      "Build(deps): bump lodash from 4.17.23 to 4.18.1 in the npm_and_yarn group across 1 directory (#13) - Bumps the npm_and_yarn group with 1 update in the / directory:",
+      "Build(deps): bump next in the npm_and_yarn group across 1 directory - Bumps the npm_and_yarn group with 1 update in the / directory: [next](https://github.com/vercel/next.js).",
+      "Enable image optimization, configure formats, and update CSP for Unsplash support",
+      "Rename knowlegde.md to knowledge.md",
+      "Update Telegram API reference in README",
+      "Build(deps): bump dompurify from 3.3.3 to 3.4.0 in the npm_and_yarn group across 1 directory (#12) - Bumps the npm_and_yarn group with 1 update in the / directory:",
+      "Build(deps): bump next from 16.2.2 to 16.2.3 in the npm_and_yarn group across 1 directory (#14) - Bumps the npm_and_yarn group with 1 update in the / directory:",
+      "Add image hostnames and integrate better-auth, drizzle-orm, and postgres with dependency updates"
+    ],
+    "type": "feature",
+    "automated": true
+  },
+  {
+    "version": "0.0",
+    "date": "14 April 2026",
+    "title": "Update changelog [skip ci]",
+    "description": "",
+    "changes": [
+      "Update changelog [skip ci]"
+    ],
+    "type": "improvement",
+    "automated": true
+  },
+  {
+    "version": "0.0",
+    "date": "10 April 2026",
+    "title": "Add Authors database support to Notion CMS configuration and documentation",
+    "description": "",
+    "changes": [
+      "Add Authors database support to Notion CMS configuration and documentation",
+      "Initialize Next.js CMS with Notion integration, content routing, and UI components",
+      "Modified Tailwind CSS globals and Notion API content integration utilities"
+    ],
+    "type": "feature",
+    "automated": true
+  },
+  {
+    "version": "0.0",
+    "date": "09 April 2026",
     "title": "Modified site architecture with dynamic routing for blogs, quizzes, tutorials, and projects alongside new UI components and status documentation.",
     "description": "",
     "changes": [
@@ -25,7 +216,7 @@
   },
   {
     "version": "0.0",
-    "date": "April 08, 2026",
+    "date": "08 April 2026",
     "title": "Migrate project structure to new directory and implement core application features and components",
     "description": "",
     "changes": [
@@ -40,7 +231,7 @@
   },
   {
     "version": "0.0",
-    "date": "April 07, 2026",
+    "date": "07 April 2026",
     "title": "Modified Next.js project with custom Tailwind CSS theme, UI components, and content structure",
     "description": "",
     "changes": [
@@ -54,7 +245,7 @@
   },
   {
     "version": "0.0",
-    "date": "April 06, 2026",
+    "date": "06 April 2026",
     "title": "Modified collapsible sidebar navigation with tooltips and responsive mobile support",
     "description": "",
     "changes": [
@@ -65,7 +256,7 @@
   },
   {
     "version": "0.0",
-    "date": "April 03, 2026",
+    "date": "03 April 2026",
     "title": "Finalize blogfolio with polished footer and hero layout",
     "description": "",
     "changes": [
@@ -83,7 +274,7 @@
   },
   {
     "version": "0.0",
-    "date": "April 02, 2026",
+    "date": "02 April 2026",
     "title": "Initial commit",
     "description": "",
     "changes": [
