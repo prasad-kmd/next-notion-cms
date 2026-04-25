@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, { createContext, useContext, useState, useEffect, startTransition } from "react";
 
 export type FontOption = {
   name: string;
@@ -69,12 +69,17 @@ export const AccessibilityProvider: React.FC<{ children: React.ReactNode }> = ({
     const saved = localStorage.getItem("accessibility-preferences");
     if (saved) {
       try {
-        setSettings((prev) => ({ ...prev, ...JSON.parse(saved) }));
+        const parsed = JSON.parse(saved);
+        startTransition(() => {
+          setSettings((prev) => ({ ...prev, ...parsed }));
+        });
       } catch (e) {
         console.error("Failed to parse accessibility preferences", e);
       }
     }
-    setMounted(true);
+    startTransition(() => {
+      setMounted(true);
+    });
   }, []);
 
   useEffect(() => {

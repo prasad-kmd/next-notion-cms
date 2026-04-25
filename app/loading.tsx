@@ -1,4 +1,5 @@
 import { PanelLeft } from "lucide-react"
+import Image from "next/image"
 
 export default function Loading() {
     return (
@@ -7,9 +8,11 @@ export default function Loading() {
                 {/* Pulsing ring around the icon */}
                 <div className="absolute inset-0 animate-ping rounded-full bg-primary/20" />
                 <div className="relative flex h-16 w-16 items-center justify-center rounded-full bg-card shadow-lg border border-border overflow-hidden">
-                    <img 
+                    <Image 
                         src="/favicon.ico" 
                         alt="Logo" 
+                        width={40}
+                        height={40}
                         className="h-10 w-10 animate-pulse object-contain"
                     />
                 </div>

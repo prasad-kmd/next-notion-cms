@@ -24,8 +24,11 @@ export function CommentList({
   const [hasMore, setHasMore] = useState(true);
   const observerTarget = useRef<HTMLDivElement>(null);
 
+  const loadingRef = useRef(false);
+
   const fetchComments = useCallback(async (currentCursor?: string) => {
-    if (isLoading) return;
+    if (loadingRef.current) return;
+    loadingRef.current = true;
     setIsLoading(true);
 
     try {
@@ -48,8 +51,9 @@ export function CommentList({
       console.error("Error fetching comments:", error);
     } finally {
       setIsLoading(false);
+      loadingRef.current = false;
     }
-  }, [pageId]);
+  }, [pageId, onCountUpdate]);
 
   // Initial load
   useEffect(() => {

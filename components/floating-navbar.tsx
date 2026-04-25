@@ -2,7 +2,7 @@
 
 import { useTheme } from "next-themes";
 import { Sun, Moon, Bookmark, Share2, LayoutGrid } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, startTransition } from "react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { Search } from "./search";
@@ -34,7 +34,9 @@ export function FloatingNavbar({
 
   // Avoid hydration mismatch
   useEffect(() => {
-    setMounted(true);
+    startTransition(() => {
+      setMounted(true);
+    });
   }, []);
 
   if (!mounted) {

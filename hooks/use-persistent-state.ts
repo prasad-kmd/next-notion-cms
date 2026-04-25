@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, startTransition } from "react"
 
 export function usePersistentState<T>(key: string, defaultValue: T) {
     const [state, setState] = useState<T>(defaultValue)
@@ -10,12 +10,17 @@ export function usePersistentState<T>(key: string, defaultValue: T) {
         const savedValue = localStorage.getItem(key)
         if (savedValue !== null) {
             try {
-                setState(JSON.parse(savedValue))
+                const parsed = JSON.parse(savedValue)
+                startTransition(() => {
+                    setState(parsed)
+                })
             } catch (e) {
                 console.error(`Error parsing persistent state for key "${key}":`, e)
             }
         }
-        setIsLoaded(true)
+        startTransition(() => {
+            setIsLoaded(true)
+        })
     }, [key])
 
     useEffect(() => {
