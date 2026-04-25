@@ -12,7 +12,7 @@ interface CommentsSectionProps {
   slug: string;
 }
 
-export function CommentsSection({ pageId, slug }: CommentsSectionProps) {
+export function CommentsSection({ pageId }: CommentsSectionProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [newComments, setNewComments] = useState<any[]>([]);
   const [commentCount, setCommentCount] = useState<number | null>(null);

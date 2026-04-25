@@ -1,6 +1,6 @@
 "use client";
 
-import { ParsedComment, parseComment } from "@/lib/comments";
+import { parseComment } from "@/lib/comments";
 import { formatDistanceToNow } from "date-fns";
 import { User } from "lucide-react";
 import Image from "next/image";

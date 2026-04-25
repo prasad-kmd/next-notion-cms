@@ -1,7 +1,7 @@
 "use client";
 
 import { useTheme } from "next-themes";
-import { Search, Palette, Menu, X, Sun, Moon, User } from "lucide-react";
+import { Search, Menu, X, Sun, Moon } from "lucide-react";
 import { useEffect, useState, startTransition } from "react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";

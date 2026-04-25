@@ -1,14 +1,14 @@
 "use client"
 
 import { useState, useEffect, useRef, useMemo } from "react"
-import { List, ChevronRight, ChevronLeft, ChevronRight as ChevronRightIcon } from "lucide-react"
+import { List, ChevronRight, ChevronRight as ChevronRightIcon } from "lucide-react"
 import { cn } from "@/lib/utils"
 
-interface TOCItem {
-  id: string
-  text: string
-  level: number
-}
+// interface TOCItem {
+//   id: string
+//   text: string
+//   level: number
+// }
 
 interface TOCProps {
   content: string

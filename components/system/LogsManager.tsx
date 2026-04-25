@@ -3,7 +3,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { 
   RefreshCw, 
-  History,
   Terminal,
   ChevronLeft,
   ChevronRight,
@@ -27,7 +26,7 @@ export function LogsManager({ initialLogs, initialTotal }: LogsManagerProps) {
   const [total, setTotal] = useState(initialTotal);
   const [logFilter, setLogFilter] = useState('all');
   const [levelFilter, setLevelFilter] = useState('all');
-  const [limit, setLimit] = useState(50);
+  const [limit] = useState(50);
   
   const fetchLogs = useCallback(async () => {
     setLoading(true);

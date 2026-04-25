@@ -49,7 +49,7 @@ export function ContentCard({ post, basePath }: ContentCardProps) {
     }
   }, [post.author]);
 
-  const category = post.category || post.technical;
+  // const category = post.category || post.technical;
 
   return (
     <Link

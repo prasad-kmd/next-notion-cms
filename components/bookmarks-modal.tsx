@@ -2,11 +2,11 @@
 
 import { useState, useEffect, startTransition } from "react";
 import { createPortal } from "react-dom";
-import { X, Calendar, ArrowRight, Trash2, Bookmark, Play } from "lucide-react";
+import { X, Calendar, Trash2, Bookmark, Play } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useBookmarks } from "@/hooks/use-bookmarks";
-import { useEntertainmentBookmarks } from "@/hooks/use-entertainment-bookmarks";
-import { cn } from "@/lib/utils";
+// import { useEntertainmentBookmarks } from "@/hooks/use-entertainment-bookmarks";
+// import { cn } from "@/lib/utils";
 
 interface BookmarksModalProps {
   isOpen: boolean;

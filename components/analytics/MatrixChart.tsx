@@ -9,9 +9,7 @@ import {
   YAxis, 
   CartesianGrid, 
   Tooltip, 
-  ResponsiveContainer,
-  Legend
-} from "recharts";
+  ResponsiveContainer} from "recharts";
 import { ANALYTICS_COLORS, getRechartsTheme } from "@/lib/recharts-theme";
 import { useTheme } from "next-themes";
 import { getColorCode } from "../ui/charts/ChartUtils";

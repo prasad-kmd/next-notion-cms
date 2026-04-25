@@ -1,4 +1,4 @@
-import { AvailableChartColorsKeys, getColorCode } from "@/components/ui/charts/ChartUtils";
+import { AvailableChartColorsKeys } from "@/components/ui/charts/ChartUtils";
 
 export const ANALYTICS_COLORS: AvailableChartColorsKeys[] = [
   "blue",

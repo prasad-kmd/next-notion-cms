@@ -3,15 +3,8 @@
 import { 
   Cpu, 
   Code2, 
-  Layers, 
-  Globe, 
-  Zap, 
   Settings, 
-  ShieldCheck, 
-  Database,
-  Search,
-  PenTool
-} from "lucide-react"
+  ShieldCheck} from "lucide-react"
 
 const skillCategories = [
   {

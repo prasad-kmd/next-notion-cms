@@ -10,10 +10,7 @@ import {
 } from "lucide-react";
 import { 
     SiGoogle, 
-    SiGithub, 
-    SiFacebook, 
-    SiX, 
-    SiReddit 
+    SiGithub 
 } from "react-icons/si";
 import { useState, Suspense } from "react";
 import { toast } from "sonner";

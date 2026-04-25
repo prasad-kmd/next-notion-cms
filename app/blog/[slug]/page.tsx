@@ -5,8 +5,8 @@ import {
   getContentItem,
   getAuthorBasic,
 } from "@/lib/content";
-import { Calendar, ArrowLeft, Clock } from "lucide-react";
-import Link from "next/link";
+import { Calendar, Clock } from "lucide-react";
+// import Link from "next/link";
 import { ContentRenderer } from "@/components/content-renderer";
 import { BookmarkButton } from "@/components/bookmark-button";
 import { ScrollProgress } from "@/components/scroll-progress";

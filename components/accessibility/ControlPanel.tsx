@@ -2,7 +2,7 @@
 
 import React from "react";
 import { useAccessibility, AVAILABLE_FONTS } from "@/contexts/AccessibilityContext";
-import { X, RotateCcw, Type, AlignLeft, List, LetterText, Contrast, Accessibility as AccessibilityIcon } from "lucide-react";
+import { RotateCcw, Type, AlignLeft, List, LetterText, Contrast, Accessibility as AccessibilityIcon } from "lucide-react";
 import { Slider } from "@/components/ui/slider";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";

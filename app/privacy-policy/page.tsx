@@ -5,7 +5,7 @@ import Link from "next/link"
 import { ShieldCheck, ArrowLeft, Shield, UserX, Laptop, Palette, Bookmark, Ban, ChevronDown, Check, X } from "lucide-react"
 import { useState } from "react"
 import { cn } from "@/lib/utils"
-import { siteConfig } from "@/lib/config";
+// import { siteConfig } from "@/lib/config";
 import { AIContentIndicator } from "@/components/ai-content-indicator";
 
 const cookieData = {

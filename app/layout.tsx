@@ -123,7 +123,7 @@ import { AccentColorInitializer } from "@/components/accent-color-initializer";
 import { AuthInitializer } from "@/components/auth/auth-initializer";
 import { PostHogProvider } from "@/components/posthog-provider";
 import PostHogPageviewWrapper from "@/components/analytics/PostHogPageview";
-import Script from "next/script";
+// import Script from "next/script";
 import { AccessibilityProvider } from "@/providers/AccessibilityProvider";
 import { FloatingButton } from "@/components/accessibility/FloatingButton";
 import { ControlPanel } from "@/components/accessibility/ControlPanel";

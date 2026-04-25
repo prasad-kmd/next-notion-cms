@@ -6,11 +6,11 @@ import { cn } from "@/lib/utils";
 import { AuthorProfile } from "./author-profile";
 import { Author } from "@/lib/content";
 
-interface TOCItem {
-  id: string;
-  text: string;
-  level: number;
-}
+// interface TOCItem {
+//   id: string;
+//   text: string;
+//   level: number;
+// }
 
 interface ArticleSidebarProps {
   content: string;

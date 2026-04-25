@@ -3,31 +3,27 @@
 import Link from "next/link";
 import Image from "next/image";
 import {
-  Calendar,
   User,
   ArrowUpRight,
-  MessageSquare,
   Clock,
   ArrowRight,
-  Layers,
-  Tag,
   FileText,
   Rocket,
 } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
+// import { Badge } from "@/components/ui/badge";
 import { ContentItem, Author } from "@/lib/content";
 import { getAuthorBasic } from "@/lib/author-client";
 import { useEffect, useState } from "react";
 import { getBlurDataURL } from "@/lib/utils";
 
-function formatDate(dateStr: string | undefined) {
-  if (!dateStr) return "Recent";
-  const d = new Date(dateStr);
-  const day = String(d.getDate()).padStart(2, "0");
-  const month = String(d.getMonth() + 1).padStart(2, "0");
-  const year = d.getFullYear();
-  return `${day} ${month} ${year}`;
-}
+// function formatDate(dateStr: string | undefined) {
+//   if (!dateStr) return "Recent";
+//   const d = new Date(dateStr);
+//   const day = String(d.getDate()).padStart(2, "0");
+//   const month = String(d.getMonth() + 1).padStart(2, "0");
+//   const year = d.getFullYear();
+//   return `${day} ${month} ${year}`;
+// }
 
 interface BlogCardProps {
   post: ContentItem;

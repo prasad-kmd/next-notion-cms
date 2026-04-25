@@ -32,7 +32,6 @@ import {
   Hash,
   Heart,
   Trophy,
-  Clapperboard,
 } from "lucide-react";
 
 const title = "Site Directory";

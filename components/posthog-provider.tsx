@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, Suspense } from "react";
+import { useEffect } from "react";
 import { posthog } from "@/lib/posthog-client";
 import { initPostHog } from "@/instrumentation-client";
 import { authClient } from "@/lib/auth-client";

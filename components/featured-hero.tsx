@@ -1,8 +1,8 @@
 "use client"
 
-import React, { useState, useEffect, startTransition } from "react"
+import { useState, useEffect, startTransition } from "react"
 import Link from "next/link"
-import { ArrowRight, Box, Code2, Database, Rocket } from "lucide-react"
+import { ArrowRight } from "lucide-react"
 import { motion } from "framer-motion"
 
 export interface HeroItem {

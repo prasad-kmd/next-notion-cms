@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { ShieldAlert, ArrowLeft, LogIn, UserX, Home, LayoutDashboard } from "lucide-react";
+import { ShieldAlert, LogIn, UserX, Home, LayoutDashboard } from "lucide-react";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { SignOutButton } from "@/components/auth/SignOutButton";

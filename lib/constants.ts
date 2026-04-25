@@ -1,4 +1,4 @@
-import { siteConfig } from "./config";
+// import { siteConfig } from "./config";
 
 export const contentConfig = {
   wordsPerMinute: 220,

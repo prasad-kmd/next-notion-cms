@@ -8,8 +8,6 @@ import {
   FolderGit2,
   LibraryBig,
   LayoutPanelLeft,
-  Menu,
-  X,
   MailSearch,
   ChevronLeft,
   ChevronRight,
@@ -30,7 +28,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 
 function MobileTopBanner() {
   return (
