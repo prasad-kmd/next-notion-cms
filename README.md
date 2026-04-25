@@ -1,8 +1,6 @@
-# Next Notion CMS
+# Next Notion CMS ![Next Notion CMS](public/img/badges/next-notion-cms.svg) 
 
-![Next Notion CMS](public/img/badges/next-notion-cms.svg)
-
-### A modern, high-performance technical documentation and engineering portfolio platform built with **Next.js 16**, **Tailwind CSS 4**, and **TypeScript**. Optimized for mechatronics research, digital architecture, and high-fidelity documentation.
+A modern, high-performance technical documentation and engineering portfolio platform built with **Next.js 16**, **Tailwind CSS 4** and **TypeScript**. Optimized for Research, digital architecture and high-fidelity documentation.
 
 ---
 
@@ -28,14 +26,16 @@
 ![GitHub forks](https://img.shields.io/github/forks/prasad-kmd/next-notion-cms?style=for-the-badge&logo=github)
 ![GitHub issues](https://img.shields.io/github/issues/prasad-kmd/next-notion-cms?style=for-the-badge&logo=github)
 ![GitHub pull requests](https://img.shields.io/github/issues-pr/prasad-kmd/next-notion-cms?style=for-the-badge&logo=github)
+![Dynamic JSON Badge](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fgithub.com%2Fprasad-kmd%2Fnext-notion-cms%2Fraw%2Fmain%2Fpackage.json&query=%24.author&style=for-the-badge&logo=pnpm&label=Author&labelColor=black&link=https%3A%2F%2Fgithub.com%2Fprasad-kmd%2Fnext-notion-cms%2Fblob%2Fmain%2Fpackage.json)
+![GitHub commit activity](https://img.shields.io/github/commit-activity/t/prasad-kmd/next-notion-cms?style=for-the-badge&logo=git&labelColor=black)
 
 ---
 
 ## 🎯 Quick Actions
 
-[![Live Demo](https://img.shields.io/badge/Live_Demo-Visit_Site-black?style=for-the-badge&logo=vercel&labelColor=black)](https://next-notion-cms.vercel.app)
-[![Report Bug](https://img.shields.io/badge/Report_Bug-Open_Issue-red?style=for-the-badge&logo=github&labelColor=black)](https://github.com/prasad-kmd/next-notion-cms/issues/new?template=bug_report.md)
-[![Feature Request](https://img.shields.io/badge/Feature_Request-Submit_Idea-green?style=for-the-badge&logo=github&labelColor=black)](https://github.com/prasad-kmd/next-notion-cms/issues/new?template=feature_request.md)
+[![Live Demo](public/img/badges/live-demo-prasadm.vercel.app.svg)](https://prasadm.vercel.app)
+[![Report Bug](public/img/badges/report-bug-open-issue.svg)](https://github.com/prasad-kmd/next-notion-cms/issues/new?template=bug_report.yml)
+[![Feature Request](public/img/badges/request-feature-submit-idea.svg)](https://github.com/prasad-kmd/next-notion-cms/issues/new?template=feature_request.yml)
 
 ---
 
@@ -136,13 +136,7 @@ cd next-notion-cms
 # 2. Install dependencies (pnpm recommended)
 pnpm install
 
-# 3. Copy environment variables
-cp .env.local.example .env.local
-
-# 4. Create required directories
-mkdir -p public/data
-
-# 5. Start development server
+# 3. Start development server
 pnpm dev
 ```
 
@@ -197,6 +191,7 @@ For detailed schema and setup steps, refer to the Notion configuration guide.
 2. **Better Auth Configuration**:
    - Generate a secure secret:
      ```powershell
+     # Windows PowerShell
      [Convert]::ToBase64String([System.Security.Cryptography.RandomNumberGenerator]::GetBytes(32))
      ```
    - Configure OAuth providers in your `.env.local`
@@ -262,7 +257,7 @@ graph TD
     A --> P
 ```
 
-For detailed architecture documentation, see [design.md](design.md).
+For detailed architecture documentation, see [DESIGN.md](DESIGN.md).
 
 ---
 
@@ -326,6 +321,9 @@ Vercel automatically handles:
 - Zero-config CI/CD pipeline
 
 ### Docker Deployment
+
+> CAUTION
+> This is a sample Dockerfile which is generated via AI tool and may need to be modified to fit your specific needs. I have not tested it yet.
 
 For self-hosting or alternative deployment targets:
 
@@ -394,9 +392,9 @@ This project is licensed under the [AGPL-3.0 License](LICENSE).
 
 **Prasad M.** - [@prasad-kmd](https://github.com/prasad-kmd)
 
-[![GitHub Profile](https://img.shields.io/badge/GitHub-prasad--kmd-black?style=for-the-badge&logo=github&labelColor=black)](https://github.com/prasad-kmd)
-[![Twitter](https://img.shields.io/badge/Twitter-@prasadmadhuran1-black?style=for-the-badge&logo=twitter&labelColor=black)](https://twitter.com/prasadmadhuran1)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-prasad--madhuranga-black?style=for-the-badge&logo=linkedin&labelColor=black)](https://linkedin.com/in/prasad-madhuranga)
+[![GitHub Profile](public/img/badges/github-prasad-kmd.svg)](https://github.com/prasad-kmd)
+[![Twitter](public/img/badges/twitter-prasadmadhuran1.svg)](https://twitter.com/prasadmadhuran1)
+[![LinkedIn](public/img/badges/linkedin-prasad-madhuranga.svg)](https://linkedin.com/in/prasad-madhuranga)
 
 ---
 
@@ -404,7 +402,7 @@ This project is licensed under the [AGPL-3.0 License](LICENSE).
 
 If you find this project useful, please consider giving it a star!
 
-[![Star on GitHub](https://img.shields.io/badge/Star_on_GitHub-Gold-yellow?style=for-the-badge&logo=github&labelColor=black)](https://github.com/prasad-kmd/next-notion-cms)
+[![Star on GitHub](public/img/badges/star-on-github.svg)](https://github.com/prasad-kmd/next-notion-cms)
 
 ---
 
