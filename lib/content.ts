@@ -319,8 +319,8 @@ export const getContentByType = cache(async function (
     );
     try {
       return await fetcher();
-    } catch (e) {
-      console.error(`Cache fetch failed for ${type}:`, e);
+    } catch {
+      console.error(`Cache fetch failed for ${type}`);
       return [];
     }
   }
@@ -479,8 +479,8 @@ export const getContentItem = cache(async function (
     );
     try {
       return await fetcher();
-    } catch (e) {
-      console.error(`Cache fetch failed for ${type}/${slug}:`, e);
+    } catch {
+      console.error(`Cache fetch failed for ${type}/${slug}`);
       return null;
     }
   }
@@ -628,7 +628,7 @@ export const getAuthorBasic = cache(async function (
     );
     try {
       return await fetcher();
-    } catch (e) {
+    } catch {
       return null;
     }
   }
@@ -702,7 +702,7 @@ export const getAuthorBySlug = cache(async function (
     );
     try {
       return await fetcher();
-    } catch (e) {
+    } catch {
       return null;
     }
   }
@@ -777,7 +777,7 @@ export const getAllAuthors = cache(async function (): Promise<Author[]> {
     );
     try {
       return await fetcher();
-    } catch (e) {
+    } catch {
       return [];
     }
   }

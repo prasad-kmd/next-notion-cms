@@ -20,7 +20,7 @@ export async function GET() {
             services: services,
             last_updated: new Date().toISOString()
         });
-    } catch (error) {
+    } catch {
         return NextResponse.json({
             overall_status: 'major_outage',
             services: [],

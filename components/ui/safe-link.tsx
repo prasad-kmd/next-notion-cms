@@ -39,7 +39,7 @@ export const SafeLink = ({
       const currentHostname = new URL(currentSiteUrl).hostname
       
       return urlObj.hostname !== currentHostname
-    } catch (e) {
+    } catch {
       // If it's not a valid URL but doesn't start with /, #, mailto, etc., treat as safe/internal or handle safely
       return false
     }
@@ -56,7 +56,7 @@ export const SafeLink = ({
           link_url: href,
           source_page: typeof window !== 'undefined' ? window.location.pathname : undefined,
         });
-      } catch (e) {
+      } catch {
         // Fallback for relative or invalid URLs that were still flagged as external
         posthog.capture("outgoing_link_clicked", {
           link_url: href,

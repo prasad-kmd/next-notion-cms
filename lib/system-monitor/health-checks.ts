@@ -8,7 +8,7 @@ export async function checkNotionHealth() {
     const start = performance.now();
     try {
         // Lightweight call: fetch a single database metadata
-        const response = await notion.databases.retrieve({ 
+        await notion.databases.retrieve({ 
             database_id: DATABASE_IDS.blog 
         });
         
@@ -25,7 +25,7 @@ export async function checkNotionHealth() {
             last_sync: new Date().toISOString(), // In a real app, this might come from a sync log
             error_message: null
         };
-    } catch (error: unknown) {
+    } catch (error) {
         const latency = performance.now() - start;
         return {
             status: 'error' as SystemStatus,
@@ -51,7 +51,7 @@ export async function checkSupabaseHealth() {
         try {
             const sizeResult = await db.execute(sql`SELECT pg_database_size(current_database())`);
             dbSize = Number((sizeResult as unknown as Array<{ pg_database_size: number }>)[0]?.pg_database_size || 0);
-        } catch (e) {
+        } catch {
             // Ignore size fetch error
         }
 
@@ -60,7 +60,7 @@ export async function checkSupabaseHealth() {
         try {
             const connResult = await db.execute(sql`SELECT count(*) as count FROM pg_stat_activity`);
             activeConnections = Number((connResult as unknown as Array<{ count: number }>)[0]?.count || 0);
-        } catch (e) {
+        } catch {
             // Ignore connection fetch error
         }
 
@@ -74,7 +74,7 @@ export async function checkSupabaseHealth() {
             active_connections: activeConnections,
             error_message: null
         };
-    } catch (error: unknown) {
+    } catch (error) {
         const latency = performance.now() - start;
         return {
             status: 'error' as SystemStatus,
@@ -124,7 +124,7 @@ export async function checkPostHogHealth() {
             project_id: projectId,
             error_message: null
         };
-    } catch (error: unknown) {
+    } catch (error) {
         const latency = performance.now() - start;
         return {
             status: 'error' as SystemStatus,

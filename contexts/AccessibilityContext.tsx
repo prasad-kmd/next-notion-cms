@@ -73,8 +73,8 @@ export const AccessibilityProvider: React.FC<{ children: React.ReactNode }> = ({
         startTransition(() => {
           setSettings((prev) => ({ ...prev, ...parsed }));
         });
-      } catch (e) {
-        console.error("Failed to parse accessibility preferences", e);
+      } catch {
+        console.error("Failed to parse accessibility preferences");
       }
     }
     startTransition(() => {
@@ -84,7 +84,8 @@ export const AccessibilityProvider: React.FC<{ children: React.ReactNode }> = ({
 
   useEffect(() => {
     if (mounted) {
-      const { isPanelOpen, ...persistSettings } = settings;
+      const persistSettings: Partial<AccessibilitySettings> = { ...settings };
+      delete persistSettings.isPanelOpen;
       localStorage.setItem("accessibility-preferences", JSON.stringify(persistSettings));
     }
   }, [settings, mounted]);

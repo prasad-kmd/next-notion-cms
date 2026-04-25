@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useEffect, useState, Suspense } from "react"
-import { useSearchParams, useRouter } from "next/navigation"
+import { useSearchParams } from "next/navigation"
 import { AlertTriangle, ArrowRight, X } from "lucide-react"
 import Link from "next/link"
 
@@ -50,8 +50,8 @@ function ExternalLinkContent() {
       // Safe fallback: redirect to homepage or show "You can close this tab"
       try {
           window.close()
-      } catch (e) {
-          console.error("Could not close window", e)
+      } catch {
+          console.error("Could not close window")
       }
       // If window.close() fails (which it often does for security), we can inform the user 
       // or redirect them back to the site if they want to stay. 
@@ -80,7 +80,7 @@ function ExternalLinkContent() {
   let hostname = ""
   try {
     hostname = new URL(url).hostname
-  } catch (e) {
+  } catch {
     hostname = "External Site"
   }
 

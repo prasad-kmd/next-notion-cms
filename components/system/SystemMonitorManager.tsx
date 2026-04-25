@@ -78,8 +78,7 @@ export function SystemMonitorManager({ initialStatus, initialLogs }: SystemMonit
         const logsData = await logsRes.json();
         setLogs(logsData.logs);
       }
-    } catch (error) {
-      console.error('Failed to fetch system data:', error);
+    } catch {
       toast.error('Failed to update system monitor');
     } finally {
       setRefreshing(false);
@@ -113,7 +112,7 @@ export function SystemMonitorManager({ initialStatus, initialLogs }: SystemMonit
       } else {
         toast.error('Failed to purge Notion cache');
       }
-    } catch (error) {
+    } catch {
       toast.error('Error purging cache');
     } finally {
       setPurging(false);
@@ -131,7 +130,7 @@ export function SystemMonitorManager({ initialStatus, initialLogs }: SystemMonit
       } else {
         toast.error('Failed to cleanup logs');
       }
-    } catch (error) {
+    } catch {
       toast.error('Error cleaning up logs');
     } finally {
       setCleaning(false);

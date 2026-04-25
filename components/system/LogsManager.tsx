@@ -46,7 +46,7 @@ export function LogsManager({ initialLogs, initialTotal }: LogsManagerProps) {
         setLogs(data.logs);
         setTotal(data.total);
       }
-    } catch (error) {
+    } catch {
       toast.error('Failed to fetch logs');
     } finally {
       setLoading(false);

@@ -29,7 +29,7 @@ export async function requireAdmin() {
         if (referer) {
             try {
                 callbackUrl = new URL(referer).pathname;
-            } catch (e) {
+            } catch {
                 // Ignore parsing errors
             }
         }

@@ -25,7 +25,7 @@ export async function GET() {
             posthog,
             timestamp: new Date().toISOString()
         });
-    } catch (error: unknown) {
+    } catch {
         return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 }

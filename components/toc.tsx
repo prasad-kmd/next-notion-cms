@@ -159,7 +159,7 @@ export function TOC({ content }: TOCProps) {
             <li key={heading.id}>
               <a
                 href={`#${heading.id}`}
-                onClick={(e) => {
+                onClick={() => {
                   // Explicitly set activeId on click
                   setActiveId(heading.id)
                   

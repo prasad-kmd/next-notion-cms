@@ -136,7 +136,7 @@ export function sanitizeContent(html: string): string {
   
   // First pass: Protect valid GitHub Gists
   let processedHtml = html.replace(
-    /<script\b[^>]*>([\s\S]*?)<\/script\s*>/gim,
+    /<script\b[^>]*>([\s\S]*?)<\/script[^>]*>/gim,
     (match) => {
       const srcMatch = match.match(/src=["']([^"']+)["']/i);
       if (srcMatch?.[1]) {
@@ -158,14 +158,17 @@ export function sanitizeContent(html: string): string {
 
   // Aggressively remove script and style tags with improved regex
   // This pattern is more robust against variations of </script> tags
-  const dangerousTagRegex = /<(script|style)\b[^>]*>[\s\S]*?<\/\1\s*>/gi;
+  const dangerousTagRegex = /<(script|style)\b[^>]*>[\s\S]*?<\/\1[^>]*>/gi;
   processedHtml = processedHtml.replace(dangerousTagRegex, "");
 
   // Final safety pass: encode any remaining "<script" fragments that might have survived
+  // Using a recursive loop to handle nested or obfuscated script tags
   // This directly addresses the "incomplete multi-character sanitization" warning
-  processedHtml = processedHtml
-    .replace(/<script/gi, "&lt;script")
-    .replace(/<\/script/gi, "&lt;/script");
+  while (/<script\b/i.test(processedHtml) || /<\/script/i.test(processedHtml)) {
+    processedHtml = processedHtml
+      .replace(/<script\b/gi, "&lt;script")
+      .replace(/<\/script/gi, "&lt;/script");
+  }
 
   // Restore protected Gists
   return processedHtml.replace(

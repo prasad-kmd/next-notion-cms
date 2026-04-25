@@ -60,7 +60,7 @@ export function MatrixChart({ timeRange, primaryDimension, secondaryDimension, t
           
           // For now, let's just show a breakdown of primary dimension
           // because true 2D matrix needs a specific HogQL query shape.
-          const transformed = results.map((s: unknown, i: number) => ({
+          const transformed = results.map((s: unknown) => ({
             label: (s as { breakdown_value: string }).breakdown_value || "Other",
             value: (s as { data: number[] }).data.reduce((acc: number, v: number) => acc + v, 0)
           })).sort((a: unknown, b: unknown) => (b as { value: number }).value - (a as { value: number }).value).slice(0, 10);
@@ -87,7 +87,7 @@ export function MatrixChart({ timeRange, primaryDimension, secondaryDimension, t
           <YAxis {...chartTheme.axis} />
           <Tooltip contentStyle={chartTheme.tooltip.contentStyle} />
           <Bar dataKey="value" radius={[4, 4, 0, 0]}>
-            {data.map((entry, index) => (
+            {data.map((_, index) => (
                 <Bar 
                     key={`bar-${index}`} 
                     dataKey="value" 

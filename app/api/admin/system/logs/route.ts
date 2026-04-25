@@ -41,7 +41,7 @@ export async function GET(req: NextRequest) {
             logs,
             total: Number(totalResult[0]?.count || 0)
         });
-    } catch (error: unknown) {
+    } catch {
         return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 }
