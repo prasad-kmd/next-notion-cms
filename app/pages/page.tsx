@@ -31,7 +31,6 @@ import {
   Search,
   Hash,
   Heart,
-  Trophy,
 } from "lucide-react";
 
 const title = "Site Directory";
@@ -104,14 +103,6 @@ const categories = [
     id: "engineering",
     description: "Specialized tools and technical knowledge bases.",
     pages: [
-      {
-        name: "Quiz Library",
-        href: "/quiz",
-        icon: Trophy,
-        color: "text-amber-500",
-        bgColor: "bg-amber-500/10",
-        description: "Interactive engineering knowledge assessments.",
-      },
       {
         name: "Engineering Wiki",
         href: "/wiki",

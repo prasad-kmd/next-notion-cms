@@ -185,7 +185,7 @@ export interface ContentItem {
   tags?: string[];
   aiAssisted?: boolean;
   author?: string;
-  type?: "blog" | "articles" | "projects" | "tutorials" | "wiki" | "quizzes";
+  type?: "blog" | "articles" | "projects" | "tutorials" | "wiki";
 }
 
 /**
@@ -225,8 +225,8 @@ const contentDirectory = path.join(process.cwd(), "content");
 /**
  * Low-level fetcher for Notion content list.
  */
-async function fetchNotionContentByType(type: "blog" | "articles" | "projects" | "tutorials" | "wiki" | "quizzes"): Promise<ContentItem[]> {
-  const databaseId = DATABASE_IDS[type];
+async function fetchNotionContentByType(type: "blog" | "articles" | "projects" | "tutorials" | "wiki"): Promise<ContentItem[]> {
+  const databaseId = DATABASE_IDS[type as keyof typeof DATABASE_IDS];
   if (!databaseId) return [];
 
   try {
@@ -306,7 +306,7 @@ async function fetchNotionContentByType(type: "blog" | "articles" | "projects" |
  * Uses React cache and Next.js unstable_cache for optimal performance.
  */
 export const getContentByType = cache(async function (
-  type: "blog" | "articles" | "projects" | "tutorials" | "wiki" | "quizzes",
+  type: "blog" | "articles" | "projects" | "tutorials" | "wiki",
 ): Promise<ContentItem[]> {
   if (isNotionEnabled) {
     const fetcher = unstable_cache(
@@ -376,10 +376,10 @@ export const getContentByType = cache(async function (
  * Low-level fetcher for a single Notion content item.
  */
 async function fetchNotionContentItem(
-  type: "blog" | "articles" | "projects" | "tutorials" | "wiki" | "quizzes",
+  type: "blog" | "articles" | "projects" | "tutorials" | "wiki",
   slug: string,
 ): Promise<ContentItem | null> {
-  const databaseId = DATABASE_IDS[type];
+  const databaseId = DATABASE_IDS[type as keyof typeof DATABASE_IDS];
   if (!databaseId) return null;
 
   try {
@@ -465,7 +465,7 @@ async function fetchNotionContentItem(
  * Gets a single content item by type and slug.
  */
 export const getContentItem = cache(async function (
-  type: "blog" | "articles" | "projects" | "tutorials" | "wiki" | "quizzes",
+  type: "blog" | "articles" | "projects" | "tutorials" | "wiki",
   slug: string,
 ): Promise<ContentItem | null> {
   if (isNotionEnabled) {

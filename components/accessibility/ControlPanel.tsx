@@ -17,6 +17,7 @@ import {
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
@@ -44,12 +45,17 @@ export function ControlPanel() {
 
   return (
     <Dialog open={isPanelOpen} onOpenChange={(open) => updateSetting("isPanelOpen", open)}>
-      <DialogContent className="sm:max-w-md backdrop-blur-xl bg-background/95 border-primary/20 shadow-2xl overflow-hidden">
-        <DialogHeader className="flex flex-row items-center justify-between border-b border-border pb-4 mb-4">
-          <DialogTitle className="text-lg font-bold uppercase tracking-widest flex items-center gap-3 font-google-sans">
-            <AccessibilityIcon className="h-5 w-5 text-primary" />
-            Reading Experience
-          </DialogTitle>
+      <DialogContent className="sm:max-w-md max-h-[90vh] overflow-y-auto backdrop-blur-xl bg-background/95 border-primary/20 shadow-2xl">
+        <DialogHeader className="flex flex-row items-center justify-between border-b border-border pb-3 mb-4">
+          <div className="space-y-1">
+            <DialogTitle className="text-base sm:text-lg font-bold uppercase tracking-widest flex items-center gap-3 font-google-sans">
+              <AccessibilityIcon className="h-5 w-5 text-primary" />
+              Reading Experience
+            </DialogTitle>
+            <DialogDescription className="text-[10px] text-muted-foreground uppercase tracking-wider font-local-inter">
+              Customize your content viewing experience
+            </DialogDescription>
+          </div>
           <Button
             variant="ghost"
             size="icon"
@@ -64,9 +70,9 @@ export function ControlPanel() {
           </Button>
         </DialogHeader>
 
-        <div className="space-y-8 py-2">
+        <div className="space-y-5 py-2">
           {/* Font Family */}
-          <div className="space-y-4">
+          <div className="space-y-2.5">
             <Label className="text-[10px] font-black uppercase text-muted-foreground tracking-[0.2em] flex items-center gap-2 font-local-inter">
               Typography Style
             </Label>
@@ -77,7 +83,7 @@ export function ControlPanel() {
                 trackEvent("fontFamily", value);
               }}
             >
-              <SelectTrigger className="font-local-jetbrains-mono text-xs border-primary/10 bg-muted/30">
+              <SelectTrigger className="font-local-jetbrains-mono text-xs border-primary/10 bg-muted/30 h-9">
                 <SelectValue placeholder="Select font style" />
               </SelectTrigger>
               <SelectContent className="z-300">
@@ -91,9 +97,9 @@ export function ControlPanel() {
           </div>
 
           {/* Sliders Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-5">
             {/* Text Size */}
-            <div className="space-y-4">
+            <div className="space-y-2.5">
               <div className="flex items-center justify-between">
                 <Label className="text-[10px] font-black uppercase text-muted-foreground tracking-[0.2em] flex items-center gap-2 font-local-inter">
                   <Type className="h-3 w-3" />
@@ -112,7 +118,7 @@ export function ControlPanel() {
             </div>
 
             {/* Line Height */}
-            <div className="space-y-4">
+            <div className="space-y-2.5">
               <div className="flex items-center justify-between">
                 <Label className="text-[10px] font-black uppercase text-muted-foreground tracking-[0.2em] flex items-center gap-2 font-local-inter">
                   <AlignLeft className="h-3 w-3" />
@@ -131,7 +137,7 @@ export function ControlPanel() {
             </div>
 
             {/* Word Spacing */}
-            <div className="space-y-4">
+            <div className="space-y-2.5">
               <div className="flex items-center justify-between">
                 <Label className="text-[10px] font-black uppercase text-muted-foreground tracking-[0.2em] flex items-center gap-2 font-local-inter">
                   <List className="h-3 w-3" />
@@ -150,7 +156,7 @@ export function ControlPanel() {
             </div>
 
             {/* Letter Spacing */}
-            <div className="space-y-4">
+            <div className="space-y-2.5">
               <div className="flex items-center justify-between">
                 <Label className="text-[10px] font-black uppercase text-muted-foreground tracking-[0.2em] flex items-center gap-2 font-local-inter">
                   <LetterText className="h-3 w-3" />
@@ -170,7 +176,7 @@ export function ControlPanel() {
           </div>
 
           {/* High Contrast */}
-          <div className="flex items-center justify-between pt-6 border-t border-border/50">
+          <div className="flex items-center justify-between pt-4 border-t border-border/50">
             <div className="space-y-0.5">
               <Label className="text-[10px] font-black uppercase text-muted-foreground tracking-[0.2em] flex items-center gap-2 font-local-inter">
                 <Contrast className="h-3 w-3" />
@@ -188,9 +194,9 @@ export function ControlPanel() {
           </div>
         </div>
 
-        <div className="mt-8 pt-4 border-t border-border flex justify-end">
+        <div className="mt-4 pt-3 border-t border-border flex justify-end">
            <Button 
-            className="text-[10px] font-black uppercase tracking-widest px-8 rounded-xl font-local-jetbrains-mono"
+            className="h-9 text-[10px] font-black uppercase tracking-widest px-8 rounded-xl font-local-jetbrains-mono"
             onClick={() => updateSetting("isPanelOpen", false)}
           >
             Apply & Close

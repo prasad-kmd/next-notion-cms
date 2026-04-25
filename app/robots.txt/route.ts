@@ -13,7 +13,6 @@ Disallow: /admin/
 Disallow: /dashboard/
 Disallow: /sign-in/
 Disallow: /external-link
-Disallow: /quiz/*
 Content-Signal: [ "search=yes", "ai-input=yes", "ai-train=no" ]
 
 User-Agent: GPTBot

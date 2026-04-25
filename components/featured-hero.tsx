@@ -36,8 +36,6 @@ export default function FeaturedHero({ items }: FeaturedHeroProps) {
     return () => clearInterval(timer)
   }, [items.length])
 
-  if (!mounted) return null
-
   return (
     <section className="relative min-h-screen flex items-center py-16 lg:py-0 overflow-hidden bg-background">
       {/* Dynamic Background Grid */}
@@ -132,20 +130,28 @@ export default function FeaturedHero({ items }: FeaturedHeroProps) {
                    {items.map((item, idx) => (
                      <motion.div
                        key={idx}
-                       initial={{ opacity: 0, x: 20 }}
-                       animate={{ 
+                       initial={false}
+                       animate={mounted ? {
                          opacity: currentIndex === idx ? 1 : 0,
                          x: currentIndex === idx ? 0 : 20,
                          pointerEvents: currentIndex === idx ? "auto" : "none"
+                       } : {
+                         opacity: idx === 0 ? 1 : 0,
+                         x: idx === 0 ? 0 : 20,
+                         pointerEvents: idx === 0 ? "auto" : "none"
                        }}
                        transition={{ duration: 0.8, ease: "circOut" }}
-                       className="absolute inset-0 p-6 flex flex-col"
+                       className={cn(
+                         "absolute inset-0 p-6 flex flex-col",
+                         !mounted && idx !== 0 && "hidden"
+                       )}
                      >
                        <div className="relative aspect-video rounded-2xl overflow-hidden mb-6 border border-border/40 dark:border-white/5 shadow-2xl">
                          <Image 
                            src={item.image} 
                            alt={item.title} 
                            fill 
+                           priority={idx === 0}
                            className="object-cover transition-transform duration-700 hover:scale-105"
                          />
                          <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
