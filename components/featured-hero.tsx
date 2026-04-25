@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, startTransition } from "react"
 import Link from "next/link"
 import { ArrowRight, Box, Code2, Database, Rocket } from "lucide-react"
 import { motion } from "framer-motion"
@@ -24,7 +24,12 @@ export default function FeaturedHero({ items }: FeaturedHeroProps) {
   const [currentIndex, setCurrentIndex] = useState(0)
 
   useEffect(() => {
-    setMounted(true)
+    startTransition(() => {
+      setMounted(true)
+    })
+  }, [])
+
+  useEffect(() => {
     const timer = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % items.length)
     }, 5000)

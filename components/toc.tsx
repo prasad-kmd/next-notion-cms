@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect, useRef, useMemo } from "react"
 import { List, ChevronRight, ChevronLeft, ChevronRight as ChevronRightIcon } from "lucide-react"
 import { cn } from "@/lib/utils"
 
@@ -15,19 +15,18 @@ interface TOCProps {
 }
 
 export function TOC({ content }: TOCProps) {
-  const [headings, setHeadings] = useState<TOCItem[]>([])
   const [activeId, setActiveId] = useState<string>("")
   const [isCollapsed, setIsCollapsed] = useState(true)
   const isScrollingFromClick = useRef(false)
   const scrollTimeoutRef = useRef<any>(null)
 
-  useEffect(() => {
+  const headings = useMemo(() => {
     // Extract headings from HTML content
     // Improved regex to be more flexible with attribute order and case sensitivity
     const headingRegex = /<h([2-3])\s+[^>]*id=["']([^"']+)["'][^>]*>(.*?)<\/h\1\s*>/gi
     const matches = Array.from(content.matchAll(headingRegex))
     
-    const extractedHeadings = matches.map((match) => {
+    return matches.map((match) => {
       let cleanText = match[3];
       while (/<[^>]*>/g.test(cleanText)) {
         cleanText = cleanText.replace(/<[^>]*>/g, "");
@@ -38,8 +37,6 @@ export function TOC({ content }: TOCProps) {
         text: cleanText.trim(), // Remove any nested HTML tags in heading
       };
     })
-
-    setHeadings(extractedHeadings)
   }, [content])
 
   useEffect(() => {

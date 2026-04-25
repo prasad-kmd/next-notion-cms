@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, startTransition } from "react"
 import { Search, Filter, CheckCircle2, Trophy, ArrowRight } from "lucide-react"
 import Link from "next/link"
 import { Badge } from "@/components/ui/badge"
@@ -29,8 +29,12 @@ export function QuizList({ quizzes }: QuizListProps) {
   }
 
   useEffect(() => {
-    loadStatuses()
-    const handleUpdate = () => loadStatuses()
+    startTransition(() => {
+      loadStatuses()
+    })
+    const handleUpdate = () => startTransition(() => {
+      loadStatuses()
+    })
     window.addEventListener('quiz_updated', handleUpdate)
     return () => window.removeEventListener('quiz_updated', handleUpdate)
   }, [quizzes])

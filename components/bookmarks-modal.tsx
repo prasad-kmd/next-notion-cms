@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, startTransition } from "react";
 import { createPortal } from "react-dom";
 import { X, Calendar, ArrowRight, Trash2, Bookmark, Play } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -19,7 +19,12 @@ export function BookmarksModal({ isOpen, onClose }: BookmarksModalProps) {
   const router = useRouter();
 
   useEffect(() => {
-    setMounted(true);
+    startTransition(() => {
+      setMounted(true);
+    });
+  }, []);
+
+  useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         onClose();

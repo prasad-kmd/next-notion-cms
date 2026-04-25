@@ -1,6 +1,6 @@
 "use client"
 
-import React, { createContext, useContext, useState, useEffect } from "react"
+import React, { createContext, useContext, useState, useEffect, startTransition } from "react"
 
 interface SidebarContextType {
     isCollapsed: boolean
@@ -16,7 +16,9 @@ export function SidebarProvider({ children }: { children: React.ReactNode }) {
     useEffect(() => {
         const saved = localStorage.getItem("sidebar-collapsed")
         if (saved !== null) {
-            setIsCollapsed(saved === "true")
+            startTransition(() => {
+                setIsCollapsed(saved === "true")
+            })
         }
     }, [])
 

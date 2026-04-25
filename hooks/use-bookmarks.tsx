@@ -1,6 +1,6 @@
 "use client"
 
-import React, { createContext, useContext, useState, useEffect, useCallback } from "react"
+import React, { createContext, useContext, useState, useEffect, useCallback, startTransition } from "react"
 import { toast } from "sonner"
 import { posthog } from "@/lib/posthog-client"
 
@@ -42,8 +42,10 @@ export function BookmarksProvider({ children }: { children: React.ReactNode }) {
     }, [])
 
     useEffect(() => {
-        loadFromLocalStorage()
-        setIsInitialized(true)
+        startTransition(() => {
+            loadFromLocalStorage()
+            setIsInitialized(true)
+        })
 
         // Listen for storage events (from other hooks like useAuthSync)
         const handleStorageChange = (e: StorageEvent | Event) => {

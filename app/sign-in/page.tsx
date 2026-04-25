@@ -2,6 +2,7 @@ import { SignInButtons } from "@/components/auth/auth-buttons";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { TechnicalBackground } from "@/components/technical-background";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function SignInPage() {
     return (
@@ -11,7 +12,7 @@ export default function SignInPage() {
             <Card className="w-full max-w-md border-border/50 bg-card/30 backdrop-blur-2xl shadow-2xl relative z-10 transition-all duration-500 hover:shadow-primary/5">
                 <CardHeader className="text-center space-y-2 pb-2">
                     <div className="mx-auto h-12 w-12 rounded-2xl bg-primary/10 flex items-center justify-center border border-primary/20 mb-4 transition-transform duration-500 hover:scale-110">
-                        <img src="/favicon.ico" alt="Logo" className="w-8 h-8 object-contain" />
+                        <Image src="/favicon.ico" alt="Logo" width={32} height={32} className="w-8 h-8 object-contain" />
                     </div>
                     <CardTitle className="text-3xl font-bold tracking-tight google-sans">Welcome Back</CardTitle>
                     <CardDescription className="text-muted-foreground/80 md:text-base">

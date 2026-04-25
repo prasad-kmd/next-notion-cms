@@ -34,6 +34,14 @@ const nextConfig = {
       },
       {
         protocol: "https",
+        hostname: "www.cheapshark.com",
+      },
+      {
+        protocol: "https",
+        hostname: "covers.openlibrary.org",
+      },
+      {
+        protocol: "https",
         hostname: "*.notion.so",
       },
       {

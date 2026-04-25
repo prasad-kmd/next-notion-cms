@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Send, Loader2, Lock } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 import { toast } from "sonner";
 import { TurnstileWidget, type TurnstileWidgetRef } from "./turnstile-widget";
 
@@ -132,7 +133,7 @@ export function CommentForm({ pageId, onSuccess }: CommentFormProps) {
         <div className="absolute bottom-3 right-3 flex items-center gap-3">
              <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-background/50 border border-border/40 backdrop-blur-sm">
                 {session.user.image && (
-                    <img src={session.user.image} className="w-4 h-4 rounded-full border border-border/60" alt="" />
+                    <Image src={session.user.image} width={16} height={16} className="w-4 h-4 rounded-full border border-border/60" alt="" />
                 )}
                 <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground font-roboto">
                     {session.user.name}

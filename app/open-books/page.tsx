@@ -15,6 +15,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/componen
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
+import Image from "next/image"
 import { SafeLink } from "@/components/ui/safe-link"
 
 interface Book {
@@ -30,6 +31,7 @@ export default function OpenBooksPage() {
   const [books, setBooks] = useState<Book[]>([])
   const [loading, setLoading] = useState<boolean>(false)
   const [error, setError] = useState<string | null>(null)
+  const [imageError, setImageError] = useState<Record<string, boolean>>({});
 
   const searchBooks = async (searchTerm: string) => {
     if (!searchTerm.trim()) return
@@ -123,12 +125,14 @@ export default function OpenBooksPage() {
                 return (
                   <Card key={book.key} className="group flex flex-col overflow-hidden border-border bg-card/40 backdrop-blur-md transition-all hover:border-primary/50 hover:shadow-xl hover:shadow-primary/5 hover:-translate-y-1">
                     <div className="relative aspect-[3/4] overflow-hidden bg-muted">
-                      <img 
-                        src={coverUrl} 
+                      <Image
+                        src={imageError[book.key] ? "https://placehold.co/720x480?text=Cover+Not+Found" : coverUrl}
                         alt={title}
-                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
-                        onError={(e) => {
-                          (e.target as HTMLImageElement).src = "https://placehold.co/720x480?text=Cover+Not+Found"
+                        fill
+                        className="object-cover transition-transform duration-500 group-hover:scale-110"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        onError={() => {
+                          setImageError(prev => ({ ...prev, [book.key]: true }));
                         }}
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 transition-opacity group-hover:opacity-80" />

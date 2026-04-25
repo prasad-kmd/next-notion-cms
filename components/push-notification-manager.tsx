@@ -2,7 +2,7 @@
 
 import { Bell } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { useState, useEffect } from "react";
+import { useState, useEffect, startTransition } from "react";
 import {
   Tooltip,
   TooltipContent,
@@ -19,10 +19,12 @@ export function PushNotificationManager({
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
-    setIsClient(true);
-    if ("Notification" in window) {
-      setPermission(Notification.permission);
-    }
+    startTransition(() => {
+      setIsClient(true);
+      if ("Notification" in window) {
+        setPermission(Notification.permission);
+      }
+    });
   }, []);
 
   const requestPermission = async () => {

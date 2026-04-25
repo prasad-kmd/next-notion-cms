@@ -13,6 +13,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/componen
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
+import Image from "next/image"
 import { SafeLink } from "@/components/ui/safe-link"
 
 interface Deal {
@@ -102,6 +103,8 @@ export default function GameDealsPage() {
     return () => clearTimeout(timer)
   }, [searchTerm, selectedStore, fetchDeals])
 
+  const [imageError, setImageError] = useState<Record<string, boolean>>({});
+
   return (
     <div className="min-h-screen p-6 lg:p-12 img_grad_pm">
       <div className="mx-auto max-w-7xl">
@@ -168,12 +171,14 @@ export default function GameDealsPage() {
             {deals.map((deal) => (
               <Card key={deal.dealID} className="group flex flex-col overflow-hidden border-border bg-card/40 backdrop-blur-md transition-all hover:border-primary/50 hover:shadow-xl hover:shadow-primary/5 hover:-translate-y-1">
                 <div className="relative aspect-[16/9] overflow-hidden bg-muted">
-                   <img 
-                    src={deal.thumb || "https://placehold.co/720x480?text=No+Image"} 
+                   <Image
+                    src={imageError[deal.dealID] ? "https://placehold.co/720x480?text=Image+Not+Found" : (deal.thumb || "https://placehold.co/720x480?text=No+Image")}
                     alt={deal.title}
-                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
-                    onError={(e) => {
-                      (e.target as HTMLImageElement).src = "https://placehold.co/720x480?text=Image+Not+Found"
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-110"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    onError={() => {
+                      setImageError(prev => ({ ...prev, [deal.dealID]: true }));
                     }}
                   />
                   <div className="absolute top-2 right-2 flex flex-col gap-1 items-end">

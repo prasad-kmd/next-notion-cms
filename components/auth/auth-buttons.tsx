@@ -2,6 +2,7 @@
 
 import { authClient } from "@/lib/auth-client";
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
 import { 
     Layout, 
     LogOut,
@@ -133,9 +134,11 @@ export function UserMenu({
                     className="p-0.5 rounded-full hover:ring-2 hover:ring-primary/20 transition-all outline-none"
                     aria-label="User profile"
                 >
-                    <img
+                    <Image
                         src={session.user.image || `https://avatar.vercel.sh/${session.user.email}`}
                         alt={session.user.name}
+                        width={32}
+                        height={32}
                         className="w-8 h-8 rounded-full border border-border object-cover"
                     />
                 </button>

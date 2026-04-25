@@ -1,5 +1,6 @@
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import Image from "next/image";
 
 interface ProfileOverviewProps {
     user: {
@@ -17,9 +18,11 @@ export function ProfileOverview({ user }: ProfileOverviewProps) {
                     <div className="relative group shrink-0">
                         <div className="absolute -inset-0.5 bg-primary/20 rounded-full blur opacity-0 group-hover:opacity-100 transition duration-500"></div>
                         <div className="relative w-20 h-20 rounded-full border border-border/40 bg-background p-1 shadow-sm overflow-hidden">
-                            <img 
+                            <Image
                                 src={user.image || `https://avatar.vercel.sh/${user.email}`} 
                                 alt={user.name}
+                                width={80}
+                                height={80}
                                 className="w-full h-full rounded-full object-cover grayscale-[0.05] hover:grayscale-0 transition-all duration-300"
                             />
                         </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useActionState, useEffect } from "react";
+import { useState, useRef, useActionState, useEffect, startTransition } from "react";
 import { Send, Loader2, Paperclip, X, FileText } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
@@ -22,7 +22,9 @@ export default function ContactForm() {
     if (state?.success) {
       toast.success(state.message);
       formRef.current?.reset();
-      setFile(null);
+      startTransition(() => {
+        setFile(null);
+      });
     } else if (state?.success === false) {
       toast.error(state.message);
       if (state.errors) {

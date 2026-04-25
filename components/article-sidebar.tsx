@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import { ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { AuthorProfile } from "./author-profile";
@@ -23,16 +23,15 @@ export function ArticleSidebar({
   author,
   lastUpdated,
 }: ArticleSidebarProps) {
-  const [headings, setHeadings] = useState<TOCItem[]>([]);
   const [activeId, setActiveId] = useState<string>("");
   const navRef = useRef<HTMLElement>(null);
 
-  useEffect(() => {
+  const headings = useMemo(() => {
     const headingRegex =
       /<h([2-4])\s+[^>]*id=["']([^"']+)["'][^>]*>([\s\S]*?)<\/h\1\s*>/gi;
     const matches = Array.from(content.matchAll(headingRegex));
 
-    const extractedHeadings = matches.map((match) => {
+    return matches.map((match) => {
       let cleanText = match[3];
       while (/<[^>]*>/g.test(cleanText)) {
         cleanText = cleanText.replace(/<[^>]*>/g, "");
@@ -43,8 +42,6 @@ export function ArticleSidebar({
         text: cleanText.trim(),
       };
     });
-
-    setHeadings(extractedHeadings);
   }, [content]);
 
   useEffect(() => {
