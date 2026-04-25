@@ -225,16 +225,16 @@ These rules directly map to CodeQL query IDs. Violating them will produce securi
 # SECTION 10 — BEFORE FINALIZING ANY CODE
 
   Before delivering any code, mentally verify:
-  [ ] No unused variables, imports, or dead code
-  [ ] No `any` or `@ts-ignore`
-  [ ] No unescaped HTML entities in JSX
-  [ ] All list items have stable, unique `key` props
-  [ ] All async functions have proper error handling and awaited Promises
-  [ ] All useEffect/useCallback/useMemo have complete dependency arrays
-  [ ] No `<img>` or `<a>` used where `<Image />` or `<Link />` should be used
-  [ ] No user input flows into HTML output, queries, file paths, or redirects without sanitization/validation
-  [ ] No secrets or sensitive data in client-accessible code
-  [ ] No deprecated Next.js 16 APIs used (middleware.ts, next lint, etc.)
-  [ ] CORS headers are restrictive and not wildcard on sensitive routes
-  [ ] No weak cryptographic algorithms used
-  [ ] All interactive elements are accessible (labels, roles, aria attributes)
+ - [ ] No unused variables, imports, or dead code
+ - [ ] No `any` or `@ts-ignore`
+ - [ ] No unescaped HTML entities in JSX
+ - [ ] All list items have stable, unique `key` props
+ - [ ] All async functions have proper error handling and awaited Promises
+ - [ ] All useEffect/useCallback/useMemo have complete dependency arrays
+ - [ ] No `<img>` or `<a>` used where `<Image />` or `<Link />` should be used
+ - [ ] No user input flows into HTML output, queries, file paths, or redirects without sanitization/validation
+ - [ ] No secrets or sensitive data in client-accessible code
+ - [ ] No deprecated Next.js 16 APIs used (middleware.ts, next lint, etc.)
+ - [ ] CORS headers are restrictive and not wildcard on sensitive routes
+ - [ ] No weak cryptographic algorithms used
+ - [ ] All interactive elements are accessible (labels, roles, aria attributes)
