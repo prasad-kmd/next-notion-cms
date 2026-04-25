@@ -9,7 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/componen
 import { Input } from "@/components/ui/input"
 
 interface QuizListProps {
-  quizzes: any[]
+  quizzes: unknown[]
 }
 
 export function QuizList({ quizzes }: QuizListProps) {

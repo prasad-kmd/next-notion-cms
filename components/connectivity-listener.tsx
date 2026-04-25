@@ -5,7 +5,7 @@ import { toast } from "sonner";
 import { Wifi, WifiOff } from "lucide-react";
 
 export function ConnectivityListener() {
-  const [isOnline, setIsOnline] = useState(
+  const [_isOnline, setIsOnline] = useState(
     typeof window !== "undefined" ? navigator.onLine : true
   );
 

@@ -1,23 +1,19 @@
-import { useState, useEffect } from 'react';
+import { useState, _useEffect } from 'react';
 
 export function useLocalStorage<T>(key: string, initialValue: T) {
   // State to store our value
   // Pass initial state function to useState so logic is only executed once
-  const [storedValue, setStoredValue] = useState<T>(initialValue);
-
-  // useEffect to retrieve value from localStorage on mount
-  useEffect(() => {
+  const [storedValue, setStoredValue] = useState<T>(() => {
     try {
       if (typeof window !== "undefined") {
         const item = window.localStorage.getItem(key);
-        if (item) {
-          setStoredValue(JSON.parse(item));
-        }
+        return item ? JSON.parse(item) : initialValue;
       }
     } catch (error) {
       console.log(error);
     }
-  }, [key]);
+    return initialValue;
+  });
 
   // Return a wrapped version of useState's setter function that
   // persists the new value to localStorage.

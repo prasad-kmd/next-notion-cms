@@ -10,7 +10,7 @@ import {
   CartesianGrid, 
   Tooltip, 
   ResponsiveContainer,
-  Legend
+  _Legend
 } from "recharts";
 import { ANALYTICS_COLORS, getRechartsTheme } from "@/lib/recharts-theme";
 import { useTheme } from "next-themes";
@@ -62,10 +62,10 @@ export function MatrixChart({ timeRange, primaryDimension, secondaryDimension, t
           
           // For now, let's just show a breakdown of primary dimension
           // because true 2D matrix needs a specific HogQL query shape.
-          const transformed = results.map((s: any, i: number) => ({
+          const transformed = results.map((s: unknown, _i: number) => ({
             label: s.breakdown_value || "Other",
             value: s.data.reduce((acc: number, v: number) => acc + v, 0)
-          })).sort((a: any, b: any) => b.value - a.value).slice(0, 10);
+          })).sort((a: unknown, b: unknown) => b.value - a.value).slice(0, 10);
           
           setData(transformed);
         }

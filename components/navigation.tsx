@@ -8,8 +8,8 @@ import {
   FolderGit2,
   LibraryBig,
   LayoutPanelLeft,
-  Menu,
-  X,
+  _Menu,
+  _X,
   MailSearch,
   ChevronLeft,
   ChevronRight,
@@ -23,14 +23,14 @@ import { cn } from "@/lib/utils";
 import { WebShareButton } from "./web-share-button";
 import { PushNotificationManager } from "./push-notification-manager";
 import { useSidebar } from "./sidebar-context";
-import { FloatingNavbar } from "./floating-navbar";
+import { _FloatingNavbar } from "./floating-navbar";
 import { MobileBottomNav } from "./mobile-bottom-nav";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, _AnimatePresence } from "framer-motion";
 
 function MobileTopBanner() {
   return (

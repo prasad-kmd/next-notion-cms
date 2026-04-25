@@ -5,8 +5,9 @@ import {
   getContentItem,
   getAuthorBasic,
 } from "@/lib/content";
-import { Calendar, ArrowLeft, Clock } from "lucide-react";
-import Link from "next/link";
+import { Calendar, ArrowLeft } from "lucide-react";
+import { ReadingTime } from "@/components/reading-time";
+import _Link from "next/link";
 import { ContentRenderer } from "@/components/content-renderer";
 import { BookmarkButton } from "@/components/bookmark-button";
 import { ScrollProgress } from "@/components/scroll-progress";
@@ -98,16 +99,18 @@ export default async function BlogPostPage({
                       day: "numeric",
                     })}
                     {post.readingTime && (
-                      <span className="flex items-center gap-1.5 ml-4 border-l border-border pl-4">
-                        <Clock className="h-3.5 w-3.5" />
-                        {post.readingTime} min read
-                      </span>
+                      <div className="flex items-center gap-1.5 ml-4 border-l border-border pl-4">
+                        <ReadingTime minutes={post.readingTime} />
+                      </div>
                     )}
-                    <span className="flex items-center gap-1.5 ml-4 border-l border-border pl-4">
+                    <div className="flex items-center gap-1.5 ml-4 border-l border-border pl-4">
                       <ViewCounter slug={post.slug} contentType="blog" />
-                    </span>
+                    </div>
                   </div>
                   <div className="flex items-center gap-2">
+                    <button className="rounded-full bg-white/10 p-2 text-white hover:bg-white/20">
+                      <ArrowLeft className="h-5 w-5" />
+                    </button>
                     <CommentScrollButton />
                     <BookmarkButton
                       key={post.slug}

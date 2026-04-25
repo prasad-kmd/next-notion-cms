@@ -6,7 +6,7 @@ import { env } from "./env";
  * Custom Error for Notion API related failures.
  */
 export class NotionAPIError extends Error {
-  constructor(message: string, public statusCode?: number, public originalError?: any) {
+  constructor(message: string, public statusCode?: number, public originalError?: unknown) {
     super(message);
     this.name = 'NotionAPIError';
   }
@@ -41,14 +41,14 @@ async function fetchOpengraphMetadata(url: string) {
       image: imageMatch ? imageMatch[1] : "",
       url,
     };
-  } catch (e) {
+  } catch (_e) {
     return { title: url, description: "", image: "", url };
   }
 }
 
 // Transform Bookmark to a sophisticated card
 n2m.setCustomTransformer("bookmark", async (block) => {
-  const { bookmark } = block as any;
+  const { bookmark } = block as unknown;
   const url = bookmark.url;
   const og = await fetchOpengraphMetadata(url);
 
@@ -84,7 +84,7 @@ n2m.setCustomTransformer("bookmark", async (block) => {
 
 // Transform File blocks
 n2m.setCustomTransformer("file", async (block) => {
-  const { file } = block as any;
+  const { file } = block as unknown;
   const url = file.type === "external" ? file.external.url : file.file.url;
   const name = file.name || "Download File";
   const sizeText = file.type === "file" ? "" : "External Link";
@@ -105,7 +105,7 @@ n2m.setCustomTransformer("file", async (block) => {
 
 // Transform Embeds (GitHub Gists etc.)
 n2m.setCustomTransformer("embed", async (block) => {
-  const { embed } = block as any;
+  const { embed } = block as unknown;
   const url = embed.url;
 
   if (url.includes("gist.github.com")) {
@@ -124,12 +124,12 @@ n2m.setCustomTransformer("embed", async (block) => {
 
 // Transform Tabs & Columns natively if structural
 n2m.setCustomTransformer("column_list", async (block) => {
-  const { id } = block as any;
+  const { id } = block as unknown;
   const childBlocks = await notion.blocks.children.list({ block_id: id });
 
   let htmlResult = `<div class="notion-column-list my-8 grid grid-cols-1 md:grid-cols-${childBlocks.results.length} gap-8 relative pb-2">`;
   for (const child of childBlocks.results) {
-    const md = await n2m.pageToMarkdown((child as any).id);
+    const md = await n2m.pageToMarkdown((child as unknown).id);
     const parsedHTML = n2m.toMarkdownString(md).parent;
     htmlResult += `<div class="notion-column space-y-4">${parsedHTML}</div>`;
   }
@@ -139,7 +139,7 @@ n2m.setCustomTransformer("column_list", async (block) => {
 
 // Transform Callouts
 n2m.setCustomTransformer("callout", async (block) => {
-  const { callout } = block as any;
+  const { callout } = block as unknown;
   const text = getPlainText(callout.rich_text);
   let iconHtml = "";
   if (callout.icon) {
@@ -158,11 +158,11 @@ n2m.setCustomTransformer("callout", async (block) => {
 
 // Transform Tabs (if using Notion's official tabs)
 n2m.setCustomTransformer("tabs", async (block) => {
-  const { id } = block as any;
+  const { id } = block as unknown;
   const childBlocks = await notion.blocks.children.list({ block_id: id });
   let htmlResult = `<div class="notion-tabs border border-border/50 rounded-[1.5rem] p-4 my-6 bg-card"><div class="text-xs font-bold text-muted-foreground uppercase tracking-widest mb-4 pb-2 border-b border-border">Tabbed Focus Area</div>`;
   for (const child of childBlocks.results) {
-    const md = await n2m.pageToMarkdown((child as any).id);
+    const md = await n2m.pageToMarkdown((child as unknown).id);
     const parsedHTML = n2m.toMarkdownString(md).parent;
     htmlResult += `<div class="notion-tab-content my-4">${parsedHTML}</div>`;
   }
@@ -205,13 +205,13 @@ export async function searchNotion(query: string) {
 /**
  * Extracts plain text from a Notion rich_text or title property.
  */
-export function getPlainText(property: any): string {
+export function getPlainText(property: unknown): string {
   if (!property) return "";
   if (property.type === "title") {
-    return property.title.map((t: any) => t.plain_text).join("");
+    return property.title.map((t: unknown) => t.plain_text).join("");
   }
   if (property.type === "rich_text") {
-    return property.rich_text.map((t: any) => t.plain_text).join("");
+    return property.rich_text.map((t: unknown) => t.plain_text).join("");
   }
   return "";
 }
@@ -219,7 +219,7 @@ export function getPlainText(property: any): string {
 /**
  * Extracts a date string from a Notion date property.
  */
-export function getDate(property: any): string | undefined {
+export function getDate(property: unknown): string | undefined {
   if (!property || property.type !== "date" || !property.date) return undefined;
   return property.date.start;
 }
@@ -227,15 +227,15 @@ export function getDate(property: any): string | undefined {
 /**
  * Extracts values from a Notion multi_select property.
  */
-export function getMultiSelect(property: any): string[] {
+export function getMultiSelect(property: unknown): string[] {
   if (!property || property.type !== "multi_select") return [];
-  return property.multi_select.map((item: any) => item.name);
+  return property.multi_select.map((item: unknown) => item.name);
 }
 
 /**
  * Extracts a value from a Notion select property.
  */
-export function getSelect(property: any): string | undefined {
+export function getSelect(property: unknown): string | undefined {
   if (!property || property.type !== "select" || !property.select) return undefined;
   return property.select.name;
 }
@@ -243,7 +243,7 @@ export function getSelect(property: any): string | undefined {
 /**
  * Extracts a boolean from a Notion checkbox property.
  */
-export function getCheckbox(property: any): boolean {
+export function getCheckbox(property: unknown): boolean {
   if (!property || property.type !== "checkbox") return false;
   return property.checkbox || false;
 }
@@ -251,7 +251,7 @@ export function getCheckbox(property: any): boolean {
 /**
  * Extracts an image URL from a Notion file or external image property.
  */
-export function getImageUrl(property: any): string | undefined {
+export function getImageUrl(property: unknown): string | undefined {
   if (
     !property ||
     property.type !== "files" ||

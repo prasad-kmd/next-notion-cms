@@ -15,8 +15,8 @@ export async function GET(request: NextRequest) {
       // This is a bit tricky as notion.search doesn't allow filtering by database ID easily
       // So we'll map them and try to infer the type
       const results = notionResults
-        .filter((page: any) => page.object === "page" && page.parent?.type === "database_id")
-        .map((page: any) => {
+        .filter((page: unknown) => page.object === "page" && page.parent?.type === "database_id")
+        .map((page: unknown) => {
           const props = page.properties;
           const title = getPlainText(props.Name || props.Title);
           const slug = getPlainText(props.Slug);

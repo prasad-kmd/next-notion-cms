@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { getContentByType, getContentItem } from "@/lib/content";
-import { ArrowLeft, Clock, Tag } from "lucide-react";
+import { ArrowLeft, _Clock, _Tag } from "lucide-react";
 import Link from "next/link";
 import { ContentRenderer } from "@/components/content-renderer";
 import { ScrollProgress } from "@/components/scroll-progress";

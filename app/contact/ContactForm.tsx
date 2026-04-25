@@ -26,7 +26,7 @@ export default function ContactForm() {
     } else if (state?.success === false) {
       toast.error(state.message);
       if (state.errors) {
-        Object.values(state.errors).flat().forEach((err: any) => toast.error(err));
+        Object.values(state.errors).flat().forEach((err: unknown) => toast.error(err));
       }
     }
   }, [state]);

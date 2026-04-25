@@ -2,7 +2,7 @@
 
 import React from "react";
 import { useAccessibility, AVAILABLE_FONTS } from "@/contexts/AccessibilityContext";
-import { X, RotateCcw, Type, AlignLeft, List, LetterText, Contrast, Accessibility as AccessibilityIcon } from "lucide-react";
+import { _X, RotateCcw, Type, AlignLeft, List, LetterText, Contrast, Accessibility as AccessibilityIcon } from "lucide-react";
 import { Slider } from "@/components/ui/slider";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -35,7 +35,7 @@ export function ControlPanel() {
     isHighContrast,
   } = useAccessibility();
 
-  const trackEvent = (setting: string, value: any) => {
+  const trackEvent = (setting: string, value: unknown) => {
     posthog.capture("accessibility_setting_changed", {
       setting,
       value,

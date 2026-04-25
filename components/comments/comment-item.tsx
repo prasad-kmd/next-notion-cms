@@ -1,16 +1,16 @@
 "use client";
 
-import { ParsedComment, parseComment } from "@/lib/comments";
+import { _ParsedComment, parseComment } from "@/lib/comments";
 import { formatDistanceToNow } from "date-fns";
 import { User } from "lucide-react";
 import Image from "next/image";
 
 interface CommentItemProps {
-  comment: any; // Notion comment object
+  comment: unknown; // Notion comment object
 }
 
 export function CommentItem({ comment }: CommentItemProps) {
-  const plainText = comment.rich_text.map((t: any) => t.plain_text).join("");
+  const plainText = comment.rich_text.map((t: unknown) => t.plain_text).join("");
   const parsed = parseComment(plainText);
   const date = new Date(comment.created_time);
 

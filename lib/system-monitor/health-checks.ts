@@ -8,7 +8,7 @@ export async function checkNotionHealth() {
     const start = performance.now();
     try {
         // Lightweight call: fetch a single database metadata
-        const response = await notion.databases.retrieve({ 
+        const _response = await notion.databases.retrieve({
             database_id: DATABASE_IDS.blog 
         });
         
@@ -25,7 +25,7 @@ export async function checkNotionHealth() {
             last_sync: new Date().toISOString(), // In a real app, this might come from a sync log
             error_message: null
         };
-    } catch (error: any) {
+    } catch (error: unknown) {
         const latency = performance.now() - start;
         return {
             status: 'error' as SystemStatus,
@@ -50,8 +50,8 @@ export async function checkSupabaseHealth() {
         let dbSize = null;
         try {
             const sizeResult = await db.execute(sql`SELECT pg_database_size(current_database())`);
-            dbSize = Number((sizeResult as any)[0]?.pg_database_size || 0);
-        } catch (e) {
+            dbSize = Number((sizeResult as unknown)[0]?.pg_database_size || 0);
+        } catch (_e) {
             // Ignore size fetch error
         }
 
@@ -59,8 +59,8 @@ export async function checkSupabaseHealth() {
         let activeConnections = null;
         try {
             const connResult = await db.execute(sql`SELECT count(*) as count FROM pg_stat_activity`);
-            activeConnections = Number((connResult as any)[0]?.count || 0);
-        } catch (e) {
+            activeConnections = Number((connResult as unknown)[0]?.count || 0);
+        } catch (_e) {
             // Ignore connection fetch error
         }
 
@@ -74,7 +74,7 @@ export async function checkSupabaseHealth() {
             active_connections: activeConnections,
             error_message: null
         };
-    } catch (error: any) {
+    } catch (error: unknown) {
         const latency = performance.now() - start;
         return {
             status: 'error' as SystemStatus,
@@ -124,7 +124,7 @@ export async function checkPostHogHealth() {
             project_id: projectId,
             error_message: null
         };
-    } catch (error: any) {
+    } catch (error: unknown) {
         const latency = performance.now() - start;
         return {
             status: 'error' as SystemStatus,

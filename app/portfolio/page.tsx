@@ -1,16 +1,16 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import {
-  ExternalLink,
+  _ExternalLink,
   Briefcase,
   GraduationCap,
   Award,
   Dna,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import { _Card, _CardContent } from "@/components/ui/card";
 import { getContentByType } from "@/lib/content";
-import Link from "next/link";
+import _Link from "next/link";
 import { ContentCard } from "@/components/content-card";
 import { PortfolioHeroActions } from "@/components/portfolio-hero-actions";
 import SkillMatrix from "@/components/skill-matrix";

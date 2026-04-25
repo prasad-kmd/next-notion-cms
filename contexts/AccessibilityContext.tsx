@@ -62,24 +62,28 @@ export const useAccessibility = () => {
 export const AccessibilityProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [settings, setSettings] = useState<AccessibilitySettings>(DEFAULT_SETTINGS);
+  const [settings, setSettings] = useState<AccessibilitySettings>(() => {
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem("accessibility-preferences");
+      if (saved) {
+        try {
+          return { ...DEFAULT_SETTINGS, ...JSON.parse(saved) };
+        } catch (e) {
+          console.error("Failed to parse accessibility preferences", e);
+        }
+      }
+    }
+    return DEFAULT_SETTINGS;
+  });
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    const saved = localStorage.getItem("accessibility-preferences");
-    if (saved) {
-      try {
-        setSettings((prev) => ({ ...prev, ...JSON.parse(saved) }));
-      } catch (e) {
-        console.error("Failed to parse accessibility preferences", e);
-      }
-    }
     setMounted(true);
   }, []);
 
   useEffect(() => {
     if (mounted) {
-      const { isPanelOpen, ...persistSettings } = settings;
+      const { isPanelOpen: __, ...persistSettings } = settings;
       localStorage.setItem("accessibility-preferences", JSON.stringify(persistSettings));
     }
   }, [settings, mounted]);

@@ -10,10 +10,10 @@ import {
   CartesianGrid, 
   Tooltip, 
   ResponsiveContainer,
-  linearGradient,
-  stop
+  _linearGradient,
+  _stop
 } from "recharts";
-import { ANALYTICS_COLORS, getRechartsTheme } from "@/lib/recharts-theme";
+import { _ANALYTICS_COLORS, getRechartsTheme } from "@/lib/recharts-theme";
 import { useTheme } from "next-themes";
 import { getColorCode } from "../ui/charts/ChartUtils";
 

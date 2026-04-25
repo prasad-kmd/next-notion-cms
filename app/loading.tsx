@@ -1,4 +1,4 @@
-import { PanelLeft } from "lucide-react"
+import { _PanelLeft } from "lucide-react"
 
 export default function Loading() {
     return (

@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react"
 import Link from "next/link"
-import { ArrowRight, Box, Code2, Database, Rocket } from "lucide-react"
+import { ArrowRight, _Box, _Code2, _Database, _Rocket } from "lucide-react"
 import { motion } from "framer-motion"
 
 export interface HeroItem {

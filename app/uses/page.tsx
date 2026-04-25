@@ -1,6 +1,6 @@
 import React from "react"
 import type { Metadata } from "next"
-import { Monitor, Laptop, Keyboard, Mouse, Smartphone, Headphones, Code2, Terminal, Globe, Palette, AppWindow, Database } from "lucide-react"
+import { Monitor, Laptop, Keyboard, Mouse, Smartphone, Headphones, Code2, Terminal, Globe, Palette, AppWindow, _Database } from "lucide-react"
 
 const title = "Uses"
 const description = "A detailed look at my hardware setup, software stack, and development tools."

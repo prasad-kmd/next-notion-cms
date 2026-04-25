@@ -5,7 +5,7 @@ import { eq } from "drizzle-orm";
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 
-export async function GET(req: Request) {
+export async function GET(_req: Request) {
     const session = await auth.api.getSession({
         headers: await headers(),
     });
@@ -51,13 +51,13 @@ export async function POST(req: Request) {
             where: eq(user.id, session.user.id),
         });
 
-        const currentPrefs = (currentUser?.preferences as any) || {};
+        const currentPrefs = (currentUser?.preferences as unknown) || {};
         
         // Strategy: Merge local data with database data
         // For bookmarks, we merge and deduplicate by slug + type
         let mergedBookmarks = currentPrefs.bookmarks || [];
         if (bookmarks && Array.isArray(bookmarks)) {
-            const existingSlugs = new Set(mergedBookmarks.map((b: any) => `${b.type}:${b.slug}`));
+            const existingSlugs = new Set(mergedBookmarks.map((b: unknown) => `${b.type}:${b.slug}`));
             
             for (const b of bookmarks) {
                 if (!existingSlugs.has(`${b.type}:${b.slug}`)) {

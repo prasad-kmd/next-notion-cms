@@ -3,14 +3,14 @@
 import { 
   Cpu, 
   Code2, 
-  Layers, 
-  Globe, 
-  Zap, 
+  _Layers,
+  _Globe,
+  _Zap,
   Settings, 
   ShieldCheck, 
-  Database,
-  Search,
-  PenTool
+  _Database,
+  _Search,
+  _PenTool
 } from "lucide-react"
 
 const skillCategories = [

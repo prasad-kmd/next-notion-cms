@@ -3,24 +3,24 @@
 import Link from "next/link";
 import Image from "next/image";
 import {
-  Calendar,
+  _Calendar,
   User,
   ArrowUpRight,
-  MessageSquare,
+  _MessageSquare,
   Clock,
   ArrowRight,
-  Layers,
-  Tag,
+  _Layers,
+  _Tag,
   FileText,
   Rocket,
 } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
+import { _Badge } from "@/components/ui/badge";
 import { ContentItem, Author } from "@/lib/content";
 import { getAuthorBasic } from "@/lib/author-client";
 import { useEffect, useState } from "react";
 import { getBlurDataURL } from "@/lib/utils";
 
-function formatDate(dateStr: string | undefined) {
+function _formatDate(dateStr: string | undefined) {
   if (!dateStr) return "Recent";
   const d = new Date(dateStr);
   const day = String(d.getDate()).padStart(2, "0");

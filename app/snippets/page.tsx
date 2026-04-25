@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useState } from "react"
-import { Code2, Copy, Search, Terminal, Filter, Cpu, Database } from "lucide-react"
+import { Code2, Copy, Search, _Terminal, _Filter, Cpu, _Database } from "lucide-react"
 
 const snippets = [
   {

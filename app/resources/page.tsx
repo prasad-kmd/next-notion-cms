@@ -4,17 +4,17 @@ import {
   FileText,
   Box,
   Code,
-  ExternalLink,
+  _ExternalLink,
   FileArchive,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
+  _CardContent,
+  _CardDescription,
+  _CardFooter,
+  _CardHeader,
+  _CardTitle,
 } from "@/components/ui/card";
 
 const title = "Downloads & Resources";

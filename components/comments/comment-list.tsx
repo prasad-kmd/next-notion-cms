@@ -7,8 +7,8 @@ import { Button } from "@/components/ui/button";
 
 interface CommentListProps {
   pageId: string;
-  initialComments?: any[];
-  newComments?: any[];
+  initialComments?: unknown[];
+  newComments?: unknown[];
   onCountUpdate?: (count: number) => void;
 }
 

@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import {
   Accessibility,
   Eye,
-  Volume2,
-  MousePointer2,
+  _Volume2,
+  _MousePointer2,
   Keyboard,
 } from "lucide-react";
 

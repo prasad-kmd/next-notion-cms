@@ -156,7 +156,7 @@ export function ContentRenderer({ content, id }: ContentRendererProps) {
                 }
               };
             }
-          } catch (e) {
+          } catch (_e) {
             // Ignore invalid URLs
           }
         }

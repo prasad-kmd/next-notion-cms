@@ -13,10 +13,10 @@ import {
   Briefcase,
   FileText,
   Settings,
-  Scaling,
-  Calculator,
-  Image as ImageIcon,
-  BookOpen,
+  _Scaling,
+  _Calculator,
+  Image as _ImageIcon,
+  _BookOpen,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useRouter, usePathname } from "next/navigation";
@@ -48,7 +48,7 @@ export function Search({ isMobileSidebar = false }: SearchProps) {
   const inputRef = useRef<HTMLInputElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
-  const pathname = usePathname();
+  const _pathname = usePathname();
 
   useEffect(() => {
     setMounted(true);

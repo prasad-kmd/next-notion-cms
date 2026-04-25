@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { ANALYTICS_COLORS, getRechartsTheme } from "@/lib/recharts-theme";
-import { useTheme } from "next-themes";
+import { _ANALYTICS_COLORS, _getRechartsTheme } from "@/lib/recharts-theme";
+import { _useTheme } from "next-themes";
 import { ExternalLink, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 

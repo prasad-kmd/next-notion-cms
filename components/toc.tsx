@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect, useRef } from "react"
-import { List, ChevronRight, ChevronLeft, ChevronRight as ChevronRightIcon } from "lucide-react"
+import { List, ChevronRight, _ChevronLeft, ChevronRight as ChevronRightIcon } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 interface TOCItem {
@@ -152,7 +152,7 @@ export function TOC({ content }: TOCProps) {
             <li key={heading.id}>
               <a
                 href={`#${heading.id}`}
-                onClick={(e) => {
+                onClick={(_e) => {
                   // Explicitly set activeId on click
                   setActiveId(heading.id)
                   

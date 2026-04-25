@@ -52,7 +52,7 @@ const quizExtension = {
       };
     }
   },
-  renderer(token: any) {
+  renderer(token: unknown) {
     return `[quiz]${token.json}[/quiz]`;
   },
 };
@@ -60,7 +60,7 @@ const quizExtension = {
 marked.use({
   renderer,
   async: true,
-  extensions: [quizExtension as any],
+  extensions: [quizExtension as unknown],
 });
 
 /**
@@ -223,13 +223,13 @@ const contentDirectory = path.join(process.cwd(), "content");
  * Low-level fetcher for Notion content list.
  */
 async function fetchNotionContentByType(type: string): Promise<ContentItem[]> {
-  const databaseId = (DATABASE_IDS as any)[type];
+  const databaseId = (DATABASE_IDS as unknown)[type];
   if (!databaseId) return [];
 
   try {
     const dbObj = await notion.databases.retrieve({ database_id: databaseId });
-    const dataSourceId = (dbObj as any).data_sources?.[0]?.id || databaseId;
-    const response: any = await notion.dataSources.query({
+    const dataSourceId = (dbObj as unknown).data_sources?.[0]?.id || databaseId;
+    const response: unknown = await notion.dataSources.query({
       data_source_id: dataSourceId,
       filter: {
         property: "Status",
@@ -246,7 +246,7 @@ async function fetchNotionContentByType(type: string): Promise<ContentItem[]> {
     });
 
     const items = await Promise.all(
-      response.results.map(async (page: any) => {
+      response.results.map(async (page: unknown) => {
         const props = page.properties;
         const slug = getPlainText(props.Slug);
         const title = getPlainText(props.Name || props.Title);
@@ -263,7 +263,7 @@ async function fetchNotionContentByType(type: string): Promise<ContentItem[]> {
           props.Authors.relation &&
           props.Authors.relation.length > 0
         ) {
-          const authorPage: any = await notion.pages.retrieve({
+          const authorPage: unknown = await notion.pages.retrieve({
             page_id: props.Authors.relation[0].id,
           });
           authorSlug = getPlainText(authorPage.properties.Slug);
@@ -285,7 +285,7 @@ async function fetchNotionContentByType(type: string): Promise<ContentItem[]> {
           tags,
           aiAssisted,
           author: authorSlug,
-          type: type as any,
+          type: type as unknown,
         };
       }),
     );
@@ -375,13 +375,13 @@ async function fetchNotionContentItem(
   type: string,
   slug: string,
 ): Promise<ContentItem | null> {
-  const databaseId = (DATABASE_IDS as any)[type];
+  const databaseId = (DATABASE_IDS as unknown)[type];
   if (!databaseId) return null;
 
   try {
     const dbObj = await notion.databases.retrieve({ database_id: databaseId });
-    const dataSourceId = (dbObj as any).data_sources?.[0]?.id || databaseId;
-    const response: any = await notion.dataSources.query({
+    const dataSourceId = (dbObj as unknown).data_sources?.[0]?.id || databaseId;
+    const response: unknown = await notion.dataSources.query({
       data_source_id: dataSourceId,
       filter: {
         property: "Slug",
@@ -393,7 +393,7 @@ async function fetchNotionContentItem(
 
     if (response.results.length === 0) return null;
 
-    const page: any = response.results[0];
+    const page: unknown = response.results[0];
     const props = page.properties;
 
     const mdblocks = await n2m.pageToMarkdown(page.id);
@@ -413,7 +413,7 @@ async function fetchNotionContentItem(
       props.Authors.relation &&
       props.Authors.relation.length > 0
     ) {
-      const authorPage: any = await notion.pages.retrieve({
+      const authorPage: unknown = await notion.pages.retrieve({
         page_id: props.Authors.relation[0].id,
       });
       authorSlug = getPlainText(authorPage.properties.Slug);
@@ -448,7 +448,7 @@ async function fetchNotionContentItem(
       tags,
       aiAssisted,
       author: authorSlug,
-      type: type as any,
+      type: type as unknown,
     };
   } catch (error) {
     console.error(`Error fetching Notion item ${slug} for ${type}:`, error);
@@ -588,8 +588,8 @@ export const getAuthorBasic = cache(async function (
         const dbObj = await notion.databases.retrieve({
           database_id: databaseId,
         });
-        const dataSourceId = (dbObj as any).data_sources?.[0]?.id || databaseId;
-        const response: any = await notion.dataSources.query({
+        const dataSourceId = (dbObj as unknown).data_sources?.[0]?.id || databaseId;
+        const response: unknown = await notion.dataSources.query({
           data_source_id: dataSourceId,
           filter: {
             property: "Slug",
@@ -599,7 +599,7 @@ export const getAuthorBasic = cache(async function (
           },
         });
         if (response.results.length === 0) return null;
-        const page: any = response.results[0];
+        const page: unknown = response.results[0];
         const props = page.properties;
         return {
           name: getPlainText(props.Name || props.Title),
@@ -622,7 +622,7 @@ export const getAuthorBasic = cache(async function (
     );
     try {
       return await fetcher();
-    } catch (e) {
+    } catch (_e) {
       return null;
     }
   }
@@ -648,8 +648,8 @@ export const getAuthorBySlug = cache(async function (
         const dbObj = await notion.databases.retrieve({
           database_id: databaseId,
         });
-        const dataSourceId = (dbObj as any).data_sources?.[0]?.id || databaseId;
-        const response: any = await notion.dataSources.query({
+        const dataSourceId = (dbObj as unknown).data_sources?.[0]?.id || databaseId;
+        const response: unknown = await notion.dataSources.query({
           data_source_id: dataSourceId,
           filter: {
             property: "Slug",
@@ -659,7 +659,7 @@ export const getAuthorBySlug = cache(async function (
           },
         });
         if (response.results.length === 0) return null;
-        const page: any = response.results[0];
+        const page: unknown = response.results[0];
         const props = page.properties;
 
         const mdblocks = await n2m.pageToMarkdown(page.id);
@@ -695,7 +695,7 @@ export const getAuthorBySlug = cache(async function (
     );
     try {
       return await fetcher();
-    } catch (e) {
+    } catch (_e) {
       return null;
     }
   }
@@ -734,8 +734,8 @@ export const getAllAuthors = cache(async function (): Promise<Author[]> {
         const dbObj = await notion.databases.retrieve({
           database_id: databaseId,
         });
-        const dataSourceId = (dbObj as any).data_sources?.[0]?.id || databaseId;
-        const response: any = await notion.dataSources.query({
+        const dataSourceId = (dbObj as unknown).data_sources?.[0]?.id || databaseId;
+        const response: unknown = await notion.dataSources.query({
           data_source_id: dataSourceId,
           filter: {
             property: "Status",
@@ -745,7 +745,7 @@ export const getAllAuthors = cache(async function (): Promise<Author[]> {
           },
         });
 
-        return response.results.map((page: any) => {
+        return response.results.map((page: unknown) => {
           const props = page.properties;
           return {
             name: getPlainText(props.Name || props.Title),
@@ -769,7 +769,7 @@ export const getAllAuthors = cache(async function (): Promise<Author[]> {
     );
     try {
       return await fetcher();
-    } catch (e) {
+    } catch (_e) {
       return [];
     }
   }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, _useEffect } from "react";
 import { authClient } from "@/lib/auth-client";
 import { posthog } from "@/lib/posthog-client";
 import { Button } from "@/components/ui/button";
@@ -12,7 +12,7 @@ import { TurnstileWidget, type TurnstileWidgetRef } from "./turnstile-widget";
 
 interface CommentFormProps {
   pageId: string;
-  onSuccess: (newComment: any) => void;
+  onSuccess: (newComment: unknown) => void;
 }
 
 export function CommentForm({ pageId, onSuccess }: CommentFormProps) {

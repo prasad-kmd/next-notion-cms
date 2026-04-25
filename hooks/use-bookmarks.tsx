@@ -21,7 +21,22 @@ interface BookmarksContextType {
 const BookmarksContext = createContext<BookmarksContextType | undefined>(undefined)
 
 export function BookmarksProvider({ children }: { children: React.ReactNode }) {
-    const [bookmarks, setBookmarks] = useState<BookmarkedItem[]>([])
+    const [bookmarks, setBookmarks] = useState<BookmarkedItem[]>(() => {
+        if (typeof window !== "undefined") {
+            const saved = localStorage.getItem("user-bookmarks")
+            if (saved) {
+                try {
+                    const parsed = JSON.parse(saved)
+                    if (Array.isArray(parsed)) {
+                        return parsed
+                    }
+                } catch (e) {
+                    console.error("Failed to parse bookmarks:", e)
+                }
+            }
+        }
+        return []
+    })
     const [isInitialized, setIsInitialized] = useState(false)
 
     // Load bookmarks from localStorage on mount and listen for storage changes
@@ -42,7 +57,6 @@ export function BookmarksProvider({ children }: { children: React.ReactNode }) {
     }, [])
 
     useEffect(() => {
-        loadFromLocalStorage()
         setIsInitialized(true)
 
         // Listen for storage events (from other hooks like useAuthSync)
@@ -118,10 +132,6 @@ export function BookmarksProvider({ children }: { children: React.ReactNode }) {
         },
         []
     )
-
-    // Add a specific cleanup to show toasts based on state changes if preferred, 
-    // but for simplicity, we'll keep toggle side-effects for now if they work.
-    // Actually, let's use a ref to track what was just toggled to show the right toast.
 
     const removeBookmark = useCallback((slug: string, type: string) => {
         if (!slug || !type) return

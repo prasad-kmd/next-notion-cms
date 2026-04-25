@@ -22,9 +22,9 @@ export function initPostHog() {
           maskAllInputs: true,
           maskTextSelector: ".mask-text",
         },
-        loaded: (ph: any) => {
+        loaded: (ph: unknown) => {
           if (typeof window !== "undefined") {
-            (window as any).posthog = ph;
+            (window as unknown).posthog = ph;
           }
         },
       });

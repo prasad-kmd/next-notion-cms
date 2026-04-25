@@ -1,8 +1,8 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { getContentByType, getContentItem } from "@/lib/content";
-import { Calendar, ArrowLeft } from "lucide-react";
-import Link from "next/link";
+import { Calendar, _ArrowLeft } from "lucide-react";
+import _Link from "next/link";
 import { ContentRenderer } from "@/components/content-renderer";
 import { BookmarkButton } from "@/components/bookmark-button";
 import { ScrollProgress } from "@/components/scroll-progress";

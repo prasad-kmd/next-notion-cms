@@ -24,6 +24,15 @@ export const ACCENT_COLORS: AccentColor[] = [
 export function useAccentColor() {
   const [accentColor, setAccentColor] = useState<AccentColor>(ACCENT_COLORS[0]);
 
+  const applyAccentColor = (color: AccentColor) => {
+    if (typeof window === "undefined") return;
+    const root = document.documentElement;
+    root.style.setProperty("--primary-h", color.h.toString());
+    root.style.setProperty("--primary-s", color.s);
+    root.style.setProperty("--primary-l", color.l);
+    localStorage.setItem("accent-color", color.name);
+  };
+
   useEffect(() => {
     const saved = localStorage.getItem("accent-color");
     if (saved) {
@@ -34,14 +43,6 @@ export function useAccentColor() {
       }
     }
   }, []);
-
-  const applyAccentColor = (color: AccentColor) => {
-    const root = document.documentElement;
-    root.style.setProperty("--primary-h", color.h.toString());
-    root.style.setProperty("--primary-s", color.s);
-    root.style.setProperty("--primary-l", color.l);
-    localStorage.setItem("accent-color", color.name);
-  };
 
   const updateAccentColor = (color: AccentColor) => {
     setAccentColor(color);

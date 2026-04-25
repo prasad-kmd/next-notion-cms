@@ -20,8 +20,8 @@ import { Badge } from "@/components/ui/badge";
 import Link from 'next/link';
 
 interface SystemMonitorManagerProps {
-  initialStatus: any;
-  initialLogs: any[];
+  initialStatus: unknown;
+  initialLogs: unknown[];
 }
 
 export function SystemMonitorManager({ initialStatus, initialLogs }: SystemMonitorManagerProps) {
@@ -87,7 +87,7 @@ export function SystemMonitorManager({ initialStatus, initialLogs }: SystemMonit
       } else {
         toast.error('Failed to purge Notion cache');
       }
-    } catch (error) {
+    } catch (_error) {
       toast.error('Error purging cache');
     } finally {
       setPurging(false);
@@ -105,7 +105,7 @@ export function SystemMonitorManager({ initialStatus, initialLogs }: SystemMonit
       } else {
         toast.error('Failed to cleanup logs');
       }
-    } catch (error) {
+    } catch (_error) {
       toast.error('Error cleaning up logs');
     } finally {
       setCleaning(false);

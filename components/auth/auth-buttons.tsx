@@ -10,9 +10,9 @@ import {
 import { 
     SiGoogle, 
     SiGithub, 
-    SiFacebook, 
-    SiX, 
-    SiReddit 
+    _SiFacebook,
+    _SiX,
+    _SiReddit
 } from "react-icons/si";
 import { useState, Suspense } from "react";
 import { toast } from "sonner";

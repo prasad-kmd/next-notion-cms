@@ -126,7 +126,7 @@ export default async function PublicStatusPage() {
 
         {/* Services Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {data.services.map((service: any) => (
+          {data.services.map((service: unknown) => (
             <div key={service.name} className="group rounded-[1.5rem] border border-border/50 bg-card/40 p-6 flex flex-col gap-4 hover:border-primary/30 transition-all hover:shadow-md backdrop-blur-sm">
               <div className="flex items-start justify-between">
                 <div className="p-3 rounded-2xl bg-muted/50 text-muted-foreground group-hover:text-primary transition-colors border border-border/40">

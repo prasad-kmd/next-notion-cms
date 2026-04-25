@@ -3,11 +3,11 @@ import {
   BookMarked,
   Star,
   ExternalLink,
-  Bookmark,
+  _Bookmark,
   Library,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, _CardContent, _CardHeader, _CardTitle } from "@/components/ui/card";
 import { SafeLink } from "@/components/ui/safe-link";
 
 const title = "Engineering Reading List";

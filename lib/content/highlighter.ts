@@ -29,8 +29,8 @@ export async function highlightCode(code: string, lang: string): Promise<string>
   // Ensure language is loaded
   if (normalizedLang !== 'text' && !sh.getLoadedLanguages().includes(normalizedLang)) {
     try {
-      await sh.loadLanguage(normalizedLang as any);
-    } catch (e) {
+      await sh.loadLanguage(normalizedLang as unknown);
+    } catch (_e) {
       console.warn(`Failed to load Shiki language: ${normalizedLang}, falling back to text.`);
       lang = 'text';
     }
@@ -41,7 +41,7 @@ export async function highlightCode(code: string, lang: string): Promise<string>
     theme: "one-dark-pro",
     transformers: [
       {
-        line(node: any, line: number) {
+        line(node: unknown, line: number) {
           node.properties.class = (node.properties.class || "") + " line";
           node.properties["data-line"] = line;
         },

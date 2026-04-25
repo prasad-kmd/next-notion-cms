@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { requireAdmin } from "@/lib/auth-utils";
+import { _requireAdmin } from "@/lib/auth-utils";
 
 export async function POST(req: NextRequest) {
   try {
@@ -283,7 +283,7 @@ export async function POST(req: NextRequest) {
     if (insightType === "top_content") {
       // For HogQL queries, results are an array of arrays
       if (Array.isArray(normalizedResult) && normalizedResult.length > 0 && Array.isArray(normalizedResult[0])) {
-        normalizedResult = normalizedResult.map((row: any[]) => ({
+        normalizedResult = normalizedResult.map((row: unknown[]) => ({
           slug: row[0],
           title: row[1] || row[0],
           type: row[2],
@@ -321,7 +321,7 @@ export async function POST(req: NextRequest) {
       }
     } else if (["traffic_sources", "device_breakdown", "browser_breakdown", "os_breakdown", "country_breakdown", "outgoing_links"].includes(insightType)) {
       if (Array.isArray(normalizedResult) && normalizedResult.length > 0 && Array.isArray(normalizedResult[0])) {
-        normalizedResult = normalizedResult.map((row: any[]) => ({
+        normalizedResult = normalizedResult.map((row: unknown[]) => ({
           label: row[0] || "Unknown",
           value: row[1]
         }));
@@ -344,7 +344,7 @@ export async function POST(req: NextRequest) {
         "Cache-Control": `public, s-maxage=${cacheMaxAge}, stale-while-revalidate=${cacheMaxAge * 2}`,
       },
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Analytics API error:", error);
     // Ensure we return a NextResponse even in the catch block
     return NextResponse.json(

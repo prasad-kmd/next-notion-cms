@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { 
   RefreshCw, 
-  History,
+  _History,
   Terminal,
   ChevronLeft,
   ChevronRight,
@@ -17,7 +17,7 @@ import { Badge } from "@/components/ui/badge";
 import Link from 'next/link';
 
 interface LogsManagerProps {
-  initialLogs: any[];
+  initialLogs: unknown[];
   initialTotal: number;
 }
 
@@ -27,7 +27,7 @@ export function LogsManager({ initialLogs, initialTotal }: LogsManagerProps) {
   const [total, setTotal] = useState(initialTotal);
   const [logFilter, setLogFilter] = useState('all');
   const [levelFilter, setLevelFilter] = useState('all');
-  const [limit, setLimit] = useState(50);
+  const [limit, _setLimit] = useState(50);
   
   const fetchLogs = useCallback(async () => {
     setLoading(true);
@@ -38,7 +38,7 @@ export function LogsManager({ initialLogs, initialTotal }: LogsManagerProps) {
         setLogs(data.logs);
         setTotal(data.total);
       }
-    } catch (error) {
+    } catch (_error) {
       toast.error('Failed to fetch logs');
     } finally {
       setLoading(false);

@@ -36,7 +36,7 @@ export function SummaryMetrics({ timeRange }: SummaryMetricsProps) {
         if (!response.ok) throw new Error("Failed to fetch summary metrics");
         const json = await response.json();
         setData(json.result);
-      } catch (err: any) {
+      } catch (err: unknown) {
         setError(err.message);
       } finally {
         setLoading(false);

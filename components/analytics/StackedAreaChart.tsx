@@ -48,8 +48,8 @@ export function StackedAreaChart({ timeRange, breakdownBy, title }: StackedAreaC
           
           const allLabels = results[0]?.labels || [];
           const transformed = allLabels.map((label: string, i: number) => {
-            const point: any = { date: label };
-            results.forEach((series: any) => {
+            const point: unknown = { date: label };
+            results.forEach((series: unknown) => {
               const key = series.breakdown_value === "$$_posthog_breakdown_null_$$" || !series.breakdown_value 
                 ? "Unknown" 
                 : series.breakdown_value;
@@ -59,7 +59,7 @@ export function StackedAreaChart({ timeRange, breakdownBy, title }: StackedAreaC
           });
           
           setData(transformed);
-          setCategories(results.map((s: any) => 
+          setCategories(results.map((s: unknown) =>
             s.breakdown_value === "$$_posthog_breakdown_null_$$" || !s.breakdown_value 
             ? "Unknown" 
             : s.breakdown_value
