@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, startTransition } from "react"
+import { useState, useEffect, startTransition, useCallback } from "react"
 import { Search, Filter, CheckCircle2, Trophy, ArrowRight } from "lucide-react"
 import Link from "next/link"
 import { Badge } from "@/components/ui/badge"
@@ -8,25 +8,42 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 
+interface Quiz {
+  slug: string
+  title: string
+  description: string
+  category?: string
+}
+
+interface QuizStatus {
+  completed: boolean
+  score: number
+  total: number
+}
+
 interface QuizListProps {
-  quizzes: any[]
+  quizzes: Quiz[]
 }
 
 export function QuizList({ quizzes }: QuizListProps) {
   const [searchQuery, setSearchQuery] = useState("")
   const [selectedCategory, setSelectedCategory] = useState("All")
-  const [quizStatuses, setQuizStatuses] = useState<Record<string, any>>({})
+  const [quizStatuses, setQuizStatuses] = useState<Record<string, QuizStatus>>({})
 
-  const loadStatuses = () => {
-    const statuses: Record<string, any> = {}
+  const loadStatuses = useCallback(() => {
+    const statuses: Record<string, QuizStatus> = {}
     quizzes.forEach(q => {
       const stored = localStorage.getItem(`quiz_status_${q.slug}`)
       if (stored) {
-        statuses[q.slug] = JSON.parse(stored)
+        try {
+          statuses[q.slug] = JSON.parse(stored)
+        } catch (e) {
+          console.error("Failed to parse quiz status", e)
+        }
       }
     })
     setQuizStatuses(statuses)
-  }
+  }, [quizzes])
 
   useEffect(() => {
     startTransition(() => {
@@ -37,7 +54,7 @@ export function QuizList({ quizzes }: QuizListProps) {
     })
     window.addEventListener('quiz_updated', handleUpdate)
     return () => window.removeEventListener('quiz_updated', handleUpdate)
-  }, [quizzes])
+  }, [loadStatuses])
 
   const categories = ["All", ...Array.from(new Set(quizzes.map(q => q.category || "General")))]
 
