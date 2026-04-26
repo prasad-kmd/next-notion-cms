@@ -52,6 +52,12 @@ export async function submitContactForm(prevState: unknown, formData: FormData) 
       message: validationResult.error.message,
       errors: validationResult.error.errors, // For Zod field errors
       validationError: validationResult.error, // Unified error object
+      formData: {
+        name: formData.get("name"),
+        email: formData.get("email"),
+        phone: formData.get("phone"),
+        message: formData.get("message"),
+      }
     };
   }
 

@@ -97,6 +97,7 @@ export default function ContactForm() {
               id="name"
               name="name"
               placeholder="John Doe"
+              defaultValue={state?.formData?.name as string || ""}
               required
               disabled={isPending}
               className="h-11 bg-muted/50 transition-all focus:bg-background focus:ring-2 focus:ring-primary/20"
@@ -115,6 +116,7 @@ export default function ContactForm() {
               name="email"
               type="email"
               placeholder="john@example.com"
+              defaultValue={state?.formData?.email as string || ""}
               required
               disabled={isPending}
               className="h-11 bg-muted/50 transition-all focus:bg-background focus:ring-2 focus:ring-primary/20"
@@ -133,6 +135,7 @@ export default function ContactForm() {
             id="phone"
             name="phone"
             placeholder="+94 77 123 4567"
+            defaultValue={state?.formData?.phone as string || ""}
             disabled={isPending}
             className="h-11 bg-muted/50 transition-all focus:bg-background focus:ring-2 focus:ring-primary/20"
           />
@@ -150,6 +153,7 @@ export default function ContactForm() {
             name="message"
             placeholder="Tell me about your project..."
             className="min-h-[120px] bg-muted/50 transition-all focus:bg-background focus:ring-2 focus:ring-primary/20"
+            defaultValue={state?.formData?.message as string || ""}
             required
             disabled={isPending}
             blockedWords={blockedWords}
@@ -223,7 +227,9 @@ export default function ContactForm() {
         </div>
 
         <div className="flex justify-center py-2">
-            <TurnstileWidget ref={turnstileRef} />
+            <TurnstileWidget ref={turnstileRef} onVerify={function (_token: string): void {
+            throw new Error("Function not implemented.");
+          } } />
         </div>
 
         <Button

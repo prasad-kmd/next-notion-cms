@@ -24,13 +24,7 @@ export function FloatingButton() {
 
   return (
     <div
-      style={{
-        position: 'fixed',
-        bottom: '5.5rem', // Placed above scroll-to-top button (2rem + 11 h-unit approx)
-        right: '2rem',
-        zIndex: 98,
-      }}
-      className="flex items-center justify-center transition-all duration-300"
+      className="fixed bottom-[5.5rem] right-4 sm:right-8 z-98 flex items-center justify-center transition-all duration-300"
     >
       <button
         onClick={() => updateSetting("isPanelOpen", !isPanelOpen)}

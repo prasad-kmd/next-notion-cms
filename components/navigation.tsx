@@ -31,20 +31,63 @@ import { motion } from "framer-motion";
 
 function MobileTopBanner() {
   return (
-    <div className="fixed top-0 left-0 right-0 z-40 lg:hidden px-4 py-3 bg-background/60 backdrop-blur-xl border-b border-border/40 flex items-center justify-center">
-      <motion.div
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ 
-          duration: 0.8, 
-          ease: "easeOut",
-          scale: { type: "spring", damping: 15, stiffness: 100 }
-        }}
-      >
-        <span className="text-sm font-bold tracking-[0.25rem] uppercase mozilla-headline bg-linear-to-r from-primary via-primary/80 to-primary bg-clip-text text-transparent">
-          PrasadM
-        </span>
-      </motion.div>
+    <div className="fixed top-0 left-0 right-0 z-40 lg:hidden h-14 overflow-hidden border-b border-border/40">
+      {/* Dynamic Background Animation */}
+      <div className="absolute inset-0 bg-background/60 backdrop-blur-xl">
+        <motion.div 
+          animate={{ 
+            scale: [1, 1.2, 1],
+            rotate: [0, 5, 0],
+            x: [0, 10, 0]
+          }}
+          transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+          className="absolute -top-full -left-1/4 w-[150%] h-[300%] bg-[radial-gradient(circle_at_50%_50%,rgba(var(--primary-rgb),0.08)_0%,transparent_50%)]"
+        />
+      </div>
+
+      <div className="relative h-full flex items-center justify-center px-4">
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="flex flex-col items-center"
+        >
+          <motion.span 
+            animate={{ 
+              backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
+            }}
+            transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
+            className="text-sm font-black tracking-[0.4rem] uppercase mozilla-headline bg-linear-to-r from-primary via-secondary to-primary bg-size-[200%_auto] bg-clip-text text-transparent"
+          >
+            PrasadM
+          </motion.span>
+          <div className="flex gap-1.5 mt-0.5">
+            {[0, 1, 2].map((i) => (
+              <motion.div
+                key={i}
+                animate={{ 
+                  scaleY: [1, 1.5, 1],
+                  opacity: [0.3, 0.7, 0.3]
+                }}
+                transition={{ 
+                  duration: 1.5, 
+                  repeat: Infinity, 
+                  delay: i * 0.2,
+                  ease: "easeInOut" 
+                }}
+                className="w-0.5 h-1.5 bg-primary/40 rounded-full"
+              />
+            ))}
+          </div>
+        </motion.div>
+      </div>
+      
+      {/* Top Scanning Line */}
+      <motion.div 
+        animate={{ x: ["-300%", "300%"] }}
+        transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
+        className="absolute bottom-0 left-0 w-1/3 h-px bg-linear-to-r from-transparent via-primary/40 to-transparent"
+      />
     </div>
   );
 }
