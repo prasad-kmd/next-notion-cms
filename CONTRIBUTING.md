@@ -21,9 +21,18 @@ Please read and follow our [Code of Conduct](CODE_OF_CONDUCT.md) to keep our com
 
 - Write clear, concise commit messages
 - Follow the existing code style and conventions
-- Add tests if applicable
+- **Add tests for all new features and bug fixes**
+- Ensure all existing tests pass before submitting
 - Update documentation as needed
 - Keep pull requests focused on a single feature or fix
+
+## Testing Requirements
+
+Before submitting a Pull Request, please ensure:
+1. All unit and integration tests pass: `pnpm test`
+2. New features have corresponding tests in the `tests/` directory
+3. E2E tests pass if you modified critical flows: `pnpm test:e2e`
+4. Code coverage does not decrease significantly
 
 ## Submitting a Pull Request
 

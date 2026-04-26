@@ -1,5 +1,7 @@
 # Next Notion CMS ![Next Notion CMS](public/img/badges/next-notion-cms.svg) 
 
+![Test Suite](https://github.com/prasad-kmd/next-notion-cms/actions/workflows/test.yml/badge.svg)
+
 A modern, high-performance technical documentation and engineering portfolio platform built with **Next.js 16**, **Tailwind CSS 4** and **TypeScript**. Optimized for Research, digital architecture and high-fidelity documentation.
 
 ---
@@ -76,6 +78,12 @@ Perfect for researchers, engineers, and developers who need a robust, scalable, 
 - **👤 User Dashboard** - Comprehensive profile management and account connectivity
 - **🛡️ Spam Protection** - Automated disposable email detection via `fakeout` and rate limiting on contact form submissions
 
+### 🧪 Automated Testing
+- **🛠️ Comprehensive Test Suite** - Integrated Vitest, Playwright, and Lighthouse CI for unit, integration, E2E, accessibility, and performance testing
+- **♿ Accessibility Audits** - Automated WCAG 2.1 AA compliance checks using axe-core
+- **⚡ Performance Budgets** - Lighthouse CI integration for monitoring key web vitals (LCP, FID, CLS)
+- **🤖 CI/CD Integration** - Full GitHub Actions workflow for automated testing on push and pull requests
+
 ### ⚡ Performance & SEO
 - **🚀 Performance-First Architecture** - Next.js 16 (App Router) for lightning-fast SSR and minimal client-side hydration
 - **🖼️ Image Excellence** - Next.js optimized images with LQIP, blur-up effects, and native lazy loading
@@ -141,6 +149,17 @@ pnpm dev
 ```
 
 Visit `http://localhost:3000` to see your local instance!
+
+---
+
+## 🧪 Testing
+
+This project includes a comprehensive automated testing suite. See [TESTING.md](./TESTING.md) for detailed documentation.
+
+- `pnpm test`: Run unit and integration tests.
+- `pnpm test:e2e`: Run end-to-end tests.
+- `pnpm test:a11y`: Run accessibility audits.
+- `pnpm test:perf`: Run performance audits.
 
 ---
 

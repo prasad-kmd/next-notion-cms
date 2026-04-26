@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.0.0] - 2025-06-05
+
+### Added
+- **Comprehensive Testing Suite**: Integrated Vitest, Playwright, Lighthouse CI, and MSW for full-stack testing.
+- **Automated CI/CD**: GitHub Actions workflows for automated testing, linting, accessibility audits, and performance monitoring.
+- **Accessibility Testing**: Automated WCAG 2.1 AA compliance checks integrated into the testing pipeline.
+- **Mock Service Worker (MSW)**: Robust API mocking for Notion, PostHog, and Better Auth.
+- **Detailed Documentation**: Added `TESTING.md` and updated project guidelines for testing.
+
 ## [1.7.0] - 2025-05-29
 
 ### Added

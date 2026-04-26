@@ -22,7 +22,14 @@
     "lint": "eslint .",
     "start": "next start",
     "db:push": "drizzle-kit push",
-    "db:studio": "drizzle-kit studio"
+    "db:studio": "drizzle-kit studio",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "test:e2e": "playwright test",
+    "test:a11y": "playwright test --project=accessibility",
+    "test:perf": "lhci autorun --config=./.lighthouserc.json",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@better-fetch/fetch": "^1.1.21",
@@ -87,20 +94,32 @@
     "zod": "^3.24.2"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.11.2",
+    "@lhci/cli": "^0.15.1",
+    "@playwright/test": "^1.59.1",
     "@tailwindcss/postcss": "^4.1.14",
+    "@testing-library/dom": "^10.4.1",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
     "@types/katex": "^0.16.7",
     "@types/node": "^22",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@types/react-katex": "^3.0.4",
     "@types/sanitize-html": "^2.16.1",
+    "@vitejs/plugin-react": "^6.0.1",
+    "@vitest/coverage-v8": "^4.1.5",
     "autoprefixer": "^10.4.21",
     "dotenv": "^16.4.7",
     "drizzle-kit": "^0.31.10",
     "eslint": "9.37.0",
     "eslint-config-next": "16.2.2",
+    "jsdom": "^29.0.2",
+    "msw": "^2.13.6",
     "postcss": "^8.5",
     "tailwindcss": "^4.1.9",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vitest": "^4.1.5",
+    "vitest-tsconfig-paths": "^3.4.1"
   }
 }
