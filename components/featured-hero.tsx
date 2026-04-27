@@ -40,22 +40,18 @@ export default function FeaturedHero({ items }: FeaturedHeroProps) {
   return (
     <section className="relative min-h-screen flex items-center py-16 lg:py-0 overflow-hidden bg-background">
       {/* Video Background */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full z-0 pointer-events-none overflow-hidden">
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-[200%] z-0 pointer-events-none overflow-hidden">
         <video
           autoPlay
           loop
           muted
           playsInline
-          className={cn(
-            "w-full h-full object-cover transition-opacity duration-1000",
-            "opacity-[0.45] mix-blend-multiply filter invert hue-rotate-360 brightness-110 contrast-125",
-            "dark:opacity-40 dark:mix-blend-screen dark:filter-none dark:hue-rotate-0 dark:brightness-100 dark:contrast-100",
-          )}
+          className="w-full h-full object-cover opacity-100 dark:opacity-40 mix-blend-screen dark:mix-blend-lighten"
           style={{
             maskImage:
-              "radial-gradient(ellipse 100% 80% at 50% 50%, black 0%, black 20%, rgba(0, 0, 0, 0.5) 50%, transparent 80%)",
+              "radial-gradient(circle at center, black 25%, transparent 55%)",
             WebkitMaskImage:
-              "radial-gradient(ellipse 100% 80% at 50% 50%, black 0%, black 20%, rgba(0, 0, 0, 0.5) 50%, transparent 80%)",
+              "radial-gradient(circle at center, black 25%, transparent 55%)",
           }}
         >
           <source src="/video/black-hole-purple.webm" type="video/webm" />
@@ -120,25 +116,30 @@ export default function FeaturedHero({ items }: FeaturedHeroProps) {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
-              className="flex flex-wrap gap-6 pt-4"
+              className="flex flex-wrap gap-4 pt-4"
             >
+              {/* Primary Action - Thick Glass */}
               <Link
                 href="/projects"
-                className="group relative inline-flex h-16 items-center justify-center overflow-hidden rounded-4xl bg-foreground px-12 text-sm font-black text-background transition-all hover:scale-105 hover:shadow-[0_20px_40px_rgba(0,0,0,0.2)]"
+                className="group relative inline-flex h-14 items-center justify-center overflow-hidden rounded-2xl bg-foreground/10 px-10 text-sm font-bold text-foreground shadow-lg transition-all hover:bg-foreground/20 hover:scale-[1.02] active:scale-[0.98] border border-white/20 dark:border-white/10 backdrop-blur-2xl"
               >
-                <span className="relative z-10 flex items-center gap-3 uppercase tracking-widest">
+                <span className="relative z-10 flex items-center gap-3 uppercase tracking-wider font-google-sans">
                   Explore Works
                   <ArrowRight
-                    size={20}
+                    size={18}
                     className="transition-transform group-hover:translate-x-1"
                   />
                 </span>
+                {/* Inner glow effect for iOS look */}
+                <div className="absolute inset-0 bg-linear-to-tr from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
               </Link>
+
+              {/* Secondary Action - Light Glass */}
               <Link
                 href="/blog"
-                className="inline-flex h-16 items-center justify-center rounded-4xl border border-border bg-card/40 px-12 text-sm font-bold backdrop-blur-xl transition-all hover:bg-muted hover:border-primary/20 uppercase tracking-widest"
+                className="inline-flex h-14 items-center justify-center rounded-2xl border border-white/10 bg-white/5 px-10 text-sm font-bold text-foreground/80 backdrop-blur-xl transition-all hover:bg-white/10 hover:text-foreground hover:border-white/20 uppercase tracking-wider shadow-sm font-amoria"
               >
-                Read Log
+                Read Blog
               </Link>
             </motion.div>
           </div>
@@ -257,8 +258,8 @@ export default function FeaturedHero({ items }: FeaturedHeroProps) {
 
       {/* Decorative side indicators */}
       <div className="absolute left-10 bottom-10 hidden xl:block">
-        <div className="flex flex-col gap-4 text-[10px] font-bold text-muted-foreground local-jetbrains-mono vertical-rl rotate-180 uppercase tracking-[0.5em] opacity-40">
-          Workspace v2.5.0 // Est. 2024
+        <div className="flex flex-col gap-4 text-[10px] font-bold text-muted-foreground local-jetbrains-mono vertical-rl rotate-180 uppercase tracking-[0.5em] opacity-40 select-none">
+          Workspace v2.5.0 // Est. 2026
         </div>
       </div>
     </section>
