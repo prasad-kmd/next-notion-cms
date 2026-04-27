@@ -41,7 +41,7 @@ export async function GET(req: NextRequest) {
     console.error("Error fetching comments:", error);
     return NextResponse.json(
       { error: "Failed to fetch comments" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
@@ -65,7 +65,7 @@ export async function POST(req: NextRequest) {
   if (isRateLimited(userId, RATE_LIMIT_CONFIG)) {
     return NextResponse.json(
       { error: "Too many comments. Please wait a moment.", type: "rate_limit" },
-      { status: 429 }
+      { status: 429 },
     );
   }
 
@@ -76,7 +76,7 @@ export async function POST(req: NextRequest) {
     if (!pageId || !content) {
       return NextResponse.json(
         { error: "Missing pageId or content" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -84,7 +84,7 @@ export async function POST(req: NextRequest) {
     if (!turnstileToken) {
       return NextResponse.json(
         { error: "Security verification missing", type: "turnstile" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -92,31 +92,33 @@ export async function POST(req: NextRequest) {
     if (!isTurnstileValid) {
       return NextResponse.json(
         { error: "Security verification failed", type: "turnstile" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
     const validationResult = await validateComment(content);
     if (!validationResult.success) {
       // Log blocked attempt (counts/patterns only)
-      console.log(`[Profanity Blocked] User: ${userId}, Count: ${validationResult.error.blockedWords?.length}`);
-      
+      console.log(
+        `[Profanity Blocked] User: ${userId}, Count: ${validationResult.error.blockedWords?.length}`,
+      );
+
       return NextResponse.json(
-        { 
+        {
           error: validationResult.error.message,
           type: validationResult.error.type,
-          blockedWords: validationResult.error.blockedWords
+          blockedWords: validationResult.error.blockedWords,
         },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
     const user = session.user;
     const fullContent = formatComment(
-        user.name || "Anonymous",
-        user.id,
-        content,
-        user.image || undefined
+      user.name || "Anonymous",
+      user.id,
+      content,
+      user.image || undefined,
     );
 
     const response = await notion.comments.create({
@@ -137,7 +139,7 @@ export async function POST(req: NextRequest) {
     console.error("Error creating comment:", error);
     return NextResponse.json(
       { error: "Failed to create comment" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

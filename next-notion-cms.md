@@ -22,6 +22,7 @@ This document provides a comprehensive comparison between the current repository
 ### Current Repository (`next-notion-cms`)
 
 **Strengths:**
+
 - Modern Next.js 16 App Router architecture
 - Comprehensive content types (blog, articles, projects, tutorials, wiki, authors)
 - Advanced custom rendering pipeline with Shiki syntax highlighting
@@ -32,6 +33,7 @@ This document provides a comprehensive comparison between the current repository
 - Service worker and PWA support
 
 **Limitations:**
+
 - Manual content rendering via `notion-to-md` package
 - Limited preview image support (no LQIP - Low Quality Image Placeholders)
 - No built-in site-wide search using Notion's native search API
@@ -43,6 +45,7 @@ This document provides a comprehensive comparison between the current repository
 ### Reference Repository (`nextjs-notion-starter-kit`)
 
 **Strengths:**
+
 - Mature, battle-tested architecture (2.0.0, widely adopted)
 - Uses `react-notion-x` for native Notion block rendering
 - **LQIP Preview Images**: Automatic low-quality image placeholders for better perceived performance
@@ -58,6 +61,7 @@ This document provides a comprehensive comparison between the current repository
 - **ACL System**: Access control layer for page permissions
 
 **Limitations:**
+
 - Uses Pages Router (though compatible with App Router migration)
 - Less customizable content rendering pipeline
 - Fewer custom UI components out-of-the-box
@@ -163,56 +167,56 @@ This document provides a comprehensive comparison between the current repository
 
 ### 1. Content Model
 
-| Aspect | Current Repo | Starter Kit |
-|--------|-------------|-------------|
+| Aspect                | Current Repo                                        | Starter Kit                            |
+| --------------------- | --------------------------------------------------- | -------------------------------------- |
 | **Content Structure** | Multiple databases (Blog, Articles, Projects, etc.) | Single root page with nested hierarchy |
-| **Content Fetching** | Direct database queries per type | Recursive page crawling from root |
-| **URL Strategy** | Type-based routes (`/blog/[slug]`) | Canonical page IDs (`/[pageId]`) |
-| **Content Rendering** | Markdown conversion + custom renderer | Native `react-notion-x` components |
+| **Content Fetching**  | Direct database queries per type                    | Recursive page crawling from root      |
+| **URL Strategy**      | Type-based routes (`/blog/[slug]`)                  | Canonical page IDs (`/[pageId]`)       |
+| **Content Rendering** | Markdown conversion + custom renderer               | Native `react-notion-x` components     |
 
 ### 2. Image Handling
 
-| Aspect | Current Repo | Starter Kit |
-|--------|-------------|-------------|
-| **Preview Images** | ❌ Not implemented | ✅ LQIP with lqip-modern |
-| **Image Caching** | ❌ No caching | ✅ Redis-backed cache |
-| **Cover Images** | Manual from Notion files | Auto-extracted with fallbacks |
-| **Default Images** | ❌ Not configured | ✅ Configurable defaults |
+| Aspect             | Current Repo             | Starter Kit                   |
+| ------------------ | ------------------------ | ----------------------------- |
+| **Preview Images** | ❌ Not implemented       | ✅ LQIP with lqip-modern      |
+| **Image Caching**  | ❌ No caching            | ✅ Redis-backed cache         |
+| **Cover Images**   | Manual from Notion files | Auto-extracted with fallbacks |
+| **Default Images** | ❌ Not configured        | ✅ Configurable defaults      |
 
 ### 3. Navigation & Routing
 
-| Aspect | Current Repo | Starter Kit |
-|--------|-------------|-------------|
+| Aspect               | Current Repo     | Starter Kit                   |
+| -------------------- | ---------------- | ----------------------------- |
 | **Navigation Style** | Custom component | Configurable (default/custom) |
-| **URL Overrides** | ❌ Not available | ✅ `pageUrlOverrides` mapping |
-| **Canonical IDs** | ❌ Not available | ✅ Human-readable slugs |
-| **Site Map** | ❌ Manual | ✅ Auto-generated |
+| **URL Overrides**    | ❌ Not available | ✅ `pageUrlOverrides` mapping |
+| **Canonical IDs**    | ❌ Not available | ✅ Human-readable slugs       |
+| **Site Map**         | ❌ Manual        | ✅ Auto-generated             |
 
 ### 4. Search
 
-| Aspect | Current Repo | Starter Kit |
-|--------|-------------|-------------|
-| **Search Method** | Client-side filtering | Native Notion search API |
-| **Caching** | ❌ None | ✅ Memoized with ExpiryMap |
-| **API Endpoint** | N/A | `/api/search-notion` |
+| Aspect            | Current Repo          | Starter Kit                |
+| ----------------- | --------------------- | -------------------------- |
+| **Search Method** | Client-side filtering | Native Notion search API   |
+| **Caching**       | ❌ None               | ✅ Memoized with ExpiryMap |
+| **API Endpoint**  | N/A                   | `/api/search-notion`       |
 
 ### 5. Performance & Caching
 
-| Aspect | Current Repo | Starter Kit |
-|--------|-------------|-------------|
-| **Page Caching** | Next.js unstable_cache | Redis + in-memory |
-| **Image Optimization** | Basic | LQIP + lazy loading |
-| **Tweet Caching** | ❌ Not applicable | ✅ Memoized fetch |
-| **Incremental SSG** | ✅ Yes | ✅ Yes with revalidation |
+| Aspect                 | Current Repo           | Starter Kit              |
+| ---------------------- | ---------------------- | ------------------------ |
+| **Page Caching**       | Next.js unstable_cache | Redis + in-memory        |
+| **Image Optimization** | Basic                  | LQIP + lazy loading      |
+| **Tweet Caching**      | ❌ Not applicable      | ✅ Memoized fetch        |
+| **Incremental SSG**    | ✅ Yes                 | ✅ Yes with revalidation |
 
 ### 6. Social & Analytics
 
-| Aspect | Current Repo | Starter Kit |
-|--------|-------------|-------------|
-| **Open Graph** | Custom API route | Built-in metadata |
-| **Twitter Cards** | Manual | Auto-generated |
-| **Analytics** | ❌ Not integrated | ✅ Fathom + PostHog |
-| **Social Sharing** | Basic buttons | Full social component |
+| Aspect             | Current Repo      | Starter Kit           |
+| ------------------ | ----------------- | --------------------- |
+| **Open Graph**     | Custom API route  | Built-in metadata     |
+| **Twitter Cards**  | Manual            | Auto-generated        |
+| **Analytics**      | ❌ Not integrated | ✅ Fathom + PostHog   |
+| **Social Sharing** | Basic buttons     | Full social component |
 
 ---
 
@@ -257,89 +261,89 @@ Based on the analysis, here are the most valuable features from `nextjs-notion-s
 import {
   type ExtendedRecordMap,
   type PreviewImage,
-  type PreviewImageMap
-} from 'notion-types'
-import { getPageImageUrls, normalizeUrl } from 'notion-utils'
-import pMap from 'p-map'
-import pMemoize from 'p-memoize'
-import lqip from 'lqip-modern'
-import ky from 'ky'
+  type PreviewImageMap,
+} from "notion-types";
+import { getPageImageUrls, normalizeUrl } from "notion-utils";
+import pMap from "p-map";
+import pMemoize from "p-memoize";
+import lqip from "lqip-modern";
+import ky from "ky";
 
-import { defaultPageCover, defaultPageIcon, isRedisEnabled } from './config'
-import { db } from './db'
-import { mapImageUrl } from './map-image-url'
+import { defaultPageCover, defaultPageIcon, isRedisEnabled } from "./config";
+import { db } from "./db";
+import { mapImageUrl } from "./map-image-url";
 
 export async function getPreviewImageMap(
-  recordMap: ExtendedRecordMap
+  recordMap: ExtendedRecordMap,
 ): Promise<PreviewImageMap> {
   const urls: string[] = getPageImageUrls(recordMap, {
-    mapImageUrl
+    mapImageUrl,
   })
     .concat([defaultPageCover, defaultPageIcon].filter(Boolean))
-    .filter(Boolean)
+    .filter(Boolean);
 
   const previewImagesMap = Object.fromEntries(
     await pMap(
       urls,
       async (url) => {
-        const cacheKey = normalizeUrl(url)
-        return [cacheKey, await getPreviewImage(url, { cacheKey })]
+        const cacheKey = normalizeUrl(url);
+        return [cacheKey, await getPreviewImage(url, { cacheKey })];
       },
       {
-        concurrency: 8
-      }
-    )
-  )
+        concurrency: 8,
+      },
+    ),
+  );
 
-  return previewImagesMap
+  return previewImagesMap;
 }
 
 async function createPreviewImage(
   url: string,
-  { cacheKey }: { cacheKey: string }
+  { cacheKey }: { cacheKey: string },
 ): Promise<PreviewImage | null> {
   try {
     // Check cache first
     if (isRedisEnabled) {
       try {
-        const cachedPreviewImage = await db.get(cacheKey)
+        const cachedPreviewImage = await db.get(cacheKey);
         if (cachedPreviewImage) {
-          return cachedPreviewImage
+          return cachedPreviewImage;
         }
       } catch (err: unknown) {
-        console.warn(`redis error get "${cacheKey}"`, err.message)
+        console.warn(`redis error get "${cacheKey}"`, err.message);
       }
     }
 
     // Fetch and generate LQIP
-    const body = await ky(url).arrayBuffer()
-    const result = await lqip(body)
+    const body = await ky(url).arrayBuffer();
+    const result = await lqip(body);
 
-    console.log('lqip', { ...result.metadata, url, cacheKey })
+    console.log("lqip", { ...result.metadata, url, cacheKey });
 
     const previewImage = {
       originalWidth: result.metadata.originalWidth,
       originalHeight: result.metadata.originalHeight,
-      dataURIBase64: result.metadata.dataURIBase64
-    }
+      dataURIBase64: result.metadata.dataURIBase64,
+    };
 
     // Cache the result
     if (isRedisEnabled) {
       try {
-        await db.set(cacheKey, previewImage)
+        await db.set(cacheKey, previewImage);
       } catch (err: unknown) {
-        console.warn(`redis error set "${cacheKey}"`, err.message)
+        console.warn(`redis error set "${cacheKey}"`, err.message);
       }
     }
 
-    return previewImage
+    return previewImage;
   } catch (err: unknown) {
-    console.warn('failed to create preview image', url, err.message)
-    return null
+    console.warn("failed to create preview image", url, err.message);
+    return null;
   }
 }
 
-export const getPreviewImage = pMemoize(createPreviewImage)
+export const getPreviewImage = pMemoize(createPreviewImage);
 ```
 
 #### 1.2 Install Dependencies
@@ -351,20 +355,20 @@ pnpm add lqip-modern ky p-map p-memoize @keyvhq/core @keyvhq/redis expiry-map
 #### 1.3 Update `/workspace/lib/db.ts`
 
 ```typescript
-import Keyv from '@keyvhq/core'
-import KeyvRedis from '@keyvhq/redis'
+import Keyv from "@keyvhq/core";
+import KeyvRedis from "@keyvhq/redis";
 
-import { isRedisEnabled, redisNamespace, redisUrl } from './config'
+import { isRedisEnabled, redisNamespace, redisUrl } from "./config";
 
-let db: Keyv
+let db: Keyv;
 if (isRedisEnabled) {
-  const keyvRedis = new KeyvRedis(redisUrl!)
-  db = new Keyv({ store: keyvRedis, namespace: redisNamespace || undefined })
+  const keyvRedis = new KeyvRedis(redisUrl!);
+  db = new Keyv({ store: keyvRedis, namespace: redisNamespace || undefined });
 } else {
-  db = new Keyv()
+  db = new Keyv();
 }
 
-export { db }
+export { db };
 ```
 
 #### 1.4 Update `/workspace/lib/config.ts`
@@ -373,21 +377,26 @@ Add the following configuration:
 
 ```typescript
 // Add to existing config
-export const isPreviewImageSupportEnabled: boolean = true
-export const isRedisEnabled: boolean = !!process.env.REDIS_ENABLED
-export const redisHost = process.env.REDIS_HOST
-export const redisPassword = process.env.REDIS_PASSWORD
-export const redisUser = process.env.REDIS_USER || 'default'
-export const redisUrl = process.env.REDIS_URL ||
-  (isRedisEnabled ? `redis://${redisUser}:${redisPassword}@${redisHost}` : null)
-export const redisNamespace = process.env.REDIS_NAMESPACE || 'preview-images'
+export const isPreviewImageSupportEnabled: boolean = true;
+export const isRedisEnabled: boolean = !!process.env.REDIS_ENABLED;
+export const redisHost = process.env.REDIS_HOST;
+export const redisPassword = process.env.REDIS_PASSWORD;
+export const redisUser = process.env.REDIS_USER || "default";
+export const redisUrl =
+  process.env.REDIS_URL ||
+  (isRedisEnabled
+    ? `redis://${redisUser}:${redisPassword}@${redisHost}`
+    : null);
+export const redisNamespace = process.env.REDIS_NAMESPACE || "preview-images";
 
 // Default page images
-export const defaultPageIcon: string | undefined = process.env.DEFAULT_PAGE_ICON
-export const defaultPageCover: string | undefined = process.env.DEFAULT_PAGE_COVER
+export const defaultPageIcon: string | undefined =
+  process.env.DEFAULT_PAGE_ICON;
+export const defaultPageCover: string | undefined =
+  process.env.DEFAULT_PAGE_COVER;
 export const defaultPageCoverPosition: number = parseFloat(
-  process.env.DEFAULT_PAGE_COVER_POSITION || '0.5'
-)
+  process.env.DEFAULT_PAGE_COVER_POSITION || "0.5",
+);
 ```
 
 #### 1.5 Integration with Content Pipeline
@@ -396,12 +405,12 @@ Update `/workspace/lib/content.ts` to generate preview images when fetching Noti
 
 ```typescript
 // Add import
-import { getPreviewImageMap } from './preview-images'
+import { getPreviewImageMap } from "./preview-images";
 
 // In your Notion fetch functions, after getting recordMap:
 if (isPreviewImageSupportEnabled) {
-  const previewImageMap = await getPreviewImageMap(recordMap)
-  ;(recordMap as unknown).preview_images = previewImageMap
+  const previewImageMap = await getPreviewImageMap(recordMap);
+  (recordMap as unknown).preview_images = previewImageMap;
 }
 ```
 
@@ -474,8 +483,8 @@ export function PreviewImage({
 #### 2.1 `/workspace/lib/get-canonical-page-id.ts`
 
 ```typescript
-import { type ExtendedRecordMap } from 'notion-types'
-import { getBlockTitle, getPageProperty, uuidToId } from 'notion-utils'
+import { type ExtendedRecordMap } from "notion-types";
+import { getBlockTitle, getPageProperty, uuidToId } from "notion-utils";
 
 /**
  * Gets the canonical page ID for a given Notion page.
@@ -484,36 +493,36 @@ import { getBlockTitle, getPageProperty, uuidToId } from 'notion-utils'
 export function getCanonicalPageId(
   pageId: string,
   recordMap: ExtendedRecordMap,
-  { uuid = true }: { uuid?: boolean } = {}
+  { uuid = true }: { uuid?: boolean } = {},
 ): string | null {
-  const block = recordMap.block[pageId]
+  const block = recordMap.block[pageId];
 
   if (!block) {
-    return null
+    return null;
   }
 
   // Check for custom slug property first
-  const slug = getPageProperty<string>('Slug', block.value, recordMap)
+  const slug = getPageProperty<string>("Slug", block.value, recordMap);
   if (slug) {
-    return slug
+    return slug;
   }
 
   // Fall back to page title
-  const title = getBlockTitle(block.value, recordMap)
+  const title = getBlockTitle(block.value, recordMap);
   if (title) {
     // Convert title to slug-like format
     const slugified = title
       .toLowerCase()
-      .replace(/[^a-z0-9]+/g, '-')
-      .replace(/^-+|-+$/g, '')
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "");
 
     if (slugified) {
-      return uuid ? `${slugified}-${uuidToId(pageId)}` : slugified
+      return uuid ? `${slugified}-${uuidToId(pageId)}` : slugified;
     }
   }
 
   // Last resort: use page ID
-  return uuid ? pageId : uuidToId(pageId)
+  return uuid ? pageId : uuidToId(pageId);
 }
 ```
 
@@ -524,133 +533,133 @@ import {
   getAllPagesInSpace,
   getBlockValue,
   getPageProperty,
-  uuidToId
-} from 'notion-utils'
-import pMemoize from 'p-memoize'
+  uuidToId,
+} from "notion-utils";
+import pMemoize from "p-memoize";
 
-import type * as types from './types'
-import * as config from './config'
-import { includeNotionIdInUrls } from './config'
-import { getCanonicalPageId } from './get-canonical-page-id'
-import { notion } from './notion'
+import type * as types from "./types";
+import * as config from "./config";
+import { includeNotionIdInUrls } from "./config";
+import { getCanonicalPageId } from "./get-canonical-page-id";
+import { notion } from "./notion";
 
-const uuid = !!includeNotionIdInUrls
+const uuid = !!includeNotionIdInUrls;
 
 export async function getSiteMap(): Promise<types.SiteMap> {
   const partialSiteMap = await getAllPages(
     config.rootNotionPageId,
-    config.rootNotionSpaceId ?? undefined
-  )
+    config.rootNotionSpaceId ?? undefined,
+  );
 
   return {
     site: config.site,
-    ...partialSiteMap
-  } as types.SiteMap
+    ...partialSiteMap,
+  } as types.SiteMap;
 }
 
 const getAllPages = pMemoize(getAllPagesImpl, {
-  cacheKey: (...args) => JSON.stringify(args)
-})
+  cacheKey: (...args) => JSON.stringify(args),
+});
 
 const getPage = async (pageId: string, opts?: unknown) => {
-  console.log('\nnotion getPage', uuidToId(pageId))
+  console.log("\nnotion getPage", uuidToId(pageId));
   return notion.getPage(pageId, {
     kyOptions: {
-      timeout: 30_000
+      timeout: 30_000,
     },
-    ...opts
-  })
-}
+    ...opts,
+  });
+};
 
 async function getAllPagesImpl(
   rootNotionPageId: string,
   rootNotionSpaceId?: string,
   {
-    maxDepth = 1
+    maxDepth = 1,
   }: {
-    maxDepth?: number
-  } = {}
+    maxDepth?: number;
+  } = {},
 ): Promise<Partial<types.SiteMap>> {
   const pageMap = await getAllPagesInSpace(
     rootNotionPageId,
     rootNotionSpaceId,
     getPage,
     {
-      maxDepth
-    }
-  )
+      maxDepth,
+    },
+  );
 
   const canonicalPageMap = Object.keys(pageMap).reduce(
     (map: Record<string, string>, pageId: string) => {
-      const recordMap = pageMap[pageId]
+      const recordMap = pageMap[pageId];
       if (!recordMap) {
-        throw new Error(`Error loading page "${pageId}"`)
+        throw new Error(`Error loading page "${pageId}"`);
       }
 
-      const block = getBlockValue(recordMap.block[pageId])
+      const block = getBlockValue(recordMap.block[pageId]);
       if (
-        !(getPageProperty<boolean | null>('Public', block!, recordMap) ?? true)
+        !(getPageProperty<boolean | null>("Public", block!, recordMap) ?? true)
       ) {
-        return map
+        return map;
       }
 
       const canonicalPageId = getCanonicalPageId(pageId, recordMap, {
-        uuid
-      })!
+        uuid,
+      })!;
 
       if (map[canonicalPageId]) {
-        console.warn('error duplicate canonical page id', {
+        console.warn("error duplicate canonical page id", {
           canonicalPageId,
           pageId,
-          existingPageId: map[canonicalPageId]
-        })
-        return map
+          existingPageId: map[canonicalPageId],
+        });
+        return map;
       } else {
         return {
           ...map,
-          [canonicalPageId]: pageId
-        }
+          [canonicalPageId]: pageId,
+        };
       }
     },
-    {}
-  )
+    {},
+  );
 
   return {
     pageMap,
-    canonicalPageMap
-  }
+    canonicalPageMap,
+  };
 }
 ```
 
 #### 2.3 `/workspace/lib/types.ts`
 
 ```typescript
-import { type ExtendedRecordMap, type PageMap } from 'notion-types'
+import { type ExtendedRecordMap, type PageMap } from "notion-types";
 
 export interface Site {
-  name: string
-  domain: string
-  rootNotionPageId: string
-  rootNotionSpaceId: string | null
-  description?: string
+  name: string;
+  domain: string;
+  rootNotionPageId: string;
+  rootNotionSpaceId: string | null;
+  description?: string;
 }
 
 export interface SiteMap {
-  site: Site
-  pageMap: PageMap
-  canonicalPageMap: CanonicalPageMap
+  site: Site;
+  pageMap: PageMap;
+  canonicalPageMap: CanonicalPageMap;
 }
 
 export interface CanonicalPageMap {
-  [canonicalPageId: string]: string
+  [canonicalPageId: string]: string;
 }
 
 export interface PageUrlOverridesMap {
-  [pagePath: string]: string
+  [pagePath: string]: string;
 }
 
 export interface PageUrlOverridesInverseMap {
-  [pageId: string]: string
+  [pageId: string]: string;
 }
 ```
 
@@ -665,76 +674,76 @@ export interface PageUrlOverridesInverseMap {
 Create this file:
 
 ```typescript
-import type * as types from './types'
+import type * as types from "./types";
 
 export interface SiteConfig {
-  rootNotionPageId: string
-  rootNotionSpaceId?: string | null
+  rootNotionPageId: string;
+  rootNotionSpaceId?: string | null;
 
-  name: string
-  domain: string
-  author: string
-  description?: string
-  language?: string
+  name: string;
+  domain: string;
+  author: string;
+  description?: string;
+  language?: string;
 
-  twitter?: string
-  github?: string
-  linkedin?: string
-  newsletter?: string
-  youtube?: string
+  twitter?: string;
+  github?: string;
+  linkedin?: string;
+  newsletter?: string;
+  youtube?: string;
 
-  defaultPageIcon?: string | null
-  defaultPageCover?: string | null
-  defaultPageCoverPosition?: number | null
+  defaultPageIcon?: string | null;
+  defaultPageCover?: string | null;
+  defaultPageCoverPosition?: number | null;
 
-  isPreviewImageSupportEnabled?: boolean
-  isTweetEmbedSupportEnabled?: boolean
-  isRedisEnabled?: boolean
-  isSearchEnabled?: boolean
+  isPreviewImageSupportEnabled?: boolean;
+  isTweetEmbedSupportEnabled?: boolean;
+  isRedisEnabled?: boolean;
+  isSearchEnabled?: boolean;
 
-  includeNotionIdInUrls?: boolean
-  pageUrlOverrides?: types.PageUrlOverridesMap | null
-  pageUrlAdditions?: types.PageUrlOverridesMap | null
+  includeNotionIdInUrls?: boolean;
+  pageUrlOverrides?: types.PageUrlOverridesMap | null;
+  pageUrlAdditions?: types.PageUrlOverridesMap | null;
 
-  navigationStyle?: types.NavigationStyle
-  navigationLinks?: Array<NavigationLink>
+  navigationStyle?: types.NavigationStyle;
+  navigationLinks?: Array<NavigationLink>;
 }
 
 export interface NavigationLink {
-  title: string
-  pageId?: string
-  url?: string
+  title: string;
+  pageId?: string;
+  url?: string;
 }
 
 export const siteConfig = (config: SiteConfig): SiteConfig => {
-  return config
-}
+  return config;
+};
 ```
 
 #### 3.2 Create `/workspace/site.config.ts`
 
 ```typescript
-import { siteConfig } from './lib/site-config'
+import { siteConfig } from "./lib/site-config";
 
 export default siteConfig({
   // the site's root Notion page (required)
-  rootNotionPageId: process.env.NOTION_ROOT_PAGE_ID || '',
+  rootNotionPageId: process.env.NOTION_ROOT_PAGE_ID || "",
 
   // if you want to restrict pages to a single notion workspace (optional)
   rootNotionSpaceId: null,
 
   // basic site info (required)
-  name: 'PrasadM Engineering Blogfolio',
-  domain: 'prasadm.vercel.app',
-  author: 'PrasadM',
+  name: "PrasadM Engineering Blogfolio",
+  domain: "prasadm.vercel.app",
+  author: "PrasadM",
 
   // open graph metadata (optional)
-  description: 'Engineering portfolio and technical blog',
+  description: "Engineering portfolio and technical blog",
 
   // social usernames (optional)
-  twitter: 'prasadmadhuran1',
-  github: 'prasad-kmd',
-  linkedin: 'prasad-madhuranga',
+  twitter: "prasadmadhuran1",
+  github: "prasad-kmd",
+  linkedin: "prasad-madhuranga",
 
   // default notion icon and cover images for site-wide consistency (optional)
   defaultPageIcon: null,
@@ -756,30 +765,30 @@ export default siteConfig({
   // }
 
   // whether to use the default notion navigation style or a custom one
-  navigationStyle: 'custom',
+  navigationStyle: "custom",
   navigationLinks: [
     {
-      title: 'Blog',
-      url: '/blog'
+      title: "Blog",
+      url: "/blog",
     },
     {
-      title: 'Articles',
-      url: '/articles'
+      title: "Articles",
+      url: "/articles",
     },
     {
-      title: 'Projects',
-      url: '/projects'
+      title: "Projects",
+      url: "/projects",
     },
     {
-      title: 'Wiki',
-      url: '/wiki'
+      title: "Wiki",
+      url: "/wiki",
     },
     {
-      title: 'About',
-      pageId: 'your-about-page-id'
-    }
-  ]
-})
+      title: "About",
+      pageId: "your-about-page-id",
+    },
+  ],
+});
 ```
 
 #### 3.3 Update Navigation Component
@@ -832,64 +841,64 @@ export function Navigation() {
 #### 4.1 Update `/workspace/lib/config.ts`
 
 ```typescript
-import rawSiteConfig from '../site.config'
-import { type SiteConfig } from './site-config'
+import rawSiteConfig from "../site.config";
+import { type SiteConfig } from "./site-config";
 
 // Parse and validate site config
-const siteConfig: SiteConfig = rawSiteConfig
+const siteConfig: SiteConfig = rawSiteConfig;
 
 // Helper to clean page URL overrides
 function cleanPageUrlMap(
   pageUrlMap: { [uri: string]: string } | null | undefined,
-  { label }: { label: string }
+  { label }: { label: string },
 ): { [path: string]: string } {
-  if (!pageUrlMap) return {}
+  if (!pageUrlMap) return {};
 
   return Object.keys(pageUrlMap).reduce((acc, uri) => {
-    const pageId = pageUrlMap[uri]
+    const pageId = pageUrlMap[uri];
 
     if (!pageId) {
-      throw new Error(`Invalid ${label} page id "${pageId}"`)
+      throw new Error(`Invalid ${label} page id "${pageId}"`);
     }
 
     if (!uri) {
-      throw new Error(`Missing ${label} value for page "${pageId}"`)
+      throw new Error(`Missing ${label} value for page "${pageId}"`);
     }
 
-    if (!uri.startsWith('/')) {
+    if (!uri.startsWith("/")) {
       throw new Error(
-        `Invalid ${label} value for page "${pageId}": value "${uri}" should be a relative URI`
-      )
+        `Invalid ${label} value for page "${pageId}": value "${uri}" should be a relative URI`,
+      );
     }
 
-    const path = uri.slice(1)
+    const path = uri.slice(1);
     return {
       ...acc,
-      [path]: pageId
-    }
-  }, {})
+      [path]: pageId,
+    };
+  }, {});
 }
 
 export const pageUrlOverrides = cleanPageUrlMap(
   siteConfig.pageUrlOverrides || {},
-  { label: 'pageUrlOverrides' }
-)
+  { label: "pageUrlOverrides" },
+);
 
 export const pageUrlAdditions = cleanPageUrlMap(
   siteConfig.pageUrlAdditions || {},
-  { label: 'pageUrlAdditions' }
-)
+  { label: "pageUrlAdditions" },
+);
 
 export const inversePageUrlOverrides = Object.keys(pageUrlOverrides).reduce(
   (acc, uri) => {
-    const pageId = pageUrlOverrides[uri]
+    const pageId = pageUrlOverrides[uri];
     return {
       ...acc,
-      [pageId]: uri
-    }
+      [pageId]: uri,
+    };
   },
-  {} as { [pageId: string]: string }
-)
+  {} as { [pageId: string]: string },
+);
 ```
 
 #### 4.2 Create Dynamic Route Handler
@@ -955,45 +964,47 @@ async function getPageByNotionId(pageId: string) {
 #### 5.1 Create `/workspace/lib/search-notion.ts`
 
 ```typescript
-import ExpiryMap from 'expiry-map'
-import pMemoize from 'p-memoize'
+import ExpiryMap from "expiry-map";
+import pMemoize from "p-memoize";
 
-import type * as types from './types'
-import { notion } from './notion'
+import type * as types from "./types";
+import { notion } from "./notion";
 
 export const searchNotion = pMemoize(searchNotionImpl, {
   cacheKey: (args) => args[0]?.query,
-  cache: new ExpiryMap(10_000) // 10 second cache
-})
+  cache: new ExpiryMap(10_000), // 10 second cache
+});
 
 async function searchNotionImpl(
-  params: types.SearchParams
+  params: types.SearchParams,
 ): Promise<types.SearchResults> {
   try {
     const results = await notion.search({
       query: params.query,
       sort: {
-        direction: 'descending',
-        timestamp: 'last_edited_time'
+        direction: "descending",
+        timestamp: "last_edited_time",
       },
       filter: {
-        value: 'page',
-        property: 'object'
-      }
-    })
+        value: "page",
+        property: "object",
+      },
+    });
 
     return {
       results: results.results.map((page: unknown) => ({
         id: page.id,
-        title: page.properties.Name?.title?.[0]?.plain_text || 'Untitled',
+        title: page.properties.Name?.title?.[0]?.plain_text || "Untitled",
         url: page.url,
-        lastEditedTime: page.last_edited_time
+        lastEditedTime: page.last_edited_time,
       })),
-      total: results.has_more ? results.results.length + 1 : results.results.length
-    }
+      total: results.has_more
+        ? results.results.length + 1
+        : results.results.length,
+    };
   } catch (error) {
-    console.error('Search error:', error)
-    return { results: [], total: 0 }
+    console.error("Search error:", error);
+    return { results: [], total: 0 };
   }
 }
 ```
@@ -1001,29 +1012,29 @@ async function searchNotionImpl(
 #### 5.2 Create API Route `/workspace/app/api/search-notion/route.ts`
 
 ```typescript
-import { NextRequest, NextResponse } from 'next/server'
-import { searchNotion } from '@/lib/search-notion'
+import { NextRequest, NextResponse } from "next/server";
+import { searchNotion } from "@/lib/search-notion";
 
 export async function POST(request: NextRequest) {
   try {
-    const body = await request.json()
-    const { query } = body
+    const body = await request.json();
+    const { query } = body;
 
-    if (!query || typeof query !== 'string') {
+    if (!query || typeof query !== "string") {
       return NextResponse.json(
-        { error: 'Query parameter is required' },
-        { status: 400 }
-      )
+        { error: "Query parameter is required" },
+        { status: 400 },
+      );
     }
 
-    const results = await searchNotion({ query })
-    return NextResponse.json(results)
+    const results = await searchNotion({ query });
+    return NextResponse.json(results);
   } catch (error) {
-    console.error('Search API error:', error)
+    console.error("Search API error:", error);
     return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    )
+      { error: "Internal server error" },
+      { status: 500 },
+    );
   }
 }
 ```
@@ -1128,40 +1139,41 @@ pnpm add rss
 #### 6.2 Create `/workspace/app/feed.xml/route.ts`
 
 ```typescript
-import RSS from 'rss'
-import { getAllContentByType } from '@/lib/content'
+import RSS from "rss";
+import { getAllContentByType } from "@/lib/content";
 
 export async function GET() {
   const feed = new RSS({
-    title: 'PrasadM Engineering Blogfolio',
-    description: 'Technical insights, engineering projects, and development journey',
-    site_url: process.env.SITE_URL || 'https://prasadm.vercel.app',
-    feed_url: `${process.env.SITE_URL || 'https://prasadm.vercel.app'}/feed.xml`,
+    title: "PrasadM Engineering Blogfolio",
+    description:
+      "Technical insights, engineering projects, and development journey",
+    site_url: process.env.SITE_URL || "https://prasadm.vercel.app",
+    feed_url: `${process.env.SITE_URL || "https://prasadm.vercel.app"}/feed.xml`,
     copyright: `${new Date().getFullYear()} PrasadM`,
-    language: 'en',
-    ttl: 60
-  })
+    language: "en",
+    ttl: 60,
+  });
 
   // Fetch all blog posts
-  const posts = await getAllContentByType('blog')
+  const posts = await getAllContentByType("blog");
 
   posts.forEach((post) => {
     feed.item({
       title: post.title,
       description: post.description,
-      url: `${process.env.SITE_URL || 'https://prasadm.vercel.app'}/blog/${post.slug}`,
+      url: `${process.env.SITE_URL || "https://prasadm.vercel.app"}/blog/${post.slug}`,
       date: new Date(post.date),
       author: post.author,
-      categories: post.tags || []
-    })
-  })
+      categories: post.tags || [],
+    });
+  });
 
   return new Response(feed.xml({ indent: true }), {
     headers: {
-      'Content-Type': 'application/xml',
-      'Cache-Control': 's-maxage=3600, stale-while-revalidate'
-    }
-  })
+      "Content-Type": "application/xml",
+      "Cache-Control": "s-maxage=3600, stale-while-revalidate",
+    },
+  });
 }
 ```
 
@@ -1320,6 +1332,7 @@ export function PostHogProvider({ children }: { children: React.ReactNode }) {
 ### Phase 1: Foundation (Week 1)
 
 - [ ] **Install Core Dependencies**
+
   ```bash
   pnpm add lqip-modern ky p-map p-memoize @keyvhq/core @keyvhq/redis expiry-map notion-utils notion-types
   ```
@@ -1331,6 +1344,7 @@ export function PostHogProvider({ children }: { children: React.ReactNode }) {
   - [ ] `/workspace/lib/db.ts`
 
 - [ ] **Update Environment Variables**
+
   ```env
   # Preview Images
   DEFAULT_PAGE_ICON=/favicon.ico
@@ -1465,18 +1479,18 @@ SITE_URL=https://prasadm.vercel.app
 ```typescript
 // site.config.ts
 export default siteConfig({
-  rootNotionPageId: '...',
+  rootNotionPageId: "...",
   rootNotionSpaceId: null,
 
-  name: 'My Site',
-  domain: 'example.com',
-  author: 'Your Name',
-  description: 'Site description',
+  name: "My Site",
+  domain: "example.com",
+  author: "Your Name",
+  description: "Site description",
 
   // Social
-  twitter: 'username',
-  github: 'username',
-  linkedin: 'username',
+  twitter: "username",
+  github: "username",
+  linkedin: "username",
 
   // Features
   isPreviewImageSupportEnabled: true,
@@ -1485,18 +1499,18 @@ export default siteConfig({
   isTweetEmbedSupportEnabled: true,
 
   // Navigation
-  navigationStyle: 'custom',
+  navigationStyle: "custom",
   navigationLinks: [
-    { title: 'Blog', url: '/blog' },
-    { title: 'About', pageId: '...' }
+    { title: "Blog", url: "/blog" },
+    { title: "About", pageId: "..." },
   ],
 
   // URL Overrides
   pageUrlOverrides: {
-    '/about': 'page-id',
-    '/contact': 'page-id'
-  }
-})
+    "/about": "page-id",
+    "/contact": "page-id",
+  },
+});
 ```
 
 ---
@@ -1510,6 +1524,7 @@ export default siteConfig({
 **Symptoms:** Images load without blur effect, console shows LQIP errors
 
 **Solutions:**
+
 - Verify `lqip-modern` is installed
 - Check image URLs are publicly accessible
 - Ensure CORS headers allow image fetching
@@ -1520,6 +1535,7 @@ export default siteConfig({
 **Symptoms:** Only root page appears, errors about page depth
 
 **Solutions:**
+
 - Increase `maxDepth` in `getAllPagesImpl`
 - Check Notion page permissions
 - Verify all pages are marked as "Public"
@@ -1530,6 +1546,7 @@ export default siteConfig({
 **Symptoms:** Search API returns empty array
 
 **Solutions:**
+
 - Verify Notion integration has search permissions
 - Check query parameter is being passed correctly
 - Ensure pages are indexed by Notion (may take time)
@@ -1540,6 +1557,7 @@ export default siteConfig({
 **Symptoms:** Links lead to 404 or wrong pages
 
 **Solutions:**
+
 - Verify `pageId` in navigation config is correct
 - Check URL format (should start with `/`)
 - Ensure dynamic routes are properly configured
@@ -1551,14 +1569,14 @@ export default siteConfig({
 
 Expected improvements after implementing all features:
 
-| Metric | Before | After | Improvement |
-|--------|--------|-------|-------------|
-| **LCP (Large Contentful Paint)** | 2.8s | 1.9s | 32% faster |
-| **FCP (First Contentful Paint)** | 1.2s | 0.9s | 25% faster |
-| **Notion API Calls** | ~50/page | ~5/page | 90% reduction |
-| **Image Load Time** | 1.5s | 0.3s (perceived) | 80% faster |
-| **Search Response** | N/A | <100ms | New feature |
-| **Bundle Size** | 450KB | 520KB | +15% (worth it) |
+| Metric                           | Before   | After            | Improvement     |
+| -------------------------------- | -------- | ---------------- | --------------- |
+| **LCP (Large Contentful Paint)** | 2.8s     | 1.9s             | 32% faster      |
+| **FCP (First Contentful Paint)** | 1.2s     | 0.9s             | 25% faster      |
+| **Notion API Calls**             | ~50/page | ~5/page          | 90% reduction   |
+| **Image Load Time**              | 1.5s     | 0.3s (perceived) | 80% faster      |
+| **Search Response**              | N/A      | <100ms           | New feature     |
+| **Bundle Size**                  | 450KB    | 520KB            | +15% (worth it) |
 
 ---
 
@@ -1574,6 +1592,7 @@ Integrating these features from `nextjs-notion-starter-kit` will significantly e
 The integration is designed to be incremental—you can implement features one at a time without breaking existing functionality. Start with Phase 1 (Foundation) and Phase 2 (Preview Images) for the biggest immediate impact.
 
 For questions or issues during implementation, refer to:
+
 - Original repo: https://github.com/transitive-bullshit/nextjs-notion-starter-kit
 - react-notion-x docs: https://github.com/NotionX/react-notion-x
 - Notion API docs: https://developers.notion.com

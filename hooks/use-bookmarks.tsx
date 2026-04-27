@@ -1,159 +1,171 @@
-"use client"
+"use client";
 
-import React, { createContext, useContext, useState, useEffect, useCallback, startTransition } from "react"
-import { toast } from "sonner"
-import { posthog } from "@/lib/posthog-client"
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  useCallback,
+  startTransition,
+} from "react";
+import { toast } from "sonner";
+import { posthog } from "@/lib/posthog-client";
 
 export interface BookmarkedItem {
-    slug: string
-    title: string
-    date?: string
-    type: "blog" | "articles" | "projects" | "tutorials" | "wiki"
+  slug: string;
+  title: string;
+  date?: string;
+  type: "blog" | "articles" | "projects" | "tutorials" | "wiki";
 }
 
 interface BookmarksContextType {
-    bookmarks: BookmarkedItem[]
-    isBookmarked: (slug: string, type: string) => boolean
-    toggleBookmark: (item: BookmarkedItem) => void
-    removeBookmark: (slug: string, type: string) => void
+  bookmarks: BookmarkedItem[];
+  isBookmarked: (slug: string, type: string) => boolean;
+  toggleBookmark: (item: BookmarkedItem) => void;
+  removeBookmark: (slug: string, type: string) => void;
 }
 
-const BookmarksContext = createContext<BookmarksContextType | undefined>(undefined)
+const BookmarksContext = createContext<BookmarksContextType | undefined>(
+  undefined,
+);
 
 export function BookmarksProvider({ children }: { children: React.ReactNode }) {
-    const [bookmarks, setBookmarks] = useState<BookmarkedItem[]>([])
-    const [isInitialized, setIsInitialized] = useState(false)
+  const [bookmarks, setBookmarks] = useState<BookmarkedItem[]>([]);
+  const [isInitialized, setIsInitialized] = useState(false);
 
-    // Load bookmarks from localStorage on mount and listen for storage changes
-    const loadFromLocalStorage = useCallback(() => {
-        const saved = localStorage.getItem("user-bookmarks")
-        if (saved) {
-            try {
-                const parsed = JSON.parse(saved)
-                if (Array.isArray(parsed)) {
-                    setBookmarks(parsed)
-                }
-            } catch (e) {
-                console.error("Failed to parse bookmarks:", e)
-            }
-        } else {
-            setBookmarks([])
+  // Load bookmarks from localStorage on mount and listen for storage changes
+  const loadFromLocalStorage = useCallback(() => {
+    const saved = localStorage.getItem("user-bookmarks");
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed)) {
+          setBookmarks(parsed);
         }
-    }, [])
+      } catch (e) {
+        console.error("Failed to parse bookmarks:", e);
+      }
+    } else {
+      setBookmarks([]);
+    }
+  }, []);
 
-    useEffect(() => {
-        startTransition(() => {
-            loadFromLocalStorage()
-            setIsInitialized(true)
-        })
+  useEffect(() => {
+    startTransition(() => {
+      loadFromLocalStorage();
+      setIsInitialized(true);
+    });
 
-        // Listen for storage events (from other hooks like useAuthSync)
-        const handleStorageChange = (e: StorageEvent | Event) => {
-            // Check if it's the correct key or a general refresh event
-            if (e instanceof StorageEvent) {
-                if (e.key === "user-bookmarks") {
-                    loadFromLocalStorage()
-                }
-            } else {
-                // Event from window.dispatchEvent(new Event("storage"))
-                loadFromLocalStorage()
-            }
+    // Listen for storage events (from other hooks like useAuthSync)
+    const handleStorageChange = (e: StorageEvent | Event) => {
+      // Check if it's the correct key or a general refresh event
+      if (e instanceof StorageEvent) {
+        if (e.key === "user-bookmarks") {
+          loadFromLocalStorage();
         }
+      } else {
+        // Event from window.dispatchEvent(new Event("storage"))
+        loadFromLocalStorage();
+      }
+    };
 
-        window.addEventListener("storage", handleStorageChange)
-        return () => window.removeEventListener("storage", handleStorageChange)
-    }, [loadFromLocalStorage])
+    window.addEventListener("storage", handleStorageChange);
+    return () => window.removeEventListener("storage", handleStorageChange);
+  }, [loadFromLocalStorage]);
 
-    // Sync back to localStorage
-    useEffect(() => {
-        if (isInitialized) {
-            localStorage.setItem("user-bookmarks", JSON.stringify(bookmarks))
-        }
-    }, [bookmarks, isInitialized])
+  // Sync back to localStorage
+  useEffect(() => {
+    if (isInitialized) {
+      localStorage.setItem("user-bookmarks", JSON.stringify(bookmarks));
+    }
+  }, [bookmarks, isInitialized]);
 
-    const isBookmarked = useCallback(
-        (slug: string, type: string) => {
-            if (!slug || !type) return false
-            return bookmarks.some((item) => item.slug === slug && item.type === type)
-        },
-        [bookmarks]
-    )
+  const isBookmarked = useCallback(
+    (slug: string, type: string) => {
+      if (!slug || !type) return false;
+      return bookmarks.some((item) => item.slug === slug && item.type === type);
+    },
+    [bookmarks],
+  );
 
-    const toggleBookmark = useCallback(
-        (item: BookmarkedItem) => {
-            if (!item.slug || !item.type) {
-                console.error("Attempted to bookmark item without slug or type:", item)
-                return
-            }
+  const toggleBookmark = useCallback((item: BookmarkedItem) => {
+    if (!item.slug || !item.type) {
+      console.error("Attempted to bookmark item without slug or type:", item);
+      return;
+    }
 
-            let action: "added" | "removed" = "added"
-            setBookmarks((prev) => {
-                const exists = prev.some((b) => b.slug === item.slug && b.type === item.type)
-                if (exists) {
-                    action = "removed"
-                    return prev.filter((b) => !(b.slug === item.slug && b.type === item.type))
-                } else {
-                    action = "added"
-                    return [...prev, item]
-                }
-            })
+    let action: "added" | "removed" = "added";
+    setBookmarks((prev) => {
+      const exists = prev.some(
+        (b) => b.slug === item.slug && b.type === item.type,
+      );
+      if (exists) {
+        action = "removed";
+        return prev.filter(
+          (b) => !(b.slug === item.slug && b.type === item.type),
+        );
+      } else {
+        action = "added";
+        return [...prev, item];
+      }
+    });
 
-            if (action === "added") {
-                toast.success("Added to bookmarks")
-                if (posthog) {
-                    posthog.capture("bookmark_added", {
-                        post_slug: item.slug,
-                        post_title: item.title,
-                        content_type: item.type,
-                    })
-                }
-            } else {
-                toast.success("Removed from bookmarks")
-                if (posthog) {
-                    posthog.capture("bookmark_removed", {
-                        post_slug: item.slug,
-                        post_title: item.title,
-                        content_type: item.type,
-                    })
-                }
-            }
-        },
-        []
-    )
+    if (action === "added") {
+      toast.success("Added to bookmarks");
+      if (posthog) {
+        posthog.capture("bookmark_added", {
+          post_slug: item.slug,
+          post_title: item.title,
+          content_type: item.type,
+        });
+      }
+    } else {
+      toast.success("Removed from bookmarks");
+      if (posthog) {
+        posthog.capture("bookmark_removed", {
+          post_slug: item.slug,
+          post_title: item.title,
+          content_type: item.type,
+        });
+      }
+    }
+  }, []);
 
-    // Add a specific cleanup to show toasts based on state changes if preferred, 
-    // but for simplicity, we'll keep toggle side-effects for now if they work.
-    // Actually, let's use a ref to track what was just toggled to show the right toast.
+  // Add a specific cleanup to show toasts based on state changes if preferred,
+  // but for simplicity, we'll keep toggle side-effects for now if they work.
+  // Actually, let's use a ref to track what was just toggled to show the right toast.
 
-    const removeBookmark = useCallback((slug: string, type: string) => {
-        if (!slug || !type) return
-        setBookmarks((prev) => {
-            const itemToRemove = prev.find((item) => item.slug === slug && item.type === type)
-            if (itemToRemove && posthog) {
-                posthog.capture("bookmark_removed", {
-                    post_slug: itemToRemove.slug,
-                    post_title: itemToRemove.title,
-                    content_type: itemToRemove.type,
-                })
-            }
-            return prev.filter((item) => !(item.slug === slug && item.type === type))
-        })
-        toast.success("Removed from bookmarks")
-    }, [])
+  const removeBookmark = useCallback((slug: string, type: string) => {
+    if (!slug || !type) return;
+    setBookmarks((prev) => {
+      const itemToRemove = prev.find(
+        (item) => item.slug === slug && item.type === type,
+      );
+      if (itemToRemove && posthog) {
+        posthog.capture("bookmark_removed", {
+          post_slug: itemToRemove.slug,
+          post_title: itemToRemove.title,
+          content_type: itemToRemove.type,
+        });
+      }
+      return prev.filter((item) => !(item.slug === slug && item.type === type));
+    });
+    toast.success("Removed from bookmarks");
+  }, []);
 
-    return (
-        <BookmarksContext.Provider
-            value={{ bookmarks, isBookmarked, toggleBookmark, removeBookmark }}
-        >
-            {children}
-        </BookmarksContext.Provider>
-    )
+  return (
+    <BookmarksContext.Provider
+      value={{ bookmarks, isBookmarked, toggleBookmark, removeBookmark }}
+    >
+      {children}
+    </BookmarksContext.Provider>
+  );
 }
 
 export function useBookmarks() {
-    const context = useContext(BookmarksContext)
-    if (context === undefined) {
-        throw new Error("useBookmarks must be used within a BookmarksProvider")
-    }
-    return context
+  const context = useContext(BookmarksContext);
+  if (context === undefined) {
+    throw new Error("useBookmarks must be used within a BookmarksProvider");
+  }
+  return context;
 }

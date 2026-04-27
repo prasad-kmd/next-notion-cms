@@ -1,4 +1,4 @@
-# Next Notion CMS ![Next Notion CMS](public/img/badges/next-notion-cms.svg) 
+# Next Notion CMS ![Next Notion CMS](public/img/badges/next-notion-cms.svg)
 
 A modern, high-performance technical documentation and engineering portfolio platform built with **Next.js 16**, **Tailwind CSS 4** and **TypeScript**. Optimized for Research, digital architecture and high-fidelity documentation.
 
@@ -52,12 +52,14 @@ Perfect for researchers, engineers, and developers who need a robust, scalable, 
 ## ✨ Features
 
 ### 📝 Content Management
+
 - **📔 Notion CMS Integration** - Fully integrated with Notion as a headless CMS for blog, articles, projects, tutorials, and wiki
 - **💬 Native Notion Comments** - Built-in commenting system using Notion's Comments API with authentication gates and Cloudflare Turnstile protection
 - **✍️ Authors System** - Comprehensive contributor directory with high-fidelity "Dossier" profile pages and contribution metrics
 - **📊 Dynamic Sitemap** - Recursively generated sitemap including all content types and authors
 
 ### 🎨 User Experience
+
 - **♿ Custom Accessibility Controller** - Scoped text adjustments (size, font, spacing, contrast) with draggable interface and persistence
 - **🎯 Smart TOC** - Automatically generated Table of Contents with active-state scroll tracking
 - **🔍 Search & Command Palette** - Global `Cmd+K` search modal for quick navigation
@@ -66,6 +68,7 @@ Perfect for researchers, engineers, and developers who need a robust, scalable, 
 - **🎨 Unique Design Identity** - Redesigned Hero with technical "Engineering Excellence" dashboard, specialized cards for different content types
 
 ### 📈 Analytics & Monitoring
+
 - **📊 Advanced Analytics** - Integrated PostHog for real-time user insights with custom Admin Analytics Dashboard
 - **👁️ View Tracking** - Per-page view counts with aggregated tracking and performance-optimized caching
 - **📊 Modern Visualizations** - Recharts-based visualizations (Tremor style) for high-fidelity data experience
@@ -73,6 +76,7 @@ Perfect for researchers, engineers, and developers who need a robust, scalable, 
 - **🩺 System Health Monitoring** - Real-time health checks for Notion, Supabase, and PostHog with historical Logging Engine (7-day retention)
 
 ### 🔐 Auth & Security
+
 - **🔐 Robust Authentication** - Better Auth with Supabase (PostgreSQL) using Drizzle ORM
 - **🌐 Multi-Provider OAuth** - Google, GitHub, Facebook, Twitter, Reddit, Notion, Vercel with automatic account linking
 - **🛡️ Stateless JWT Sessions** - Free-tier optimization with secure session management
@@ -80,6 +84,7 @@ Perfect for researchers, engineers, and developers who need a robust, scalable, 
 - **🛡️ Spam Protection** - Automated disposable email detection via `fakeout` and rate limiting on contact form submissions
 
 ### ⚡ Performance & SEO
+
 - **🚀 Performance-First Architecture** - Next.js 16 (App Router) for lightning-fast SSR and minimal client-side hydration
 - **🖼️ Image Excellence** - Next.js optimized images with LQIP, blur-up effects, and native lazy loading
 - **🔍 Semantic SEO** - Full Schema.org (JSON-LD) integration for articles, blog posts, and breadcrumbs
@@ -93,37 +98,50 @@ Perfect for researchers, engineers, and developers who need a robust, scalable, 
 ## 📸 Screenshots / Gallery (To be updated)
 
 ### Hero & Landing
+
 <!-- ![Hero Dashboard](public/img/hero/1.webp) -->
-*Engineering Excellence Dashboard with timed carousel of latest works*
+
+_Engineering Excellence Dashboard with timed carousel of latest works_
 
 <!-- ![Features Overview](public/img/hero/2.webp) -->
-*Technical features showcase with code-focused aesthetics*
+
+_Technical features showcase with code-focused aesthetics_
 
 <!-- ![Content Display](public/img/hero/3.webp) -->
-*Specialized content cards for blogs, articles, and projects*
+
+_Specialized content cards for blogs, articles, and projects_
 
 <!-- ![Documentation View](public/img/hero/4.webp) -->
-*High-fidelity documentation layout with syntax highlighting*
+
+_High-fidelity documentation layout with syntax highlighting_
 
 ### Page Previews
+
 <!-- ![Blog Posts](public/img/page/posts.webp) -->
-*Blog listing with specialized card design*
+
+_Blog listing with specialized card design_
 
 <!-- ![Diary Page](public/img/page/diary.webp) -->
-*Personal diary section with clean typography*
+
+_Personal diary section with clean typography_
 
 <!-- ![Ideas Board](public/img/page/ideas.webp) -->
-*Ideas and concepts visualization*
+
+_Ideas and concepts visualization_
 
 <!-- ![Workflow Diagram](public/img/page/workflow.webp) -->
-*Technical workflow illustrations*
+
+_Technical workflow illustrations_
 
 ### About & Contact
+
 <!-- ![About Us](public/img/about_us.webp) -->
-*Team and contributors showcase*
+
+_Team and contributors showcase_
 
 <!-- ![Contact Form](public/img/contact_us.webp) -->
-*Secure contact form with Telegram integration*
+
+_Secure contact form with Telegram integration_
 
 ---
 
@@ -160,29 +178,29 @@ For detailed schema and setup steps, refer to the Notion configuration guide.
 
 ### Environment Variables
 
-| Variable | Description | Required | Example |
-|----------|-------------|----------|---------|
-| `NOTION_AUTH_TOKEN` | Notion integration token | ✅ | `secret_xxx...` |
-| `NOTION_BLOG_ID` | Blog database ID | ✅ | `abc123...` |
-| `NOTION_ARTICLES_ID` | Articles database ID | ✅ | `def456...` |
-| `NOTION_PROJECTS_ID` | Projects database ID | ✅ | `ghi789...` |
-| `NOTION_TUTORIALS_ID` | Tutorials database ID | ✅ | `jkl012...` |
-| `NOTION_WIKI_ID` | Wiki database ID | ✅ | `mno345...` |
-| `NOTION_AUTHORS_ID` | Authors database ID | ✅ | `pqr678...` |
-| `DATABASE_URL` | PostgreSQL connection string | ✅ | `postgresql://...` |
-| `BETTER_AUTH_SECRET` | 32-char auth secret | ✅ | Random 32-char string |
-| `BETTER_AUTH_URL` | Auth callback URL | ✅ | `http://localhost:3000` |
-| `NEXT_PUBLIC_TURNSTILE_SITE_KEY` | Cloudflare Turnstile site key | ✅ | `1x00000000000000000000AA` |
-| `TURNSTILE_SECRET_KEY` | Cloudflare Turnstile secret | ✅ | `1x0000000000000000000000000000000AA` |
-| `GOOGLE_CLIENT_ID` | Google OAuth client ID | ❌ | From Google Cloud Console |
-| `GOOGLE_CLIENT_SECRET` | Google OAuth secret | ❌ | From Google Cloud Console |
-| `GITHUB_CLIENT_ID` | GitHub OAuth client ID | ❌ | From GitHub Developer Settings |
-| `GITHUB_CLIENT_SECRET` | GitHub OAuth secret | ❌ | From GitHub Developer Settings |
-| `TELEGRAM_TOKEN` | Telegram bot token | ❌ | For contact form |
-| `TELEGRAM_CHAT_ID` | Telegram chat ID | ❌ | For contact form notifications |
-| `POSTHOG_PERSONAL_API_KEY` | PostHog API key | ❌ | For analytics |
-| `POSTHOG_PROJECT_ID` | PostHog project ID | ❌ | For analytics |
-| `NEXT_PUBLIC_POSTHOG_KEY` | PostHog public key | ❌ | For client-side analytics |
+| Variable                         | Description                   | Required | Example                               |
+| -------------------------------- | ----------------------------- | -------- | ------------------------------------- |
+| `NOTION_AUTH_TOKEN`              | Notion integration token      | ✅       | `secret_xxx...`                       |
+| `NOTION_BLOG_ID`                 | Blog database ID              | ✅       | `abc123...`                           |
+| `NOTION_ARTICLES_ID`             | Articles database ID          | ✅       | `def456...`                           |
+| `NOTION_PROJECTS_ID`             | Projects database ID          | ✅       | `ghi789...`                           |
+| `NOTION_TUTORIALS_ID`            | Tutorials database ID         | ✅       | `jkl012...`                           |
+| `NOTION_WIKI_ID`                 | Wiki database ID              | ✅       | `mno345...`                           |
+| `NOTION_AUTHORS_ID`              | Authors database ID           | ✅       | `pqr678...`                           |
+| `DATABASE_URL`                   | PostgreSQL connection string  | ✅       | `postgresql://...`                    |
+| `BETTER_AUTH_SECRET`             | 32-char auth secret           | ✅       | Random 32-char string                 |
+| `BETTER_AUTH_URL`                | Auth callback URL             | ✅       | `http://localhost:3000`               |
+| `NEXT_PUBLIC_TURNSTILE_SITE_KEY` | Cloudflare Turnstile site key | ✅       | `1x00000000000000000000AA`            |
+| `TURNSTILE_SECRET_KEY`           | Cloudflare Turnstile secret   | ✅       | `1x0000000000000000000000000000000AA` |
+| `GOOGLE_CLIENT_ID`               | Google OAuth client ID        | ❌       | From Google Cloud Console             |
+| `GOOGLE_CLIENT_SECRET`           | Google OAuth secret           | ❌       | From Google Cloud Console             |
+| `GITHUB_CLIENT_ID`               | GitHub OAuth client ID        | ❌       | From GitHub Developer Settings        |
+| `GITHUB_CLIENT_SECRET`           | GitHub OAuth secret           | ❌       | From GitHub Developer Settings        |
+| `TELEGRAM_TOKEN`                 | Telegram bot token            | ❌       | For contact form                      |
+| `TELEGRAM_CHAT_ID`               | Telegram chat ID              | ❌       | For contact form notifications        |
+| `POSTHOG_PERSONAL_API_KEY`       | PostHog API key               | ❌       | For analytics                         |
+| `POSTHOG_PROJECT_ID`             | PostHog project ID            | ❌       | For analytics                         |
+| `NEXT_PUBLIC_POSTHOG_KEY`        | PostHog public key            | ❌       | For client-side analytics             |
 
 ### Database & Auth Setup
 
@@ -207,23 +225,23 @@ For detailed schema and setup steps, refer to the Notion configuration guide.
 
 ## 🛠️ Tech Stack
 
-| Category | Technology | Purpose |
-|----------|------------|---------|
-| **Framework** | Next.js 16 (App Router) | React framework with SSR/SSG |
-| **Language** | TypeScript 5 | Type-safe JavaScript |
-| **Styling** | Tailwind CSS 4 | Utility-first CSS framework |
-| **Authentication** | Better Auth | Next-gen authentication |
-| **Database** | Supabase (PostgreSQL) | Managed PostgreSQL database |
-| **ORM** | Drizzle ORM | Type-safe database ORM |
-| **CMS** | Notion API | Headless CMS backend |
-| **Charts** | Recharts | Data visualization (Tremor style) |
-| **Syntax Highlighting** | Shiki | VS Code-accurate code highlighting |
-| **Animations** | Framer Motion + GSAP | Smooth UI animations |
-| **Validation** | Zod + Obscenity | Type-safe schema validation and profanity filtering |
-| **Email Detection** | Fakeout | Automated disposable email blocking |
-| **Analytics** | PostHog | Product analytics platform |
-| **Security** | Cloudflare Turnstile | CAPTCHA alternative |
-| **Package Manager** | pnpm 9 | Fast, disk-efficient package manager |
+| Category                | Technology              | Purpose                                             |
+| ----------------------- | ----------------------- | --------------------------------------------------- |
+| **Framework**           | Next.js 16 (App Router) | React framework with SSR/SSG                        |
+| **Language**            | TypeScript 5            | Type-safe JavaScript                                |
+| **Styling**             | Tailwind CSS 4          | Utility-first CSS framework                         |
+| **Authentication**      | Better Auth             | Next-gen authentication                             |
+| **Database**            | Supabase (PostgreSQL)   | Managed PostgreSQL database                         |
+| **ORM**                 | Drizzle ORM             | Type-safe database ORM                              |
+| **CMS**                 | Notion API              | Headless CMS backend                                |
+| **Charts**              | Recharts                | Data visualization (Tremor style)                   |
+| **Syntax Highlighting** | Shiki                   | VS Code-accurate code highlighting                  |
+| **Animations**          | Framer Motion + GSAP    | Smooth UI animations                                |
+| **Validation**          | Zod + Obscenity         | Type-safe schema validation and profanity filtering |
+| **Email Detection**     | Fakeout                 | Automated disposable email blocking                 |
+| **Analytics**           | PostHog                 | Product analytics platform                          |
+| **Security**            | Cloudflare Turnstile    | CAPTCHA alternative                                 |
+| **Package Manager**     | pnpm 9                  | Fast, disk-efficient package manager                |
 
 ---
 
@@ -319,6 +337,7 @@ The easiest way to deploy your application:
 4. Deploy!
 
 Vercel automatically handles:
+
 - Edge network distribution
 - Automatic HTTPS
 - Preview deployments for pull requests
@@ -353,6 +372,7 @@ CMD ["pnpm", "start"]
 ```
 
 Build and run:
+
 ```bash
 docker build -t next-notion-cms .
 docker run -p 3000:3000 --env-file .env.local next-notion-cms

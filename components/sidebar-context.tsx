@@ -1,49 +1,55 @@
-"use client"
+"use client";
 
-import React, { createContext, useContext, useState, useEffect, startTransition } from "react"
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  startTransition,
+} from "react";
 
 interface SidebarContextType {
-    isCollapsed: boolean
-    toggleSidebar: () => void
+  isCollapsed: boolean;
+  toggleSidebar: () => void;
 }
 
-const SidebarContext = createContext<SidebarContextType | undefined>(undefined)
+const SidebarContext = createContext<SidebarContextType | undefined>(undefined);
 
 export function SidebarProvider({ children }: { children: React.ReactNode }) {
-    const [isCollapsed, setIsCollapsed] = useState(false)
+  const [isCollapsed, setIsCollapsed] = useState(false);
 
-    // Initialize state from localStorage
-    useEffect(() => {
-        const saved = localStorage.getItem("sidebar-collapsed")
-        if (saved !== null) {
-            startTransition(() => {
-                setIsCollapsed(saved === "true")
-            })
-        }
-    }, [])
+  // Initialize state from localStorage
+  useEffect(() => {
+    const saved = localStorage.getItem("sidebar-collapsed");
+    if (saved !== null) {
+      startTransition(() => {
+        setIsCollapsed(saved === "true");
+      });
+    }
+  }, []);
 
-    // Update localStorage and CSS variable when state changes
-    useEffect(() => {
-        localStorage.setItem("sidebar-collapsed", String(isCollapsed))
+  // Update localStorage and CSS variable when state changes
+  useEffect(() => {
+    localStorage.setItem("sidebar-collapsed", String(isCollapsed));
 
-        // Set CSS variable for dynamic layout adjustments
-        const width = isCollapsed ? "80px" : "256px" // 20 vs 64 in tailwind
-        document.documentElement.style.setProperty("--sidebar-width", width)
-    }, [isCollapsed])
+    // Set CSS variable for dynamic layout adjustments
+    const width = isCollapsed ? "80px" : "256px"; // 20 vs 64 in tailwind
+    document.documentElement.style.setProperty("--sidebar-width", width);
+  }, [isCollapsed]);
 
-    const toggleSidebar = () => setIsCollapsed((prev) => !prev)
+  const toggleSidebar = () => setIsCollapsed((prev) => !prev);
 
-    return (
-        <SidebarContext.Provider value={{ isCollapsed, toggleSidebar }}>
-            {children}
-        </SidebarContext.Provider>
-    )
+  return (
+    <SidebarContext.Provider value={{ isCollapsed, toggleSidebar }}>
+      {children}
+    </SidebarContext.Provider>
+  );
 }
 
 export function useSidebar() {
-    const context = useContext(SidebarContext)
-    if (context === undefined) {
-        throw new Error("useSidebar must be used within a SidebarProvider")
-    }
-    return context
+  const context = useContext(SidebarContext);
+  if (context === undefined) {
+    throw new Error("useSidebar must be used within a SidebarProvider");
+  }
+  return context;
 }

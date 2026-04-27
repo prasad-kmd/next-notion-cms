@@ -22,7 +22,10 @@ function isRateLimited(identifier: string): boolean {
   return false;
 }
 
-export async function submitContactForm(prevState: unknown, formData: FormData) {
+export async function submitContactForm(
+  prevState: unknown,
+  formData: FormData,
+) {
   // We don't have easy access to IP in Server Actions without headers()
   // But we can use email as a simple identifier for rate limiting
   const emailInput = formData.get("email") as string;
@@ -35,16 +38,19 @@ export async function submitContactForm(prevState: unknown, formData: FormData) 
       validationError: {
         type: "rate_limit",
         message: "Too many requests. Please try again later.",
-      }
+      },
     };
   }
 
-  const validationResult = await validateContactForm({
-    name: formData.get("name"),
-    email: formData.get("email"),
-    phone: formData.get("phone"),
-    message: formData.get("message"),
-  }, turnstileToken);
+  const validationResult = await validateContactForm(
+    {
+      name: formData.get("name"),
+      email: formData.get("email"),
+      phone: formData.get("phone"),
+      message: formData.get("message"),
+    },
+    turnstileToken,
+  );
 
   if (!validationResult.success) {
     return {
@@ -57,7 +63,7 @@ export async function submitContactForm(prevState: unknown, formData: FormData) 
         email: formData.get("email"),
         phone: formData.get("phone"),
         message: formData.get("message"),
-      }
+      },
     };
   }
 
@@ -125,10 +131,16 @@ ${message}
     const result = await response.json();
 
     if (result.ok) {
-      return { success: true, message: `Hey ${name}, your message has been sent!` };
+      return {
+        success: true,
+        message: `Hey ${name}, your message has been sent!`,
+      };
     } else {
       console.error("Telegram API error:", result);
-      return { success: false, message: "Failed to send message via Telegram." };
+      return {
+        success: false,
+        message: "Failed to send message via Telegram.",
+      };
     }
   } catch (error) {
     console.error("Contact form error:", error);

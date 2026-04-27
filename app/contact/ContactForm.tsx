@@ -1,6 +1,12 @@
 "use client";
 
-import { useState, useRef, useActionState, useEffect, startTransition } from "react";
+import {
+  useState,
+  useRef,
+  useActionState,
+  useEffect,
+  startTransition,
+} from "react";
 import { Send, Loader2, Paperclip, X, FileText } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
@@ -9,14 +15,23 @@ import { Label } from "@/components/ui/label";
 import { HighlightedTextArea } from "@/components/ui/HighlightedTextArea";
 import { cn } from "@/lib/utils";
 import { submitContactForm } from "./actions";
-import { showTempMailError, showProfanityError } from "@/lib/validation/notifications";
+import {
+  showTempMailError,
+  showProfanityError,
+} from "@/lib/validation/notifications";
 import { BlockedWord } from "@/types/validation";
-import { TurnstileWidget, type TurnstileWidgetRef } from "@/components/comments/turnstile-widget";
+import {
+  TurnstileWidget,
+  type TurnstileWidgetRef,
+} from "@/components/comments/turnstile-widget";
 
 const MAX_FILE_SIZE = 20 * 1024 * 1024; // 20 MB
 
 export default function ContactForm() {
-  const [state, formAction, isPending] = useActionState(submitContactForm, null);
+  const [state, formAction, isPending] = useActionState(
+    submitContactForm,
+    null,
+  );
   const [file, setFile] = useState<File | null>(null);
   const [blockedWords, setBlockedWords] = useState<BlockedWord[]>([]);
   const formRef = useRef<HTMLFormElement>(null);
@@ -51,9 +66,11 @@ export default function ContactForm() {
       } else {
         toast.error(state.message);
       }
-      
+
       if (state.errors) {
-        Object.values(state.errors).flat().forEach((err: unknown) => toast.error(err as string));
+        Object.values(state.errors)
+          .flat()
+          .forEach((err: unknown) => toast.error(err as string));
       }
     }
   }, [state]);
@@ -97,7 +114,7 @@ export default function ContactForm() {
               id="name"
               name="name"
               placeholder="John Doe"
-              defaultValue={state?.formData?.name as string || ""}
+              defaultValue={(state?.formData?.name as string) || ""}
               required
               disabled={isPending}
               className="h-11 bg-muted/50 transition-all focus:bg-background focus:ring-2 focus:ring-primary/20"
@@ -116,7 +133,7 @@ export default function ContactForm() {
               name="email"
               type="email"
               placeholder="john@example.com"
-              defaultValue={state?.formData?.email as string || ""}
+              defaultValue={(state?.formData?.email as string) || ""}
               required
               disabled={isPending}
               className="h-11 bg-muted/50 transition-all focus:bg-background focus:ring-2 focus:ring-primary/20"
@@ -135,7 +152,7 @@ export default function ContactForm() {
             id="phone"
             name="phone"
             placeholder="+94 77 123 4567"
-            defaultValue={state?.formData?.phone as string || ""}
+            defaultValue={(state?.formData?.phone as string) || ""}
             disabled={isPending}
             className="h-11 bg-muted/50 transition-all focus:bg-background focus:ring-2 focus:ring-primary/20"
           />
@@ -153,7 +170,7 @@ export default function ContactForm() {
             name="message"
             placeholder="Tell me about your project..."
             className="min-h-[120px] bg-muted/50 transition-all focus:bg-background focus:ring-2 focus:ring-primary/20"
-            defaultValue={state?.formData?.message as string || ""}
+            defaultValue={(state?.formData?.message as string) || ""}
             required
             disabled={isPending}
             blockedWords={blockedWords}
@@ -215,21 +232,29 @@ export default function ContactForm() {
                 <X className="h-4 w-4" />
               </Button>
               {/* Hidden input to keep file in FormData when using form action */}
-              <input type="file" name="file" className="hidden" ref={(el) => {
-                if (el && file) {
-                   const dataTransfer = new DataTransfer();
-                   dataTransfer.items.add(file);
-                   el.files = dataTransfer.files;
-                }
-              }} />
+              <input
+                type="file"
+                name="file"
+                className="hidden"
+                ref={(el) => {
+                  if (el && file) {
+                    const dataTransfer = new DataTransfer();
+                    dataTransfer.items.add(file);
+                    el.files = dataTransfer.files;
+                  }
+                }}
+              />
             </div>
           )}
         </div>
 
         <div className="flex justify-center py-2">
-            <TurnstileWidget ref={turnstileRef} onVerify={function (): void {
-            throw new Error("Function not implemented.");
-          } } />
+          <TurnstileWidget
+            ref={turnstileRef}
+            onVerify={function (): void {
+              throw new Error("Function not implemented.");
+            }}
+          />
         </div>
 
         <Button

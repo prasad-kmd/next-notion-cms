@@ -271,7 +271,10 @@ export function ProjectCard({ post }: ProjectCardProps) {
         <div className="flex items-center gap-3 md:gap-4 mb-3 md:mb-6">
           <div className="flex gap-1">
             {[1, 2, 3].map((i) => (
-              <div key={i} className="w-1 h-1 md:w-1.5 md:h-1.5 rounded-full bg-primary/40" />
+              <div
+                key={i}
+                className="w-1 h-1 md:w-1.5 md:h-1.5 rounded-full bg-primary/40"
+              />
             ))}
           </div>
           <span className="text-[7px] md:text-[9px] font-black text-muted-foreground/40 uppercase tracking-[0.4em] local-jetbrains-mono">

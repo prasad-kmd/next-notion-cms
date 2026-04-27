@@ -39,7 +39,6 @@ export function FloatingNavbar({
     });
   }, []);
 
-
   const toggleTheme = () => {
     setTheme(theme === "dark" ? "light" : "dark");
   };
@@ -98,7 +97,7 @@ export function FloatingNavbar({
 
   return (
     <div
-      style={!mounted && !isMobileSidebar ? { display: 'none' } : {}}
+      style={!mounted && !isMobileSidebar ? { display: "none" } : {}}
       className={cn(
         "flex items-center gap-1 transition-all google-sans",
         !isMobileSidebar &&

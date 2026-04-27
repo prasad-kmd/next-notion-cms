@@ -11,10 +11,10 @@ export const runtime = "edge";
  */
 function stripTags(html: string): string {
   if (typeof html !== "string") return "";
-  
+
   let result = "";
   let inTag = false;
-  
+
   for (let i = 0; i < html.length; i++) {
     const char = html[i];
     if (char === "<" && !inTag) {
@@ -46,11 +46,11 @@ export async function GET(req: NextRequest) {
   const { searchParams } = req.nextUrl;
 
   const title = sanitizeText(
-    searchParams.get("title") || "PrasadM's Blogfolio"
+    searchParams.get("title") || "PrasadM's Blogfolio",
   );
   const description = sanitizeText(
     searchParams.get("description") ||
-      "Personal blogfolio documenting my engineering and development journey."
+      "Personal blogfolio documenting my engineering and development journey.",
   );
 
   // Explicit allow-list to prevent tainted data from searchParams flowing into dynamic values

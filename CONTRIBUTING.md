@@ -38,6 +38,7 @@ Please read and follow our [Code of Conduct](CODE_OF_CONDUCT.md) to keep our com
 ## Issue Reporting
 
 When reporting an issue, please include:
+
 - A clear and descriptive title
 - Steps to reproduce the problem
 - Expected vs actual behavior

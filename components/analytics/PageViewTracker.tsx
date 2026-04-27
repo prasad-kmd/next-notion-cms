@@ -22,14 +22,17 @@ export function PageViewTracker({
 
   useEffect(() => {
     if (posthog) {
-      const url = window.origin + pathname + (searchParams.toString() ? `?${searchParams.toString()}` : "");
-      
-      // We capture an enhanced pageview event. 
+      const url =
+        window.origin +
+        pathname +
+        (searchParams.toString() ? `?${searchParams.toString()}` : "");
+
+      // We capture an enhanced pageview event.
       // PostHog's history_change will also capture one, but it won't have these custom properties.
       // We can use posthog.register to make these properties persistent for the session,
       // or just capture an additional event.
       // Following instructions: Call posthog.capture('$pageview', { ...properties })
-      
+
       posthog.capture("$pageview", {
         $current_url: url,
         content_type: contentType,
@@ -37,7 +40,7 @@ export function PageViewTracker({
         page_title: title,
         author_id: authorId,
       });
-      
+
       // Also register them for subsequent events in this session
       posthog.register({
         last_content_type: contentType,

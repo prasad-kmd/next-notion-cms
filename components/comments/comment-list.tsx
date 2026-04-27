@@ -18,11 +18,11 @@ interface CommentListProps {
   onCountUpdate?: (count: number) => void;
 }
 
-export function CommentList({ 
-  pageId, 
-  initialComments = [], 
+export function CommentList({
+  pageId,
+  initialComments = [],
   newComments = [],
-  onCountUpdate
+  onCountUpdate,
 }: CommentListProps) {
   const [comments, setComments] = useState<Comment[]>(initialComments);
   const [cursor, setCursor] = useState<string | null>(null);
@@ -32,34 +32,37 @@ export function CommentList({
 
   const loadingRef = useRef(false);
 
-  const fetchComments = useCallback(async (currentCursor?: string) => {
-    if (loadingRef.current) return;
-    loadingRef.current = true;
-    setIsLoading(true);
+  const fetchComments = useCallback(
+    async (currentCursor?: string) => {
+      if (loadingRef.current) return;
+      loadingRef.current = true;
+      setIsLoading(true);
 
-    try {
-      const url = `/api/comments?pageId=${pageId}${currentCursor ? `&cursor=${currentCursor}` : ""}`;
-      const res = await fetch(url);
-      if (!res.ok) throw new Error("Failed to fetch comments");
-      
-      const data = await res.json();
-      
-      if (currentCursor) {
-        setComments(prev => [...prev, ...data.results]);
-      } else {
-        setComments(data.results);
-        if (onCountUpdate) onCountUpdate(data.results.length);
+      try {
+        const url = `/api/comments?pageId=${pageId}${currentCursor ? `&cursor=${currentCursor}` : ""}`;
+        const res = await fetch(url);
+        if (!res.ok) throw new Error("Failed to fetch comments");
+
+        const data = await res.json();
+
+        if (currentCursor) {
+          setComments((prev) => [...prev, ...data.results]);
+        } else {
+          setComments(data.results);
+          if (onCountUpdate) onCountUpdate(data.results.length);
+        }
+
+        setCursor(data.next_cursor);
+        setHasMore(data.has_more);
+      } catch (error) {
+        console.error("Error fetching comments:", error);
+      } finally {
+        setIsLoading(false);
+        loadingRef.current = false;
       }
-      
-      setCursor(data.next_cursor);
-      setHasMore(data.has_more);
-    } catch (error) {
-      console.error("Error fetching comments:", error);
-    } finally {
-      setIsLoading(false);
-      loadingRef.current = false;
-    }
-  }, [pageId, onCountUpdate]);
+    },
+    [pageId, onCountUpdate],
+  );
 
   // Initial load
   useEffect(() => {
@@ -69,12 +72,12 @@ export function CommentList({
   // Infinite scroll
   useEffect(() => {
     const observer = new IntersectionObserver(
-      entries => {
+      (entries) => {
         if (entries[0].isIntersecting && hasMore && !isLoading) {
           fetchComments(cursor || undefined);
         }
       },
-      { threshold: 0.1 }
+      { threshold: 0.1 },
     );
 
     if (observerTarget.current) {
@@ -85,7 +88,7 @@ export function CommentList({
   }, [hasMore, isLoading, cursor, fetchComments]);
 
   const allComments = [...newComments, ...comments].filter(
-    (c, index, self) => index === self.findIndex((t) => t.id === c.id)
+    (c, index, self) => index === self.findIndex((t) => t.id === c.id),
   );
 
   if (!isLoading && allComments.length === 0) {
@@ -94,7 +97,9 @@ export function CommentList({
         <div className="h-12 w-12 rounded-full bg-muted flex items-center justify-center">
           <MessageSquare className="h-6 w-6" />
         </div>
-        <p className="text-sm font-medium font-local-jetbrains-mono">No comments yet. Be the first to share your thoughts!</p>
+        <p className="text-sm font-medium font-local-jetbrains-mono">
+          No comments yet. Be the first to share your thoughts!
+        </p>
       </div>
     );
   }
@@ -116,14 +121,14 @@ export function CommentList({
             </div>
           )}
           {!isLoading && hasMore && (
-            <Button 
-                variant="ghost" 
-                size="sm" 
-                onClick={() => fetchComments(cursor || undefined)}
-                className="text-[10px] font-black uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors font-local-jetbrains-mono"
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => fetchComments(cursor || undefined)}
+              className="text-[10px] font-black uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors font-local-jetbrains-mono"
             >
-                <ArrowDown className="h-3 w-3 mr-2" />
-                Load More Comments
+              <ArrowDown className="h-3 w-3 mr-2" />
+              Load More Comments
             </Button>
           )}
         </div>

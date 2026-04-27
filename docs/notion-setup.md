@@ -41,7 +41,7 @@ Next Notion CMS uses Notion as a headless CMS, allowing you to manage all your c
 4. Select your workspace
 5. Keep default capabilities:
    - ✅ Read content
-   - ✅ Update content  
+   - ✅ Update content
    - ✅ Insert content
    - ❌ No user information needed
 6. Click **Submit**
@@ -49,6 +49,7 @@ Next Notion CMS uses Notion as a headless CMS, allowing you to manage all your c
 ### Step 2: Copy Integration Token
 
 After creating the integration:
+
 1. Click on your integration
 2. Copy the **Internal Integration Token**
 3. Save it securely - this is your `NOTION_AUTH_TOKEN`
@@ -87,32 +88,32 @@ Create **six** databases in Notion:
 
 ### Content Databases (Blog, Articles, Tutorials, Projects, Wiki)
 
-| Property Name | Type | Required | Description |
-|--------------|------|----------|-------------|
-| **Name** | Title | ✅ | Display title (auto-detected) |
-| **Slug** | Text | ✅ | URL-friendly identifier |
-| **Authors** | Relation | ❌ | Link to Authors database |
-| **Date** | Date | ✅ | Publication date |
-| **Status** | Status | ✅ | Draft/Published toggle |
-| **Description** | Text | ✅ | Short summary for cards |
-| **Tags** | Multi-select | ❌ | Keywords for filtering |
-| **Categories** | Select | ❌ | Main category |
-| **AIAssisted** | Checkbox | ❌ | AI usage indicator |
-| **Technical** | Multi-select | ❌ | Tech stack tags |
+| Property Name   | Type         | Required | Description                   |
+| --------------- | ------------ | -------- | ----------------------------- |
+| **Name**        | Title        | ✅       | Display title (auto-detected) |
+| **Slug**        | Text         | ✅       | URL-friendly identifier       |
+| **Authors**     | Relation     | ❌       | Link to Authors database      |
+| **Date**        | Date         | ✅       | Publication date              |
+| **Status**      | Status       | ✅       | Draft/Published toggle        |
+| **Description** | Text         | ✅       | Short summary for cards       |
+| **Tags**        | Multi-select | ❌       | Keywords for filtering        |
+| **Categories**  | Select       | ❌       | Main category                 |
+| **AIAssisted**  | Checkbox     | ❌       | AI usage indicator            |
+| **Technical**   | Multi-select | ❌       | Tech stack tags               |
 
 ### Authors Database
 
-| Property Name | Type | Required | Description |
-|--------------|------|----------|-------------|
-| **Name** | Title | ✅ | Author's display name |
-| **Slug** | Text | ✅ | URL-friendly identifier |
-| **Role** | Text | ❌ | Job title/role |
-| **Biography** | Text | ❌ | Short bio |
-| **Avatar** | Files | ❌ | Profile photo |
-| **Twitter** | Text | ❌ | Twitter username |
-| **GitHub** | Text | ❌ | GitHub username |
-| **LinkedIn** | Text | ❌ | LinkedIn username |
-| **Status** | Status | ✅ | Published/Draft |
+| Property Name | Type   | Required | Description             |
+| ------------- | ------ | -------- | ----------------------- |
+| **Name**      | Title  | ✅       | Author's display name   |
+| **Slug**      | Text   | ✅       | URL-friendly identifier |
+| **Role**      | Text   | ❌       | Job title/role          |
+| **Biography** | Text   | ❌       | Short bio               |
+| **Avatar**    | Files  | ❌       | Profile photo           |
+| **Twitter**   | Text   | ❌       | Twitter username        |
+| **GitHub**    | Text   | ❌       | GitHub username         |
+| **LinkedIn**  | Text   | ❌       | LinkedIn username       |
+| **Status**    | Status | ✅       | Published/Draft         |
 
 ---
 
@@ -138,6 +139,7 @@ https://www.notion.so/workspace/DATABASE_ID?v=...
 ```
 
 **Example:**
+
 - URL: `https://www.notion.so/myworkspace/a1b2c3d4e5f6?v=abc123`
 - Database ID: `a1b2c3d4e5f6`
 
@@ -205,12 +207,14 @@ The system automatically converts:
 #### Math Equations
 
 Use Notion's equation blocks:
+
 - Inline: `$E=mc^2$`
 - Block: `$$F=ma$$`
 
 #### Quizzes
 
 Embed quizzes using shortcode:
+
 ```
 [quiz] { "questions": [...] } [/quiz]
 ```
@@ -218,6 +222,7 @@ Embed quizzes using shortcode:
 #### GitHub Alerts
 
 Format as callouts with specific icons:
+
 - `[!NOTE]` - Blue info icon
 - `[!TIP]` - Green lightbulb
 - `[!WARNING]` - Yellow warning
@@ -231,6 +236,7 @@ Format as callouts with specific icons:
 ### "Could not find property: Status"
 
 **Solution:**
+
 1. Ensure property is named exactly **"Status"** (case-sensitive)
 2. Verify property type is **Status** (not Select)
 3. Add the property if missing
@@ -238,6 +244,7 @@ Format as callouts with specific icons:
 ### Content Not Appearing
 
 Checklist:
+
 - [ ] Status is set to "Published"
 - [ ] Database is shared with integration
 - [ ] Database ID is correct
@@ -247,6 +254,7 @@ Checklist:
 ### Slow Updates
 
 **Understanding Cache:**
+
 - API responses cached for 1 hour
 - ISR revalidation: 1 hour
 - **Immediate update**: Trigger manual Vercel redeployment
@@ -254,6 +262,7 @@ Checklist:
 ### Rate Limiting
 
 Notion API limits:
+
 - 3 requests/second
 - If exceeded, implement exponential backoff
 

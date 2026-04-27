@@ -1,5 +1,5 @@
-import React from 'react';
-import { StatusIndicator, StatusType } from './StatusIndicator';
+import React from "react";
+import { StatusIndicator, StatusType } from "./StatusIndicator";
 // import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
@@ -13,7 +13,13 @@ interface Action {
   label: string;
   onClick: () => void;
   loading?: boolean;
-  variant?: 'default' | 'outline' | 'secondary' | 'ghost' | 'link' | 'destructive';
+  variant?:
+    | "default"
+    | "outline"
+    | "secondary"
+    | "ghost"
+    | "link"
+    | "destructive";
 }
 
 interface ServiceCardProps {
@@ -33,16 +39,20 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({
   metrics,
   actions = [],
   loading = false,
-  lastChecked
+  lastChecked,
 }) => {
   return (
     <div className="relative group overflow-hidden rounded-2xl border border-border/50 bg-card/50 p-6 transition-all hover:border-primary/30 hover:shadow-lg">
       <div className="flex items-start justify-between mb-4">
         <div>
-          <h3 className="text-lg font-bold tracking-tight text-foreground font-google-sans">{title}</h3>
-          <p className="text-sm text-muted-foreground mt-1 font-local-inter">{description}</p>
+          <h3 className="text-lg font-bold tracking-tight text-foreground font-google-sans">
+            {title}
+          </h3>
+          <p className="text-sm text-muted-foreground mt-1 font-local-inter">
+            {description}
+          </p>
         </div>
-        <StatusIndicator status={loading ? 'checking' : status} withLabel />
+        <StatusIndicator status={loading ? "checking" : status} withLabel />
       </div>
 
       <div className="grid grid-cols-2 gap-4 my-6">
@@ -52,7 +62,7 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({
               {metric.label}
             </span>
             <span className="text-lg text-foreground font-local-jetbrains-mono">
-              {metric.value ?? 'N/A'}
+              {metric.value ?? "N/A"}
             </span>
           </div>
         ))}
@@ -62,13 +72,15 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({
         {actions.map((action, index) => (
           <Button
             key={index}
-            variant={action.variant || 'outline'}
+            variant={action.variant || "outline"}
             size="sm"
             onClick={action.onClick}
             disabled={action.loading}
             className="rounded-xl h-8 text-xs"
           >
-            {action.loading && <Loader2 className="mr-2 h-3 w-3 animate-spin" />}
+            {action.loading && (
+              <Loader2 className="mr-2 h-3 w-3 animate-spin" />
+            )}
             {action.label}
           </Button>
         ))}
@@ -79,7 +91,7 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({
           Last checked: {new Date(lastChecked).toLocaleTimeString()}
         </div>
       )}
-      
+
       {loading && (
         <div className="absolute inset-0 bg-background/20 backdrop-blur-[1px] flex items-center justify-center pointer-events-none">
           <div className="h-1 w-full absolute top-0 left-0 bg-primary/20 overflow-hidden">

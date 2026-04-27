@@ -6,35 +6,35 @@ Welcome to the comprehensive documentation for Next Notion CMS. This wiki contai
 
 ### Getting Started
 
-| Document | Description | Difficulty |
-|----------|-------------|------------|
-| [Getting Started](getting-started.md) | Complete setup guide from scratch | Beginner |
-| [Configuration](configuration.md) | All configuration options explained | Beginner |
-| [Notion CMS Setup](notion-setup.md) | Step-by-step Notion integration | Intermediate |
+| Document                              | Description                         | Difficulty   |
+| ------------------------------------- | ----------------------------------- | ------------ |
+| [Getting Started](getting-started.md) | Complete setup guide from scratch   | Beginner     |
+| [Configuration](configuration.md)     | All configuration options explained | Beginner     |
+| [Notion CMS Setup](notion-setup.md)   | Step-by-step Notion integration     | Intermediate |
 
 ### Core Features
 
-| Document | Description | Difficulty |
-|----------|-------------|------------|
-| [Authentication](authentication.md) | OAuth setup and user management | Intermediate |
-| [Database Guide](database.md) | Supabase and Drizzle ORM setup | Intermediate |
-| [Content Management](content-management.md) | Creating and managing content | Beginner |
+| Document                                    | Description                     | Difficulty   |
+| ------------------------------------------- | ------------------------------- | ------------ |
+| [Authentication](authentication.md)         | OAuth setup and user management | Intermediate |
+| [Database Guide](database.md)               | Supabase and Drizzle ORM setup  | Intermediate |
+| [Content Management](content-management.md) | Creating and managing content   | Beginner     |
 
 ### Advanced Topics
 
-| Document | Description | Difficulty |
-|----------|-------------|------------|
-| [Architecture](architecture.md) | System design and technical deep-dive | Advanced |
-| [Components](components.md) | UI component library reference | Intermediate |
-| [API Reference](api-reference.md) | Available API endpoints | Advanced |
+| Document                          | Description                           | Difficulty   |
+| --------------------------------- | ------------------------------------- | ------------ |
+| [Architecture](architecture.md)   | System design and technical deep-dive | Advanced     |
+| [Components](components.md)       | UI component library reference        | Intermediate |
+| [API Reference](api-reference.md) | Available API endpoints               | Advanced     |
 
 ### Deployment & Maintenance
 
-| Document | Description | Difficulty |
-|----------|-------------|------------|
-| [Deployment](deployment.md) | Production deployment guide | Intermediate |
-| [Troubleshooting](troubleshooting.md) | Common issues and solutions | All Levels |
-| [Contributing](contributing.md) | Contribution guidelines | All Levels |
+| Document                              | Description                 | Difficulty   |
+| ------------------------------------- | --------------------------- | ------------ |
+| [Deployment](deployment.md)           | Production deployment guide | Intermediate |
+| [Troubleshooting](troubleshooting.md) | Common issues and solutions | All Levels   |
+| [Contributing](contributing.md)       | Contribution guidelines     | All Levels   |
 
 ---
 
@@ -119,7 +119,7 @@ graph LR
 
 ### Documentation Feedback
 
-Found an issue or have a suggestion? 
+Found an issue or have a suggestion?
 
 - Open an issue with the "documentation" label
 - Submit a PR to improve the docs
@@ -131,16 +131,16 @@ Found an issue or have a suggestion?
 
 This documentation uses the following conventions:
 
-| Symbol | Meaning |
-|--------|---------|
-| ✅ | Recommended / Best Practice |
-| ⚠️ | Warning / Caution |
-| ❌ | Not Recommended / Avoid |
-| 💡 | Tip / Helpful Hint |
-| 🔗 | External Link |
-| 📁 | File/Directory |
-| 🔧 | Configuration |
-| 🚀 | Deployment/Production |
+| Symbol | Meaning                     |
+| ------ | --------------------------- |
+| ✅     | Recommended / Best Practice |
+| ⚠️     | Warning / Caution           |
+| ❌     | Not Recommended / Avoid     |
+| 💡     | Tip / Helpful Hint          |
+| 🔗     | External Link               |
+| 📁     | File/Directory              |
+| 🔧     | Configuration               |
+| 🚀     | Deployment/Production       |
 
 ### Code Blocks
 

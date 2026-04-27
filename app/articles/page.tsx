@@ -37,7 +37,9 @@ interface ArticlesPageProps {
   searchParams: Promise<{ page?: string }>;
 }
 
-export default async function ArticlesPage({ searchParams }: ArticlesPageProps) {
+export default async function ArticlesPage({
+  searchParams,
+}: ArticlesPageProps) {
   const { page } = await searchParams;
   const currentPage = parseInt(page || "1");
   const postsPerPage = 9;
@@ -46,13 +48,13 @@ export default async function ArticlesPage({ searchParams }: ArticlesPageProps) 
   const totalPages = Math.ceil(allEntries.length / postsPerPage);
   const entries = allEntries.slice(
     (currentPage - 1) * postsPerPage,
-    currentPage * postsPerPage
+    currentPage * postsPerPage,
   );
 
   return (
     <div className="min-h-screen py-12 articles_page img_grad_pm">
       <div className="mx-auto max-w-6xl px-6 lg:px-8">
-        <motion.div 
+        <motion.div
           initial="hidden"
           animate="visible"
           variants={fadeInUp}
@@ -74,7 +76,7 @@ export default async function ArticlesPage({ searchParams }: ArticlesPageProps) 
           </div>
         ) : (
           <>
-            <motion.div 
+            <motion.div
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
@@ -82,16 +84,20 @@ export default async function ArticlesPage({ searchParams }: ArticlesPageProps) 
               className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 xl:gap-10"
             >
               {entries.map((entry) => (
-                <motion.div key={entry.slug} variants={fadeInUp} className="h-full">
+                <motion.div
+                  key={entry.slug}
+                  variants={fadeInUp}
+                  className="h-full"
+                >
                   <ArticleCard post={entry} />
                 </motion.div>
               ))}
             </motion.div>
-            
-            <Pagination 
-              currentPage={currentPage} 
-              totalPages={totalPages} 
-              basePath="/articles" 
+
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              basePath="/articles"
             />
           </>
         )}

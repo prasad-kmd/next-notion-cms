@@ -18,27 +18,29 @@ export async function GET() {
   return NextResponse.json({
     telegram_token: process.env.TELEGRAM_TOKEN,
     telegram_chat_id: process.env.TELEGRAM_CHAT_ID,
-  })
+  });
 }
 ```
 
 **Problem:** This endpoint exposes sensitive Telegram credentials to ANYONE who can access it. This is a critical security vulnerability.
 
 **Recommendation:**
+
 - **IMMEDIATELY** remove or secure this endpoint
 - Never expose environment variables containing secrets via API routes
 - Use server-side only processing for Telegram integration
 
 **Fixed Implementation:**
+
 ```typescript
 // Option 1: Remove entirely and use server actions
 // Option 2: Add authentication middleware
-import { auth } from '@/lib/auth'; // Implement proper auth
+import { auth } from "@/lib/auth"; // Implement proper auth
 
 export async function GET(request: Request) {
   const session = await auth();
   if (!session?.user?.isAdmin) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
   // Only return non-sensitive config
   return NextResponse.json({ configured: !!process.env.TELEGRAM_CHAT_ID });
@@ -58,19 +60,22 @@ const { telegram_token, telegram_chat_id } = await secretsResponse.json();
 ```
 
 **Problem:** Telegram bot token is fetched client-side, exposing it to:
+
 - Browser DevTools inspection
 - Network tab monitoring
 - Potential MITM attacks
 - Malicious script injection
 
 **Recommendation:**
+
 - Move Telegram API calls to a **server action** or **API route**
 - Keep all credentials server-side only
 
 **Fixed Implementation:**
+
 ```typescript
 // app/contact/actions.ts
-'use server';
+"use server";
 
 export async function submitContactForm(formData: FormData) {
   const telegramToken = process.env.TELEGRAM_TOKEN;
@@ -85,7 +90,7 @@ export async function submitContactForm(formData: FormData) {
 }
 
 // ContactForm.tsx
-import { submitContactForm } from './actions';
+import { submitContactForm } from "./actions";
 
 const handleSubmit = async (e: React.FormEvent) => {
   e.preventDefault();
@@ -100,6 +105,7 @@ const handleSubmit = async (e: React.FormEvent) => {
 **File:** `app/contact/ContactForm.tsx`
 
 **Problems:**
+
 - No email format validation beyond HTML5 `type="email"`
 - No message length limits
 - No rate limiting on form submissions
@@ -107,20 +113,24 @@ const handleSubmit = async (e: React.FormEvent) => {
 - File upload lacks MIME type validation (only checks size)
 
 **Recommendations:**
+
 ```typescript
 // Add validation schema with Zod
-import { z } from 'zod';
+import { z } from "zod";
 
 const contactSchema = z.object({
   name: z.string().min(2).max(100),
   email: z.string().email(),
-  phone: z.string().optional().regex(/^\+?[\d\s-]{8,}$/),
+  phone: z
+    .string()
+    .optional()
+    .regex(/^\+?[\d\s-]{8,}$/),
   message: z.string().min(10).max(5000),
 });
 
 // Add rate limiting (e.g., with @upstash/ratelimit or custom solution)
 // Validate file MIME types
-const ALLOWED_MIME_TYPES = ['application/pdf', 'image/jpeg', 'image/png'];
+const ALLOWED_MIME_TYPES = ["application/pdf", "image/jpeg", "image/png"];
 if (!ALLOWED_MIME_TYPES.includes(file.type)) {
   toast.error("Invalid file type");
   return;
@@ -142,6 +152,7 @@ typescript: {
 **Problem:** This allows the application to build even with TypeScript errors, potentially hiding critical type safety issues.
 
 **Recommendation:**
+
 ```typescript
 typescript: {
   ignoreBuildErrors: false,  // ✅ Enable strict type checking
@@ -164,12 +175,14 @@ images: {
 ```
 
 **Problem:** Disables Next.js image optimization, resulting in:
+
 - Larger image payloads
 - No automatic WebP/AVIF conversion
 - No responsive image srcset generation
 - Slower page loads
 
 **Recommendation:**
+
 ```typescript
 images: {
   unoptimized: false,  // ✅ Enable optimization
@@ -191,11 +204,13 @@ images: {
 **File:** `app/layout.tsx` (lines 32-111)
 
 **Problem:** Loading **13 different font families** locally:
+
 - Increases initial bundle size
 - Multiple font files block rendering
 - Unused fonts waste bandwidth
 
 **Recommendation:**
+
 ```typescript
 // Reduce to essential fonts only (2-3 max)
 const inter = localFont({
@@ -225,15 +240,16 @@ Consider using `next/font/google` for better optimization and caching.
 **Current:** Uses `cache()` and `unstable_cache()` correctly ✅
 
 **Additional Recommendations:**
+
 ```typescript
 // Add revalidation tags for better ISR
-export const getContentByType = cache(async function(type: string) {
+export const getContentByType = cache(async function (type: string) {
   const fetcher = unstable_cache(
     async () => fetchNotionContentByType(type),
     [`content-list-${type}`],
     {
       revalidate: 3600,
-      tags: [`content-${type}`, `global-content`] // Add global tag for bulk revalidation
+      tags: [`content-${type}`, `global-content`], // Add global tag for bulk revalidation
     },
   );
   return fetcher();
@@ -251,6 +267,7 @@ export const getContentByType = cache(async function(type: string) {
 **Problem:** Highlighter loads 16 languages but may not need all on every request.
 
 **Recommendation:**
+
 ```typescript
 // Lazy-load languages dynamically
 async function getHighlighter() {
@@ -280,6 +297,7 @@ async function highlightCode(code: string, lang: string) {
 **Observation:** All fonts and images served from `/public` directory.
 
 **Recommendations:**
+
 - Use Vercel Blob Storage or Cloudflare R2 for media assets
 - Implement proper Cache-Control headers
 - Consider using `next/image` with optimized remote patterns for Notion images
@@ -292,10 +310,12 @@ async function highlightCode(code: string, lang: string) {
 **File:** `package.json`
 
 **Observations:**
+
 - 55 production dependencies
 - Heavy libraries: `framer-motion`, `chart.js`, `jspdf`, `html2canvas`, `gsap`
 
 **Recommendations:**
+
 ```json
 // Analyze bundle with @next/bundle-analyzer
 {
@@ -320,6 +340,7 @@ async function highlightCode(code: string, lang: string) {
 **File:** `lib/notion.ts`, `lib/content.ts`
 
 **Current Pattern:**
+
 ```typescript
 catch (error) {
   console.error(`Error fetching...`, error);
@@ -328,6 +349,7 @@ catch (error) {
 ```
 
 **Recommendation:**
+
 ```typescript
 // Implement proper error boundaries and user feedback
 class NotionAPIError extends Error {
@@ -356,24 +378,26 @@ catch (error) {
 **Files:** Multiple
 
 **Examples:**
+
 ```typescript
-const MAX_FILE_SIZE = 20 * 1024 * 1024;  // ✅ Good
-const wordsPerMinute = 200;  // ❌ Magic number
-revalidate: 3600  // ❌ Magic number
+const MAX_FILE_SIZE = 20 * 1024 * 1024; // ✅ Good
+const wordsPerMinute = 200; // ❌ Magic number
+revalidate: 3600; // ❌ Magic number
 ```
 
 **Recommendation:**
+
 ```typescript
 // lib/config.ts
 export const contentConfig = {
   wordsPerMinute: 220,
   cacheRevalidation: 60 * 60, // 1 hour
   maxFileSize: 20 * 1024 * 1024,
-  allowedFileTypes: ['pdf', 'jpg', 'png'],
+  allowedFileTypes: ["pdf", "jpg", "png"],
 };
 
 // Usage
-import { contentConfig } from '@/lib/config';
+import { contentConfig } from "@/lib/config";
 const readingTime = Math.ceil(words / contentConfig.wordsPerMinute);
 ```
 
@@ -392,6 +416,7 @@ const readingTime = Math.ceil(words / contentConfig.wordsPerMinute);
 **Files:** Most utility functions lack documentation
 
 **Recommendation:**
+
 ```typescript
 /**
  * Extracts plain text from a Notion rich_text or title property.
@@ -421,9 +446,11 @@ rules: {
 ```
 
 **Recommendation:**
+
 - Document WHY rules are disabled
 - Fix underlying issues instead of disabling rules
 - Add more strict rules for better code quality:
+
 ```typescript
 rules: {
   '@typescript-eslint/no-explicit-any': 'warn',
@@ -440,12 +467,14 @@ rules: {
 **Files:** `lib/notion.ts`, `lib/content.ts`
 
 **Problem:** Extensive use of `any` type:
+
 ```typescript
-const { bookmark } = block as unknown;  // ❌
-const props = page.properties;  // ❌ Implicit any
+const { bookmark } = block as unknown; // ❌
+const props = page.properties; // ❌ Implicit any
 ```
 
 **Recommendation:**
+
 ```typescript
 // Define proper types
 interface NotionBookmarkBlock {
@@ -460,7 +489,7 @@ interface NotionPageProperties {
   // ...
 }
 
-const { bookmark } = block as NotionBookmarkBlock;  // ✅
+const { bookmark } = block as NotionBookmarkBlock; // ✅
 ```
 
 Install and configure `@notionhq/client` types properly.
@@ -474,6 +503,7 @@ Install and configure `@notionhq/client` types properly.
 **File:** `lib/content.ts` (1000+ lines)
 
 **Problem:** Single file handles:
+
 - Notion API integration
 - Markdown parsing
 - Syntax highlighting
@@ -482,6 +512,7 @@ Install and configure `@notionhq/client` types properly.
 - File system operations
 
 **Recommendation:** Split into modular services:
+
 ```
 lib/
 ├── content/
@@ -506,9 +537,10 @@ lib/
 **File:** Multiple files access `process.env` directly
 
 **Recommendation:**
+
 ```typescript
 // lib/env.ts
-import { z } from 'zod';
+import { z } from "zod";
 
 const envSchema = z.object({
   NOTION_AUTH_TOKEN: z.string().min(1),
@@ -521,7 +553,7 @@ const envSchema = z.object({
 export const env = envSchema.parse(process.env);
 
 // Type-safe access throughout app
-import { env } from '@/lib/env';
+import { env } from "@/lib/env";
 const token = env.NOTION_AUTH_TOKEN;
 ```
 
@@ -534,27 +566,34 @@ Add `.env.example` validation in CI/CD pipeline.
 **Current:** Scattered `console.error()` and `console.log()` calls
 
 **Recommendation:**
+
 ```typescript
 // lib/logger.ts
-type LogLevel = 'debug' | 'info' | 'warn' | 'error';
+type LogLevel = "debug" | "info" | "warn" | "error";
 
 class Logger {
   private level: LogLevel;
 
-  constructor(level: LogLevel = process.env.NODE_ENV === 'production' ? 'warn' : 'debug') {
+  constructor(
+    level: LogLevel = process.env.NODE_ENV === "production" ? "warn" : "debug",
+  ) {
     this.level = level;
   }
 
   error(message: string, context?: Record<string, unknown>) {
-    this.log('error', message, context);
+    this.log("error", message, context);
     // Send to Sentry, LogRocket, etc. in production
   }
 
   info(message: string, context?: Record<string, unknown>) {
-    this.log('info', message, context);
+    this.log("info", message, context);
   }
 
-  private log(level: LogLevel, message: string, context?: Record<string, unknown>) {
+  private log(
+    level: LogLevel,
+    message: string,
+    context?: Record<string, unknown>,
+  ) {
     if (this.shouldLog(level)) {
       console[level](`[${level.toUpperCase()}] ${message}`, context);
     }
@@ -571,10 +610,12 @@ export const logger = new Logger();
 **Observation:** Direct imports between deeply nested components
 
 **Recommendation:**
+
 - Implement dependency injection pattern
 - Use React Context for shared state (already partially done)
 - Create clear separation between UI components and business logic
 - Consider feature-based folder structure:
+
 ```
 features/
 ├── blog/
@@ -593,6 +634,7 @@ features/
 ### 21. **Incomplete README** ⚠️ DOCUMENTATION
 
 **Current:** Good overview but missing:
+
 - Architecture diagram
 - API documentation
 - Contributing guidelines
@@ -600,7 +642,8 @@ features/
 - Deployment guide details
 
 **Recommendations:**
-```markdown
+
+````markdown
 ## Architecture
 
 ```mermaid
@@ -611,29 +654,31 @@ graph TD
     B --> E[Notion API]
     C --> F[File System]
 ```
+````
 
 ## API Routes
 
-| Endpoint | Method | Description | Auth Required |
-|----------|--------|-------------|---------------|
-| `/api/secrets` | GET | ❌ DEPRECATED - Security risk | Yes |
-| `/api/og` | GET | Generate OpenGraph images | No |
-| `/api/author` | GET | Fetch author data | No |
+| Endpoint       | Method | Description                   | Auth Required |
+| -------------- | ------ | ----------------------------- | ------------- |
+| `/api/secrets` | GET    | ❌ DEPRECATED - Security risk | Yes           |
+| `/api/og`      | GET    | Generate OpenGraph images     | No            |
+| `/api/author`  | GET    | Fetch author data             | No            |
 
 ## Development
 
 ### Running Tests
+
 ```bash
 pnpm test
 pnpm test:coverage
 ```
 
 ### Code Style
+
 ```bash
 pnpm lint
 pnpm format
 ```
-
 
 ---
 
@@ -642,6 +687,7 @@ pnpm format
 **File:** `lib/content.ts` (regex patterns, quiz injection)
 
 **Example needing comments:**
+
 ```typescript
 // Current (unclear)
 cleanJson = cleanJson.replace(
@@ -663,24 +709,29 @@ cleanJson = cleanJson.replace(
 ### 23. **No CHANGELOG** ⚠️ DOCUMENTATION
 
 **Recommendation:** Add `CHANGELOG.md` following [Keep a Changelog](https://keepachangelog.com/) format:
+
 ```markdown
 # Changelog
 
 ## [1.5.0] - 2024-01-15
 
 ### Added
+
 - Interactive quiz component support
 - GitHub-style alert blocks
 
 ### Changed
+
 - Updated to Next.js 16.2.2
 - Improved syntax highlighting performance
 
 ### Fixed
+
 - Security vulnerability in contact form
 - TypeScript build errors ignored in production
 
 ### Security
+
 - ⚠️ Fixed critical API endpoint exposing Telegram credentials
 ```
 
@@ -689,6 +740,7 @@ cleanJson = cleanJson.replace(
 ### 24. **Missing ADR (Architecture Decision Records)** ⚠️ DOCUMENTATION
 
 **Recommendation:** Create `docs/adr/` directory:
+
 ```
 docs/
 └── adr/
@@ -699,22 +751,28 @@ docs/
 ```
 
 Template:
+
 ```markdown
 # ADR-001: Use Next.js 16 App Router
 
 ## Status
+
 Accepted
 
 ## Context
+
 Need modern React framework with SSR, ISR, and excellent DX.
 
 ## Decision
+
 Use Next.js 16 with App Router for:
+
 - Server Components by default
 - Improved performance
 - Better caching strategies
 
 ## Consequences
+
 - Learning curve for team
 - Migration from Pages Router required
 - Access to latest React features
@@ -727,10 +785,11 @@ Use Next.js 16 with App Router for:
 ### 25. **Content Security Policy (CSP) Missing** ⚠️ SECURITY
 
 **Recommendation:** Add CSP headers in `next.config.mjs`:
+
 ```typescript
 const securityHeaders = [
   {
-    key: 'Content-Security-Policy',
+    key: "Content-Security-Policy",
     value: [
       "default-src 'self'",
       "script-src 'self' 'unsafe-inline' https://gist.github.com",
@@ -739,23 +798,23 @@ const securityHeaders = [
       "font-src 'self' data:",
       "connect-src 'self' https://api.notion.com https://api.telegram.org",
       "frame-src 'self' https://www.youtube.com",
-    ].join('; '),
+    ].join("; "),
   },
   {
-    key: 'X-Frame-Options',
-    value: 'DENY',
+    key: "X-Frame-Options",
+    value: "DENY",
   },
   {
-    key: 'X-Content-Type-Options',
-    value: 'nosniff',
+    key: "X-Content-Type-Options",
+    value: "nosniff",
   },
   {
-    key: 'Referrer-Policy',
-    value: 'strict-origin-when-cross-origin',
+    key: "Referrer-Policy",
+    value: "strict-origin-when-cross-origin",
   },
   {
-    key: 'Permissions-Policy',
-    value: 'camera=(), microphone=(), geolocation=()',
+    key: "Permissions-Policy",
+    value: "camera=(), microphone=(), geolocation=()",
   },
 ];
 
@@ -763,7 +822,7 @@ module.exports = {
   async headers() {
     return [
       {
-        source: '/:path*',
+        source: "/:path*",
         headers: securityHeaders,
       },
     ];
@@ -778,6 +837,7 @@ module.exports = {
 **File:** `app/api/*` routes and contact form
 
 **Recommendation:**
+
 ```typescript
 // Middleware for rate limiting
 import { Ratelimit } from "@upstash/ratelimit";
@@ -795,10 +855,7 @@ export async function POST(request: Request) {
   const { success } = await ratelimit.limit(ip);
 
   if (!success) {
-    return NextResponse.json(
-      { error: "Too many requests" },
-      { status: 429 }
-    );
+    return NextResponse.json({ error: "Too many requests" }, { status: 429 });
   }
 
   // Process request
@@ -812,12 +869,13 @@ export async function POST(request: Request) {
 **Check:** Ensure no `.env.local` values leak to client
 
 **Recommendation:**
+
 ```typescript
 // Add to next.config.mjs
-const { withSecureHeaders } = require('next-secure-headers');
+const { withSecureHeaders } = require("next-secure-headers");
 
 module.exports = withSecureHeaders({
-  dangerouslyDisableDefaultSrcSelf: ['font-src'],
+  dangerouslyDisableDefaultSrcSelf: ["font-src"],
 })(nextConfig);
 
 // Audit with:
@@ -829,6 +887,7 @@ module.exports = withSecureHeaders({
 ### 28. **Dependency Vulnerabilities** ⚠️ SECURITY
 
 **Recommendation:**
+
 ```bash
 # Regular security audits
 pnpm audit
@@ -864,6 +923,7 @@ Consider using `dependabot` or `renovate` for automated updates.
 **Current:** Zero tests in codebase
 
 **Recommendation:**
+
 ```json
 // package.json
 {
@@ -884,6 +944,7 @@ Consider using `dependabot` or `renovate` for automated updates.
 ```
 
 **Test Structure:**
+
 ```
 __tests__/
 ├── unit/
@@ -899,23 +960,24 @@ __tests__/
 ```
 
 **Example Test:**
+
 ```typescript
 // __tests__/unit/content.test.ts
-import { describe, it, expect, vi } from 'vitest';
-import { getPlainText, getDate } from '@/lib/notion';
+import { describe, it, expect, vi } from "vitest";
+import { getPlainText, getDate } from "@/lib/notion";
 
-describe('Notion helpers', () => {
-  it('should extract plain text from title property', () => {
+describe("Notion helpers", () => {
+  it("should extract plain text from title property", () => {
     const property = {
-      type: 'title',
-      title: [{ plain_text: 'Test Title' }]
+      type: "title",
+      title: [{ plain_text: "Test Title" }],
     };
 
-    expect(getPlainText(property)).toBe('Test Title');
+    expect(getPlainText(property)).toBe("Test Title");
   });
 
-  it('should return empty string for null property', () => {
-    expect(getPlainText(null)).toBe('');
+  it("should return empty string for null property", () => {
+    expect(getPlainText(null)).toBe("");
   });
 });
 ```
@@ -925,6 +987,7 @@ describe('Notion helpers', () => {
 ### 30. **No Visual Regression Testing** ⚠️ TESTING
 
 **Recommendation:**
+
 ```bash
 pnpm add -D @percy/cli @percy/playwright
 ```
@@ -940,6 +1003,7 @@ Add Percy or Chromatic for visual testing of UI components.
 **Current:** Only Vercel Speed Insights enabled
 
 **Recommendations:**
+
 ```typescript
 // Add comprehensive monitoring
 import { Analytics } from "@vercel/analytics/react";
@@ -962,11 +1026,11 @@ export function initMonitoring() {
   }
 
   // Custom performance metrics
-  if (typeof window !== 'undefined') {
+  if (typeof window !== "undefined") {
     reportWebVitals((metric) => {
       // Send to analytics endpoint
-      fetch('/api/metrics', {
-        method: 'POST',
+      fetch("/api/metrics", {
+        method: "POST",
         body: JSON.stringify(metric),
       });
     });
@@ -979,6 +1043,7 @@ export function initMonitoring() {
 ### 32. **No Synthetic Monitoring** ⚠️ MONITORING
 
 **Recommendation:** Set up Checkly or Pingdom for:
+
 - Uptime monitoring
 - Performance regression detection
 - SSL certificate expiry alerts
@@ -993,6 +1058,7 @@ export function initMonitoring() {
 **Current:** Basic accessibility page exists but implementation gaps
 
 **Recommendations:**
+
 ```typescript
 // Add skip links
 <a href="#main-content" className="sr-only focus:not-sr-only">
@@ -1019,6 +1085,7 @@ pnpm add -D axe-core @axe-core/react
 ```
 
 **Add to CI/CD:**
+
 ```yaml
 - name: Accessibility Audit
   run: npx pa11y-ci
@@ -1031,6 +1098,7 @@ pnpm add -D axe-core @axe-core/react
 ### 34. **Outdated Dependencies** ⚠️ MAINTENANCE
 
 **Recommendation:**
+
 ```bash
 # Check for outdated packages
 pnpm outdated
@@ -1043,6 +1111,7 @@ pnpm install --save-exact
 ```
 
 **Critical Updates Needed:**
+
 - Review all `latest` version pins in `package.json`
 - Pin specific versions for reproducibility
 - Use Dependabot for automated PRs
@@ -1052,6 +1121,7 @@ pnpm install --save-exact
 ### 35. **Unused Dependencies** ⚠️ MAINTENANCE
 
 **Recommendation:**
+
 ```bash
 pnpm add -D depcheck
 pnpm dlx depcheck
@@ -1068,6 +1138,7 @@ Remove unused packages to reduce bundle size and attack surface.
 **Current:** Basic workflow (assumed from `.github` folder)
 
 **Recommended Workflow:**
+
 ```yaml
 # .github/workflows/ci.yml
 name: CI/CD Pipeline
@@ -1116,6 +1187,7 @@ jobs:
 ## 🎯 Priority Matrix
 
 ### Immediate (Week 1)
+
 1. 🔴 **Fix critical security vulnerability** (`/api/secrets` endpoint)
 2. 🔴 **Move Telegram integration to server-side**
 3. 🔴 **Enable TypeScript strict mode** (remove `ignoreBuildErrors`)
@@ -1123,6 +1195,7 @@ jobs:
 5. 🟡 **Implement rate limiting**
 
 ### Short-term (Month 1)
+
 6. 🟡 **Optimize image handling** (disable `unoptimized`)
 7. 🟡 **Reduce font loading overhead**
 8. 🟢 **Add comprehensive error handling**
@@ -1130,6 +1203,7 @@ jobs:
 10. 🟢 **Add environment variable validation**
 
 ### Medium-term (Quarter 1)
+
 11. 🟢 **Refactor monolithic content.ts**
 12. 🟢 **Implement logging strategy**
 13. 📚 **Improve documentation** (CHANGELOG, ADRs, JSDoc)
@@ -1137,6 +1211,7 @@ jobs:
 15. 🧪 **Write test suite** (unit + integration)
 
 ### Long-term (Quarter 2+)
+
 16. 🚀 **Add performance monitoring** (Sentry, analytics)
 17. ♿ **Complete accessibility audit** and fixes
 18. 📦 **Dependency cleanup** and update strategy
@@ -1147,14 +1222,14 @@ jobs:
 
 ## 📊 Estimated Impact
 
-| Category | Effort | Impact | ROI |
-|----------|--------|--------|-----|
-| Security Fixes | Low | Critical | ⭐⭐⭐⭐⭐ |
-| Performance | Medium | High | ⭐⭐⭐⭐ |
-| Code Quality | Medium | High | ⭐⭐⭐⭐ |
-| Testing | High | High | ⭐⭐⭐⭐ |
-| Documentation | Low | Medium | ⭐⭐⭐ |
-| Architecture | High | Medium | ⭐⭐⭐ |
+| Category       | Effort | Impact   | ROI        |
+| -------------- | ------ | -------- | ---------- |
+| Security Fixes | Low    | Critical | ⭐⭐⭐⭐⭐ |
+| Performance    | Medium | High     | ⭐⭐⭐⭐   |
+| Code Quality   | Medium | High     | ⭐⭐⭐⭐   |
+| Testing        | High   | High     | ⭐⭐⭐⭐   |
+| Documentation  | Low    | Medium   | ⭐⭐⭐     |
+| Architecture   | High   | Medium   | ⭐⭐⭐     |
 
 ---
 
@@ -1176,6 +1251,7 @@ jobs:
 ## 🛠️ Tools & Resources
 
 ### Recommended Additions
+
 - **Type Safety:** Zod for runtime validation
 - **Testing:** Vitest + Playwright
 - **Monitoring:** Sentry + Vercel Analytics
@@ -1185,6 +1261,7 @@ jobs:
 - **Accessibility:** axe-core, pa11y-ci
 
 ### Useful Commands
+
 ```bash
 # Security audit
 pnpm audit
@@ -1212,6 +1289,7 @@ pnpm outdated
 This codebase demonstrates solid fundamentals with Next.js 16, TypeScript, and modern React patterns. However, **critical security vulnerabilities** must be addressed immediately, particularly the exposed API endpoint and client-side credential handling.
 
 The recommended improvements follow industry best practices and will significantly enhance:
+
 - **Security posture** (eliminate credential exposure)
 - **Performance** (optimize fonts, images, caching)
 - **Maintainability** (better types, modular architecture)
@@ -1222,6 +1300,6 @@ Prioritize the **Immediate** category items within the first week, then systemat
 
 ---
 
-*Generated: $(date)*
-*Review Cycle: Quarterly*
-*Owner: Development Team Lead*
+_Generated: $(date)_
+_Review Cycle: Quarterly_
+_Owner: Development Team Lead_

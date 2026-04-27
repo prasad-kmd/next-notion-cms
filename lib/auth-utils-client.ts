@@ -7,11 +7,11 @@ import { authClient } from "./auth-client";
  * Uses better-auth client
  */
 export function useIsAdmin() {
-    const { data: session, isPending } = authClient.useSession();
-    
-    return {
-        isAdmin: session?.user?.role === "admin",
-        isPending,
-        session
-    };
+  const { data: session, isPending } = authClient.useSession();
+
+  return {
+    isAdmin: session?.user?.role === "admin",
+    isPending,
+    session,
+  };
 }

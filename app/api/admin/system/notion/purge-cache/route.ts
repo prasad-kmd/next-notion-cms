@@ -4,17 +4,19 @@ import { revalidateTag } from "next/cache";
 import { logInfo } from "@/lib/system-logs";
 
 export async function POST() {
-    try {
-        const session = await requireAdmin();
-        
-        // Purge Notion-related caches
-        revalidateTag("notion-content");
-        revalidateTag("comments");
-        
-        await logInfo('notion', 'Cache purged manually', { admin: session.user.email });
+  try {
+    const session = await requireAdmin();
 
-        return NextResponse.json({ success: true });
-    } catch {
-        return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
+    // Purge Notion-related caches
+    revalidateTag("notion-content");
+    revalidateTag("comments");
+
+    await logInfo("notion", "Cache purged manually", {
+      admin: session.user.email,
+    });
+
+    return NextResponse.json({ success: true });
+  } catch {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
 }

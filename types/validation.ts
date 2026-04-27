@@ -1,4 +1,11 @@
-export type ValidationErrorType = "temp_mail" | "profanity" | "turnstile" | "zod" | "auth" | "rate_limit" | "generic";
+export type ValidationErrorType =
+  | "temp_mail"
+  | "profanity"
+  | "turnstile"
+  | "zod"
+  | "auth"
+  | "rate_limit"
+  | "generic";
 
 export interface BlockedWord {
   word: string;

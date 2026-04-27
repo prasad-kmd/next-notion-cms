@@ -8,7 +8,7 @@ import { Session } from "@/types/auth";
  * Server-side check if a session belongs to an admin
  */
 export function isAdmin(session: Session | null): boolean {
-    return session?.user?.role === "admin";
+  return session?.user?.role === "admin";
 }
 
 /**
@@ -16,32 +16,32 @@ export function isAdmin(session: Session | null): boolean {
  * Throws redirect if not authorized
  */
 export async function requireAdmin() {
-    const session = await auth.api.getSession({
-        headers: await headers(),
-    });
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
 
-    if (!session) {
-        // Redirect to sign-in with callback URL
-        const headerList = await headers();
-        const referer = headerList.get("referer");
-        let callbackUrl = "/";
+  if (!session) {
+    // Redirect to sign-in with callback URL
+    const headerList = await headers();
+    const referer = headerList.get("referer");
+    let callbackUrl = "/";
 
-        if (referer) {
-            try {
-                callbackUrl = new URL(referer).pathname;
-            } catch {
-                // Ignore parsing errors
-            }
-        }
-        
-        redirect(`/sign-in?callbackUrl=${encodeURIComponent(callbackUrl)}`);
+    if (referer) {
+      try {
+        callbackUrl = new URL(referer).pathname;
+      } catch {
+        // Ignore parsing errors
+      }
     }
 
-    if (session.user.role !== "admin") {
-        redirect("/not-authorized");
-    }
+    redirect(`/sign-in?callbackUrl=${encodeURIComponent(callbackUrl)}`);
+  }
 
-    return session;
+  if (session.user.role !== "admin") {
+    redirect("/not-authorized");
+  }
+
+  return session;
 }
 
 /**
@@ -49,11 +49,11 @@ export async function requireAdmin() {
  * Uses better-auth client
  */
 export function useIsAdmin() {
-    const { data: session, isPending } = authClient.useSession();
-    
-    return {
-        isAdmin: session?.user?.role === "admin",
-        isPending,
-        session
-    };
+  const { data: session, isPending } = authClient.useSession();
+
+  return {
+    isAdmin: session?.user?.role === "admin",
+    isPending,
+    session,
+  };
 }

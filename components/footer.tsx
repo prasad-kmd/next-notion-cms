@@ -22,17 +22,17 @@ export function Footer() {
     <footer className="relative border-t border-border bg-card/30 backdrop-blur-md overflow-hidden">
       {/* Decorative background elements with animations */}
       <div className="absolute inset-0 z-0 pointer-events-none opacity-40 dark:opacity-20 overflow-hidden">
-        <div 
-          className="absolute top-[-10%] left-[-10%] w-[40%] h-[60%] bg-primary/20 rounded-full blur-[120px] animate-blob" 
-          style={{ animationDuration: '25s' }}
+        <div
+          className="absolute top-[-10%] left-[-10%] w-[40%] h-[60%] bg-primary/20 rounded-full blur-[120px] animate-blob"
+          style={{ animationDuration: "25s" }}
         />
-        <div 
-          className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[70%] bg-primary/10 rounded-full blur-[140px] animate-blob" 
-          style={{ animationDuration: '30s', animationDelay: '-10s' }}
+        <div
+          className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[70%] bg-primary/10 rounded-full blur-[140px] animate-blob"
+          style={{ animationDuration: "30s", animationDelay: "-10s" }}
         />
-        <div 
-          className="absolute top-[20%] right-[10%] w-[30%] h-[40%] bg-primary/15 rounded-full blur-[100px] animate-blob" 
-          style={{ animationDuration: '35s', animationDelay: '-20s' }}
+        <div
+          className="absolute top-[20%] right-[10%] w-[30%] h-[40%] bg-primary/15 rounded-full blur-[100px] animate-blob"
+          style={{ animationDuration: "35s", animationDelay: "-20s" }}
         />
       </div>
 

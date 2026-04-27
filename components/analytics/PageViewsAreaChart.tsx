@@ -2,14 +2,15 @@
 
 import { useEffect, useState } from "react";
 import { useHasMounted } from "@/hooks/use-has-mounted";
-import { 
-  AreaChart, 
-  Area, 
-  XAxis, 
-  YAxis, 
-  CartesianGrid, 
-  Tooltip, 
-  ResponsiveContainer} from "recharts";
+import {
+  AreaChart,
+  Area,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+} from "recharts";
 import { getRechartsTheme } from "@/lib/recharts-theme";
 import { useTheme } from "next-themes";
 import { getColorCode } from "../ui/charts/ChartUtils";
@@ -32,19 +33,21 @@ export function PageViewsAreaChart({ timeRange }: PageViewsAreaChartProps) {
         const response = await fetch("/api/admin/analytics", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ 
+          body: JSON.stringify({
             insightType: "pageviews_trend_area",
-            params: { timeRange }
+            params: { timeRange },
           }),
         });
         if (response.ok) {
           const json = await response.json();
           const series = json.result?.[0];
           if (series) {
-            const transformed = series.labels.map((label: string, i: number) => ({
-              date: label,
-              views: series.data[i]
-            }));
+            const transformed = series.labels.map(
+              (label: string, i: number) => ({
+                date: label,
+                views: series.data[i],
+              }),
+            );
             setData(transformed);
           }
         }
@@ -57,7 +60,12 @@ export function PageViewsAreaChart({ timeRange }: PageViewsAreaChartProps) {
     fetchData();
   }, [timeRange]);
 
-  if (loading || !hasMounted) return <div className="h-[320px] flex items-center justify-center animate-pulse bg-muted/10 rounded-3xl">Loading trend...</div>;
+  if (loading || !hasMounted)
+    return (
+      <div className="h-[320px] flex items-center justify-center animate-pulse bg-muted/10 rounded-3xl">
+        Loading trend...
+      </div>
+    );
 
   const color = getColorCode("blue");
 
@@ -67,24 +75,20 @@ export function PageViewsAreaChart({ timeRange }: PageViewsAreaChartProps) {
         <AreaChart data={data}>
           <defs>
             <linearGradient id="colorViews" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor={color} stopOpacity={0.3}/>
-              <stop offset="95%" stopColor={color} stopOpacity={0}/>
+              <stop offset="5%" stopColor={color} stopOpacity={0.3} />
+              <stop offset="95%" stopColor={color} stopOpacity={0} />
             </linearGradient>
           </defs>
           <CartesianGrid {...chartTheme.grid} vertical={false} />
-          <XAxis 
-            dataKey="date" 
-            {...chartTheme.axis}
-            minTickGap={30}
-          />
+          <XAxis dataKey="date" {...chartTheme.axis} minTickGap={30} />
           <YAxis {...chartTheme.axis} />
           <Tooltip contentStyle={chartTheme.tooltip.contentStyle} />
-          <Area 
-            type="monotone" 
-            dataKey="views" 
-            stroke={color} 
-            fillOpacity={1} 
-            fill="url(#colorViews)" 
+          <Area
+            type="monotone"
+            dataKey="views"
+            stroke={color}
+            fillOpacity={1}
+            fill="url(#colorViews)"
             strokeWidth={2}
           />
         </AreaChart>

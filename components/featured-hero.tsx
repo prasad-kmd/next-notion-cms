@@ -1,41 +1,41 @@
-"use client"
+"use client";
 
-import { useState, useEffect, startTransition } from "react"
-import Link from "next/link"
-import { ArrowRight } from "lucide-react"
-import { motion } from "framer-motion"
+import { useState, useEffect, startTransition } from "react";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
+import { motion } from "framer-motion";
 
 export interface HeroItem {
-  title: string
-  description: string
-  image: string
-  link: string
-  label: string
+  title: string;
+  description: string;
+  image: string;
+  link: string;
+  label: string;
 }
 
 interface FeaturedHeroProps {
-  items: HeroItem[]
+  items: HeroItem[];
 }
 
-import Image from "next/image"
-import { cn } from "@/lib/utils"
+import Image from "next/image";
+import { cn } from "@/lib/utils";
 
 export default function FeaturedHero({ items }: FeaturedHeroProps) {
-  const [mounted, setMounted] = useState(false)
-  const [currentIndex, setCurrentIndex] = useState(0)
+  const [mounted, setMounted] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
     startTransition(() => {
-      setMounted(true)
-    })
-  }, [])
+      setMounted(true);
+    });
+  }, []);
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % items.length)
-    }, 5000)
-    return () => clearInterval(timer)
-  }, [items.length])
+      setCurrentIndex((prev) => (prev + 1) % items.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, [items.length]);
 
   return (
     <section className="relative min-h-screen flex items-center py-16 lg:py-0 overflow-hidden bg-background">
@@ -49,11 +49,13 @@ export default function FeaturedHero({ items }: FeaturedHeroProps) {
           className={cn(
             "w-full h-full object-cover transition-opacity duration-1000",
             "opacity-[0.45] mix-blend-multiply filter invert hue-rotate-360 brightness-110 contrast-125",
-            "dark:opacity-40 dark:mix-blend-screen dark:filter-none dark:hue-rotate-0 dark:brightness-100 dark:contrast-100"
+            "dark:opacity-40 dark:mix-blend-screen dark:filter-none dark:hue-rotate-0 dark:brightness-100 dark:contrast-100",
           )}
           style={{
-            maskImage: "radial-gradient(ellipse 100% 80% at 50% 50%, black 0%, black 20%, rgba(0, 0, 0, 0.5) 50%, transparent 80%)",
-            WebkitMaskImage: "radial-gradient(ellipse 100% 80% at 50% 50%, black 0%, black 20%, rgba(0, 0, 0, 0.5) 50%, transparent 80%)",
+            maskImage:
+              "radial-gradient(ellipse 100% 80% at 50% 50%, black 0%, black 20%, rgba(0, 0, 0, 0.5) 50%, transparent 80%)",
+            WebkitMaskImage:
+              "radial-gradient(ellipse 100% 80% at 50% 50%, black 0%, black 20%, rgba(0, 0, 0, 0.5) 50%, transparent 80%)",
           }}
         >
           <source src="/video/black-hole-purple.webm" type="video/webm" />
@@ -66,7 +68,7 @@ export default function FeaturedHero({ items }: FeaturedHeroProps) {
         <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_20%_30%,rgba(var(--primary-rgb),0.05)_0%,transparent_50%)]" />
         <div className="absolute top-0 right-0 w-full h-full bg-[radial-gradient(circle_at_80%_70%,rgba(var(--secondary-rgb),0.05)_0%,transparent_50%)]" />
       </div>
-      
+
       {/* Floating Geometric Elements */}
       <div className="absolute top-1/4 -left-20 w-[500px] h-[500px] bg-primary/10 rounded-full blur-[120px] animate-pulse" />
       <div className="absolute bottom-1/4 -right-20 w-[500px] h-[500px] bg-secondary/10 rounded-full blur-[120px] animate-pulse delay-1000" />
@@ -83,10 +85,18 @@ export default function FeaturedHero({ items }: FeaturedHeroProps) {
               >
                 The Future <br />
                 <span className="text-primary italic relative">
-                   Is Built.
-                   <svg className="absolute -bottom-4 left-0 w-full h-4 text-primary/20" viewBox="0 0 300 20">
-                     <path d="M0 10 Q 75 0, 150 10 T 300 10" fill="none" stroke="currentColor" strokeWidth="4" />
-                   </svg>
+                  Is Built.
+                  <svg
+                    className="absolute -bottom-4 left-0 w-full h-4 text-primary/20"
+                    viewBox="0 0 300 20"
+                  >
+                    <path
+                      d="M0 10 Q 75 0, 150 10 T 300 10"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    />
+                  </svg>
                 </span>
               </motion.h1>
             </div>
@@ -97,7 +107,13 @@ export default function FeaturedHero({ items }: FeaturedHeroProps) {
               transition={{ delay: 0.2 }}
               className="text-xl md:text-2xl text-muted-foreground max-w-2xl google-sans leading-relaxed font-light"
             >
-              Architecting high-performance systems where <span className="text-foreground font-bold">mechatronics</span> meets <span className="text-foreground font-bold">digital innovation</span>. Documenting the frontier of hardware engineering.
+              Architecting high-performance systems where{" "}
+              <span className="text-foreground font-bold">mechatronics</span>{" "}
+              meets{" "}
+              <span className="text-foreground font-bold">
+                digital innovation
+              </span>
+              . Documenting the frontier of hardware engineering.
             </motion.p>
 
             <motion.div
@@ -112,7 +128,10 @@ export default function FeaturedHero({ items }: FeaturedHeroProps) {
               >
                 <span className="relative z-10 flex items-center gap-3 uppercase tracking-widest">
                   Explore Works
-                  <ArrowRight size={20} className="transition-transform group-hover:translate-x-1" />
+                  <ArrowRight
+                    size={20}
+                    className="transition-transform group-hover:translate-x-1"
+                  />
                 </span>
               </Link>
               <Link
@@ -122,7 +141,6 @@ export default function FeaturedHero({ items }: FeaturedHeroProps) {
                 Read Log
               </Link>
             </motion.div>
-
           </div>
 
           <motion.div
@@ -136,95 +154,107 @@ export default function FeaturedHero({ items }: FeaturedHeroProps) {
               <div className="relative rounded-[3rem] border border-border/40 dark:border-white/10 bg-card/80 p-4 xl:p-6 shadow-2xl overflow-hidden backdrop-blur-3xl min-h-[500px] flex flex-col">
                 {/* Dashboard Header */}
                 <div className="flex items-center justify-between mb-6 px-4">
-                   <div className="flex gap-2">
-                     <div className="w-3 h-3 rounded-full bg-[#ff5f57]" />
-                     <div className="w-3 h-3 rounded-full bg-[#febc2e]" />
-                     <div className="w-3 h-3 rounded-full bg-[#28c840]" />
-                   </div>
-                   <div className="px-3 py-1 rounded-full bg-primary/5 border border-primary/10 text-[9px] font-bold text-muted-foreground uppercase tracking-[0.2em] local-jetbrains-mono flex items-center gap-2">
-                     <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-                     Engineering_Feed
-                   </div>
+                  <div className="flex gap-2">
+                    <div className="w-3 h-3 rounded-full bg-[#ff5f57]" />
+                    <div className="w-3 h-3 rounded-full bg-[#febc2e]" />
+                    <div className="w-3 h-3 rounded-full bg-[#28c840]" />
+                  </div>
+                  <div className="px-3 py-1 rounded-full bg-primary/5 border border-primary/10 text-[9px] font-bold text-muted-foreground uppercase tracking-[0.2em] local-jetbrains-mono flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+                    Engineering_Feed
+                  </div>
                 </div>
 
                 {/* Carousel Area */}
                 <div className="relative flex-1 rounded-4xl overflow-hidden border border-border/40 dark:border-white/5 bg-background/40">
-                   {items.map((item, idx) => (
-                     <motion.div
-                       key={idx}
-                       initial={false}
-                       animate={mounted ? { 
-                         opacity: currentIndex === idx ? 1 : 0,
-                         x: currentIndex === idx ? 0 : 20,
-                         pointerEvents: currentIndex === idx ? "auto" : "none"
-                       } : {
-                         opacity: idx === 0 ? 1 : 0,
-                         x: idx === 0 ? 0 : 20,
-                         pointerEvents: idx === 0 ? "auto" : "none"
-                       }}
-                       transition={{ duration: 0.8, ease: "circOut" }}
-                       className={cn(
-                         "absolute inset-0 p-6 flex flex-col",
-                         !mounted && idx !== 0 && "hidden"
-                       )}
-                     >
-                       <div className="relative aspect-video rounded-2xl overflow-hidden mb-6 border border-border/40 dark:border-white/5 shadow-2xl">
-                         <Image 
-                           src={item.image} 
-                           alt={item.title} 
-                           fill 
-                           priority={idx === 0}
-                           className="object-cover transition-transform duration-700 hover:scale-105"
-                         />
-                         <div className="absolute inset-0 bg-linear-to-t from-background/80 via-transparent to-transparent" />
-                         <div className="absolute bottom-4 left-4">
-                            <span className="px-3 py-1 bg-primary/20 backdrop-blur-md border border-primary/30 rounded-full text-[8px] font-black text-primary uppercase tracking-widest">
-                              {item.label}
-                            </span>
-                         </div>
-                       </div>
-                       
-                       <h3 className="text-2xl font-black amoriaregular text-foreground mb-3 line-clamp-2">
-                         {item.title}
-                       </h3>
-                       <p className="text-xs text-muted-foreground line-clamp-3 mb-6 google-sans font-light leading-relaxed italic">
-                         "{item.description}"
-                       </p>
-                       
-                       <Link 
-                         href={item.link}
-                         className="mt-auto group/feed-link inline-flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.3em] text-primary hover:text-foreground transition-colors"
-                       >
-                         Initialize Access
-                         <ArrowRight size={14} className="transition-transform group-hover/feed-link:translate-x-1" />
-                       </Link>
-                     </motion.div>
-                   ))}
+                  {items.map((item, idx) => (
+                    <motion.div
+                      key={idx}
+                      initial={false}
+                      animate={
+                        mounted
+                          ? {
+                              opacity: currentIndex === idx ? 1 : 0,
+                              x: currentIndex === idx ? 0 : 20,
+                              pointerEvents:
+                                currentIndex === idx ? "auto" : "none",
+                            }
+                          : {
+                              opacity: idx === 0 ? 1 : 0,
+                              x: idx === 0 ? 0 : 20,
+                              pointerEvents: idx === 0 ? "auto" : "none",
+                            }
+                      }
+                      transition={{ duration: 0.8, ease: "circOut" }}
+                      className={cn(
+                        "absolute inset-0 p-6 flex flex-col",
+                        !mounted && idx !== 0 && "hidden",
+                      )}
+                    >
+                      <div className="relative aspect-video rounded-2xl overflow-hidden mb-6 border border-border/40 dark:border-white/5 shadow-2xl">
+                        <Image
+                          src={item.image}
+                          alt={item.title}
+                          fill
+                          priority={idx === 0}
+                          className="object-cover transition-transform duration-700 hover:scale-105"
+                        />
+                        <div className="absolute inset-0 bg-linear-to-t from-background/80 via-transparent to-transparent" />
+                        <div className="absolute bottom-4 left-4">
+                          <span className="px-3 py-1 bg-primary/20 backdrop-blur-md border border-primary/30 rounded-full text-[8px] font-black text-primary uppercase tracking-widest">
+                            {item.label}
+                          </span>
+                        </div>
+                      </div>
+
+                      <h3 className="text-2xl font-black amoriaregular text-foreground mb-3 line-clamp-2">
+                        {item.title}
+                      </h3>
+                      <p className="text-xs text-muted-foreground line-clamp-3 mb-6 google-sans font-light leading-relaxed italic">
+                        "{item.description}"
+                      </p>
+
+                      <Link
+                        href={item.link}
+                        className="mt-auto group/feed-link inline-flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.3em] text-primary hover:text-foreground transition-colors"
+                      >
+                        Initialize Access
+                        <ArrowRight
+                          size={14}
+                          className="transition-transform group-hover/feed-link:translate-x-1"
+                        />
+                      </Link>
+                    </motion.div>
+                  ))}
                 </div>
 
                 {/* Carousel Indicators */}
                 <div className="flex justify-center gap-2 mt-6">
-                   {items.map((_, idx) => (
-                     <button
-                       key={idx}
-                       onClick={() => setCurrentIndex(idx)}
-                       className={`h-1.5 transition-all duration-500 rounded-full ${currentIndex === idx ? "w-8 bg-primary" : "w-1.5 bg-border/40 hover:bg-border/60"}`}
-                     />
-                   ))}
+                  {items.map((_, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => setCurrentIndex(idx)}
+                      className={`h-1.5 transition-all duration-500 rounded-full ${currentIndex === idx ? "w-8 bg-primary" : "w-1.5 bg-border/40 hover:bg-border/60"}`}
+                    />
+                  ))}
                 </div>
 
                 {/* Decorative scanning line */}
-                <motion.div 
+                <motion.div
                   animate={{ top: ["0%", "100%", "0%"] }}
-                  transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
-                  className="absolute left-0 right-0 h-px bg-primary/20 blur-sm z-20 pointer-events-none" 
+                  transition={{
+                    duration: 10,
+                    repeat: Infinity,
+                    ease: "linear",
+                  }}
+                  className="absolute left-0 right-0 h-px bg-primary/20 blur-sm z-20 pointer-events-none"
                 />
               </div>
             </div>
           </motion.div>
         </div>
       </div>
-      
+
       {/* Decorative side indicators */}
       <div className="absolute left-10 bottom-10 hidden xl:block">
         <div className="flex flex-col gap-4 text-[10px] font-bold text-muted-foreground local-jetbrains-mono vertical-rl rotate-180 uppercase tracking-[0.5em] opacity-40">
@@ -232,5 +262,5 @@ export default function FeaturedHero({ items }: FeaturedHeroProps) {
         </div>
       </div>
     </section>
-  )
+  );
 }

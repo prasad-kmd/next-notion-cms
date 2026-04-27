@@ -8,7 +8,10 @@ interface RelatedContentProps {
   currentSlug: string;
 }
 
-export async function RelatedContent({ type, currentSlug }: RelatedContentProps) {
+export async function RelatedContent({
+  type,
+  currentSlug,
+}: RelatedContentProps) {
   const allItems = await getContentByType(type);
   const relatedItems = allItems
     .filter((item: unknown) => item.slug !== currentSlug)

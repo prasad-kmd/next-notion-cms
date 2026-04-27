@@ -2,13 +2,13 @@
 
 import { useEffect, useState } from "react";
 import { useHasMounted } from "@/hooks/use-has-mounted";
-import { 
-  PieChart, 
-  Pie, 
-  Cell, 
-  Tooltip, 
+import {
+  PieChart,
+  Pie,
+  Cell,
+  Tooltip,
   ResponsiveContainer,
-  Legend
+  Legend,
 } from "recharts";
 import { ANALYTICS_COLORS, getRechartsTheme } from "@/lib/recharts-theme";
 import { useTheme } from "next-themes";
@@ -20,7 +20,11 @@ interface BreakdownChartProps {
   title: string;
 }
 
-export function BreakdownChart({ timeRange, insightType, title }: BreakdownChartProps) {
+export function BreakdownChart({
+  timeRange,
+  insightType,
+  title,
+}: BreakdownChartProps) {
   const [data, setData] = useState<Record<string, unknown>[]>([]);
   const [loading, setLoading] = useState(true);
   const hasMounted = useHasMounted();
@@ -34,9 +38,9 @@ export function BreakdownChart({ timeRange, insightType, title }: BreakdownChart
         const response = await fetch("/api/admin/analytics", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ 
+          body: JSON.stringify({
             insightType,
-            params: { timeRange }
+            params: { timeRange },
           }),
         });
         if (response.ok) {
@@ -52,7 +56,12 @@ export function BreakdownChart({ timeRange, insightType, title }: BreakdownChart
     fetchData();
   }, [timeRange, insightType]);
 
-  if (loading || !hasMounted) return <div className="h-[320px] flex items-center justify-center animate-pulse bg-muted/10 rounded-3xl">Loading {title}...</div>;
+  if (loading || !hasMounted)
+    return (
+      <div className="h-[320px] flex items-center justify-center animate-pulse bg-muted/10 rounded-3xl">
+        Loading {title}...
+      </div>
+    );
 
   return (
     <div className="h-[320px] w-full relative">
@@ -69,7 +78,12 @@ export function BreakdownChart({ timeRange, insightType, title }: BreakdownChart
             nameKey="label"
           >
             {data.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={getColorCode(ANALYTICS_COLORS[index % ANALYTICS_COLORS.length])} />
+              <Cell
+                key={`cell-${index}`}
+                fill={getColorCode(
+                  ANALYTICS_COLORS[index % ANALYTICS_COLORS.length],
+                )}
+              />
             ))}
           </Pie>
           <Tooltip contentStyle={chartTheme.tooltip.contentStyle} />

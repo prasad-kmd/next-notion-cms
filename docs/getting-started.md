@@ -19,11 +19,11 @@ Before you begin, ensure you have the following installed:
 
 ### Required Software
 
-| Software | Version | Purpose | Download Link |
-|----------|---------|---------|---------------|
-| **Node.js** | v20.x+ | JavaScript runtime | [Download](https://nodejs.org/) |
-| **pnpm** | v9.x+ | Package manager | [Install](https://pnpm.io/installation) |
-| **Git** | Latest | Version control | [Download](https://git-scm.com/) |
+| Software    | Version | Purpose            | Download Link                           |
+| ----------- | ------- | ------------------ | --------------------------------------- |
+| **Node.js** | v20.x+  | JavaScript runtime | [Download](https://nodejs.org/)         |
+| **pnpm**    | v9.x+   | Package manager    | [Install](https://pnpm.io/installation) |
+| **Git**     | Latest  | Version control    | [Download](https://git-scm.com/)        |
 
 ### Verify Installation
 
@@ -56,6 +56,7 @@ pnpm install
 ```
 
 This will install all required packages including:
+
 - Next.js 16
 - Tailwind CSS 4
 - Better Auth
@@ -131,6 +132,7 @@ pnpm db:push
 ```
 
 This command will:
+
 - Create all necessary tables (`user`, `session`, `account`, `verification`)
 - Set up proper indexes and constraints
 - Initialize the schema defined in `lib/db/schema.ts`
@@ -144,6 +146,7 @@ pnpm db:studio
 ```
 
 This opens a web interface at `http://localhost:3000` where you can:
+
 - View table structures
 - Browse data
 - Run SQL queries
@@ -171,16 +174,16 @@ The application will start at: **http://localhost:3000**
 
 Once running, you can access:
 
-| Route | Description |
-|-------|-------------|
-| `/` | Homepage with featured content |
-| `/blog` | Blog posts listing |
-| `/articles` | Technical articles |
-| `/projects` | Project showcase |
-| `/tutorials` | Tutorial content |
-| `/wiki` | Documentation wiki |
-| `/authors` | Author directory |
-| `/sign-in` | Authentication page |
+| Route        | Description                     |
+| ------------ | ------------------------------- |
+| `/`          | Homepage with featured content  |
+| `/blog`      | Blog posts listing              |
+| `/articles`  | Technical articles              |
+| `/projects`  | Project showcase                |
+| `/tutorials` | Tutorial content                |
+| `/wiki`      | Documentation wiki              |
+| `/authors`   | Author directory                |
+| `/sign-in`   | Authentication page             |
 | `/dashboard` | User dashboard (requires login) |
 
 ---
@@ -247,7 +250,7 @@ pnpm install
 
 ---
 
-**Need Help?** 
+**Need Help?**
 
 - 📖 Read the full [documentation index](README.md)
 - 🐛 Report issues on [GitHub](https://github.com/prasad-kmd/next-notion-cms/issues)

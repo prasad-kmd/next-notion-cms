@@ -55,13 +55,13 @@ git push origin main
 
 Navigate to **Settings > Environment Variables** and add all variables from your `.env.local`:
 
-| Variable | Environment | Value |
-|----------|------------|-------|
-| `DATABASE_URL` | Production | Your Supabase URL |
-| `BETTER_AUTH_SECRET` | Production | Your auth secret |
-| `BETTER_AUTH_URL` | Production | `https://your-domain.com` |
-| `NOTION_AUTH_TOKEN` | Production | Your Notion token |
-| ... | ... | ... |
+| Variable             | Environment | Value                     |
+| -------------------- | ----------- | ------------------------- |
+| `DATABASE_URL`       | Production  | Your Supabase URL         |
+| `BETTER_AUTH_SECRET` | Production  | Your auth secret          |
+| `BETTER_AUTH_URL`    | Production  | `https://your-domain.com` |
+| `NOTION_AUTH_TOKEN`  | Production  | Your Notion token         |
+| ...                  | ...         | ...                       |
 
 ⚠️ **Important**: Add variables for all environments (Production, Preview, Development)
 
@@ -153,8 +153,8 @@ Ensure proper configuration for production:
 const nextConfig = {
   images: {
     remotePatterns: [
-      { protocol: 'https', hostname: '**.notion.so' },
-      { protocol: 'https', hostname: '**.amazonaws.com' },
+      { protocol: "https", hostname: "**.notion.so" },
+      { protocol: "https", hostname: "**.amazonaws.com" },
     ],
   },
   // Enable static exports if needed
@@ -229,6 +229,7 @@ images: {
 ### Code Splitting
 
 Automatic with Next.js:
+
 - Page-level code splitting
 - Dynamic imports for heavy components
 - Lazy loading for syntax highlighting
@@ -240,6 +241,7 @@ Automatic with Next.js:
 ### Vercel Analytics
 
 Enable in Vercel dashboard:
+
 - **Web Analytics**: Traffic insights
 - **Speed Insights**: Performance metrics
 - **Real Experience Score**: User-centric metrics
@@ -247,6 +249,7 @@ Enable in Vercel dashboard:
 ### Error Tracking
 
 Recommended tools:
+
 - **Sentry**: Error reporting
 - **LogRocket**: Session replay
 - **Vercel Logs**: Server logs
@@ -254,6 +257,7 @@ Recommended tools:
 ### Uptime Monitoring
 
 Set up external monitoring:
+
 - **UptimeRobot**: Free tier available
 - **Pingdom**: Advanced features
 - **StatusCake**: Comprehensive alerts
@@ -271,6 +275,7 @@ Set up external monitoring:
 ### Step 2: Configure DNS
 
 **For Root Domain:**
+
 ```
 Type: A
 Name: @
@@ -278,6 +283,7 @@ Value: 76.76.21.21
 ```
 
 **For WWW Subdomain:**
+
 ```
 Type: CNAME
 Name: www

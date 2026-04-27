@@ -1,11 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import {
-  Briefcase,
-  GraduationCap,
-  Award,
-  Dna,
-} from "lucide-react";
+import { Briefcase, GraduationCap, Award, Dna } from "lucide-react";
 import { Button } from "@/components/ui/button";
 // import { Card, CardContent } from "@/components/ui/card";
 import { getContentByType } from "@/lib/content";

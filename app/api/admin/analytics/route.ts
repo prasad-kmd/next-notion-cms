@@ -16,20 +16,31 @@ export async function POST(req: NextRequest) {
 
     const body = await req.json();
     const { insightType, params = {} } = body;
-    const { timeRange = "-30d", contentType, limit = 10, interval: userInterval, breakdownBy } = params;
+    const {
+      timeRange = "-30d",
+      contentType,
+      limit = 10,
+      interval: userInterval,
+      breakdownBy,
+    } = params;
 
     // Helper to convert PostHog time range to HogQL interval
     const formatHogQLInterval = (range: string) => {
       const value = range.replace(/^-/, "");
       const num = parseInt(value) || 30;
       const unit = value.replace(/^\d+/, "").toLowerCase();
-      
+
       switch (unit) {
-        case "h": return `${num} HOUR`;
-        case "d": return `${num} DAY`;
-        case "w": return `${num} WEEK`;
-        case "m": return `${num} MONTH`;
-        default: return `${num} DAY`;
+        case "h":
+          return `${num} HOUR`;
+        case "d":
+          return `${num} DAY`;
+        case "w":
+          return `${num} WEEK`;
+        case "m":
+          return `${num} MONTH`;
+        default:
+          return `${num} DAY`;
       }
     };
 
@@ -68,12 +79,12 @@ export async function POST(req: NextRequest) {
           const contentTypeFilter = contentType
             ? `AND properties.content_type = '${contentType}'`
             : "AND properties.page_slug IS NOT NULL";
-          
+
           const interval = formatHogQLInterval(timeRange);
-          
+
           queryObj = {
             kind: "HogQLQuery",
-            query: `SELECT properties.page_slug AS slug, any(properties.page_title) AS title, any(properties.content_type) AS type, count() AS views FROM events WHERE event = '$pageview' ${contentTypeFilter} AND timestamp >= now() - INTERVAL ${interval} GROUP BY slug ORDER BY views DESC LIMIT ${limit}`
+            query: `SELECT properties.page_slug AS slug, any(properties.page_title) AS title, any(properties.content_type) AS type, count() AS views FROM events WHERE event = '$pageview' ${contentTypeFilter} AND timestamp >= now() - INTERVAL ${interval} GROUP BY slug ORDER BY views DESC LIMIT ${limit}`,
           };
         }
         break;
@@ -129,7 +140,7 @@ export async function POST(req: NextRequest) {
               (SELECT count() FROM events WHERE event = 'comment_submitted' AND timestamp >= now() - INTERVAL ${hogqlInterval}) AS total_comments,
               (SELECT count() FROM events WHERE event = 'bookmark_added' AND timestamp >= now() - INTERVAL ${hogqlInterval}) AS total_bookmarks
               FROM events 
-              WHERE event = '$pageview' AND timestamp >= now() - INTERVAL ${hogqlInterval}`
+              WHERE event = '$pageview' AND timestamp >= now() - INTERVAL ${hogqlInterval}`,
           };
         }
         break;
@@ -151,7 +162,7 @@ export async function POST(req: NextRequest) {
               FROM events 
               WHERE event = '$pageview' AND timestamp >= now() - INTERVAL ${hogqlInterval}
               GROUP BY source 
-              ORDER BY count DESC`
+              ORDER BY count DESC`,
           };
         }
         break;
@@ -160,7 +171,7 @@ export async function POST(req: NextRequest) {
           const hogqlInterval = formatHogQLInterval(timeRange);
           queryObj = {
             kind: "HogQLQuery",
-            query: `SELECT properties.$device_type AS device, count() AS count FROM events WHERE event = '$pageview' AND timestamp >= now() - INTERVAL ${hogqlInterval} GROUP BY device ORDER BY count DESC`
+            query: `SELECT properties.$device_type AS device, count() AS count FROM events WHERE event = '$pageview' AND timestamp >= now() - INTERVAL ${hogqlInterval} GROUP BY device ORDER BY count DESC`,
           };
         }
         break;
@@ -169,7 +180,7 @@ export async function POST(req: NextRequest) {
           const hogqlInterval = formatHogQLInterval(timeRange);
           queryObj = {
             kind: "HogQLQuery",
-            query: `SELECT properties.$browser AS browser, count() AS count FROM events WHERE event = '$pageview' AND timestamp >= now() - INTERVAL ${hogqlInterval} GROUP BY browser ORDER BY count DESC`
+            query: `SELECT properties.$browser AS browser, count() AS count FROM events WHERE event = '$pageview' AND timestamp >= now() - INTERVAL ${hogqlInterval} GROUP BY browser ORDER BY count DESC`,
           };
         }
         break;
@@ -178,7 +189,7 @@ export async function POST(req: NextRequest) {
           const hogqlInterval = formatHogQLInterval(timeRange);
           queryObj = {
             kind: "HogQLQuery",
-            query: `SELECT properties.$os AS os, count() AS count FROM events WHERE event = '$pageview' AND timestamp >= now() - INTERVAL ${hogqlInterval} GROUP BY os ORDER BY count DESC`
+            query: `SELECT properties.$os AS os, count() AS count FROM events WHERE event = '$pageview' AND timestamp >= now() - INTERVAL ${hogqlInterval} GROUP BY os ORDER BY count DESC`,
           };
         }
         break;
@@ -187,7 +198,7 @@ export async function POST(req: NextRequest) {
           const hogqlInterval = formatHogQLInterval(timeRange);
           queryObj = {
             kind: "HogQLQuery",
-            query: `SELECT properties.$geoip_country_name AS country, count() AS count FROM events WHERE event = '$pageview' AND timestamp >= now() - INTERVAL ${hogqlInterval} GROUP BY country ORDER BY count DESC LIMIT ${limit}`
+            query: `SELECT properties.$geoip_country_name AS country, count() AS count FROM events WHERE event = '$pageview' AND timestamp >= now() - INTERVAL ${hogqlInterval} GROUP BY country ORDER BY count DESC LIMIT ${limit}`,
           };
         }
         break;
@@ -196,7 +207,7 @@ export async function POST(req: NextRequest) {
           const hogqlInterval = formatHogQLInterval(timeRange);
           queryObj = {
             kind: "HogQLQuery",
-            query: `SELECT properties.target_domain AS domain, count() AS count FROM events WHERE event = 'outgoing_link_clicked' AND timestamp >= now() - INTERVAL ${hogqlInterval} GROUP BY domain ORDER BY count DESC LIMIT ${limit}`
+            query: `SELECT properties.target_domain AS domain, count() AS count FROM events WHERE event = 'outgoing_link_clicked' AND timestamp >= now() - INTERVAL ${hogqlInterval} GROUP BY domain ORDER BY count DESC LIMIT ${limit}`,
           };
         }
         break;
@@ -279,33 +290,44 @@ export async function POST(req: NextRequest) {
     // The query API returns `.results` instead of `.result`
     // For HogQLQuery, it returns results as an array of arrays
     let normalizedResult = json.results || json.result || [];
-    
+
     if (insightType === "top_content") {
       // For HogQL queries, results are an array of arrays
-      if (Array.isArray(normalizedResult) && normalizedResult.length > 0 && Array.isArray(normalizedResult[0])) {
+      if (
+        Array.isArray(normalizedResult) &&
+        normalizedResult.length > 0 &&
+        Array.isArray(normalizedResult[0])
+      ) {
         normalizedResult = normalizedResult.map((row: unknown[]) => ({
           slug: row[0] as string,
           title: (row[1] || row[0]) as string,
           type: row[2] as string,
-          views: row[3] as number
+          views: row[3] as number,
         }));
       }
     } else if (insightType === "summary_metrics") {
       if (Array.isArray(normalizedResult) && normalizedResult.length > 0) {
         const row = normalizedResult[0];
-        
+
         // Fetch Notion content count
         let totalContent = 0;
         try {
           const { getContentByType } = await import("@/lib/content");
-          const [blog, articles, projects, tutorials, wiki] = await Promise.all([
-            getContentByType("blog"),
-            getContentByType("articles"),
-            getContentByType("projects"),
-            getContentByType("tutorials"),
-            getContentByType("wiki"),
-          ]);
-          totalContent = blog.length + articles.length + projects.length + tutorials.length + wiki.length;
+          const [blog, articles, projects, tutorials, wiki] = await Promise.all(
+            [
+              getContentByType("blog"),
+              getContentByType("articles"),
+              getContentByType("projects"),
+              getContentByType("tutorials"),
+              getContentByType("wiki"),
+            ],
+          );
+          totalContent =
+            blog.length +
+            articles.length +
+            projects.length +
+            tutorials.length +
+            wiki.length;
         } catch (e) {
           console.error("Failed to fetch Notion stats for summary:", e);
         }
@@ -319,11 +341,24 @@ export async function POST(req: NextRequest) {
           total_content: totalContent,
         };
       }
-    } else if (["traffic_sources", "device_breakdown", "browser_breakdown", "os_breakdown", "country_breakdown", "outgoing_links"].includes(insightType)) {
-      if (Array.isArray(normalizedResult) && normalizedResult.length > 0 && Array.isArray(normalizedResult[0])) {
+    } else if (
+      [
+        "traffic_sources",
+        "device_breakdown",
+        "browser_breakdown",
+        "os_breakdown",
+        "country_breakdown",
+        "outgoing_links",
+      ].includes(insightType)
+    ) {
+      if (
+        Array.isArray(normalizedResult) &&
+        normalizedResult.length > 0 &&
+        Array.isArray(normalizedResult[0])
+      ) {
         normalizedResult = normalizedResult.map((row: unknown[]) => ({
           label: (row[0] as string) || "Unknown",
-          value: row[1] as number
+          value: row[1] as number,
         }));
       }
     }
@@ -332,11 +367,15 @@ export async function POST(req: NextRequest) {
       result: normalizedResult,
     };
 
-
     // Set appropriate cache headers based on insight type
     let cacheMaxAge = 300; // Default 5 minutes
     if (insightType === "country_breakdown") cacheMaxAge = 43200; // 12 hours
-    if (["device_breakdown", "browser_breakdown", "os_breakdown"].includes(insightType)) cacheMaxAge = 21600; // 6 hours
+    if (
+      ["device_breakdown", "browser_breakdown", "os_breakdown"].includes(
+        insightType,
+      )
+    )
+      cacheMaxAge = 21600; // 6 hours
     if (insightType === "summary_metrics") cacheMaxAge = 3600; // 1 hour
 
     return NextResponse.json(data, {
@@ -348,7 +387,9 @@ export async function POST(req: NextRequest) {
     console.error("Analytics API error:", error);
     // Ensure we return a NextResponse even in the catch block
     return NextResponse.json(
-      { error: error instanceof Error ? error.message : "Internal Server Error" },
+      {
+        error: error instanceof Error ? error.message : "Internal Server Error",
+      },
       { status: 500 },
     );
   }

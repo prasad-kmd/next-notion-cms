@@ -37,9 +37,9 @@ export function SummaryMetrics({ timeRange }: SummaryMetricsProps) {
         const response = await fetch("/api/admin/analytics", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ 
+          body: JSON.stringify({
             insightType: "summary_metrics",
-            params: { timeRange }
+            params: { timeRange },
           }),
         });
         if (!response.ok) throw new Error("Failed to fetch summary metrics");
@@ -54,7 +54,12 @@ export function SummaryMetrics({ timeRange }: SummaryMetricsProps) {
     fetchData();
   }, [timeRange]);
 
-  if (error) return <div className="text-destructive p-4 border border-destructive/20 bg-destructive/5 rounded-2xl">Error: {error}</div>;
+  if (error)
+    return (
+      <div className="text-destructive p-4 border border-destructive/20 bg-destructive/5 rounded-2xl">
+        Error: {error}
+      </div>
+    );
 
   const metrics = [
     {
@@ -92,7 +97,7 @@ export function SummaryMetrics({ timeRange }: SummaryMetricsProps) {
       value: data ? data.total_content : "--",
       icon: <FileText className="w-4 h-4" />,
       description: "Total published",
-    }
+    },
   ];
 
   return (

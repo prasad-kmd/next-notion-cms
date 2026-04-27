@@ -12,18 +12,25 @@ export default function Loading() {
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      initialResourceCount.current = performance.getEntriesByType("resource").length;
-      
+      initialResourceCount.current =
+        performance.getEntriesByType("resource").length;
+
       const observer = new PerformanceObserver((list) => {
         const entries = list.getEntries();
         entries.forEach((entry) => {
           if (!processedResources.current.has(entry.name)) {
             processedResources.current.add(entry.name);
-            const fileName = entry.name.split("/").pop()?.split("?")[0] || "unknown_asset";
-            const type = (entry as PerformanceResourceTiming).initiatorType.toUpperCase();
-            
-            setLogs((prev) => [...prev.slice(-4), `[LOAD] ${type}::${fileName.substring(0, 20)}... OK`]);
-            
+            const fileName =
+              entry.name.split("/").pop()?.split("?")[0] || "unknown_asset";
+            const type = (
+              entry as PerformanceResourceTiming
+            ).initiatorType.toUpperCase();
+
+            setLogs((prev) => [
+              ...prev.slice(-4),
+              `[LOAD] ${type}::${fileName.substring(0, 20)}... OK`,
+            ]);
+
             // Proportional progress based on discovered resources
             setProgress((prev) => {
               const next = prev + (100 - prev) * 0.15;
@@ -79,12 +86,20 @@ export default function Loading() {
             <div className="local-jetbrains-mono min-h-[80px] space-y-1 text-[11px] leading-tight text-primary/80">
               {logs.map((log, i) => (
                 <div key={i} className="flex gap-2">
-                  <span className="text-muted-foreground opacity-50 select-none">{">"}</span>
-                  <span className={cn(i === logs.length - 1 ? "animate-pulse" : "")}>{log}</span>
+                  <span className="text-muted-foreground opacity-50 select-none">
+                    {">"}
+                  </span>
+                  <span
+                    className={cn(i === logs.length - 1 ? "animate-pulse" : "")}
+                  >
+                    {log}
+                  </span>
                 </div>
               ))}
               <div className="flex gap-2">
-                <span className="text-muted-foreground opacity-50 select-none">{">"}</span>
+                <span className="text-muted-foreground opacity-50 select-none">
+                  {">"}
+                </span>
                 <span className="w-2 h-4 bg-primary/40 animate-pulse" />
               </div>
             </div>
@@ -93,7 +108,9 @@ export default function Loading() {
             <div className="space-y-2">
               <div className="flex items-center justify-between text-[9px] font-black uppercase tracking-widest text-muted-foreground">
                 <span>Deployment_Progress</span>
-                <span className="local-jetbrains-mono">{Math.round(progress)}%</span>
+                <span className="local-jetbrains-mono">
+                  {Math.round(progress)}%
+                </span>
               </div>
               <div className="h-1.5 w-full overflow-hidden rounded-full bg-muted border border-border/50">
                 <div
@@ -107,21 +124,25 @@ export default function Loading() {
 
         {/* Footer Info */}
         <div className="flex justify-between items-center px-2">
-            <div className="text-[9px] font-bold text-muted-foreground/40 uppercase tracking-[0.3em] local-jetbrains-mono">
-                PMEngineerLK // CORE_INIT
+          <div className="text-[9px] font-bold text-muted-foreground/40 uppercase tracking-[0.3em] local-jetbrains-mono">
+            PMEngineerLK // CORE_INIT
+          </div>
+          <div className="flex gap-4">
+            <div className="h-1 w-8 bg-primary/20 rounded-full overflow-hidden">
+              <div className="h-full bg-primary/60 animate-[loading-scan_2s_infinite]" />
             </div>
-            <div className="flex gap-4">
-                 <div className="h-1 w-8 bg-primary/20 rounded-full overflow-hidden">
-                    <div className="h-full bg-primary/60 animate-[loading-scan_2s_infinite]" />
-                 </div>
-            </div>
+          </div>
         </div>
       </div>
 
       <style jsx global>{`
         @keyframes loading-scan {
-          0% { transform: translateX(-100%); }
-          100% { transform: translateX(100%); }
+          0% {
+            transform: translateX(-100%);
+          }
+          100% {
+            transform: translateX(100%);
+          }
         }
       `}</style>
     </div>

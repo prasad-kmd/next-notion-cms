@@ -10,14 +10,20 @@ interface ViewCounterProps {
   className?: string;
 }
 
-export function ViewCounter({ slug, contentType, className }: ViewCounterProps) {
+export function ViewCounter({
+  slug,
+  contentType,
+  className,
+}: ViewCounterProps) {
   const [views, setViews] = useState<number | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchViews = async () => {
       try {
-        const response = await fetch(`/api/views/${slug}?contentType=${contentType}`);
+        const response = await fetch(
+          `/api/views/${slug}?contentType=${contentType}`,
+        );
         if (response.ok) {
           const data = await response.json();
           setViews(data.views);
@@ -55,7 +61,7 @@ export function ViewCounter({ slug, contentType, className }: ViewCounterProps) 
     <div
       className={cn(
         "flex items-center gap-1.5 text-muted-foreground font-local-inter",
-        className
+        className,
       )}
     >
       <Eye className="h-3.5 w-3.5" />

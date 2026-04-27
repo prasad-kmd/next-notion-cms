@@ -41,7 +41,7 @@ export default async function WikiPage({ searchParams }: WikiPageProps) {
   const totalPages = Math.ceil(allEntries.length / postsPerPage);
   const entries = allEntries.slice(
     (currentPage - 1) * postsPerPage,
-    currentPage * postsPerPage
+    currentPage * postsPerPage,
   );
 
   return (
@@ -49,9 +49,9 @@ export default async function WikiPage({ searchParams }: WikiPageProps) {
       {/* Background Decorator */}
       <div className="absolute top-0 right-0 -z-10 w-[600px] h-[600px] bg-primary/5 blur-[150px] rounded-full pointer-events-none" />
       <div className="absolute bottom-0 left-0 -z-10 w-[400px] h-[400px] bg-secondary/5 blur-[120px] rounded-full pointer-events-none" />
-      
+
       <div className="mx-auto max-w-6xl px-6 lg:px-8 relative z-10">
-        <motion.div 
+        <motion.div
           initial="hidden"
           animate="visible"
           variants={fadeInUp}
@@ -77,7 +77,7 @@ export default async function WikiPage({ searchParams }: WikiPageProps) {
           </div>
         ) : (
           <>
-            <motion.div 
+            <motion.div
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
@@ -93,7 +93,7 @@ export default async function WikiPage({ searchParams }: WikiPageProps) {
                     <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
                       <Hash className="h-24 w-24 -mr-8 -mt-8 rotate-12" />
                     </div>
-                    
+
                     <div className="flex items-center gap-2 mb-6">
                       <div className="px-3 py-1 rounded-full bg-primary/10 text-[10px] font-bold text-primary uppercase tracking-widest border border-primary/10">
                         {entry.technical || "General"}
@@ -129,11 +129,11 @@ export default async function WikiPage({ searchParams }: WikiPageProps) {
                 </motion.div>
               ))}
             </motion.div>
-            
-            <Pagination 
-              currentPage={currentPage} 
-              totalPages={totalPages} 
-              basePath="/wiki" 
+
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              basePath="/wiki"
             />
           </>
         )}

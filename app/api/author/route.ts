@@ -10,7 +10,7 @@ export async function GET(request: NextRequest) {
   }
 
   const author = await getAuthorBasic(slug);
-  
+
   if (!author) {
     return NextResponse.json({ error: "Author not found" }, { status: 404 });
   }

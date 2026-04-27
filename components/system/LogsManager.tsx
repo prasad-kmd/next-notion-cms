@@ -1,19 +1,19 @@
 "use client";
 
-import React, { useState, useEffect, useCallback } from 'react';
-import { 
-  RefreshCw, 
+import React, { useState, useEffect, useCallback } from "react";
+import {
+  RefreshCw,
   Terminal,
   ChevronLeft,
   ChevronRight,
-  Filter
-} from 'lucide-react';
+  Filter,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { LogEntry } from "@/components/system/LogEntry";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge";
-import Link from 'next/link';
+import Link from "next/link";
 
 interface Log {
   id: string;
@@ -33,21 +33,23 @@ export function LogsManager({ initialLogs, initialTotal }: LogsManagerProps) {
   const [loading, setLoading] = useState(false);
   const [logs, setLogs] = useState<Log[]>(initialLogs);
   const [total, setTotal] = useState(initialTotal);
-  const [logFilter, setLogFilter] = useState('all');
-  const [levelFilter, setLevelFilter] = useState('all');
+  const [logFilter, setLogFilter] = useState("all");
+  const [levelFilter, setLevelFilter] = useState("all");
   const [limit] = useState(50);
-  
+
   const fetchLogs = useCallback(async () => {
     setLoading(true);
     try {
-      const res = await fetch(`/api/admin/system/logs?limit=${limit}&service=${logFilter}&level=${levelFilter}`);
+      const res = await fetch(
+        `/api/admin/system/logs?limit=${limit}&service=${logFilter}&level=${levelFilter}`,
+      );
       if (res.ok) {
         const data = await res.json();
         setLogs(data.logs);
         setTotal(data.total);
       }
     } catch {
-      toast.error('Failed to fetch logs');
+      toast.error("Failed to fetch logs");
     } finally {
       setLoading(false);
     }
@@ -55,8 +57,8 @@ export function LogsManager({ initialLogs, initialTotal }: LogsManagerProps) {
 
   useEffect(() => {
     // Only fetch if filters are NOT the initial state
-    if (logFilter !== 'all' || levelFilter !== 'all' || limit !== 50) {
-        fetchLogs();
+    if (logFilter !== "all" || levelFilter !== "all" || limit !== 50) {
+      fetchLogs();
     }
   }, [logFilter, levelFilter, limit, fetchLogs]);
 
@@ -66,25 +68,38 @@ export function LogsManager({ initialLogs, initialTotal }: LogsManagerProps) {
         <div className="space-y-1">
           <div className="flex items-center gap-2">
             <Link href="/dashboard/system-monitor">
-              <Button variant="ghost" size="icon" className="h-8 w-8 rounded-full">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-8 w-8 rounded-full"
+              >
                 <ChevronLeft className="w-4 h-4" />
               </Button>
             </Link>
-            <h1 className="text-3xl font-black font-google-sans tracking-tight">System Logs</h1>
-            <Badge variant="outline" className="text-[10px] font-local-jetbrains-mono">{total} TOTAL</Badge>
+            <h1 className="text-3xl font-black font-google-sans tracking-tight">
+              System Logs
+            </h1>
+            <Badge
+              variant="outline"
+              className="text-[10px] font-local-jetbrains-mono"
+            >
+              {total} TOTAL
+            </Badge>
           </div>
           <p className="text-xs font-local-inter text-muted-foreground ml-10">
             Historical activity and error logs for all platform services.
           </p>
         </div>
 
-        <Button 
-          variant="outline" 
-          size="sm" 
-          onClick={fetchLogs} 
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={fetchLogs}
           disabled={loading}
         >
-          <RefreshCw className={`w-4 h-4 mr-2 font-local-inter ${loading ? "animate-spin" : ""}`} />
+          <RefreshCw
+            className={`w-4 h-4 mr-2 font-local-inter ${loading ? "animate-spin" : ""}`}
+          />
           Refresh Logs
         </Button>
       </div>
@@ -94,23 +109,72 @@ export function LogsManager({ initialLogs, initialTotal }: LogsManagerProps) {
           <Filter className="w-3 h-3" />
           Filters
         </div>
-        
+
         <Tabs value={logFilter} onValueChange={setLogFilter} className="w-auto">
           <TabsList className="bg-muted/50 border border-border/50 h-8">
-            <TabsTrigger value="all" className="text-[10px] uppercase font-bold tracking-widest px-3 h-6">All Services</TabsTrigger>
-            <TabsTrigger value="notion" className="text-[10px] uppercase font-bold tracking-widest px-3 h-6">Notion</TabsTrigger>
-            <TabsTrigger value="supabase" className="text-[10px] uppercase font-bold tracking-widest px-3 h-6">Supabase</TabsTrigger>
-            <TabsTrigger value="posthog" className="text-[10px] uppercase font-bold tracking-widest px-3 h-6">PostHog</TabsTrigger>
-            <TabsTrigger value="system" className="text-[10px] uppercase font-bold tracking-widest px-3 h-6">System</TabsTrigger>
+            <TabsTrigger
+              value="all"
+              className="text-[10px] uppercase font-bold tracking-widest px-3 h-6"
+            >
+              All Services
+            </TabsTrigger>
+            <TabsTrigger
+              value="notion"
+              className="text-[10px] uppercase font-bold tracking-widest px-3 h-6"
+            >
+              Notion
+            </TabsTrigger>
+            <TabsTrigger
+              value="supabase"
+              className="text-[10px] uppercase font-bold tracking-widest px-3 h-6"
+            >
+              Supabase
+            </TabsTrigger>
+            <TabsTrigger
+              value="posthog"
+              className="text-[10px] uppercase font-bold tracking-widest px-3 h-6"
+            >
+              PostHog
+            </TabsTrigger>
+            <TabsTrigger
+              value="system"
+              className="text-[10px] uppercase font-bold tracking-widest px-3 h-6"
+            >
+              System
+            </TabsTrigger>
           </TabsList>
         </Tabs>
 
-        <Tabs value={levelFilter} onValueChange={setLevelFilter} className="w-auto">
+        <Tabs
+          value={levelFilter}
+          onValueChange={setLevelFilter}
+          className="w-auto"
+        >
           <TabsList className="bg-muted/50 border border-border/50 h-8">
-            <TabsTrigger value="all" className="text-[10px] uppercase font-bold tracking-widest px-3 h-6">All Levels</TabsTrigger>
-            <TabsTrigger value="info" className="text-[10px] uppercase font-bold tracking-widest px-3 h-6 text-blue-500">Info</TabsTrigger>
-            <TabsTrigger value="warning" className="text-[10px] uppercase font-bold tracking-widest px-3 h-6 text-yellow-500">Warning</TabsTrigger>
-            <TabsTrigger value="error" className="text-[10px] uppercase font-bold tracking-widest px-3 h-6 text-red-500">Error</TabsTrigger>
+            <TabsTrigger
+              value="all"
+              className="text-[10px] uppercase font-bold tracking-widest px-3 h-6"
+            >
+              All Levels
+            </TabsTrigger>
+            <TabsTrigger
+              value="info"
+              className="text-[10px] uppercase font-bold tracking-widest px-3 h-6 text-blue-500"
+            >
+              Info
+            </TabsTrigger>
+            <TabsTrigger
+              value="warning"
+              className="text-[10px] uppercase font-bold tracking-widest px-3 h-6 text-yellow-500"
+            >
+              Warning
+            </TabsTrigger>
+            <TabsTrigger
+              value="error"
+              className="text-[10px] uppercase font-bold tracking-widest px-3 h-6 text-red-500"
+            >
+              Error
+            </TabsTrigger>
           </TabsList>
         </Tabs>
       </div>
@@ -125,8 +189,17 @@ export function LogsManager({ initialLogs, initialTotal }: LogsManagerProps) {
         ) : (
           <div className="py-24 flex flex-col items-center justify-center text-muted-foreground gap-2">
             <Terminal className="w-12 h-12 opacity-20" />
-            <p className="text-sm font-local-jetbrains-mono">No logs found matching your criteria</p>
-            <Button variant="link" onClick={() => {setLogFilter('all'); setLevelFilter('all');}} className="text-primary text-xs font-local-inter">
+            <p className="text-sm font-local-jetbrains-mono">
+              No logs found matching your criteria
+            </p>
+            <Button
+              variant="link"
+              onClick={() => {
+                setLogFilter("all");
+                setLevelFilter("all");
+              }}
+              className="text-primary text-xs font-local-inter"
+            >
               Clear Filters
             </Button>
           </div>
@@ -134,10 +207,26 @@ export function LogsManager({ initialLogs, initialTotal }: LogsManagerProps) {
       </div>
 
       <div className="flex items-center justify-between text-xs text-muted-foreground font-roboto">
-        <span>Showing {logs.length} of {total} logs</span>
+        <span>
+          Showing {logs.length} of {total} logs
+        </span>
         <div className="flex items-center gap-2">
-          <Button variant="outline" size="icon" disabled className="h-8 w-8 rounded-xl opacity-50"><ChevronLeft className="w-4 h-4" /></Button>
-          <Button variant="outline" size="icon" disabled={total <= limit} className="h-8 w-8 rounded-xl"><ChevronRight className="w-4 h-4" /></Button>
+          <Button
+            variant="outline"
+            size="icon"
+            disabled
+            className="h-8 w-8 rounded-xl opacity-50"
+          >
+            <ChevronLeft className="w-4 h-4" />
+          </Button>
+          <Button
+            variant="outline"
+            size="icon"
+            disabled={total <= limit}
+            className="h-8 w-8 rounded-xl"
+          >
+            <ChevronRight className="w-4 h-4" />
+          </Button>
         </div>
       </div>
     </div>

@@ -1,24 +1,26 @@
-"use client"
+"use client";
 
-import dynamic from "next/dynamic"
+import dynamic from "next/dynamic";
 
 interface MagicBentoClientProps {
-  blogCount: number
-  articlesCount: number
-  projectsCount: number
-  tutorialsCount: number
+  blogCount: number;
+  articlesCount: number;
+  projectsCount: number;
+  tutorialsCount: number;
   latestItems: {
-    blog?: { title: string; description?: string }
-    articles?: { title: string; description?: string }
-    projects?: { title: string; description?: string }
-    tutorials?: { title: string; description?: string }
-  }
+    blog?: { title: string; description?: string };
+    articles?: { title: string; description?: string };
+    projects?: { title: string; description?: string };
+    tutorials?: { title: string; description?: string };
+  };
 }
 
 const MagicBento = dynamic(() => import("@/components/MagicBento"), {
   ssr: false,
-  loading: () => <div className="w-full h-[500px] bg-muted/50 rounded-lg animate-pulse" />,
-})
+  loading: () => (
+    <div className="w-full h-[500px] bg-muted/50 rounded-lg animate-pulse" />
+  ),
+});
 
 export default function MagicBentoClient({
   blogCount,
@@ -35,5 +37,5 @@ export default function MagicBentoClient({
       tutorialsCount={tutorialsCount}
       latestItems={latestItems}
     />
-  )
+  );
 }

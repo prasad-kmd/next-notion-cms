@@ -2,7 +2,10 @@
 
 import React, { useEffect, useRef } from "react";
 import { useAccessibility } from "@/contexts/AccessibilityContext";
-import { applyAccessibilityStyles, clearAccessibilityStyles } from "@/lib/accessibility/apply-styles";
+import {
+  applyAccessibilityStyles,
+  clearAccessibilityStyles,
+} from "@/lib/accessibility/apply-styles";
 
 interface ContentAreaProps {
   children: React.ReactNode;
@@ -29,20 +32,23 @@ export function ContentArea({ children, className = "" }: ContentAreaProps) {
   }, []);
 
   return (
-    <div 
-      ref={containerRef} 
+    <div
+      ref={containerRef}
       className={`accessibility-content-area ${className}`}
-      style={{
-        fontSize: "var(--a11y-font-size, inherit)",
-        fontFamily: "var(--a11y-font-family, inherit)",
-        lineHeight: "var(--a11y-line-height, inherit)",
-        wordSpacing: "var(--a11y-word-spacing, inherit)",
-        letterSpacing: "var(--a11y-letter-spacing, inherit)",
-      } as React.CSSProperties}
+      style={
+        {
+          fontSize: "var(--a11y-font-size, inherit)",
+          fontFamily: "var(--a11y-font-family, inherit)",
+          lineHeight: "var(--a11y-line-height, inherit)",
+          wordSpacing: "var(--a11y-word-spacing, inherit)",
+          letterSpacing: "var(--a11y-letter-spacing, inherit)",
+        } as React.CSSProperties
+      }
     >
       <style jsx global>{`
         .accessibility-content-area,
-        .accessibility-content-area *:not(pre):not(code):not(pre *):not(.katex *):not(.katex) {
+        .accessibility-content-area
+          *:not(pre):not(code):not(pre *):not(.katex *):not(.katex) {
           font-family: var(--a11y-font-family, inherit) !important;
         }
       `}</style>

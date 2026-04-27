@@ -1,8 +1,19 @@
 "use client";
 
 import React from "react";
-import { useAccessibility, AVAILABLE_FONTS } from "@/contexts/AccessibilityContext";
-import { RotateCcw, Type, AlignLeft, List, LetterText, Contrast, Accessibility as AccessibilityIcon } from "lucide-react";
+import {
+  useAccessibility,
+  AVAILABLE_FONTS,
+} from "@/contexts/AccessibilityContext";
+import {
+  RotateCcw,
+  Type,
+  AlignLeft,
+  List,
+  LetterText,
+  Contrast,
+  Accessibility as AccessibilityIcon,
+} from "lucide-react";
 import { Slider } from "@/components/ui/slider";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -44,7 +55,10 @@ export function ControlPanel() {
   };
 
   return (
-    <Dialog open={isPanelOpen} onOpenChange={(open) => updateSetting("isPanelOpen", open)}>
+    <Dialog
+      open={isPanelOpen}
+      onOpenChange={(open) => updateSetting("isPanelOpen", open)}
+    >
       <DialogContent className="sm:max-w-md max-h-[90vh] overflow-y-auto backdrop-blur-xl bg-background/95 border-primary/20 shadow-2xl">
         <DialogHeader className="flex flex-row items-center justify-between border-b border-border pb-3 mb-4">
           <div className="space-y-1">
@@ -88,7 +102,11 @@ export function ControlPanel() {
               </SelectTrigger>
               <SelectContent className="z-300">
                 {AVAILABLE_FONTS.map((font) => (
-                  <SelectItem key={font.name} value={font.name} className="font-local-jetbrains-mono text-xs">
+                  <SelectItem
+                    key={font.name}
+                    value={font.name}
+                    className="font-local-jetbrains-mono text-xs"
+                  >
                     {font.label}
                   </SelectItem>
                 ))}
@@ -105,7 +123,9 @@ export function ControlPanel() {
                   <Type className="h-3 w-3" />
                   Text Size
                 </Label>
-                <span className="text-[10px] font-black font-mono bg-primary/10 text-primary px-1.5 py-0.5 rounded">{Math.round(fontSize * 100)}%</span>
+                <span className="text-[10px] font-black font-mono bg-primary/10 text-primary px-1.5 py-0.5 rounded">
+                  {Math.round(fontSize * 100)}%
+                </span>
               </div>
               <Slider
                 value={[fontSize]}
@@ -124,7 +144,9 @@ export function ControlPanel() {
                   <AlignLeft className="h-3 w-3" />
                   Line Spacing
                 </Label>
-                <span className="text-[10px] font-black font-mono bg-primary/10 text-primary px-1.5 py-0.5 rounded">{lineHeight.toFixed(1)}</span>
+                <span className="text-[10px] font-black font-mono bg-primary/10 text-primary px-1.5 py-0.5 rounded">
+                  {lineHeight.toFixed(1)}
+                </span>
               </div>
               <Slider
                 value={[lineHeight]}
@@ -143,7 +165,9 @@ export function ControlPanel() {
                   <List className="h-3 w-3" />
                   Word Spacing
                 </Label>
-                <span className="text-[10px] font-black font-mono bg-primary/10 text-primary px-1.5 py-0.5 rounded">{wordSpacing.toFixed(2)}</span>
+                <span className="text-[10px] font-black font-mono bg-primary/10 text-primary px-1.5 py-0.5 rounded">
+                  {wordSpacing.toFixed(2)}
+                </span>
               </div>
               <Slider
                 value={[wordSpacing]}
@@ -162,7 +186,9 @@ export function ControlPanel() {
                   <LetterText className="h-3 w-3" />
                   Letter Spacing
                 </Label>
-                <span className="text-[10px] font-black font-mono bg-primary/10 text-primary px-1.5 py-0.5 rounded">{letterSpacing.toFixed(2)}</span>
+                <span className="text-[10px] font-black font-mono bg-primary/10 text-primary px-1.5 py-0.5 rounded">
+                  {letterSpacing.toFixed(2)}
+                </span>
               </div>
               <Slider
                 value={[letterSpacing]}
@@ -182,7 +208,9 @@ export function ControlPanel() {
                 <Contrast className="h-3 w-3" />
                 High Contrast Content
               </Label>
-              <p className="text-[9px] text-muted-foreground font-roboto">Maximize text-to-background contrast</p>
+              <p className="text-[9px] text-muted-foreground font-roboto">
+                Maximize text-to-background contrast
+              </p>
             </div>
             <Switch
               checked={isHighContrast}
@@ -195,7 +223,7 @@ export function ControlPanel() {
         </div>
 
         <div className="mt-4 pt-3 border-t border-border flex justify-end">
-           <Button 
+          <Button
             className="h-9 text-[10px] font-black uppercase tracking-widest px-8 rounded-xl font-local-jetbrains-mono"
             onClick={() => updateSetting("isPanelOpen", false)}
           >

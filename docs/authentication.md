@@ -55,6 +55,7 @@ pnpm db:push
 ```
 
 This creates the required tables:
+
 - `user` - User accounts
 - `session` - Active sessions
 - `account` - Linked OAuth accounts
@@ -96,7 +97,7 @@ GOOGLE_CLIENT_SECRET=your_client_secret
 3. Fill in application details:
    - **Application name**: Your site name
    - **Homepage URL**: `https://your-domain.com`
-   - **Authorization callback URL**: 
+   - **Authorization callback URL**:
      ```
      http://localhost:3000/api/auth/callback/github
      https://your-domain.com/api/auth/callback/github
@@ -113,13 +114,13 @@ GITHUB_CLIENT_SECRET=your_client_secret
 
 ### Other Providers
 
-| Provider | Setup Link | Callback URL Format |
-|----------|-----------|---------------------|
-| Facebook | [Meta Dev](https://developers.facebook.com/) | `/api/auth/callback/facebook` |
-| Twitter | [Twitter Dev](https://developer.twitter.com/) | `/api/auth/callback/twitter` |
-| Reddit | [Reddit Apps](https://www.reddit.com/prefs/apps) | `/api/auth/callback/reddit` |
-| Notion | [Notion Integrations](https://www.notion.so/my-integrations) | `/api/auth/callback/notion` |
-| Vercel | [Vercel Integrations](https://vercel.com/integrations) | `/api/auth/callback/vercel` |
+| Provider | Setup Link                                                   | Callback URL Format           |
+| -------- | ------------------------------------------------------------ | ----------------------------- |
+| Facebook | [Meta Dev](https://developers.facebook.com/)                 | `/api/auth/callback/facebook` |
+| Twitter  | [Twitter Dev](https://developer.twitter.com/)                | `/api/auth/callback/twitter`  |
+| Reddit   | [Reddit Apps](https://www.reddit.com/prefs/apps)             | `/api/auth/callback/reddit`   |
+| Notion   | [Notion Integrations](https://www.notion.so/my-integrations) | `/api/auth/callback/notion`   |
+| Vercel   | [Vercel Integrations](https://vercel.com/integrations)       | `/api/auth/callback/vercel`   |
 
 ---
 
@@ -128,7 +129,7 @@ GITHUB_CLIENT_SECRET=your_client_secret
 ### Supabase Configuration
 
 1. **Create Project**: Go to [Supabase](https://supabase.com/)
-2. **Get Connection String**: 
+2. **Get Connection String**:
    - Project Settings > Database
    - Copy URI connection string
 3. **Configure Pooling** (Recommended):
@@ -193,8 +194,8 @@ Routes are protected via middleware in `proxy.ts`:
 
 ```typescript
 const PROTECTED_ROUTES = [
-    { path: "/dashboard", exact: false, role: "user" },
-    { path: "/admin", exact: false, role: "admin" },
+  { path: "/dashboard", exact: false, role: "user" },
+  { path: "/admin", exact: false, role: "admin" },
 ];
 ```
 
@@ -203,7 +204,7 @@ const PROTECTED_ROUTES = [
 Use in server components:
 
 ```typescript
-import { requireAdmin } from '@/lib/auth-utils';
+import { requireAdmin } from "@/lib/auth-utils";
 
 export default async function AdminPage() {
   await requireAdmin();
@@ -222,7 +223,7 @@ const isAdmin = useIsAdmin();
 // Component approach
 <AdminOnly>
   <AdminContent />
-</AdminOnly>
+</AdminOnly>;
 ```
 
 ---
@@ -238,6 +239,7 @@ const isAdmin = useIsAdmin();
 ### Account Linking
 
 Automatic account linking when:
+
 - Same email address
 - Different OAuth providers
 - Merges accounts seamlessly
@@ -252,6 +254,7 @@ Automatic account linking when:
 ### Rate Limiting
 
 Built-in rate limiting on:
+
 - Login attempts
 - Password reset requests
 - API endpoints
@@ -263,6 +266,7 @@ Built-in rate limiting on:
 ### "Invalid Callback URL"
 
 Ensure your callback URLs exactly match:
+
 - Protocol (http vs https)
 - Domain (localhost vs production)
 - Path (no trailing slashes)
@@ -270,6 +274,7 @@ Ensure your callback URLs exactly match:
 ### "Session Expired Immediately"
 
 Check:
+
 - `BETTER_AUTH_SECRET` is consistent
 - System clock is synchronized
 - Browser cookies are enabled
@@ -277,6 +282,7 @@ Check:
 ### "OAuth Provider Not Working"
 
 Verify:
+
 - Client ID and Secret are correct
 - Redirect URIs match exactly
 - Provider app is approved/active

@@ -35,6 +35,7 @@ The system uses a `system_logs` table in PostgreSQL (managed via Drizzle):
 ### Health Check Logic
 
 Statuses are determined based on:
+
 - **Operational**: Responds correctly within 2 seconds.
 - **Degraded**: Responds but exceeds 2 seconds latency.
 - **Error**: API call fails, times out (>10s), or returns an error status.
@@ -51,14 +52,17 @@ The public status page at `/status` simplifies internal metrics for users:
 ## Administrative Actions
 
 ### Cache Purge
+
 The "Purge Notion Cache" button calls `revalidateTag("notion-content")`, forcing the Next.js Data Cache to refresh content from the Notion API on the next request.
 
 ### Log Cleanup
+
 The system automatically attempts to delete logs older than 7 days with a 10% probability on every new log entry. Admins can also trigger a full cleanup manually from the dashboard.
 
 ## Adding New Services
 
 To monitor a new service:
+
 1. Add the service to `LogService` type in `lib/system-logs.ts`.
 2. Implement a check function in `lib/system-monitor/health-checks.ts`.
 3. Create a new API endpoint in `app/api/admin/system/`.

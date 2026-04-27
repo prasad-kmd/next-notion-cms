@@ -15,36 +15,38 @@ export interface TurnstileWidgetRef {
   reset: () => void;
 }
 
-export const TurnstileWidget = forwardRef<TurnstileWidgetRef, TurnstileWidgetProps>(
-  ({ onVerify, onError, onExpire }, ref) => {
-    const { resolvedTheme } = useTheme();
-    const turnstileRef = useRef<TurnstileInstance>(null);
+export const TurnstileWidget = forwardRef<
+  TurnstileWidgetRef,
+  TurnstileWidgetProps
+>(({ onVerify, onError, onExpire }, ref) => {
+  const { resolvedTheme } = useTheme();
+  const turnstileRef = useRef<TurnstileInstance>(null);
 
-    useImperativeHandle(ref, () => ({
-      reset: () => {
-        turnstileRef.current?.reset();
-      },
-    }));
+  useImperativeHandle(ref, () => ({
+    reset: () => {
+      turnstileRef.current?.reset();
+    },
+  }));
 
-    const siteKey = env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || "1x00000000000000000000AA";
+  const siteKey =
+    env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || "1x00000000000000000000AA";
 
-    return (
-      <div className="flex justify-start my-2 min-h-[65px]">
-        <Turnstile
-          ref={turnstileRef}
-          siteKey={siteKey}
-          injectScript={true}
-          options={{
-            theme: (resolvedTheme as "light" | "dark") || "auto",
-            size: "normal",
-          }}
-          onSuccess={onVerify}
-          onError={onError}
-          onExpire={onExpire}
-        />
-      </div>
-    );
-  }
-);
+  return (
+    <div className="flex justify-start my-2 min-h-[65px]">
+      <Turnstile
+        ref={turnstileRef}
+        siteKey={siteKey}
+        injectScript={true}
+        options={{
+          theme: (resolvedTheme as "light" | "dark") || "auto",
+          size: "normal",
+        }}
+        onSuccess={onVerify}
+        onError={onError}
+        onExpire={onExpire}
+      />
+    </div>
+  );
+});
 
 TurnstileWidget.displayName = "TurnstileWidget";

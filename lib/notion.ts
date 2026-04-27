@@ -6,9 +6,13 @@ import { env } from "./env";
  * Custom Error for Notion API related failures.
  */
 export class NotionAPIError extends Error {
-  constructor(message: string, public statusCode?: number, public originalError?: unknown) {
+  constructor(
+    message: string,
+    public statusCode?: number,
+    public originalError?: unknown,
+  ) {
     super(message);
-    this.name = 'NotionAPIError';
+    this.name = "NotionAPIError";
   }
 }
 
@@ -84,13 +88,13 @@ n2m.setCustomTransformer("bookmark", async (block) => {
 
 // Transform File blocks
 n2m.setCustomTransformer("file", async (block) => {
-  const { file } = block as { 
-    file: { 
-      type: string; 
-      external?: { url: string }; 
+  const { file } = block as {
+    file: {
+      type: string;
+      external?: { url: string };
       file?: { url: string };
       name?: string;
-    } 
+    };
   };
   const url = file.type === "external" ? file.external?.url : file.file?.url;
   const name = file.name || "Download File";
@@ -151,16 +155,16 @@ n2m.setCustomTransformer("column_list", async (block) => {
 
 // Transform Callouts
 n2m.setCustomTransformer("callout", async (block) => {
-  const { callout } = block as { 
-    callout: { 
-      rich_text: unknown; 
-      icon?: { 
-        type: string; 
-        emoji?: string; 
-        external?: { url: string }; 
+  const { callout } = block as {
+    callout: {
+      rich_text: unknown;
+      icon?: {
+        type: string;
+        emoji?: string;
+        external?: { url: string };
         file?: { url: string };
-      } 
-    } 
+      };
+    };
   };
   const text = getPlainText(callout.rich_text);
   let iconHtml = "";
@@ -228,10 +232,10 @@ export async function searchNotion(query: string) {
  * Extracts plain text from a Notion rich_text or title property.
  */
 export function getPlainText(property: unknown): string {
-  if (!property || typeof property !== 'object') return "";
-  const p = property as { 
-    type: string; 
-    title?: Array<{ plain_text: string }>; 
+  if (!property || typeof property !== "object") return "";
+  const p = property as {
+    type: string;
+    title?: Array<{ plain_text: string }>;
     rich_text?: Array<{ plain_text: string }>;
   };
   if (p.type === "title" && p.title) {
@@ -247,7 +251,7 @@ export function getPlainText(property: unknown): string {
  * Extracts a date string from a Notion date property.
  */
 export function getDate(property: unknown): string | undefined {
-  if (!property || typeof property !== 'object') return undefined;
+  if (!property || typeof property !== "object") return undefined;
   const p = property as { type: string; date?: { start: string } };
   if (p.type !== "date" || !p.date) return undefined;
   return p.date.start;
@@ -257,8 +261,11 @@ export function getDate(property: unknown): string | undefined {
  * Extracts values from a Notion multi_select property.
  */
 export function getMultiSelect(property: unknown): string[] {
-  if (!property || typeof property !== 'object') return [];
-  const p = property as { type: string; multi_select?: Array<{ name: string }> };
+  if (!property || typeof property !== "object") return [];
+  const p = property as {
+    type: string;
+    multi_select?: Array<{ name: string }>;
+  };
   if (p.type !== "multi_select" || !p.multi_select) return [];
   return p.multi_select.map((item) => item.name);
 }
@@ -267,7 +274,7 @@ export function getMultiSelect(property: unknown): string[] {
  * Extracts a value from a Notion select property.
  */
 export function getSelect(property: unknown): string | undefined {
-  if (!property || typeof property !== 'object') return undefined;
+  if (!property || typeof property !== "object") return undefined;
   const p = property as { type: string; select?: { name: string } };
   if (p.type !== "select" || !p.select) return undefined;
   return p.select.name;
@@ -277,7 +284,7 @@ export function getSelect(property: unknown): string | undefined {
  * Extracts a boolean from a Notion checkbox property.
  */
 export function getCheckbox(property: unknown): boolean {
-  if (!property || typeof property !== 'object') return false;
+  if (!property || typeof property !== "object") return false;
   const p = property as { type: string; checkbox?: boolean };
   if (p.type !== "checkbox") return false;
   return p.checkbox || false;
@@ -287,20 +294,16 @@ export function getCheckbox(property: unknown): boolean {
  * Extracts an image URL from a Notion file or external image property.
  */
 export function getImageUrl(property: unknown): string | undefined {
-  if (!property || typeof property !== 'object') return undefined;
-  const p = property as { 
-    type: string; 
-    files?: Array<{ 
-      type: string; 
-      external?: { url: string }; 
+  if (!property || typeof property !== "object") return undefined;
+  const p = property as {
+    type: string;
+    files?: Array<{
+      type: string;
+      external?: { url: string };
       file?: { url: string };
-    }> 
+    }>;
   };
-  if (
-    p.type !== "files" ||
-    !p.files ||
-    p.files.length === 0
-  ) {
+  if (p.type !== "files" || !p.files || p.files.length === 0) {
     return undefined;
   }
   const file = p.files[0];
@@ -316,11 +319,11 @@ export interface NotionPage {
 }
 
 export interface NotionTitleProperty {
-  type: 'title';
+  type: "title";
   title: Array<{ plain_text: string }>;
 }
 
 export interface NotionRichTextProperty {
-  type: 'rich_text';
+  type: "rich_text";
   rich_text: Array<{ plain_text: string }>;
 }

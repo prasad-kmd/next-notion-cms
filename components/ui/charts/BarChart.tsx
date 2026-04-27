@@ -109,7 +109,9 @@ export const BarChart = ({
                 width={100}
                 tick={{ fill: "currentColor" }}
                 className="text-[10px] font-local-inter text-muted-foreground"
-                tickFormatter={(value) => (value.length > 15 ? `${value.substring(0, 15)}...` : value)}
+                tickFormatter={(value) =>
+                  value.length > 15 ? `${value.substring(0, 15)}...` : value
+                }
               />
             </>
           )}
@@ -130,10 +132,17 @@ export const BarChart = ({
                         >
                           <div
                             className="h-2 w-2 rounded-full"
-                            style={{ backgroundColor: (entry as unknown as { color: string }).color }}
+                            style={{
+                              backgroundColor: (
+                                entry as unknown as { color: string }
+                              ).color,
+                            }}
                           />
                           <p className="text-sm font-bold google-sans">
-                            {(entry as unknown as { name: string }).name}: {valueFormatter((entry as unknown as { value: number }).value)}
+                            {(entry as unknown as { name: string }).name}:{" "}
+                            {valueFormatter(
+                              (entry as unknown as { value: number }).value,
+                            )}
                           </p>
                         </div>
                       ))}

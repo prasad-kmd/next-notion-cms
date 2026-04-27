@@ -100,10 +100,17 @@ export const AreaChart = ({
                         >
                           <div
                             className="h-2 w-2 rounded-full"
-                            style={{ backgroundColor: (entry as unknown as { color: string }).color }}
+                            style={{
+                              backgroundColor: (
+                                entry as unknown as { color: string }
+                              ).color,
+                            }}
                           />
                           <p className="text-sm font-bold google-sans">
-                            {(entry as unknown as { name: string }).name}: {valueFormatter((entry as unknown as { value: number }).value)}
+                            {(entry as unknown as { name: string }).name}:{" "}
+                            {valueFormatter(
+                              (entry as unknown as { value: number }).value,
+                            )}
                           </p>
                         </div>
                       ))}
@@ -140,14 +147,14 @@ export const AreaChart = ({
                 <stop
                   offset="5%"
                   stopColor={getColorCode(
-                    categoryColors.get(category) || "blue"
+                    categoryColors.get(category) || "blue",
                   )}
                   stopOpacity={0.3}
                 />
                 <stop
                   offset="95%"
                   stopColor={getColorCode(
-                    categoryColors.get(category) || "blue"
+                    categoryColors.get(category) || "blue",
                   )}
                   stopOpacity={0}
                 />

@@ -34,11 +34,11 @@ function MobileTopBanner() {
     <div className="fixed top-0 left-0 right-0 z-40 lg:hidden h-14 overflow-hidden border-b border-border/40">
       {/* Dynamic Background Animation */}
       <div className="absolute inset-0 bg-background/60 backdrop-blur-xl">
-        <motion.div 
-          animate={{ 
+        <motion.div
+          animate={{
             scale: [1, 1.2, 1],
             rotate: [0, 5, 0],
-            x: [0, 10, 0]
+            x: [0, 10, 0],
           }}
           transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
           className="absolute -top-full -left-1/4 w-[150%] h-[300%] bg-[radial-gradient(circle_at_50%_50%,rgba(var(--primary-rgb),0.08)_0%,transparent_50%)]"
@@ -52,8 +52,8 @@ function MobileTopBanner() {
           transition={{ duration: 0.5 }}
           className="flex flex-col items-center"
         >
-          <motion.span 
-            animate={{ 
+          <motion.span
+            animate={{
               backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
             }}
             transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
@@ -65,15 +65,15 @@ function MobileTopBanner() {
             {[0, 1, 2].map((i) => (
               <motion.div
                 key={i}
-                animate={{ 
+                animate={{
                   scaleY: [1, 1.5, 1],
-                  opacity: [0.3, 0.7, 0.3]
+                  opacity: [0.3, 0.7, 0.3],
                 }}
-                transition={{ 
-                  duration: 1.5, 
-                  repeat: Infinity, 
+                transition={{
+                  duration: 1.5,
+                  repeat: Infinity,
                   delay: i * 0.2,
-                  ease: "easeInOut" 
+                  ease: "easeInOut",
                 }}
                 className="w-0.5 h-1.5 bg-primary/40 rounded-full"
               />
@@ -81,9 +81,9 @@ function MobileTopBanner() {
           </div>
         </motion.div>
       </div>
-      
+
       {/* Top Scanning Line */}
-      <motion.div 
+      <motion.div
         animate={{ x: ["-300%", "300%"] }}
         transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
         className="absolute bottom-0 left-0 w-1/3 h-px bg-linear-to-r from-transparent via-primary/40 to-transparent"
@@ -161,9 +161,9 @@ export function Navigation() {
   return (
     <>
       <MobileTopBanner />
-      <MobileBottomNav 
+      <MobileBottomNav
         isSidebarOpen={mobileMenuOpen}
-        onToggleSidebar={() => setMobileMenuOpen(!mobileMenuOpen)} 
+        onToggleSidebar={() => setMobileMenuOpen(!mobileMenuOpen)}
       />
 
       {/* Sidebar */}

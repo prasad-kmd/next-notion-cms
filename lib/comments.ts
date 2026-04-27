@@ -2,7 +2,12 @@
  * Formats a comment with user attribution.
  * Format: [Name|ID|Avatar]: content
  */
-export function formatComment(name: string, id: string, content: string, avatar?: string): string {
+export function formatComment(
+  name: string,
+  id: string,
+  content: string,
+  avatar?: string,
+): string {
   const meta = [name, id, avatar || ""].join("|");
   return `[${meta}]: ${content}`;
 }
@@ -23,7 +28,7 @@ export interface ParsedComment {
 export function parseComment(text: string): ParsedComment {
   // Use a regex that correctly handles the pipe characters without requiring extra spaces
   const match = text.match(/^\[(.*?)\|(.*?)\|(.*?)\]: ([\s\S]*)$/);
-  
+
   // Try a more flexible match if the strict one fails (for initial implementation or manual comments)
   const flexibleMatch = text.match(/^\[(.*?)\]: ([\s\S]*)$/);
 

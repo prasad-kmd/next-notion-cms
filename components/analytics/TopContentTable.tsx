@@ -17,7 +17,10 @@ interface TopContentTableProps {
   contentType?: string;
 }
 
-export function TopContentTable({ timeRange, contentType }: TopContentTableProps) {
+export function TopContentTable({
+  timeRange,
+  contentType,
+}: TopContentTableProps) {
   const [data, setData] = useState<Record<string, unknown>[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -52,12 +55,17 @@ export function TopContentTable({ timeRange, contentType }: TopContentTableProps
     return (
       <Card className="col-span-full border-border/50 bg-card/50 backdrop-blur-sm">
         <CardHeader>
-          <CardTitle className="text-lg font-google-sans">Content Performance Details</CardTitle>
+          <CardTitle className="text-lg font-google-sans">
+            Content Performance Details
+          </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
             {[...Array(5)].map((_, i) => (
-              <div key={i} className="h-12 w-full rounded-xl bg-muted/20 animate-pulse" />
+              <div
+                key={i}
+                className="h-12 w-full rounded-xl bg-muted/20 animate-pulse"
+              />
             ))}
           </div>
         </CardContent>
@@ -68,7 +76,9 @@ export function TopContentTable({ timeRange, contentType }: TopContentTableProps
   return (
     <Card className="col-span-full border-border/50 bg-card/50 backdrop-blur-sm">
       <CardHeader>
-        <CardTitle className="text-lg font-google-sans">Content Performance Details</CardTitle>
+        <CardTitle className="text-lg font-google-sans">
+          Content Performance Details
+        </CardTitle>
       </CardHeader>
       <CardContent>
         <div className="overflow-x-auto">
@@ -85,11 +95,14 @@ export function TopContentTable({ timeRange, contentType }: TopContentTableProps
             <tbody>
               {data.length > 0 ? (
                 data.map((item, index) => {
-                  const type = item.type || contentType || 'unknown';
-                  const href = `/${type === 'article' ? 'articles' : type === 'blog' ? 'blog' : type === 'tutorial' ? 'tutorials' : type === 'project' ? 'projects' : 'wiki'}/${item.slug}`;
-                  
+                  const type = item.type || contentType || "unknown";
+                  const href = `/${type === "article" ? "articles" : type === "blog" ? "blog" : type === "tutorial" ? "tutorials" : type === "project" ? "projects" : "wiki"}/${item.slug}`;
+
                   return (
-                    <tr key={item.slug} className="border-b border-border/40 hover:bg-muted/5 transition-colors">
+                    <tr
+                      key={item.slug}
+                      className="border-b border-border/40 hover:bg-muted/5 transition-colors"
+                    >
                       <td className="py-4 px-4 font-medium text-muted-foreground">
                         #{index + 1}
                       </td>
@@ -124,7 +137,9 @@ export function TopContentTable({ timeRange, contentType }: TopContentTableProps
                               </Link>
                             </TooltipTrigger>
                             <TooltipContent className="rounded-xl border-border/50 bg-card/90 backdrop-blur-md px-3 py-1.5 shadow-xl">
-                              <p className="text-xs font-bold google-sans">View Page</p>
+                              <p className="text-xs font-bold google-sans">
+                                View Page
+                              </p>
                             </TooltipContent>
                           </Tooltip>
                         </TooltipProvider>
@@ -134,7 +149,10 @@ export function TopContentTable({ timeRange, contentType }: TopContentTableProps
                 })
               ) : (
                 <tr>
-                  <td colSpan={5} className="py-12 text-center text-muted-foreground">
+                  <td
+                    colSpan={5}
+                    className="py-12 text-center text-muted-foreground"
+                  >
                     No data available for this selection.
                   </td>
                 </tr>

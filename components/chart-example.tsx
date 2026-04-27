@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import { Line, Bar } from "react-chartjs-2"
+import { Line, Bar } from "react-chartjs-2";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -12,9 +12,19 @@ import {
   Tooltip,
   Legend,
   Filler,
-} from "chart.js"
+} from "chart.js";
 
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, BarElement, Title, Tooltip, Legend, Filler)
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+  Filler,
+);
 
 export function IrrigationEfficiencyChart() {
   const data = {
@@ -35,7 +45,7 @@ export function IrrigationEfficiencyChart() {
         tension: 0.4,
       },
     ],
-  }
+  };
 
   const options = {
     responsive: true,
@@ -54,9 +64,9 @@ export function IrrigationEfficiencyChart() {
         max: 100,
       },
     },
-  }
+  };
 
-  return <Line data={data} options={options} />
+  return <Line data={data} options={options} />;
 }
 
 export function CostComparisonChart() {
@@ -71,7 +81,7 @@ export function CostComparisonChart() {
         borderWidth: 2,
       },
     ],
-  }
+  };
 
   const options = {
     responsive: true,
@@ -89,7 +99,7 @@ export function CostComparisonChart() {
         beginAtZero: true,
       },
     },
-  }
+  };
 
-  return <Bar data={data} options={options} />
+  return <Bar data={data} options={options} />;
 }

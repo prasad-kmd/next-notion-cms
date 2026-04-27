@@ -55,7 +55,7 @@ export type AvailableChartColorsKeys = keyof typeof chartColors;
 
 export const constructCategoryColors = (
   categories: string[],
-  colors: AvailableChartColorsKeys[]
+  colors: AvailableChartColorsKeys[],
 ): Map<string, AvailableChartColorsKeys> => {
   const categoryColors = new Map<string, AvailableChartColorsKeys>();
   categories.forEach((category, index) => {
@@ -66,7 +66,7 @@ export const constructCategoryColors = (
 
 export const getColorClassName = (
   color: AvailableChartColorsKeys,
-  type: "bg" | "stroke" | "fill" | "text"
+  type: "bg" | "stroke" | "fill" | "text",
 ) => {
   const fallbackColor = chartColors.blue;
   return chartColors[color]?.[type] ?? fallbackColor[type];

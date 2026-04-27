@@ -18,7 +18,10 @@ export function AccentPicker({ side = "bottom" }: { side?: "top" | "bottom" }) {
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-      if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(event.target as Node)
+      ) {
         setIsOpen(false);
       }
     }
@@ -34,14 +37,18 @@ export function AccentPicker({ side = "bottom" }: { side?: "top" | "bottom" }) {
             onClick={() => setIsOpen(!isOpen)}
             className={cn(
               "p-2 rounded-full transition-all group relative",
-              isOpen ? "bg-primary text-primary-foreground" : "hover:bg-muted text-muted-foreground hover:text-foreground"
+              isOpen
+                ? "bg-primary text-primary-foreground"
+                : "hover:bg-muted text-muted-foreground hover:text-foreground",
             )}
             aria-label="Change accent color"
           >
             <Palette className="h-5 w-5" />
             <motion.div
               className="absolute -top-1 -right-1 w-3 h-3 rounded-full border-2 border-background shadow-sm"
-              style={{ backgroundColor: `hsl(${accentColor.h} ${accentColor.s} ${accentColor.l})` }}
+              style={{
+                backgroundColor: `hsl(${accentColor.h} ${accentColor.s} ${accentColor.l})`,
+              }}
               layoutId="accent-indicator"
             />
           </button>
@@ -54,15 +61,19 @@ export function AccentPicker({ side = "bottom" }: { side?: "top" | "bottom" }) {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, y: side === "bottom" ? 10 : -10, scale: 0.95 }}
+            initial={{
+              opacity: 0,
+              y: side === "bottom" ? 10 : -10,
+              scale: 0.95,
+            }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: side === "bottom" ? 10 : -10, scale: 0.95 }}
             transition={{ type: "spring", damping: 20, stiffness: 300 }}
             className={cn(
               "absolute p-3 rounded-2xl border border-border bg-background/80 backdrop-blur-xl shadow-2xl z-70 min-w-[200px]",
-              side === "bottom" 
-                ? "top-full right-0 mt-3" 
-                : "bottom-full left-0 mb-3 top-auto"
+              side === "bottom"
+                ? "top-full right-0 mt-3"
+                : "bottom-full left-0 mb-3 top-auto",
             )}
           >
             <div className="mb-2 px-1 text-center">
@@ -82,7 +93,7 @@ export function AccentPicker({ side = "bottom" }: { side?: "top" | "bottom" }) {
                     }}
                     className={cn(
                       "group relative flex h-8 w-8 items-center justify-center rounded-full transition-all hover:scale-110 active:scale-95",
-                      color.className
+                      color.className,
                     )}
                     title={color.name}
                   >

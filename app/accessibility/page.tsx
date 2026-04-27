@@ -1,9 +1,5 @@
 import type { Metadata } from "next";
-import {
-  Accessibility,
-  Eye,
-  Keyboard,
-} from "lucide-react";
+import { Accessibility, Eye, Keyboard } from "lucide-react";
 
 const title = "Accessibility Statement";
 const description =

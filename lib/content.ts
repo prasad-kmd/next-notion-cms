@@ -225,7 +225,9 @@ const contentDirectory = path.join(process.cwd(), "content");
 /**
  * Low-level fetcher for Notion content list.
  */
-async function fetchNotionContentByType(type: "blog" | "articles" | "projects" | "tutorials" | "wiki"): Promise<ContentItem[]> {
+async function fetchNotionContentByType(
+  type: "blog" | "articles" | "projects" | "tutorials" | "wiki",
+): Promise<ContentItem[]> {
   const databaseId = DATABASE_IDS[type as keyof typeof DATABASE_IDS];
   if (!databaseId) return [];
 
@@ -297,7 +299,11 @@ async function fetchNotionContentByType(type: "blog" | "articles" | "projects" |
     return items;
   } catch (error) {
     console.error(`Error fetching Notion content for ${type}:`, error);
-    throw new NotionAPIError(`Failed to fetch Notion content for ${type}`, 500, error);
+    throw new NotionAPIError(
+      `Failed to fetch Notion content for ${type}`,
+      500,
+      error,
+    );
   }
 }
 
@@ -312,9 +318,9 @@ export const getContentByType = cache(async function (
     const fetcher = unstable_cache(
       async () => fetchNotionContentByType(type),
       [`content-list-${type}`],
-      { 
-        revalidate: notionConfig.revalidate, 
-        tags: [`content-${type}`, ...notionConfig.defaultTags] 
+      {
+        revalidate: notionConfig.revalidate,
+        tags: [`content-${type}`, ...notionConfig.defaultTags],
       },
     );
     try {
@@ -472,9 +478,13 @@ export const getContentItem = cache(async function (
     const fetcher = unstable_cache(
       async () => fetchNotionContentItem(type, slug),
       [`content-item-${type}-${slug}`],
-      { 
-        revalidate: notionConfig.revalidate, 
-        tags: [`content-${type}`, `content-item-${slug}`, ...notionConfig.defaultTags] 
+      {
+        revalidate: notionConfig.revalidate,
+        tags: [
+          `content-${type}`,
+          `content-item-${slug}`,
+          ...notionConfig.defaultTags,
+        ],
       },
     );
     try {
@@ -621,9 +631,9 @@ export const getAuthorBasic = cache(async function (
         };
       },
       [`author-basic-${slug}`],
-      { 
-        revalidate: notionConfig.revalidate, 
-        tags: ["authors", ...notionConfig.defaultTags] 
+      {
+        revalidate: notionConfig.revalidate,
+        tags: ["authors", ...notionConfig.defaultTags],
       },
     );
     try {
@@ -695,9 +705,9 @@ export const getAuthorBySlug = cache(async function (
         };
       },
       [`author-full-${slug}`],
-      { 
-        revalidate: notionConfig.revalidate, 
-        tags: ["authors", ...notionConfig.defaultTags] 
+      {
+        revalidate: notionConfig.revalidate,
+        tags: ["authors", ...notionConfig.defaultTags],
       },
     );
     try {
@@ -770,9 +780,9 @@ export const getAllAuthors = cache(async function (): Promise<Author[]> {
         });
       },
       ["all-authors"],
-      { 
-        revalidate: notionConfig.revalidate, 
-        tags: ["authors", ...notionConfig.defaultTags] 
+      {
+        revalidate: notionConfig.revalidate,
+        tags: ["authors", ...notionConfig.defaultTags],
       },
     );
     try {

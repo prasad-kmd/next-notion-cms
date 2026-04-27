@@ -5,9 +5,13 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
   async rewrites() {
-    const isEu = process.env.NEXT_PUBLIC_POSTHOG_HOST?.includes('eu');
-    const ingestHost = isEu ? "https://eu.i.posthog.com" : "https://us.i.posthog.com";
-    const assetsHost = isEu ? "https://eu-assets.i.posthog.com" : "https://us-assets.i.posthog.com";
+    const isEu = process.env.NEXT_PUBLIC_POSTHOG_HOST?.includes("eu");
+    const ingestHost = isEu
+      ? "https://eu.i.posthog.com"
+      : "https://us.i.posthog.com";
+    const assetsHost = isEu
+      ? "https://eu-assets.i.posthog.com"
+      : "https://us-assets.i.posthog.com";
 
     return [
       {
@@ -60,31 +64,19 @@ const nextConfig = {
         protocol: "https",
         hostname: "avatars.githubusercontent.com",
       },
-      { protocol: "https",
-        hostname: "covers.openlibrary.org",
-      },
-      { protocol: "https",
-        hostname: "cdn.cloudflare.steamstatic.com",
-      },
+      { protocol: "https", hostname: "covers.openlibrary.org" },
+      { protocol: "https", hostname: "cdn.cloudflare.steamstatic.com" },
       // Optional safety: older CheapShark thumbs sometimes used this
-      { protocol: "https",
-        hostname: "cdn.akamai.steamstatic.com",
-      },
-      { protocol: "https",
-        hostname: "www.cheapshark.com",
-      },
+      { protocol: "https", hostname: "cdn.akamai.steamstatic.com" },
+      { protocol: "https", hostname: "www.cheapshark.com" },
       // CheapShark thumbs can come from store CDNs; example shown in CheapShark docs:
-      { protocol: "https",
-        hostname: "cdn.fanatical.com",
-      },
+      { protocol: "https", hostname: "cdn.fanatical.com" },
       // (Optional) seen in CheapShark usage examples in the wild:
-      { protocol: "https",
-        hostname: "shared.fastly.steamstatic.com",
-      },
+      { protocol: "https", hostname: "shared.fastly.steamstatic.com" },
     ],
-    formats: ['image/webp', 'image/avif'],
+    formats: ["image/webp", "image/avif"],
     dangerouslyAllowSVG: true, // For LQIP shimmers
-    contentDispositionType: 'attachment', // Security for downloads
+    contentDispositionType: "attachment", // Security for downloads
   },
   // Add security headers including CSP
   async headers() {
@@ -97,8 +89,10 @@ const nextConfig = {
       connect-src 'self' https://api.notion.com https://api.telegram.org https://lh3.googleusercontent.com https://avatars.githubusercontent.com https://*.googleusercontent.com https://*.githubusercontent.com https://*.amazonaws.com https://i.pravatar.cc https://placehold.co https://images.unsplash.com https://*.unsplash.com https://challenges.cloudflare.com https://turnstile.cloudflare.com https://vitals.vercel-analytics.com https://api.vercel.com https://*.posthog.com http://localhost:3000 https://localhost:3000 ws://localhost:3000 wss://localhost:3000 https://cheapshark.com https://openlibrary.org https://api.codetabs.com https://export.arxiv.org;
       frame-src 'self' https://www.youtube.com https://challenges.cloudflare.com https://turnstile.cloudflare.com;
       worker-src 'self' blob: https://challenges.cloudflare.com;
-      ${process.env.NODE_ENV === 'production' ? 'upgrade-insecure-requests;' : ''}
-    `.replace(/\s{2,}/g, ' ').trim();
+      ${process.env.NODE_ENV === "production" ? "upgrade-insecure-requests;" : ""}
+    `
+      .replace(/\s{2,}/g, " ")
+      .trim();
 
     return [
       {

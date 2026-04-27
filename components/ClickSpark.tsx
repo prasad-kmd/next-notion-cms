@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useRef, useEffect, useCallback, useMemo } from 'react';
-import { useAccentColor } from '@/hooks/use-accent-color';
-import { useTheme } from 'next-themes';
+import React, { useRef, useEffect, useCallback, useMemo } from "react";
+import { useAccentColor } from "@/hooks/use-accent-color";
+import { useTheme } from "next-themes";
 
 interface ClickSparkProps {
   sparkColor?: string;
@@ -10,7 +10,7 @@ interface ClickSparkProps {
   sparkRadius?: number;
   sparkCount?: number;
   duration?: number;
-  easing?: 'linear' | 'ease-in' | 'ease-out' | 'ease-in-out';
+  easing?: "linear" | "ease-in" | "ease-out" | "ease-in-out";
   extraScale?: number;
   children?: React.ReactNode;
 }
@@ -28,21 +28,21 @@ const ClickSpark: React.FC<ClickSparkProps> = ({
   sparkRadius = 15,
   sparkCount = 8,
   duration = 400,
-  easing = 'ease-out',
+  easing = "ease-out",
   extraScale = 1.0,
-  children
+  children,
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const { accentColor } = useAccentColor();
   const { resolvedTheme } = useTheme();
-  
+
   // Use accent color if explicitly provided or as a fallback
   // We adjust the lightness based on the theme to make it "show better"
   const sparkColor = useMemo(() => {
     if (providedSparkColor) return providedSparkColor;
-    
+
     // In dark mode, we want a brighter spark. In light mode, a more vibrant one.
-    const lightness = resolvedTheme === 'dark' ? '65%' : '45%';
+    const lightness = resolvedTheme === "dark" ? "65%" : "45%";
     return `hsl(${accentColor.h}, ${accentColor.s}, ${lightness})`;
   }, [providedSparkColor, accentColor, resolvedTheme]);
   const sparksRef = useRef<Spark[]>([]);
@@ -84,61 +84,64 @@ const ClickSpark: React.FC<ClickSparkProps> = ({
   const easeFunc = useCallback(
     (t: number) => {
       switch (easing) {
-        case 'linear':
+        case "linear":
           return t;
-        case 'ease-in':
+        case "ease-in":
           return t * t;
-        case 'ease-in-out':
+        case "ease-in-out":
           return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
         default:
           return t * (2 - t);
       }
     },
-    [easing]
+    [easing],
   );
 
-  const draw = useCallback(function draw(timestamp: number) {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
+  const draw = useCallback(
+    function draw(timestamp: number) {
+      const canvas = canvasRef.current;
+      if (!canvas) return;
+      const ctx = canvas.getContext("2d");
+      if (!ctx) return;
 
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    if (sparksRef.current.length === 0) {
-      animationIdRef.current = 0;
-      return;
-    }
-
-    sparksRef.current = sparksRef.current.filter((spark: Spark) => {
-      const elapsed = timestamp - spark.startTime;
-      if (elapsed >= duration) {
-        return false;
+      if (sparksRef.current.length === 0) {
+        animationIdRef.current = 0;
+        return;
       }
 
-      const progress = elapsed / duration;
-      const eased = easeFunc(progress);
+      sparksRef.current = sparksRef.current.filter((spark: Spark) => {
+        const elapsed = timestamp - spark.startTime;
+        if (elapsed >= duration) {
+          return false;
+        }
 
-      const distance = eased * sparkRadius * extraScale;
-      const lineLength = sparkSize * (1 - eased);
+        const progress = elapsed / duration;
+        const eased = easeFunc(progress);
 
-      const x1 = spark.x + distance * Math.cos(spark.angle);
-      const y1 = spark.y + distance * Math.sin(spark.angle);
-      const x2 = spark.x + (distance + lineLength) * Math.cos(spark.angle);
-      const y2 = spark.y + (distance + lineLength) * Math.sin(spark.angle);
+        const distance = eased * sparkRadius * extraScale;
+        const lineLength = sparkSize * (1 - eased);
 
-      ctx.strokeStyle = sparkColor;
-      ctx.lineWidth = 2;
-      ctx.beginPath();
-      ctx.moveTo(x1, y1);
-      ctx.lineTo(x2, y2);
-      ctx.stroke();
+        const x1 = spark.x + distance * Math.cos(spark.angle);
+        const y1 = spark.y + distance * Math.sin(spark.angle);
+        const x2 = spark.x + (distance + lineLength) * Math.cos(spark.angle);
+        const y2 = spark.y + (distance + lineLength) * Math.sin(spark.angle);
 
-      return true;
-    });
+        ctx.strokeStyle = sparkColor;
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(x1, y1);
+        ctx.lineTo(x2, y2);
+        ctx.stroke();
 
-    animationIdRef.current = requestAnimationFrame(draw);
-  }, [duration, easeFunc, extraScale, sparkColor, sparkRadius, sparkSize]);
+        return true;
+      });
+
+      animationIdRef.current = requestAnimationFrame(draw);
+    },
+    [duration, easeFunc, extraScale, sparkColor, sparkRadius, sparkSize],
+  );
 
   const handleClick = (e: React.MouseEvent<HTMLDivElement>): void => {
     const canvas = canvasRef.current;
@@ -152,11 +155,11 @@ const ClickSpark: React.FC<ClickSparkProps> = ({
       x,
       y,
       angle: (2 * Math.PI * i) / sparkCount,
-      startTime: now
+      startTime: now,
     }));
 
     sparksRef.current.push(...newSparks);
-    
+
     if (animationIdRef.current === 0) {
       animationIdRef.current = requestAnimationFrame(draw);
     }
@@ -173,9 +176,9 @@ const ClickSpark: React.FC<ClickSparkProps> = ({
   return (
     <div className="relative w-full h-full" onClick={handleClick}>
       {children}
-      <canvas 
-        ref={canvasRef} 
-        className="absolute inset-0 pointer-events-none z-[9999]" 
+      <canvas
+        ref={canvasRef}
+        className="absolute inset-0 pointer-events-none z-[9999]"
       />
     </div>
   );

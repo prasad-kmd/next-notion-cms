@@ -1,16 +1,16 @@
 "use client";
 
 import React, { useEffect, useState, useCallback, useRef } from "react";
-import { 
-  RotateCw, 
-  ArrowLeft, 
-  ArrowRight, 
-  Copy, 
-  ExternalLink, 
+import {
+  RotateCw,
+  ArrowLeft,
+  ArrowRight,
+  Copy,
+  ExternalLink,
   Home,
   Info,
   Link as LinkIcon,
-  Mail
+  Mail,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
@@ -31,9 +31,9 @@ const MenuItem = ({ icon: Icon, label, onClick, disabled }: MenuItemProps) => (
     disabled={disabled}
     className={cn(
       "flex items-center gap-3 w-full px-4 py-2 text-sm transition-colors duration-200",
-      disabled 
-        ? "text-muted-foreground cursor-not-allowed" 
-        : "text-foreground hover:bg-primary/10 hover:text-primary"
+      disabled
+        ? "text-muted-foreground cursor-not-allowed"
+        : "text-foreground hover:bg-primary/10 hover:text-primary",
     )}
   >
     <Icon className="w-4 h-4" />
@@ -49,10 +49,10 @@ export const CustomContextMenu = () => {
 
   const handleContextMenu = useCallback((e: MouseEvent) => {
     e.preventDefault();
-    
+
     // Find if the click was on a link
     const target = e.target as HTMLElement;
-    const linkElement = target.closest('a');
+    const linkElement = target.closest("a");
     if (linkElement && linkElement.href) {
       setTargetLink(linkElement.href);
     } else {
@@ -110,71 +110,71 @@ export const CustomContextMenu = () => {
     >
       {targetLink && (
         <>
-          <MenuItem 
-            icon={ExternalLink} 
-            label="Open in New Tab" 
+          <MenuItem
+            icon={ExternalLink}
+            label="Open in New Tab"
             onClick={() => {
-              window.open(targetLink, '_blank', 'noopener,noreferrer');
+              window.open(targetLink, "_blank", "noopener,noreferrer");
               setVisible(false);
-            }} 
+            }}
           />
-          <MenuItem 
-            icon={LinkIcon} 
-            label="Copy Link Address" 
+          <MenuItem
+            icon={LinkIcon}
+            label="Copy Link Address"
             onClick={() => {
               navigator.clipboard.writeText(targetLink);
               toast.success("Link address copied");
               setVisible(false);
-            }} 
+            }}
           />
           <div className="my-1 border-t border-border" />
         </>
       )}
 
-      <MenuItem 
-        icon={ArrowLeft} 
-        label="Back" 
-        onClick={() => window.history.back()} 
+      <MenuItem
+        icon={ArrowLeft}
+        label="Back"
+        onClick={() => window.history.back()}
       />
-      <MenuItem 
-        icon={ArrowRight} 
-        label="Forward" 
-        onClick={() => window.history.forward()} 
+      <MenuItem
+        icon={ArrowRight}
+        label="Forward"
+        onClick={() => window.history.forward()}
       />
-      <MenuItem 
-        icon={RotateCw} 
-        label="Reload" 
-        onClick={() => window.location.reload()} 
+      <MenuItem
+        icon={RotateCw}
+        label="Reload"
+        onClick={() => window.location.reload()}
       />
-      
+
       <div className="my-1 border-t border-border" />
-      
-      <MenuItem 
-        icon={Home} 
-        label="Go to Home" 
-        onClick={() => window.location.href = '/'} 
+
+      <MenuItem
+        icon={Home}
+        label="Go to Home"
+        onClick={() => (window.location.href = "/")}
       />
-      <MenuItem 
-        icon={Copy} 
-        label="Copy Page URL" 
+      <MenuItem
+        icon={Copy}
+        label="Copy Page URL"
         onClick={() => {
           navigator.clipboard.writeText(window.location.href);
           toast.success("Page URL copied to clipboard");
           setVisible(false);
-        }} 
+        }}
       />
-      
+
       <div className="my-1 border-t border-border" />
-      
-      <MenuItem 
-        icon={Info} 
-        label="About Site" 
-        onClick={() => window.location.href = '/about'} 
+
+      <MenuItem
+        icon={Info}
+        label="About Site"
+        onClick={() => (window.location.href = "/about")}
       />
-      <MenuItem 
-        icon={Mail} 
-        label="Contact Developer" 
-        onClick={() => window.location.href = '/contact'} 
+      <MenuItem
+        icon={Mail}
+        label="Contact Developer"
+        onClick={() => (window.location.href = "/contact")}
       />
     </div>
   );

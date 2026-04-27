@@ -14,7 +14,11 @@ import { RelatedContent } from "@/components/related-content";
 import { ArticleSidebar } from "@/components/article-sidebar";
 import { AIContentIndicator } from "@/components/ai-content-indicator";
 import { Breadcrumbs } from "@/components/breadcrumbs";
-import { JsonLd, getContentSchema, getBreadcrumbSchema } from "@/components/json-ld";
+import {
+  JsonLd,
+  getContentSchema,
+  getBreadcrumbSchema,
+} from "@/components/json-ld";
 import { CommentsSection } from "@/components/comments/comments-section";
 import { CommentScrollButton } from "@/components/comment-scroll-button";
 import { PageViewTracker } from "@/components/analytics/PageViewTracker";
@@ -68,18 +72,29 @@ export default async function ArticlePage({
         title={entry.title}
         authorId={entry.author}
       />
-      <JsonLd data={getContentSchema({ ...entry, authorName: author?.name }, "articles")} />
-      <JsonLd data={getBreadcrumbSchema([
-        { label: "Articles", href: "/articles" },
-        { label: entry.title, href: `/articles/${entry.slug}` }
-      ])} />
+      <JsonLd
+        data={getContentSchema(
+          { ...entry, authorName: author?.name },
+          "articles",
+        )}
+      />
+      <JsonLd
+        data={getBreadcrumbSchema([
+          { label: "Articles", href: "/articles" },
+          { label: entry.title, href: `/articles/${entry.slug}` },
+        ])}
+      />
       <ScrollProgress />
       <div className="mx-auto max-w-6xl">
-        <Breadcrumbs 
+        <Breadcrumbs
           items={[
             { label: "Articles", href: "/articles" },
-            { label: entry.title, href: `/articles/${entry.slug}`, active: true }
-          ]} 
+            {
+              label: entry.title,
+              href: `/articles/${entry.slug}`,
+              active: true,
+            },
+          ]}
         />
 
         <div className="flex flex-col lg:flex-row gap-12">

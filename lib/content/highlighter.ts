@@ -20,19 +20,27 @@ export async function getHighlighter() {
  * Highlights a code block using Shiki.
  * Loads the language dynamically if not already loaded.
  */
-export async function highlightCode(code: string, lang: string): Promise<string> {
+export async function highlightCode(
+  code: string,
+  lang: string,
+): Promise<string> {
   const sh = await getHighlighter();
-  
+
   // Normalize language name
   const normalizedLang = lang.toLowerCase();
-  
+
   // Ensure language is loaded
-  if (normalizedLang !== 'text' && !sh.getLoadedLanguages().includes(normalizedLang)) {
+  if (
+    normalizedLang !== "text" &&
+    !sh.getLoadedLanguages().includes(normalizedLang)
+  ) {
     try {
       await sh.loadLanguage(normalizedLang as unknown);
     } catch {
-      console.warn(`Failed to load Shiki language: ${normalizedLang}, falling back to text.`);
-      lang = 'text';
+      console.warn(
+        `Failed to load Shiki language: ${normalizedLang}, falling back to text.`,
+      );
+      lang = "text";
     }
   }
 

@@ -2,14 +2,15 @@
 
 import { useEffect, useState } from "react";
 import { useHasMounted } from "@/hooks/use-has-mounted";
-import { 
-  BarChart, 
-  Bar, 
-  XAxis, 
-  YAxis, 
-  CartesianGrid, 
-  Tooltip, 
-  ResponsiveContainer} from "recharts";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+} from "recharts";
 import { ANALYTICS_COLORS, getRechartsTheme } from "@/lib/recharts-theme";
 import { useTheme } from "next-themes";
 import { getColorCode } from "../ui/charts/ChartUtils";
@@ -21,7 +22,12 @@ interface MatrixChartProps {
   title: string;
 }
 
-export function MatrixChart({ timeRange, primaryDimension, secondaryDimension, title }: MatrixChartProps) {
+export function MatrixChart({
+  timeRange,
+  primaryDimension,
+  secondaryDimension,
+  title,
+}: MatrixChartProps) {
   const [data, setData] = useState<Record<string, unknown>[]>([]);
   const [loading, setLoading] = useState(true);
   const hasMounted = useHasMounted();
@@ -33,38 +39,48 @@ export function MatrixChart({ timeRange, primaryDimension, secondaryDimension, t
       setLoading(true);
       try {
         // This requires a more complex query. For now, we'll use PostHog's Breakdown with secondary dimension.
-        // PostHog Trends API supports single breakdown. For true matrix (A vs B), 
+        // PostHog Trends API supports single breakdown. For true matrix (A vs B),
         // we might need a custom HogQL query if we want to show it in one chart.
-        
+
         // Simplified approach: Query pageviews broken down by primary dimension,
-        // and we show it as a grouped bar chart if possible, but PostHog API 
+        // and we show it as a grouped bar chart if possible, but PostHog API
         // usually returns time-series.
-        
+
         // Let's use HogQL for a true matrix summary (not time-series)
         const response = await fetch("/api/admin/analytics", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ 
+          body: JSON.stringify({
             insightType: "multi_variable_insight", // We'll adapt this or add a new one
-            params: { 
-                timeRange, 
-                breakdownBy: primaryDimension,
-                // We'll need to extend the API to handle true matrix queries
-            }
+            params: {
+              timeRange,
+              breakdownBy: primaryDimension,
+              // We'll need to extend the API to handle true matrix queries
+            },
           }),
         });
-        
+
         if (response.ok) {
           const json = await response.json();
           const results = json.result || [];
-          
+
           // For now, let's just show a breakdown of primary dimension
           // because true 2D matrix needs a specific HogQL query shape.
-          const transformed = results.map((s: unknown) => ({
-            label: (s as { breakdown_value: string }).breakdown_value || "Other",
-            value: (s as { data: number[] }).data.reduce((acc: number, v: number) => acc + v, 0)
-          })).sort((a: unknown, b: unknown) => (b as { value: number }).value - (a as { value: number }).value).slice(0, 10);
-          
+          const transformed = results
+            .map((s: unknown) => ({
+              label:
+                (s as { breakdown_value: string }).breakdown_value || "Other",
+              value: (s as { data: number[] }).data.reduce(
+                (acc: number, v: number) => acc + v,
+                0,
+              ),
+            }))
+            .sort(
+              (a: unknown, b: unknown) =>
+                (b as { value: number }).value - (a as { value: number }).value,
+            )
+            .slice(0, 10);
+
           setData(transformed);
         }
       } catch (err) {
@@ -76,7 +92,12 @@ export function MatrixChart({ timeRange, primaryDimension, secondaryDimension, t
     fetchData();
   }, [timeRange, primaryDimension, secondaryDimension]);
 
-  if (loading || !hasMounted) return <div className="h-[320px] flex items-center justify-center animate-pulse bg-muted/10 rounded-3xl">Loading {title}...</div>;
+  if (loading || !hasMounted)
+    return (
+      <div className="h-[320px] flex items-center justify-center animate-pulse bg-muted/10 rounded-3xl">
+        Loading {title}...
+      </div>
+    );
 
   return (
     <div className="h-[320px] w-full relative">
@@ -88,11 +109,13 @@ export function MatrixChart({ timeRange, primaryDimension, secondaryDimension, t
           <Tooltip contentStyle={chartTheme.tooltip.contentStyle} />
           <Bar dataKey="value" radius={[4, 4, 0, 0]}>
             {data.map((_, index) => (
-                <Bar 
-                    key={`bar-${index}`} 
-                    dataKey="value" 
-                    fill={getColorCode(ANALYTICS_COLORS[index % ANALYTICS_COLORS.length])} 
-                />
+              <Bar
+                key={`bar-${index}`}
+                dataKey="value"
+                fill={getColorCode(
+                  ANALYTICS_COLORS[index % ANALYTICS_COLORS.length],
+                )}
+              />
             ))}
           </Bar>
         </BarChart>

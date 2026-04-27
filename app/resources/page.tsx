@@ -1,15 +1,7 @@
 import type { Metadata } from "next";
-import {
-  Download,
-  FileText,
-  Box,
-  Code,
-  FileArchive,
-} from "lucide-react";
+import { Download, FileText, Box, Code, FileArchive } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-} from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 
 const title = "Downloads & Resources";
 const description =

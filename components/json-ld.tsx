@@ -13,14 +13,14 @@ export function getBaseSchema() {
   return {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    "name": siteConfig.title,
-    "url": siteConfig.url,
-    "description": siteConfig.description,
-    "author": {
+    name: siteConfig.title,
+    url: siteConfig.url,
+    description: siteConfig.description,
+    author: {
       "@type": "Person",
-      "name": siteConfig.author,
-      "url": siteConfig.url
-    }
+      name: siteConfig.author,
+      url: siteConfig.url,
+    },
   };
 }
 
@@ -28,41 +28,43 @@ export function getBreadcrumbSchema(items: { label: string; href: string }[]) {
   return {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
-    "itemListElement": items.map((item, index) => ({
+    itemListElement: items.map((item, index) => ({
       "@type": "ListItem",
-      "position": index + 1,
-      "name": item.label,
-      "item": `${siteConfig.url}${item.href}`
-    }))
+      position: index + 1,
+      name: item.label,
+      item: `${siteConfig.url}${item.href}`,
+    })),
   };
 }
 
 export function getContentSchema(post: unknown, type: string) {
   const schemaType = type === "articles" ? "TechArticle" : "BlogPosting";
-  
+
   return {
     "@context": "https://schema.org",
     "@type": schemaType,
-    "headline": post.title,
-    "description": post.description,
-    "image": post.firstImage || `${siteConfig.url}/api/og?title=${encodeURIComponent(post.title)}`,
-    "datePublished": post.date,
-    "author": {
+    headline: post.title,
+    description: post.description,
+    image:
+      post.firstImage ||
+      `${siteConfig.url}/api/og?title=${encodeURIComponent(post.title)}`,
+    datePublished: post.date,
+    author: {
       "@type": "Person",
-      "name": post.authorName || siteConfig.author,
-      "url": `${siteConfig.url}/authors/${post.author}`
+      name: post.authorName || siteConfig.author,
+      url: `${siteConfig.url}/authors/${post.author}`,
     },
-    "publisher": {
+    publisher: {
       "@type": "Organization",
-      "name": siteConfig.title,
-      "logo": {
+      name: siteConfig.title,
+      logo: {
         "@type": "ImageObject",
-        "url": `${siteConfig.url}/favicon.ico`
-      }
+        url: `${siteConfig.url}/favicon.ico`,
+      },
     },
-    "mainEntityOfPage": {
+    mainEntityOfPage: {
       "@type": "WebPage",
-      "@id": `${siteConfig.url}/${type}/${post.slug}`
-    }
+      "@id": `${siteConfig.url}/${type}/${post.slug}`,
+    },
   };
 }

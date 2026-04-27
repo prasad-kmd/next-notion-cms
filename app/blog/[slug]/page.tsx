@@ -14,7 +14,11 @@ import { RelatedContent } from "@/components/related-content";
 import { ArticleSidebar } from "@/components/article-sidebar";
 import { AIContentIndicator } from "@/components/ai-content-indicator";
 import { Breadcrumbs } from "@/components/breadcrumbs";
-import { JsonLd, getContentSchema, getBreadcrumbSchema } from "@/components/json-ld";
+import {
+  JsonLd,
+  getContentSchema,
+  getBreadcrumbSchema,
+} from "@/components/json-ld";
 import { CommentsSection } from "@/components/comments/comments-section";
 import { CommentScrollButton } from "@/components/comment-scroll-button";
 import { PageViewTracker } from "@/components/analytics/PageViewTracker";
@@ -68,18 +72,22 @@ export default async function BlogPostPage({
         title={post.title}
         authorId={post.author}
       />
-      <JsonLd data={getContentSchema({ ...post, authorName: author?.name }, "blog")} />
-      <JsonLd data={getBreadcrumbSchema([
-        { label: "Blog", href: "/blog" },
-        { label: post.title, href: `/blog/${post.slug}` }
-      ])} />
+      <JsonLd
+        data={getContentSchema({ ...post, authorName: author?.name }, "blog")}
+      />
+      <JsonLd
+        data={getBreadcrumbSchema([
+          { label: "Blog", href: "/blog" },
+          { label: post.title, href: `/blog/${post.slug}` },
+        ])}
+      />
       <ScrollProgress />
       <div className="mx-auto max-w-6xl">
-        <Breadcrumbs 
+        <Breadcrumbs
           items={[
             { label: "Blog", href: "/blog" },
-            { label: post.title, href: `/blog/${post.slug}`, active: true }
-          ]} 
+            { label: post.title, href: `/blog/${post.slug}`, active: true },
+          ]}
         />
 
         <div className="flex flex-col lg:flex-row gap-12">

@@ -17,36 +17,36 @@ This document covers all configuration options available in Next Notion CMS.
 
 ### Required Variables
 
-| Variable | Description | Example |
-|----------|-------------|---------|
-| `DATABASE_URL` | PostgreSQL connection string | `postgresql://user:pass@host:5432/db` |
-| `BETTER_AUTH_SECRET` | 32-character random secret | Generated via `openssl rand -base64 32` |
-| `BETTER_AUTH_URL` | Base URL for auth | `http://localhost:3000` |
+| Variable             | Description                  | Example                                 |
+| -------------------- | ---------------------------- | --------------------------------------- |
+| `DATABASE_URL`       | PostgreSQL connection string | `postgresql://user:pass@host:5432/db`   |
+| `BETTER_AUTH_SECRET` | 32-character random secret   | Generated via `openssl rand -base64 32` |
+| `BETTER_AUTH_URL`    | Base URL for auth            | `http://localhost:3000`                 |
 
 ### Optional Variables
 
 #### Notion CMS
 
-| Variable | Description | Default |
-|----------|-------------|---------|
-| `NOTION_AUTH_TOKEN` | Notion integration token | - |
-| `NOTION_BLOG_ID` | Blog database ID | - |
-| `NOTION_ARTICLES_ID` | Articles database ID | - |
-| `NOTION_TUTORIALS_ID` | Tutorials database ID | - |
-| `NOTION_PROJECTS_ID` | Projects database ID | - |
-| `NOTION_WIKI_ID` | Wiki database ID | - |
-| `NOTION_AUTHORS_ID` | Authors database ID | - |
+| Variable              | Description              | Default |
+| --------------------- | ------------------------ | ------- |
+| `NOTION_AUTH_TOKEN`   | Notion integration token | -       |
+| `NOTION_BLOG_ID`      | Blog database ID         | -       |
+| `NOTION_ARTICLES_ID`  | Articles database ID     | -       |
+| `NOTION_TUTORIALS_ID` | Tutorials database ID    | -       |
+| `NOTION_PROJECTS_ID`  | Projects database ID     | -       |
+| `NOTION_WIKI_ID`      | Wiki database ID         | -       |
+| `NOTION_AUTHORS_ID`   | Authors database ID      | -       |
 
 #### External Services
 
-| Variable | Description | Purpose |
-|----------|-------------|---------|
-| `TELEGRAM_TOKEN` | Telegram bot token | Contact form notifications |
-| `TELEGRAM_CHAT_ID` | Telegram chat ID | Where to send notifications |
-| `NEXT_PUBLIC_GITHUB_TOKEN` | GitHub PAT | Repository display |
-| `NEXT_PUBLIC_GITHUB_USERNAME` | GitHub username | Your GitHub profile |
-| `NEXT_PUBLIC_TURNSTILE_SITE_KEY` | Cloudflare site key | Comment protection |
-| `TURNSTILE_SECRET_KEY` | Cloudflare secret key | Comment protection |
+| Variable                         | Description           | Purpose                     |
+| -------------------------------- | --------------------- | --------------------------- |
+| `TELEGRAM_TOKEN`                 | Telegram bot token    | Contact form notifications  |
+| `TELEGRAM_CHAT_ID`               | Telegram chat ID      | Where to send notifications |
+| `NEXT_PUBLIC_GITHUB_TOKEN`       | GitHub PAT            | Repository display          |
+| `NEXT_PUBLIC_GITHUB_USERNAME`    | GitHub username       | Your GitHub profile         |
+| `NEXT_PUBLIC_TURNSTILE_SITE_KEY` | Cloudflare site key   | Comment protection          |
+| `TURNSTILE_SECRET_KEY`           | Cloudflare secret key | Comment protection          |
 
 See [Authentication Guide](authentication.md) for OAuth provider variables.
 
@@ -101,18 +101,18 @@ export const notionConfig = {
 
 Each Notion database must have these properties:
 
-| Property | Type | Required |
-|----------|------|----------|
-| Name/Title | Title | ✅ |
-| Slug | Text | ✅ |
-| Date | Date | ✅ |
-| Status | Select | ✅ |
-| Description | Text | ✅ |
-| Tags | Multi-select | ❌ |
-| Categories | Select | ❌ |
-| Authors | Relation | ❌ |
-| AIAssisted | Checkbox | ❌ |
-| Technical | Multi-select | ❌ |
+| Property    | Type         | Required |
+| ----------- | ------------ | -------- |
+| Name/Title  | Title        | ✅       |
+| Slug        | Text         | ✅       |
+| Date        | Date         | ✅       |
+| Status      | Select       | ✅       |
+| Description | Text         | ✅       |
+| Tags        | Multi-select | ❌       |
+| Categories  | Select       | ❌       |
+| Authors     | Relation     | ❌       |
+| AIAssisted  | Checkbox     | ❌       |
+| Technical   | Multi-select | ❌       |
 
 See [Notion Setup Guide](notion-setup.md) for detailed instructions.
 
@@ -155,6 +155,7 @@ GOOGLE_CLIENT_SECRET=your_client_secret
 ```
 
 **Setup Steps:**
+
 1. Go to [Google Cloud Console](https://console.cloud.google.com/)
 2. Create OAuth 2.0 credentials
 3. Add redirect URI: `https://your-domain.com/api/auth/callback/google`
@@ -167,6 +168,7 @@ GITHUB_CLIENT_SECRET=your_client_secret
 ```
 
 **Setup Steps:**
+
 1. Go to GitHub Settings > Developer settings
 2. Register new OAuth App
 3. Set callback URL: `https://your-domain.com/api/auth/callback/github`
@@ -175,13 +177,13 @@ GITHUB_CLIENT_SECRET=your_client_secret
 
 Supported providers with their environment variables:
 
-| Provider | Client ID Var | Client Secret Var |
-|----------|--------------|-------------------|
+| Provider | Client ID Var        | Client Secret Var        |
+| -------- | -------------------- | ------------------------ |
 | Facebook | `FACEBOOK_CLIENT_ID` | `FACEBOOK_CLIENT_SECRET` |
-| Twitter | `TWITTER_CLIENT_ID` | `TWITTER_CLIENT_SECRET` |
-| Reddit | `REDDIT_CLIENT_ID` | `REDDIT_CLIENT_SECRET` |
-| Notion | `NOTION_CLIENT_ID` | `NOTION_CLIENT_SECRET` |
-| Vercel | `VERCEL_CLIENT_ID` | `VERCEL_CLIENT_SECRET` |
+| Twitter  | `TWITTER_CLIENT_ID`  | `TWITTER_CLIENT_SECRET`  |
+| Reddit   | `REDDIT_CLIENT_ID`   | `REDDIT_CLIENT_SECRET`   |
+| Notion   | `NOTION_CLIENT_ID`   | `NOTION_CLIENT_SECRET`   |
+| Vercel   | `VERCEL_CLIENT_ID`   | `VERCEL_CLIENT_SECRET`   |
 
 See [Authentication Guide](authentication.md) for detailed setup instructions.
 

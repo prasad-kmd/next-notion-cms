@@ -4,7 +4,7 @@ export interface ChangelogEntry {
   title: string;
   description: string;
   changes: string[];
-  type: 'feature' | 'fix' | 'improvement' | 'start' | 'Start';
+  type: "feature" | "fix" | "improvement" | "start" | "Start";
   automated?: boolean; // Flag to indicate if entry was auto-generated
 }
 

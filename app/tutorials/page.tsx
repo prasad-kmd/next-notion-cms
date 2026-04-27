@@ -56,7 +56,7 @@ export default async function TutorialsPage({
   return (
     <div className="min-h-screen py-12 tutorials_page img_grad_pm">
       <div className="mx-auto max-w-6xl px-6 lg:px-8">
-        <motion.div 
+        <motion.div
           initial="hidden"
           animate="visible"
           variants={fadeInUp}
@@ -78,7 +78,7 @@ export default async function TutorialsPage({
           </div>
         ) : (
           <>
-            <motion.div 
+            <motion.div
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
@@ -87,10 +87,7 @@ export default async function TutorialsPage({
             >
               {tutorials.map((post) => (
                 <motion.div key={post.slug} variants={fadeInUp}>
-                  <ContentCard
-                    post={post}
-                    basePath="/tutorials"
-                  />
+                  <ContentCard post={post} basePath="/tutorials" />
                 </motion.div>
               ))}
             </motion.div>

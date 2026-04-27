@@ -4,7 +4,7 @@ export const contentConfig = {
   wordsPerMinute: 220,
   cacheRevalidation: 21600, // 6 hours
   maxFileSize: 20 * 1024 * 1024, // 20 MB
-  allowedFileTypes: ['pdf', 'jpg', 'png', 'jpeg'],
+  allowedFileTypes: ["pdf", "jpg", "png", "jpeg"],
 };
 
 export const securityConfig = {

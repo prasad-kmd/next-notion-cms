@@ -22,13 +22,13 @@ export function ContentRenderer({ content, id }: ContentRendererProps) {
     // Process images to be lazy-loaded and optimized if possible
     // Note: We are using native lazy loading here as we're injecting HTML
     if (contentRef.current) {
-      const images = contentRef.current.querySelectorAll('img');
-      images.forEach(img => {
-        if (!img.getAttribute('loading')) {
-          img.setAttribute('loading', 'lazy');
+      const images = contentRef.current.querySelectorAll("img");
+      images.forEach((img) => {
+        if (!img.getAttribute("loading")) {
+          img.setAttribute("loading", "lazy");
         }
-        if (!img.getAttribute('decoding')) {
-          img.setAttribute('decoding', 'async');
+        if (!img.getAttribute("decoding")) {
+          img.setAttribute("decoding", "async");
         }
       });
     }
@@ -68,7 +68,6 @@ export function ContentRenderer({ content, id }: ContentRendererProps) {
     }
   }, [content, pathname, id]);
 
-
   useEffect(() => {
     if (!contentRef.current) return;
 
@@ -76,7 +75,11 @@ export function ContentRenderer({ content, id }: ContentRendererProps) {
       const preBlocks = contentRef.current?.querySelectorAll("pre");
       preBlocks?.forEach((pre) => {
         // Skip if already has a copy button OR is part of a Shiki enhanced block
-        if (pre.querySelector(".copy-button") || pre.closest(".code-block-wrapper")) return;
+        if (
+          pre.querySelector(".copy-button") ||
+          pre.closest(".code-block-wrapper")
+        )
+          return;
 
         pre.style.position = "relative";
         const button = document.createElement("button");

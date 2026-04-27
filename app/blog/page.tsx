@@ -42,17 +42,17 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
   const currentPage = parseInt(page || "1");
   const postsPerPage = 9;
   const allPosts = await getContentByType("blog");
-  
+
   const totalPages = Math.ceil(allPosts.length / postsPerPage);
   const posts = allPosts.slice(
     (currentPage - 1) * postsPerPage,
-    currentPage * postsPerPage
+    currentPage * postsPerPage,
   );
 
   return (
     <div className="min-h-screen py-12 blog_page img_grad_pm">
       <div className="mx-auto max-w-6xl px-6 lg:px-8">
-        <motion.div 
+        <motion.div
           initial="hidden"
           animate="visible"
           variants={fadeInUp}
@@ -74,7 +74,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
           </div>
         ) : (
           <>
-            <motion.div 
+            <motion.div
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
@@ -82,16 +82,20 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
               className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 xl:gap-10"
             >
               {posts.map((post) => (
-                <motion.div key={post.slug} variants={fadeInUp} className="h-full">
+                <motion.div
+                  key={post.slug}
+                  variants={fadeInUp}
+                  className="h-full"
+                >
                   <BlogCard post={post} />
                 </motion.div>
               ))}
             </motion.div>
-            
-            <Pagination 
-              currentPage={currentPage} 
-              totalPages={totalPages} 
-              basePath="/blog" 
+
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              basePath="/blog"
             />
           </>
         )}

@@ -6,38 +6,40 @@ This guide provides step-by-step instructions for setting up **Better Auth**, **
 
 1.  **Create a Project:** Go to [Supabase](https://supabase.com/) and create a new project.
 2.  **Get Connection String:**
-    *   Navigate to **Project Settings** > **Database**.
-    *   Copy the **URI** connection string (ensure it includes your password).
-    *   Add this to your `.env.local` as `DATABASE_URL`.
-    *   *Tip:* If using Supabase Connection Pooling (IPv4), use the Transaction mode URI (port 6543).
+    - Navigate to **Project Settings** > **Database**.
+    - Copy the **URI** connection string (ensure it includes your password).
+    - Add this to your `.env.local` as `DATABASE_URL`.
+    - _Tip:_ If using Supabase Connection Pooling (IPv4), use the Transaction mode URI (port 6543).
 
 ## 2. Better Auth Configuration
 
 1.  **Generate Secret:**
-    *   Run `npx auth secret` or `openssl rand -base64 32`.
-    *   Add the output to `.env.local` as `BETTER_AUTH_SECRET`.
+    - Run `npx auth secret` or `openssl rand -base64 32`.
+    - Add the output to `.env.local` as `BETTER_AUTH_SECRET`.
 2.  **Set Base URL:**
-    *   Add `BETTER_AUTH_URL=http://localhost:3000` (for development) or your production URL.
+    - Add `BETTER_AUTH_URL=http://localhost:3000` (for development) or your production URL.
 
 ## 3. OAuth Provider Setup
 
 ### Google
+
 1.  Go to [Google Cloud Console](https://console.cloud.google.com/).
 2.  Create a new project or select an existing one.
 3.  Go to **APIs & Services** > **Credentials**.
 4.  Create an **OAuth 2.0 Client ID** (Web Application).
 5.  Add Authorized Redirect URIs:
-    *   `http://localhost:3000/api/auth/callback/google`
-    *   `https://your-domain.com/api/auth/callback/google`
+    - `http://localhost:3000/api/auth/callback/google`
+    - `https://your-domain.com/api/auth/callback/google`
 6.  Add `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET` to `.env.local`.
 
 ### GitHub
+
 1.  Go to **GitHub Settings** > **Developer settings** > **OAuth Apps**.
 2.  Register a new application.
 3.  Set the **Homepage URL** to your site URL.
 4.  Set the **Authorization callback URL**:
-    *   `http://localhost:3000/api/auth/callback/github`
-    *   `https://your-domain.com/api/auth/callback/github`
+    - `http://localhost:3000/api/auth/callback/github`
+    - `https://your-domain.com/api/auth/callback/github`
 5.  Add `GITHUB_CLIENT_ID` and `GITHUB_CLIENT_SECRET` to `.env.local`.
 
 ## 4. Drizzle Migrations
@@ -72,15 +74,16 @@ GITHUB_CLIENT_SECRET=...
 
 ## 6. How it Works
 
-*   **Stateless Sessions:** Uses JWT strategy to reduce database lookups on every request, staying within Supabase's free tier quotas.
-*   **Auto-Sync:** Upon sign-in, the `useAuthSync` hook detects local bookmarks/preferences and merges them into the `user.preferences` JSONB column in the database.
-*   **Account Linking:** Better Auth is configured to automatically link accounts with the same email across different providers.
+- **Stateless Sessions:** Uses JWT strategy to reduce database lookups on every request, staying within Supabase's free tier quotas.
+- **Auto-Sync:** Upon sign-in, the `useAuthSync` hook detects local bookmarks/preferences and merges them into the `user.preferences` JSONB column in the database.
+- **Account Linking:** Better Auth is configured to automatically link accounts with the same email across different providers.
 
 ## 7. Role-Based Access Control (RBAC)
 
 The system supports `user` and `admin` roles. By default, all new users are assigned the `user` role.
 
 ### Designating an Admin
+
 Currently, admin designation is a manual process via the database.
 
 1.  Connect to your Supabase SQL Editor.
@@ -92,16 +95,23 @@ Currently, admin designation is a manual process via the database.
 4.  The change will take effect on the user's next session refresh or re-authentication.
 
 ### Protecting Routes
+
 Route protection is managed in `proxy.ts` (Next.js 16 Middleware replacement).
 
 To protect a new route, add it to the `PROTECTED_ROUTES` array in `proxy.ts`:
+
 ```typescript
 const PROTECTED_ROUTES = [
-    { path: "/roadmap", exact: true, role: "admin" },
-    { path: "/new-protected-page", pattern: "/new-protected-page/*", role: "admin" },
+  { path: "/roadmap", exact: true, role: "admin" },
+  {
+    path: "/new-protected-page",
+    pattern: "/new-protected-page/*",
+    role: "admin",
+  },
 ];
 ```
 
 ### Authorization Utilities
-*   **Server Side:** Use `requireAdmin()` in server components to block access.
-*   **Client Side:** Use `useIsAdmin()` hook or the `<AdminOnly>` component.
+
+- **Server Side:** Use `requireAdmin()` in server components to block access.
+- **Client Side:** Use `useIsAdmin()` hook or the `<AdminOnly>` component.

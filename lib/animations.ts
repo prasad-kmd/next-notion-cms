@@ -1,16 +1,16 @@
-"use client"
+"use client";
 
-import { Variants } from "framer-motion"
+import { Variants } from "framer-motion";
 
 export const staggerContainer: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.1
-    }
-  }
-}
+      staggerChildren: 0.1,
+    },
+  },
+};
 
 export const fadeInUp: Variants = {
   hidden: { opacity: 0, y: 20 },
@@ -19,10 +19,10 @@ export const fadeInUp: Variants = {
     y: 0,
     transition: {
       duration: 0.5,
-      ease: "easeOut"
-    }
-  }
-}
+      ease: "easeOut",
+    },
+  },
+};
 
 export const scaleIn: Variants = {
   hidden: { opacity: 0, scale: 0.9 },
@@ -31,7 +31,7 @@ export const scaleIn: Variants = {
     scale: 1,
     transition: {
       duration: 0.5,
-      ease: "easeOut"
-    }
-  }
-}
+      ease: "easeOut",
+    },
+  },
+};

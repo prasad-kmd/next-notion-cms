@@ -1,7 +1,14 @@
-import React, { useState } from 'react';
-import { formatDistanceToNow } from 'date-fns';
+import React, { useState } from "react";
+import { formatDistanceToNow } from "date-fns";
 import { cn } from "@/lib/utils";
-import { ChevronDown, ChevronUp, Database, Shield, Activity, Terminal } from "lucide-react";
+import {
+  ChevronDown,
+  ChevronUp,
+  Database,
+  Shield,
+  Activity,
+  Terminal,
+} from "lucide-react";
 
 interface LogEntryProps {
   log: {
@@ -32,17 +39,20 @@ export const LogEntry: React.FC<LogEntryProps> = ({ log }) => {
 
   return (
     <div className="group border-b border-border/40 last:border-0 font-local-inter">
-      <div 
+      <div
         className="flex items-center gap-4 py-3 px-2 hover:bg-muted/30 transition-colors cursor-pointer"
         onClick={() => setIsExpanded(!isExpanded)}
       >
-        <div className={cn(
-          "px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-widest border",
-          levelStyles[log.level as keyof typeof levelStyles] || levelStyles.info
-        )}>
+        <div
+          className={cn(
+            "px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-widest border",
+            levelStyles[log.level as keyof typeof levelStyles] ||
+              levelStyles.info,
+          )}
+        >
           {log.level}
         </div>
-        
+
         <div className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground min-w-[100px]">
           {serviceIcons[log.service as keyof typeof serviceIcons]}
           <span className="capitalize">{log.service}</span>
@@ -57,14 +67,20 @@ export const LogEntry: React.FC<LogEntryProps> = ({ log }) => {
         </div>
 
         <div className="text-muted-foreground/40 group-hover:text-foreground">
-          {isExpanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+          {isExpanded ? (
+            <ChevronUp className="w-4 h-4" />
+          ) : (
+            <ChevronDown className="w-4 h-4" />
+          )}
         </div>
       </div>
 
       {isExpanded && (
         <div className="px-14 pb-4 animate-in slide-in-from-top-1 duration-200">
           <div className="bg-muted/50 rounded-xl p-4 border border-border/50">
-            <h4 className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground mb-2 font-local-inter">Metadata</h4>
+            <h4 className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground mb-2 font-local-inter">
+              Metadata
+            </h4>
             <pre className="text-xs text-muted-foreground overflow-x-auto p-2 bg-background/50 rounded-lg font-local-jetbrains-mono">
               {JSON.stringify(log.metadata, null, 2)}
             </pre>

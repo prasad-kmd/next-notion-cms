@@ -60,11 +60,11 @@ export default async function WikiEntryPage({
     <div className="min-h-screen px-6 py-12 lg:px-8 wiki_item img_grad_pm">
       <ScrollProgress />
       <div className="mx-auto max-w-6xl">
-        <Breadcrumbs 
+        <Breadcrumbs
           items={[
             { label: "Wiki", href: "/wiki" },
-            { label: entry.title, href: `/wiki/${entry.slug}`, active: true }
-          ]} 
+            { label: entry.title, href: `/wiki/${entry.slug}`, active: true },
+          ]}
         />
 
         <div className="flex flex-col lg:flex-row gap-12">

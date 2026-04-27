@@ -97,11 +97,15 @@ export default async function TutorialPage({
       />
       <ScrollProgress />
       <div className="mx-auto max-w-6xl">
-        <Breadcrumbs 
+        <Breadcrumbs
           items={[
             { label: "Tutorials", href: "/tutorials" },
-            { label: post.title, href: `/tutorials/${post.slug}`, active: true }
-          ]} 
+            {
+              label: post.title,
+              href: `/tutorials/${post.slug}`,
+              active: true,
+            },
+          ]}
         />
 
         <div className="flex flex-col lg:flex-row gap-12">

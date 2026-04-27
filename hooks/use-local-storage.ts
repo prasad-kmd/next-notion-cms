@@ -1,4 +1,4 @@
-import { useState, useEffect, startTransition } from 'react';
+import { useState, useEffect, startTransition } from "react";
 
 export function useLocalStorage<T>(key: string, initialValue: T) {
   // State to store our value

@@ -2,15 +2,15 @@
 
 import { useEffect, useState } from "react";
 import { useHasMounted } from "@/hooks/use-has-mounted";
-import { 
-  AreaChart, 
-  Area, 
-  XAxis, 
-  YAxis, 
-  CartesianGrid, 
-  Tooltip, 
+import {
+  AreaChart,
+  Area,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
   ResponsiveContainer,
-  Legend
+  Legend,
 } from "recharts";
 import { ANALYTICS_COLORS, getRechartsTheme } from "@/lib/recharts-theme";
 import { useTheme } from "next-themes";
@@ -20,7 +20,9 @@ interface OutgoingLinksTrendChartProps {
   timeRange: string;
 }
 
-export function OutgoingLinksTrendChart({ timeRange }: OutgoingLinksTrendChartProps) {
+export function OutgoingLinksTrendChart({
+  timeRange,
+}: OutgoingLinksTrendChartProps) {
   const [data, setData] = useState<Record<string, unknown>[]>([]);
   const [domains, setDomains] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
@@ -35,20 +37,26 @@ export function OutgoingLinksTrendChart({ timeRange }: OutgoingLinksTrendChartPr
         const response = await fetch("/api/admin/analytics", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ 
+          body: JSON.stringify({
             insightType: "multi_variable_insight",
-            params: { timeRange, breakdownBy: "target_domain" }
+            params: { timeRange, breakdownBy: "target_domain" },
           }),
         });
         if (response.ok) {
           const json = await response.json();
           const results = json.result || [];
-          
+
           // Get top 5 domains
           const topSeries = results
             .sort((a: unknown, b: unknown) => {
-              const sumA = (a as { data: number[] }).data.reduce((acc: number, val: number) => acc + val, 0);
-              const sumB = (b as { data: number[] }).data.reduce((acc: number, val: number) => acc + val, 0);
+              const sumA = (a as { data: number[] }).data.reduce(
+                (acc: number, val: number) => acc + val,
+                0,
+              );
+              const sumB = (b as { data: number[] }).data.reduce(
+                (acc: number, val: number) => acc + val,
+                0,
+              );
               return sumB - sumA;
             })
             .slice(0, 5);
@@ -57,20 +65,29 @@ export function OutgoingLinksTrendChart({ timeRange }: OutgoingLinksTrendChartPr
           const transformed = allLabels.map((label: string, i: number) => {
             const point: unknown = { date: label };
             topSeries.forEach((series: unknown) => {
-              const key = (series as { breakdown_value: string }).breakdown_value === "$$_posthog_breakdown_null_$$" || !(series as { breakdown_value: string }).breakdown_value 
-                ? "Unknown" 
-                : (series as { breakdown_value: string }).breakdown_value;
-              (point as Record<string, unknown>)[key] = (series as { data: number[] }).data[i];
+              const key =
+                (series as { breakdown_value: string }).breakdown_value ===
+                  "$$_posthog_breakdown_null_$$" ||
+                !(series as { breakdown_value: string }).breakdown_value
+                  ? "Unknown"
+                  : (series as { breakdown_value: string }).breakdown_value;
+              (point as Record<string, unknown>)[key] = (
+                series as { data: number[] }
+              ).data[i];
             });
             return point;
           });
-          
+
           setData(transformed);
-          setDomains(topSeries.map((s: unknown) => 
-            (s as { breakdown_value: string }).breakdown_value === "$$_posthog_breakdown_null_$$" || !(s as { breakdown_value: string }).breakdown_value 
-            ? "Unknown" 
-            : (s as { breakdown_value: string }).breakdown_value
-          ));
+          setDomains(
+            topSeries.map((s: unknown) =>
+              (s as { breakdown_value: string }).breakdown_value ===
+                "$$_posthog_breakdown_null_$$" ||
+              !(s as { breakdown_value: string }).breakdown_value
+                ? "Unknown"
+                : (s as { breakdown_value: string }).breakdown_value,
+            ),
+          );
         }
       } catch (err) {
         console.error(err);
@@ -81,7 +98,12 @@ export function OutgoingLinksTrendChart({ timeRange }: OutgoingLinksTrendChartPr
     fetchData();
   }, [timeRange]);
 
-  if (loading || !hasMounted) return <div className="h-[320px] flex items-center justify-center animate-pulse bg-muted/10 rounded-3xl">Loading link trends...</div>;
+  if (loading || !hasMounted)
+    return (
+      <div className="h-[320px] flex items-center justify-center animate-pulse bg-muted/10 rounded-3xl">
+        Loading link trends...
+      </div>
+    );
 
   return (
     <div className="h-[320px] w-full relative">
@@ -93,11 +115,13 @@ export function OutgoingLinksTrendChart({ timeRange }: OutgoingLinksTrendChartPr
           <Tooltip contentStyle={chartTheme.tooltip.contentStyle} />
           <Legend />
           {domains.map((domain, i) => (
-            <Area 
-              key={domain} 
+            <Area
+              key={domain}
               type="monotone"
-              dataKey={domain} 
-              stroke={getColorCode(ANALYTICS_COLORS[i % ANALYTICS_COLORS.length])}
+              dataKey={domain}
+              stroke={getColorCode(
+                ANALYTICS_COLORS[i % ANALYTICS_COLORS.length],
+              )}
               fill={getColorCode(ANALYTICS_COLORS[i % ANALYTICS_COLORS.length])}
               fillOpacity={0.3}
               stackId="1"

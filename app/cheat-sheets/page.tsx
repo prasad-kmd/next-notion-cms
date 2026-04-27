@@ -1,12 +1,5 @@
 import type { Metadata } from "next";
-import {
-  Printer,
-  Download,
-  Layout,
-  Cpu,
-  Code2,
-  Layers,
-} from "lucide-react";
+import { Printer, Download, Layout, Cpu, Code2, Layers } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 

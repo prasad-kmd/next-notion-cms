@@ -6,7 +6,7 @@ import { Wifi, WifiOff } from "lucide-react";
 
 export function ConnectivityListener() {
   const [, setIsOnline] = useState(
-    typeof window !== "undefined" ? navigator.onLine : true
+    typeof window !== "undefined" ? navigator.onLine : true,
   );
 
   useEffect(() => {

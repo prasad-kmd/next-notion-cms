@@ -25,13 +25,16 @@ export function ViewTransitions({ children }: { children: React.ReactNode }) {
         if ("startViewTransition" in document) {
           const href = link.getAttribute("href");
           const url = new URL(link.href);
-          
+
           // Normalize paths to handle trailing slashes during comparison
-          const currentPath = window.location.pathname.replace(/\/$/, "") || "/";
+          const currentPath =
+            window.location.pathname.replace(/\/$/, "") || "/";
           const targetPath = url.pathname.replace(/\/$/, "") || "/";
-          
-          const isHashLink = href?.startsWith("#") || (targetPath === currentPath && url.hash !== "");
-          
+
+          const isHashLink =
+            href?.startsWith("#") ||
+            (targetPath === currentPath && url.hash !== "");
+
           // Completely bypass view transitions for local hash jumps
           if (isHashLink) {
             e.preventDefault();

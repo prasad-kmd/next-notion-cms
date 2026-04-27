@@ -2,15 +2,15 @@
 
 import { useEffect, useState } from "react";
 import { useHasMounted } from "@/hooks/use-has-mounted";
-import { 
-  BarChart, 
-  Bar, 
-  XAxis, 
-  YAxis, 
-  CartesianGrid, 
-  Tooltip, 
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
   ResponsiveContainer,
-  Cell
+  Cell,
 } from "recharts";
 import { ANALYTICS_COLORS, getRechartsTheme } from "@/lib/recharts-theme";
 import { useTheme } from "next-themes";
@@ -34,9 +34,9 @@ export function OutgoingLinksChart({ timeRange }: OutgoingLinksChartProps) {
         const response = await fetch("/api/admin/analytics", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ 
+          body: JSON.stringify({
             insightType: "outgoing_links",
-            params: { timeRange, limit: 10 }
+            params: { timeRange, limit: 10 },
           }),
         });
         if (response.ok) {
@@ -52,7 +52,12 @@ export function OutgoingLinksChart({ timeRange }: OutgoingLinksChartProps) {
     fetchData();
   }, [timeRange]);
 
-  if (loading || !hasMounted) return <div className="h-[320px] flex items-center justify-center animate-pulse bg-muted/10 rounded-3xl">Loading outgoing links...</div>;
+  if (loading || !hasMounted)
+    return (
+      <div className="h-[320px] flex items-center justify-center animate-pulse bg-muted/10 rounded-3xl">
+        Loading outgoing links...
+      </div>
+    );
 
   return (
     <div className="h-[320px] w-full relative">
@@ -64,16 +69,21 @@ export function OutgoingLinksChart({ timeRange }: OutgoingLinksChartProps) {
         >
           <CartesianGrid {...chartTheme.grid} vertical={false} />
           <XAxis type="number" hide />
-          <YAxis 
-            dataKey="label" 
-            type="category" 
+          <YAxis
+            dataKey="label"
+            type="category"
             {...chartTheme.axis}
             width={150}
           />
           <Tooltip contentStyle={chartTheme.tooltip.contentStyle} />
           <Bar dataKey="value" radius={[0, 4, 4, 0]}>
             {data.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={getColorCode(ANALYTICS_COLORS[index % ANALYTICS_COLORS.length])} />
+              <Cell
+                key={`cell-${index}`}
+                fill={getColorCode(
+                  ANALYTICS_COLORS[index % ANALYTICS_COLORS.length],
+                )}
+              />
             ))}
           </Bar>
         </BarChart>

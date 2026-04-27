@@ -37,7 +37,9 @@ interface ProjectsPageProps {
   searchParams: Promise<{ page?: string }>;
 }
 
-export default async function ProjectsPage({ searchParams }: ProjectsPageProps) {
+export default async function ProjectsPage({
+  searchParams,
+}: ProjectsPageProps) {
   const { page } = await searchParams;
   const currentPage = parseInt(page || "1");
   const postsPerPage = 9;
@@ -46,13 +48,13 @@ export default async function ProjectsPage({ searchParams }: ProjectsPageProps) 
   const totalPages = Math.ceil(allProjects.length / postsPerPage);
   const projects = allProjects.slice(
     (currentPage - 1) * postsPerPage,
-    currentPage * postsPerPage
+    currentPage * postsPerPage,
   );
 
   return (
     <div className="min-h-screen py-12 projects_page img_grad_pm">
       <div className="mx-auto max-w-6xl px-6 lg:px-8">
-        <motion.div 
+        <motion.div
           initial="hidden"
           animate="visible"
           variants={fadeInUp}
@@ -74,7 +76,7 @@ export default async function ProjectsPage({ searchParams }: ProjectsPageProps) 
           </div>
         ) : (
           <>
-            <motion.div 
+            <motion.div
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
@@ -82,16 +84,20 @@ export default async function ProjectsPage({ searchParams }: ProjectsPageProps) 
               className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 xl:gap-10"
             >
               {projects.map((project) => (
-                <motion.div key={project.slug} variants={fadeInUp} className="h-full">
+                <motion.div
+                  key={project.slug}
+                  variants={fadeInUp}
+                  className="h-full"
+                >
                   <ProjectCard post={project} />
                 </motion.div>
               ))}
             </motion.div>
-            
-            <Pagination 
-              currentPage={currentPage} 
-              totalPages={totalPages} 
-              basePath="/projects" 
+
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              basePath="/projects"
             />
           </>
         )}

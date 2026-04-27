@@ -9,7 +9,10 @@ interface TopContentChartProps {
   contentType?: string;
 }
 
-export function TopContentChart({ timeRange, contentType }: TopContentChartProps) {
+export function TopContentChart({
+  timeRange,
+  contentType,
+}: TopContentChartProps) {
   const [data, setData] = useState<Record<string, unknown>[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -44,7 +47,9 @@ export function TopContentChart({ timeRange, contentType }: TopContentChartProps
     return (
       <Card className="col-span-1 border-border/50 bg-card/50 backdrop-blur-sm rounded-4xl">
         <CardHeader>
-          <CardTitle className="text-lg font-google-sans">Top Content (Views)</CardTitle>
+          <CardTitle className="text-lg font-google-sans">
+            Top Content (Views)
+          </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="h-[300px] w-full flex items-center justify-center bg-card/5 rounded-2xl border border-border/40 animate-pulse font-local-inter">
@@ -56,7 +61,7 @@ export function TopContentChart({ timeRange, contentType }: TopContentChartProps
   }
 
   // Transform data for Recharts
-  const chartData = data.map(item => ({
+  const chartData = data.map((item) => ({
     name: item.title || item.slug,
     Views: item.views,
   }));
@@ -64,7 +69,9 @@ export function TopContentChart({ timeRange, contentType }: TopContentChartProps
   return (
     <Card className="col-span-1 border-border/50 bg-card/50 backdrop-blur-sm rounded-4xl">
       <CardHeader>
-        <CardTitle className="text-lg font-google-sans">Top Content (Views)</CardTitle>
+        <CardTitle className="text-lg font-google-sans">
+          Top Content (Views)
+        </CardTitle>
       </CardHeader>
       <CardContent>
         <div className="h-[300px] w-full min-h-[300px]">

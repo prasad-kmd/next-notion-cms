@@ -71,11 +71,11 @@ export default async function WikiEntryPage({
       />
       <ScrollProgress />
       <div className="mx-auto max-w-6xl">
-        <Breadcrumbs 
+        <Breadcrumbs
           items={[
             { label: "Wiki", href: "/wiki" },
-            { label: entry.title, href: `/wiki/${entry.slug}`, active: true }
-          ]} 
+            { label: entry.title, href: `/wiki/${entry.slug}`, active: true },
+          ]}
         />
 
         <div className="flex flex-col lg:flex-row gap-12">

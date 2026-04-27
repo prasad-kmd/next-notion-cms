@@ -15,189 +15,218 @@ import { ActivityTab } from "@/components/dashboard/activity-tab";
 import { db } from "@/lib/db";
 import { user } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
-import { 
-    Link as LinkIcon, 
-    Bookmark, 
-    Shield,
-    LayoutDashboard,
-    BarChart,
-    ArrowUpRight,
-    Activity
+import {
+  Link as LinkIcon,
+  Bookmark,
+  Shield,
+  LayoutDashboard,
+  BarChart,
+  ArrowUpRight,
+  Activity,
 } from "lucide-react";
 
 const getSession = cache(async () => {
-    return await auth.api.getSession({
-        headers: await headers(),
-    });
+  return await auth.api.getSession({
+    headers: await headers(),
+  });
 });
 
 const getUserAccounts = cache(async () => {
-    return await auth.api.listUserAccounts({
-        headers: await headers(),
-    });
+  return await auth.api.listUserAccounts({
+    headers: await headers(),
+  });
 });
 
 export default async function DashboardPage() {
-    const session = await getSession();
+  const session = await getSession();
 
-    if (!session) {
-        redirect("/sign-in");
-    }
+  if (!session) {
+    redirect("/sign-in");
+  }
 
-    const { user: sessionUser } = session;
+  const { user: sessionUser } = session;
 
-    // Fetch fresh user data from DB to ensure preferences are up to date
-    const dbUser = await db.query.user.findFirst({
-        where: eq(user.id, sessionUser.id)
-    });
+  // Fetch fresh user data from DB to ensure preferences are up to date
+  const dbUser = await db.query.user.findFirst({
+    where: eq(user.id, sessionUser.id),
+  });
 
-    const displayUser = (dbUser || sessionUser) as unknown;
+  const displayUser = (dbUser || sessionUser) as unknown;
 
-    // Fetch accounts for the user
-    const accounts = await getUserAccounts();
+  // Fetch accounts for the user
+  const accounts = await getUserAccounts();
 
-    return (
-        <div className="relative min-h-screen">
-            <TechnicalBackground />
-            
-            <Container className="pt-12 pb-20 relative z-10">
-                <div className="max-w-6xl mx-auto space-y-6">
-                    <Breadcrumbs 
-                        items={[
-                            { label: "Dashboard", href: "/dashboard", active: true }
-                        ]} 
-                        className="mb-4 font-local-inter"
-                    />
-                    
-                    <DashboardFeedback />
-                    
-                    {/* Simplified Header */}
-                    <header className="space-y-3">
-                        <h1 className="text-4xl font-bold google-sans tracking-tight">User Dashboard</h1>
-                        <p className="text-muted-foreground leading-relaxed text-sm md:text-base font-local-inter">
-                            Manage your profile, linked accounts, and view your activity.
-                        </p>
-                    </header>
+  return (
+    <div className="relative min-h-screen">
+      <TechnicalBackground />
 
-                    <Tabs defaultValue="overview" className="w-full space-y-4 font-local-inter">
-                        <TabsList className="w-full bg-muted/10 backdrop-blur-md p-1 rounded-2xl border border-border/40 h-auto gap-1">
-                            <TabsTrigger 
-                                value="overview" 
-                                className="flex-1 rounded-xl px-4 py-3 text-sm font-bold transition-all data-[state=active]:bg-background data-[state=active]:text-primary data-[state=active]:shadow-sm active:scale-[0.98] group"
-                            >
-                                <div className="flex items-center gap-2.5">
-                                    <LayoutDashboard className="w-4 h-4 opacity-50 group-data-[state=active]:opacity-100 transition-opacity" />
-                                    <span className="tracking-wide">Overview</span>
-                                </div>
-                            </TabsTrigger>
-                            <TabsTrigger 
-                                value="accounts"
-                                className="flex-1 rounded-xl px-4 py-3 text-sm font-bold transition-all data-[state=active]:bg-background data-[state=active]:text-primary data-[state=active]:shadow-sm active:scale-[0.98] group"
-                            >
-                                <div className="flex items-center gap-2.5">
-                                    <LinkIcon className="w-4 h-4 opacity-50 group-data-[state=active]:opacity-100 transition-opacity" />
-                                    <span className="tracking-wide">Accounts</span>
-                                </div>
-                            </TabsTrigger>
-                            <TabsTrigger 
-                                value="activity"
-                                className="flex-1 rounded-xl px-4 py-3 text-sm font-bold transition-all data-[state=active]:bg-background data-[state=active]:text-primary data-[state=active]:shadow-sm active:scale-[0.98] group"
-                            >
-                                <div className="flex items-center gap-2.5">
-                                    <Bookmark className="w-4 h-4 opacity-50 group-data-[state=active]:opacity-100 transition-opacity" />
-                                    <span className="tracking-wide">Activity</span>
-                                </div>
-                            </TabsTrigger>
-                        </TabsList>
+      <Container className="pt-12 pb-20 relative z-10">
+        <div className="max-w-6xl mx-auto space-y-6">
+          <Breadcrumbs
+            items={[{ label: "Dashboard", href: "/dashboard", active: true }]}
+            className="mb-4 font-local-inter"
+          />
 
-                        <TabsContent value="overview" className="space-y-10 mt-0 focus-visible:outline-none">
-                            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                                <div className="lg:col-span-2 space-y-8">
-                                    <ProfileOverview user={displayUser as unknown} />
-                                    <StatsSummary preferences={displayUser.preferences as unknown} />
-                                </div>
-                                <div className="space-y-6">
-                                    <div className="p-6 rounded-3xl border border-border/40 bg-card/10 backdrop-blur-md space-y-4 shadow-sm">
-                                        <h3 className="text-xs font-bold google-sans uppercase tracking-[0.2em] flex items-center gap-2">
-                                            <Shield className="w-4 h-4 text-primary" />
-                                            Security Panel
-                                        </h3>
-                                        <p className="text-xs text-muted-foreground leading-relaxed">
-                                            Your account data is encrypted and protected. All connections are verified for session integrity.
-                                        </p>
-                                        <div className="bg-emerald-500/5 border border-emerald-500/10 p-3 rounded-2xl flex items-center gap-3">
-                                            <div className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                                            <span className="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-widest">Verified</span>
-                                        </div>
-                                    </div>
+          <DashboardFeedback />
 
-                                    {displayUser.role === "admin" && (
-                                        <div className="space-y-4">
-                                            <div className="relative group rounded-3xl overflow-hidden p-px">
-                                                <div className="absolute inset-0 bg-linear-to-r from-primary/40 to-primary/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl" />
-                                                <div className="relative bg-card/20 backdrop-blur-xl border border-border/40 hover:border-primary/30 rounded-3xl flex h-full transition-colors duration-500">
-                                                    <Link 
-                                                        href="/dashboard/analytics"
-                                                        className="flex flex-1 items-center justify-between p-4"
-                                                    >
-                                                        <div className="flex items-center gap-4">
-                                                            <div className="relative flex items-center justify-center p-3 rounded-2xl bg-linear-to-br from-primary/20 to-primary/5 text-primary border border-primary/20 shadow-[0_0_15px_rgba(var(--primary),0.1)] group-hover:shadow-[0_0_20px_rgba(var(--primary),0.3)] group-hover:scale-105 transition-all duration-300">
-                                                                <BarChart className="w-4 h-4 z-10" />
-                                                            </div>
-                                                            <div>
-                                                                <h4 className="text-sm font-bold google-sans group-hover:text-primary transition-colors">Analytics</h4>
-                                                                <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-local-inter mt-0.5">Admin Only</p>
-                                                            </div>
-                                                        </div>
-                                                        <div className="flex items-center justify-center w-8 h-8 rounded-full bg-primary/10 text-primary opacity-0 group-hover:opacity-100 transition-all duration-300 -translate-x-4 group-hover:translate-x-0 group-hover:bg-primary group-hover:text-primary-foreground shadow-lg shadow-primary/20">
-                                                            <ArrowUpRight className="w-3.5 h-3.5" />
-                                                        </div>
-                                                    </Link>
-                                                </div>
-                                            </div>
+          {/* Simplified Header */}
+          <header className="space-y-3">
+            <h1 className="text-4xl font-bold google-sans tracking-tight">
+              User Dashboard
+            </h1>
+            <p className="text-muted-foreground leading-relaxed text-sm md:text-base font-local-inter">
+              Manage your profile, linked accounts, and view your activity.
+            </p>
+          </header>
 
-                                            <div className="relative group rounded-3xl overflow-hidden p-px">
-                                                <div className="absolute inset-0 bg-linear-to-r from-primary/40 to-primary/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl" />
-                                                <div className="relative bg-card/20 backdrop-blur-xl border border-border/40 hover:border-primary/30 rounded-3xl flex h-full transition-colors duration-500">
-                                                    <Link 
-                                                        href="/dashboard/system-monitor"
-                                                        className="flex flex-1 items-center justify-between p-4"
-                                                    >
-                                                        <div className="flex items-center gap-4">
-                                                            <div className="relative flex items-center justify-center p-3 rounded-2xl bg-linear-to-br from-primary/20 to-primary/5 text-primary border border-primary/20 shadow-[0_0_15px_rgba(var(--primary),0.1)] group-hover:shadow-[0_0_20px_rgba(var(--primary),0.3)] group-hover:scale-105 transition-all duration-300">
-                                                                <Activity className="w-4 h-4 z-10" />
-                                                            </div>
-                                                            <div>
-                                                                <h4 className="text-sm font-bold google-sans group-hover:text-primary transition-colors">System Monitor</h4>
-                                                                <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-local-inter mt-0.5">Admin Only</p>
-                                                            </div>
-                                                        </div>
-                                                        <div className="flex items-center justify-center w-8 h-8 rounded-full bg-primary/10 text-primary opacity-0 group-hover:opacity-100 transition-all duration-300 -translate-x-4 group-hover:translate-x-0 group-hover:bg-primary group-hover:text-primary-foreground shadow-lg shadow-primary/20">
-                                                            <ArrowUpRight className="w-3.5 h-3.5" />
-                                                        </div>
-                                                    </Link>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    )}
-                                </div>
-                            </div>
-                        </TabsContent>
-
-                        <TabsContent value="accounts" className="mt-0 focus-visible:outline-none">
-                            <LinkedAccounts accounts={accounts} />
-                        </TabsContent>
-
-                        <TabsContent value="activity" className="mt-0 focus-visible:outline-none">
-                            <ActivityTab bookmarkCount={(displayUser.preferences as unknown)?.bookmarks?.length || 0} />
-                        </TabsContent>
-                    </Tabs>
+          <Tabs
+            defaultValue="overview"
+            className="w-full space-y-4 font-local-inter"
+          >
+            <TabsList className="w-full bg-muted/10 backdrop-blur-md p-1 rounded-2xl border border-border/40 h-auto gap-1">
+              <TabsTrigger
+                value="overview"
+                className="flex-1 rounded-xl px-4 py-3 text-sm font-bold transition-all data-[state=active]:bg-background data-[state=active]:text-primary data-[state=active]:shadow-sm active:scale-[0.98] group"
+              >
+                <div className="flex items-center gap-2.5">
+                  <LayoutDashboard className="w-4 h-4 opacity-50 group-data-[state=active]:opacity-100 transition-opacity" />
+                  <span className="tracking-wide">Overview</span>
                 </div>
-            </Container>
+              </TabsTrigger>
+              <TabsTrigger
+                value="accounts"
+                className="flex-1 rounded-xl px-4 py-3 text-sm font-bold transition-all data-[state=active]:bg-background data-[state=active]:text-primary data-[state=active]:shadow-sm active:scale-[0.98] group"
+              >
+                <div className="flex items-center gap-2.5">
+                  <LinkIcon className="w-4 h-4 opacity-50 group-data-[state=active]:opacity-100 transition-opacity" />
+                  <span className="tracking-wide">Accounts</span>
+                </div>
+              </TabsTrigger>
+              <TabsTrigger
+                value="activity"
+                className="flex-1 rounded-xl px-4 py-3 text-sm font-bold transition-all data-[state=active]:bg-background data-[state=active]:text-primary data-[state=active]:shadow-sm active:scale-[0.98] group"
+              >
+                <div className="flex items-center gap-2.5">
+                  <Bookmark className="w-4 h-4 opacity-50 group-data-[state=active]:opacity-100 transition-opacity" />
+                  <span className="tracking-wide">Activity</span>
+                </div>
+              </TabsTrigger>
+            </TabsList>
 
-            {/* Background Decorations */}
-            <div className="fixed bottom-0 right-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[120px] -z-10 pointer-events-none" />
-            <div className="fixed top-0 left-0 w-[500px] h-[500px] bg-secondary/5 rounded-full blur-[120px] -z-10 pointer-events-none" />
+            <TabsContent
+              value="overview"
+              className="space-y-10 mt-0 focus-visible:outline-none"
+            >
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div className="lg:col-span-2 space-y-8">
+                  <ProfileOverview user={displayUser as unknown} />
+                  <StatsSummary
+                    preferences={displayUser.preferences as unknown}
+                  />
+                </div>
+                <div className="space-y-6">
+                  <div className="p-6 rounded-3xl border border-border/40 bg-card/10 backdrop-blur-md space-y-4 shadow-sm">
+                    <h3 className="text-xs font-bold google-sans uppercase tracking-[0.2em] flex items-center gap-2">
+                      <Shield className="w-4 h-4 text-primary" />
+                      Security Panel
+                    </h3>
+                    <p className="text-xs text-muted-foreground leading-relaxed">
+                      Your account data is encrypted and protected. All
+                      connections are verified for session integrity.
+                    </p>
+                    <div className="bg-emerald-500/5 border border-emerald-500/10 p-3 rounded-2xl flex items-center gap-3">
+                      <div className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                      <span className="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-widest">
+                        Verified
+                      </span>
+                    </div>
+                  </div>
+
+                  {displayUser.role === "admin" && (
+                    <div className="space-y-4">
+                      <div className="relative group rounded-3xl overflow-hidden p-px">
+                        <div className="absolute inset-0 bg-linear-to-r from-primary/40 to-primary/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl" />
+                        <div className="relative bg-card/20 backdrop-blur-xl border border-border/40 hover:border-primary/30 rounded-3xl flex h-full transition-colors duration-500">
+                          <Link
+                            href="/dashboard/analytics"
+                            className="flex flex-1 items-center justify-between p-4"
+                          >
+                            <div className="flex items-center gap-4">
+                              <div className="relative flex items-center justify-center p-3 rounded-2xl bg-linear-to-br from-primary/20 to-primary/5 text-primary border border-primary/20 shadow-[0_0_15px_rgba(var(--primary),0.1)] group-hover:shadow-[0_0_20px_rgba(var(--primary),0.3)] group-hover:scale-105 transition-all duration-300">
+                                <BarChart className="w-4 h-4 z-10" />
+                              </div>
+                              <div>
+                                <h4 className="text-sm font-bold google-sans group-hover:text-primary transition-colors">
+                                  Analytics
+                                </h4>
+                                <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-local-inter mt-0.5">
+                                  Admin Only
+                                </p>
+                              </div>
+                            </div>
+                            <div className="flex items-center justify-center w-8 h-8 rounded-full bg-primary/10 text-primary opacity-0 group-hover:opacity-100 transition-all duration-300 -translate-x-4 group-hover:translate-x-0 group-hover:bg-primary group-hover:text-primary-foreground shadow-lg shadow-primary/20">
+                              <ArrowUpRight className="w-3.5 h-3.5" />
+                            </div>
+                          </Link>
+                        </div>
+                      </div>
+
+                      <div className="relative group rounded-3xl overflow-hidden p-px">
+                        <div className="absolute inset-0 bg-linear-to-r from-primary/40 to-primary/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl" />
+                        <div className="relative bg-card/20 backdrop-blur-xl border border-border/40 hover:border-primary/30 rounded-3xl flex h-full transition-colors duration-500">
+                          <Link
+                            href="/dashboard/system-monitor"
+                            className="flex flex-1 items-center justify-between p-4"
+                          >
+                            <div className="flex items-center gap-4">
+                              <div className="relative flex items-center justify-center p-3 rounded-2xl bg-linear-to-br from-primary/20 to-primary/5 text-primary border border-primary/20 shadow-[0_0_15px_rgba(var(--primary),0.1)] group-hover:shadow-[0_0_20px_rgba(var(--primary),0.3)] group-hover:scale-105 transition-all duration-300">
+                                <Activity className="w-4 h-4 z-10" />
+                              </div>
+                              <div>
+                                <h4 className="text-sm font-bold google-sans group-hover:text-primary transition-colors">
+                                  System Monitor
+                                </h4>
+                                <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-local-inter mt-0.5">
+                                  Admin Only
+                                </p>
+                              </div>
+                            </div>
+                            <div className="flex items-center justify-center w-8 h-8 rounded-full bg-primary/10 text-primary opacity-0 group-hover:opacity-100 transition-all duration-300 -translate-x-4 group-hover:translate-x-0 group-hover:bg-primary group-hover:text-primary-foreground shadow-lg shadow-primary/20">
+                              <ArrowUpRight className="w-3.5 h-3.5" />
+                            </div>
+                          </Link>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </TabsContent>
+
+            <TabsContent
+              value="accounts"
+              className="mt-0 focus-visible:outline-none"
+            >
+              <LinkedAccounts accounts={accounts} />
+            </TabsContent>
+
+            <TabsContent
+              value="activity"
+              className="mt-0 focus-visible:outline-none"
+            >
+              <ActivityTab
+                bookmarkCount={
+                  (displayUser.preferences as unknown)?.bookmarks?.length || 0
+                }
+              />
+            </TabsContent>
+          </Tabs>
         </div>
-    );
+      </Container>
+
+      {/* Background Decorations */}
+      <div className="fixed bottom-0 right-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[120px] -z-10 pointer-events-none" />
+      <div className="fixed top-0 left-0 w-[500px] h-[500px] bg-secondary/5 rounded-full blur-[120px] -z-10 pointer-events-none" />
+    </div>
+  );
 }

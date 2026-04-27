@@ -29,7 +29,9 @@ export function MobileBottomNav({
 
   // Avoid hydration mismatch
   useEffect(() => {
-    startTransition(() => { setMounted(true); });
+    startTransition(() => {
+      setMounted(true);
+    });
   }, []);
 
   if (!mounted) {
@@ -44,7 +46,7 @@ export function MobileBottomNav({
     <div
       className={cn(
         "fixed bottom-0 left-0 right-0 z-50 flex items-center justify-around px-2 py-1.5 border-t border-border bg-background/80 backdrop-blur-xl shadow-[0_-5px_15px_-3px_rgba(0,0,0,0.1)] w-full lg:hidden rounded-t-[2.5rem]",
-        className
+        className,
       )}
     >
       {/* Search */}

@@ -9,7 +9,8 @@ import { siteConfig } from "./config";
 import { env } from "./env";
 
 const GITHUB_API_BASE = "https://api.github.com";
-const GITHUB_USERNAME = env.NEXT_PUBLIC_GITHUB_USERNAME || siteConfig.githubUsername;
+const GITHUB_USERNAME =
+  env.NEXT_PUBLIC_GITHUB_USERNAME || siteConfig.githubUsername;
 
 // Get GitHub token from environment variable (optional, increases rate limit)
 const GITHUB_TOKEN = env.NEXT_PUBLIC_GITHUB_TOKEN;

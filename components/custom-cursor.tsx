@@ -11,7 +11,8 @@ export const CustomCursor = () => {
 
   useEffect(() => {
     // Check if it's a touch device or if we're on a small screen
-    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    const isTouchDevice =
+      "ontouchstart" in window || navigator.maxTouchPoints > 0;
     if (isTouchDevice || window.innerWidth < 768) return;
 
     const cursor = cursorRef.current;
@@ -19,7 +20,7 @@ export const CustomCursor = () => {
 
     const onMouseMove = (e: MouseEvent) => {
       if (!isVisible) setIsVisible(true);
-      
+
       gsap.to(cursor, {
         x: e.clientX,
         y: e.clientY,
@@ -44,7 +45,9 @@ export const CustomCursor = () => {
     window.addEventListener("mouseenter", onMouseEnterWindow);
 
     const updateLinkListeners = () => {
-      const links = document.querySelectorAll("a, button, [role='button'], input, textarea, select");
+      const links = document.querySelectorAll(
+        "a, button, [role='button'], input, textarea, select",
+      );
       links.forEach((link) => {
         link.addEventListener("mouseenter", onMouseEnterLink);
         link.addEventListener("mouseleave", onMouseLeaveLink);
@@ -74,7 +77,7 @@ export const CustomCursor = () => {
       className={`fixed top-0 left-0 pointer-events-none z-[10001] transition-opacity duration-300 ${
         isVisible ? "opacity-100" : "opacity-0"
       } hidden md:block`}
-      style={{ mixBlendMode: 'difference' }}
+      style={{ mixBlendMode: "difference" }}
     >
       <div
         className={`transition-all duration-300 ease-out origin-top-left ${
@@ -87,7 +90,7 @@ export const CustomCursor = () => {
           viewBox="0 0 24 24"
           fill="white"
           xmlns="http://www.w3.org/2000/svg"
-          style={{ transform: 'rotate(-15deg)' }}
+          style={{ transform: "rotate(-15deg)" }}
         >
           <path d="M5.5 3.21V20.8L10.11 15.65H18.5L5.5 3.21Z" />
         </svg>

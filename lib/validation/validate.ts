@@ -20,8 +20,9 @@ const contactSchema = z.object({
 });
 
 export async function verifyTurnstile(token: string): Promise<boolean> {
-  const secretKey = env.TURNSTILE_SECRET_KEY || "1x0000000000000000000000000000000AA";
-  
+  const secretKey =
+    env.TURNSTILE_SECRET_KEY || "1x0000000000000000000000000000000AA";
+
   try {
     const verifyRes = await fetch(
       "https://challenges.cloudflare.com/turnstile/v0/siteverify",
@@ -31,7 +32,7 @@ export async function verifyTurnstile(token: string): Promise<boolean> {
           "Content-Type": "application/x-www-form-urlencoded",
         },
         body: `secret=${encodeURIComponent(secretKey)}&response=${encodeURIComponent(token)}`,
-      }
+      },
     );
 
     const verifyData = await verifyRes.json();
@@ -43,8 +44,8 @@ export async function verifyTurnstile(token: string): Promise<boolean> {
 }
 
 export async function validateContactForm(
-  data: unknown, 
-  turnstileToken: string | null
+  data: unknown,
+  turnstileToken: string | null,
 ): Promise<ValidationResult<z.infer<typeof contactSchema>>> {
   // 1. Turnstile verification
   if (!turnstileToken) {
@@ -90,7 +91,8 @@ export async function validateContactForm(
       success: false,
       error: {
         type: "temp_mail",
-        message: "Please use a permanent email address. Disposable email addresses are not accepted.",
+        message:
+          "Please use a permanent email address. Disposable email addresses are not accepted.",
       },
     };
   }
@@ -111,7 +113,9 @@ export async function validateContactForm(
   return { success: true, data: result.data };
 }
 
-export async function validateComment(text: string): Promise<ValidationResult<string>> {
+export async function validateComment(
+  text: string,
+): Promise<ValidationResult<string>> {
   // Profanity check only
   const blockedWords = findBlockedWords(text);
   if (blockedWords.length > 0) {

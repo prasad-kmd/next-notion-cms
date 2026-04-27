@@ -54,9 +54,11 @@ const envSchema = z.object({
   POSTHOG_PERSONAL_API_KEY: z.string().optional(),
   POSTHOG_PROJECT_ID: z.string().optional(),
   POSTHOG_API_HOST: z.string().optional(),
-  
+
   // Node Env
-  NODE_ENV: z.enum(["development", "test", "production"]).default("development"),
+  NODE_ENV: z
+    .enum(["development", "test", "production"])
+    .default("development"),
 });
 
 const parsed = envSchema.safeParse(process.env);

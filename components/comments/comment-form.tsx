@@ -42,10 +42,10 @@ export function CommentForm({ pageId, onSuccess }: CommentFormProps) {
       const res = await fetch("/api/comments", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ 
-          pageId, 
+        body: JSON.stringify({
+          pageId,
           content: content.trim(),
-          turnstileToken 
+          turnstileToken,
         }),
       });
 
@@ -61,7 +61,7 @@ export function CommentForm({ pageId, onSuccess }: CommentFormProps) {
       }
 
       const newComment = data;
-      
+
       // Track comment submission in PostHog
       if (posthog) {
         posthog.capture("comment_submitted", {
@@ -79,7 +79,10 @@ export function CommentForm({ pageId, onSuccess }: CommentFormProps) {
       toast.success("Comment posted successfully!");
     } catch (error: unknown) {
       console.error(error);
-      const errorMessage = error instanceof Error ? error.message : "Failed to post comment. Please try again.";
+      const errorMessage =
+        error instanceof Error
+          ? error.message
+          : "Failed to post comment. Please try again.";
       toast.error(errorMessage);
     } finally {
       setIsSubmitting(false);
@@ -106,8 +109,15 @@ export function CommentForm({ pageId, onSuccess }: CommentFormProps) {
             Share your thoughts and feedback on this article.
           </p>
         </div>
-        <Button asChild variant="outline" size="sm" className="rounded-xl px-6 font-mozilla-headline">
-          <Link href={`/sign-in?callbackUrl=${encodeURIComponent(typeof window !== 'undefined' ? window.location.href : '')}`}>
+        <Button
+          asChild
+          variant="outline"
+          size="sm"
+          className="rounded-xl px-6 font-mozilla-headline"
+        >
+          <Link
+            href={`/sign-in?callbackUrl=${encodeURIComponent(typeof window !== "undefined" ? window.location.href : "")}`}
+          >
             Sign In
           </Link>
         </Button>
@@ -137,9 +147,9 @@ export function CommentForm({ pageId, onSuccess }: CommentFormProps) {
           disabled={isSubmitting}
           blockedWords={blockedWords}
         />
-        
+
         {content.trim().length > 0 && (
-          <TurnstileWidget 
+          <TurnstileWidget
             ref={turnstileRef}
             onVerify={(token) => setTurnstileToken(token)}
             onExpire={() => setTurnstileToken(null)}
@@ -151,14 +161,20 @@ export function CommentForm({ pageId, onSuccess }: CommentFormProps) {
         )}
 
         <div className="absolute bottom-3 right-3 flex items-center gap-3">
-             <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-background/50 border border-border/40 backdrop-blur-sm">
-                {session.user.image && (
-                    <Image src={session.user.image} width={16} height={16} className="w-4 h-4 rounded-full border border-border/60" alt="" />
-                )}
-                <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground font-roboto">
-                    {session.user.name}
-                </span>
-             </div>
+          <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-background/50 border border-border/40 backdrop-blur-sm">
+            {session.user.image && (
+              <Image
+                src={session.user.image}
+                width={16}
+                height={16}
+                className="w-4 h-4 rounded-full border border-border/60"
+                alt=""
+              />
+            )}
+            <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground font-roboto">
+              {session.user.name}
+            </span>
+          </div>
           <Button
             type="submit"
             disabled={!content.trim() || isSubmitting || !turnstileToken}
@@ -174,7 +190,8 @@ export function CommentForm({ pageId, onSuccess }: CommentFormProps) {
         </div>
       </div>
       <p className="text-[10px] text-muted-foreground/60 px-2 italic font-local-inter">
-        Keep the discussion technical and respectful. Markdown is supported via Notion.
+        Keep the discussion technical and respectful. Markdown is supported via
+        Notion.
       </p>
     </form>
   );

@@ -10,15 +10,18 @@ function PostHogPageView(): null {
 
   useEffect(() => {
     // Only track if it's NOT a content page, as those are handled by PageViewTracker
-    const isContentPage = 
-      pathname.startsWith("/blog/") || 
-      pathname.startsWith("/articles/") || 
-      pathname.startsWith("/tutorials/") || 
-      pathname.startsWith("/projects/") || 
+    const isContentPage =
+      pathname.startsWith("/blog/") ||
+      pathname.startsWith("/articles/") ||
+      pathname.startsWith("/tutorials/") ||
+      pathname.startsWith("/projects/") ||
       pathname.startsWith("/wiki/");
 
     if (posthog && !isContentPage) {
-      const url = window.origin + pathname + (searchParams.toString() ? `?${searchParams.toString()}` : "");
+      const url =
+        window.origin +
+        pathname +
+        (searchParams.toString() ? `?${searchParams.toString()}` : "");
       posthog.capture("$pageview", {
         $current_url: url,
       });

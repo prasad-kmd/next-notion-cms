@@ -21,7 +21,9 @@ export function AnalyticsDashboardFilters() {
     <div className="space-y-8">
       <div className="flex flex-wrap items-center gap-4">
         <div className="flex items-center gap-2">
-          <span className="text-sm font-medium text-muted-foreground">Range:</span>
+          <span className="text-sm font-medium text-muted-foreground">
+            Range:
+          </span>
           <Select value={timeRange} onValueChange={setTimeRange}>
             <SelectTrigger className="w-[140px] rounded-xl border-border/50">
               <SelectValue placeholder="Select range" />
@@ -35,7 +37,9 @@ export function AnalyticsDashboardFilters() {
         </div>
 
         <div className="flex items-center gap-2">
-          <span className="text-sm font-medium text-muted-foreground">Type:</span>
+          <span className="text-sm font-medium text-muted-foreground">
+            Type:
+          </span>
           <Select value={contentType} onValueChange={setContentType}>
             <SelectTrigger className="w-[140px] rounded-xl border-border/50">
               <SelectValue placeholder="Select type" />
@@ -53,8 +57,14 @@ export function AnalyticsDashboardFilters() {
       </div>
 
       <div className="grid grid-cols-1 gap-8">
-        <TopContentChart timeRange={timeRange} contentType={actualContentType} />
-        <TopContentTable timeRange={timeRange} contentType={actualContentType} />
+        <TopContentChart
+          timeRange={timeRange}
+          contentType={actualContentType}
+        />
+        <TopContentTable
+          timeRange={timeRange}
+          contentType={actualContentType}
+        />
       </div>
     </div>
   );

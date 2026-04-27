@@ -5,7 +5,10 @@ export interface RateLimitConfig {
 
 const rateLimitMap = new Map<string, number[]>();
 
-export function isRateLimited(identifier: string, config: RateLimitConfig): boolean {
+export function isRateLimited(
+  identifier: string,
+  config: RateLimitConfig,
+): boolean {
   const now = Date.now();
   const timestamps = rateLimitMap.get(identifier) || [];
   const recentTimestamps = timestamps.filter((ts) => now - ts < config.window);

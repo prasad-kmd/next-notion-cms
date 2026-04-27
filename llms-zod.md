@@ -330,7 +330,7 @@
 - [Internal changes](https://zod.dev/v4/changelog?id=internal-changes)
 - [updates generics](https://zod.dev/v4/changelog?id=updates-generics)
 - [adds z.core](https://zod.dev/v4/changelog?id=adds-zcore)
-- [moves ._def](https://zod.dev/v4/changelog?id=moves-_def)
+- [moves .\_def](https://zod.dev/v4/changelog?id=moves-_def)
 - [drops ZodEffects](https://zod.dev/v4/changelog?id=drops-zodeffects)
 - [adds ZodTransform](https://zod.dev/v4/changelog?id=adds-zodtransform)
 - [drops ZodPreprocess](https://zod.dev/v4/changelog?id=drops-zodpreprocess)

@@ -2,15 +2,15 @@
 
 import { useEffect, useState } from "react";
 import { useHasMounted } from "@/hooks/use-has-mounted";
-import { 
-  AreaChart, 
-  Area, 
-  XAxis, 
-  YAxis, 
-  CartesianGrid, 
-  Tooltip, 
+import {
+  AreaChart,
+  Area,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
   ResponsiveContainer,
-  Legend
+  Legend,
 } from "recharts";
 import { ANALYTICS_COLORS, getRechartsTheme } from "@/lib/recharts-theme";
 import { useTheme } from "next-themes";
@@ -22,7 +22,11 @@ interface StackedAreaChartProps {
   title: string;
 }
 
-export function StackedAreaChart({ timeRange, breakdownBy, title }: StackedAreaChartProps) {
+export function StackedAreaChart({
+  timeRange,
+  breakdownBy,
+  title,
+}: StackedAreaChartProps) {
   const [data, setData] = useState<Record<string, unknown>[]>([]);
   const [categories, setCategories] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
@@ -37,33 +41,41 @@ export function StackedAreaChart({ timeRange, breakdownBy, title }: StackedAreaC
         const response = await fetch("/api/admin/analytics", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ 
+          body: JSON.stringify({
             insightType: "multi_variable_insight",
-            params: { timeRange, breakdownBy }
+            params: { timeRange, breakdownBy },
           }),
         });
         if (response.ok) {
           const json = await response.json();
           const results = json.result || [];
-          
+
           const allLabels = results[0]?.labels || [];
           const transformed = allLabels.map((label: string, i: number) => {
             const point: unknown = { date: label };
             results.forEach((series: unknown) => {
-              const key = (series as { breakdown_value: string }).breakdown_value === "$$_posthog_breakdown_null_$$" || !(series as { breakdown_value: string }).breakdown_value 
-                ? "Unknown" 
-                : (series as { breakdown_value: string }).breakdown_value;
-              (point as Record<string, unknown>)[key] = (series as { data: number[] }).data[i];
+              const key =
+                (series as { breakdown_value: string }).breakdown_value ===
+                  "$$_posthog_breakdown_null_$$" ||
+                !(series as { breakdown_value: string }).breakdown_value
+                  ? "Unknown"
+                  : (series as { breakdown_value: string }).breakdown_value;
+              (point as Record<string, unknown>)[key] = (
+                series as { data: number[] }
+              ).data[i];
             });
             return point;
           });
-          
+
           setData(transformed);
-          setCategories(results.map((s: unknown) => 
-            s.breakdown_value === "$$_posthog_breakdown_null_$$" || !s.breakdown_value 
-            ? "Unknown" 
-            : s.breakdown_value
-          ));
+          setCategories(
+            results.map((s: unknown) =>
+              s.breakdown_value === "$$_posthog_breakdown_null_$$" ||
+              !s.breakdown_value
+                ? "Unknown"
+                : s.breakdown_value,
+            ),
+          );
         }
       } catch (err) {
         console.error(err);
@@ -74,7 +86,12 @@ export function StackedAreaChart({ timeRange, breakdownBy, title }: StackedAreaC
     fetchData();
   }, [timeRange, breakdownBy]);
 
-  if (loading || !hasMounted) return <div className="h-[320px] flex items-center justify-center animate-pulse bg-muted/10 rounded-3xl">Loading {title}...</div>;
+  if (loading || !hasMounted)
+    return (
+      <div className="h-[320px] flex items-center justify-center animate-pulse bg-muted/10 rounded-3xl">
+        Loading {title}...
+      </div>
+    );
 
   return (
     <div className="h-[320px] w-full relative">
@@ -86,11 +103,13 @@ export function StackedAreaChart({ timeRange, breakdownBy, title }: StackedAreaC
           <Tooltip contentStyle={chartTheme.tooltip.contentStyle} />
           <Legend />
           {categories.map((cat, i) => (
-            <Area 
-              key={cat} 
+            <Area
+              key={cat}
               type="monotone"
-              dataKey={cat} 
-              stroke={getColorCode(ANALYTICS_COLORS[i % ANALYTICS_COLORS.length])}
+              dataKey={cat}
+              stroke={getColorCode(
+                ANALYTICS_COLORS[i % ANALYTICS_COLORS.length],
+              )}
               fill={getColorCode(ANALYTICS_COLORS[i % ANALYTICS_COLORS.length])}
               fillOpacity={0.3}
               stackId="1"

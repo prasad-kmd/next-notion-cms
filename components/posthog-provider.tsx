@@ -25,9 +25,5 @@ export function PostHogProvider({ children }: { children: React.ReactNode }) {
     }
   }, [session]);
 
-  return (
-    <>
-      {children}
-    </>
-  );
+  return <>{children}</>;
 }

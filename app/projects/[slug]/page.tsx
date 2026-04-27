@@ -62,11 +62,15 @@ export default async function ProjectPage({
       />
       <ScrollProgress />
       <div className="mx-auto max-w-4xl">
-        <Breadcrumbs 
+        <Breadcrumbs
           items={[
             { label: "Projects", href: "/projects" },
-            { label: project.title, href: `/projects/${project.slug}`, active: true }
-          ]} 
+            {
+              label: project.title,
+              href: `/projects/${project.slug}`,
+              active: true,
+            },
+          ]}
         />
 
         <article>

@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: Promise<{ slug: string[] }> }
+  { params }: { params: Promise<{ slug: string[] }> },
 ) {
   try {
     const { slug } = await params;
@@ -12,7 +12,8 @@ export async function GET(
 
     const POSTHOG_PERSONAL_API_KEY = process.env.POSTHOG_PERSONAL_API_KEY;
     const POSTHOG_PROJECT_ID = process.env.POSTHOG_PROJECT_ID;
-    const POSTHOG_API_HOST = process.env.POSTHOG_API_HOST || "https://us.posthog.com";
+    const POSTHOG_API_HOST =
+      process.env.POSTHOG_API_HOST || "https://us.posthog.com";
 
     if (!POSTHOG_PERSONAL_API_KEY || !POSTHOG_PROJECT_ID) {
       return NextResponse.json({ views: 0 }, { status: 200 });
@@ -70,24 +71,34 @@ export async function GET(
     }
 
     const data = await response.json();
-    
+
     // In TrendsQuery, the total is usually in results[0].count or results[0].data
     // For a single series with no breakdown and total math, it should be an array of values over time if not aggregated
     // But since we want total, we might need to sum it up if PostHog returns it over time
-    
+
     let totalViews = 0;
     if (data.results && data.results[0] && data.results[0].data) {
-        // PostHog TrendsQuery returns an array of values for the date range
-        totalViews = data.results[0].data.reduce((acc: number, val: number) => acc + val, 0);
-    } else if (data.results && data.results[0] && typeof data.results[0].count === 'number') {
-        totalViews = data.results[0].count;
+      // PostHog TrendsQuery returns an array of values for the date range
+      totalViews = data.results[0].data.reduce(
+        (acc: number, val: number) => acc + val,
+        0,
+      );
+    } else if (
+      data.results &&
+      data.results[0] &&
+      typeof data.results[0].count === "number"
+    ) {
+      totalViews = data.results[0].count;
     }
 
-    return NextResponse.json({ views: totalViews }, {
+    return NextResponse.json(
+      { views: totalViews },
+      {
         headers: {
-            "Cache-Control": "public, s-maxage=3600, stale-while-revalidate=1800",
-        }
-    });
+          "Cache-Control": "public, s-maxage=3600, stale-while-revalidate=1800",
+        },
+      },
+    );
   } catch (error) {
     console.error("View count API error:", error);
     return NextResponse.json({ views: 0 }, { status: 200 });
