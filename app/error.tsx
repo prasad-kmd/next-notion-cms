@@ -184,9 +184,18 @@ export default function Error({
         {/* Action Buttons */}
         <div className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-4">
           <Button
-            onClick={() =>
-              typeof reset === "function" ? reset() : window.location.reload()
-            }
+            onClick={() => {
+              // Try the Next.js reset first, then fallback to a full page reload if needed
+              if (typeof reset === "function") {
+                reset();
+                // Add a small delay then reload if reset didn't work (page still has error)
+                setTimeout(() => {
+                  window.location.assign(window.location.href);
+                }, 500);
+              } else {
+                window.location.assign(window.location.href);
+              }
+            }}
             size="lg"
             className="rounded-full px-8 transition-all hover:scale-105"
           >

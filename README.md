@@ -61,12 +61,15 @@ Perfect for researchers, engineers, and developers who need a robust, scalable, 
 - **♿ Custom Accessibility Controller** - Scoped text adjustments (size, font, spacing, contrast) with draggable interface and persistence
 - **🎯 Smart TOC** - Automatically generated Table of Contents with active-state scroll tracking
 - **🔍 Search & Command Palette** - Global `Cmd+K` search modal for quick navigation
+- **🚀 Resource-Driven Loading** - MacOS-styled terminal loading interface that tracks real-time sequential resource loading via PerformanceObserver
+- **🎬 High-Fidelity Hero Background** - Seamlessly blended, theme-aware video background with precision masking for both light and dark modes
 - **🎨 Unique Design Identity** - Redesigned Hero with technical "Engineering Excellence" dashboard, specialized cards for different content types
 
 ### 📈 Analytics & Monitoring
 - **📊 Advanced Analytics** - Integrated PostHog for real-time user insights with custom Admin Analytics Dashboard
 - **👁️ View Tracking** - Per-page view counts with aggregated tracking and performance-optimized caching
 - **📊 Modern Visualizations** - Recharts-based visualizations (Tremor style) for high-fidelity data experience
+- **🚨 Kernel Panic Error System** - Technical, high-fidelity global error handling with integrated diagnostics and theme-aware recovery controls
 - **🩺 System Health Monitoring** - Real-time health checks for Notion, Supabase, and PostHog with historical Logging Engine (7-day retention)
 
 ### 🔐 Auth & Security

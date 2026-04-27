@@ -39,6 +39,27 @@ export default function FeaturedHero({ items }: FeaturedHeroProps) {
 
   return (
     <section className="relative min-h-screen flex items-center py-16 lg:py-0 overflow-hidden bg-background">
+      {/* Video Background */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full z-0 pointer-events-none overflow-hidden">
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className={cn(
+            "w-full h-full object-cover transition-opacity duration-1000",
+            "opacity-[0.45] mix-blend-multiply filter invert hue-rotate-360 brightness-110 contrast-125",
+            "dark:opacity-40 dark:mix-blend-screen dark:filter-none dark:hue-rotate-0 dark:brightness-100 dark:contrast-100"
+          )}
+          style={{
+            maskImage: "radial-gradient(ellipse 100% 80% at 50% 50%, black 0%, black 20%, rgba(0, 0, 0, 0.5) 50%, transparent 80%)",
+            WebkitMaskImage: "radial-gradient(ellipse 100% 80% at 50% 50%, black 0%, black 20%, rgba(0, 0, 0, 0.5) 50%, transparent 80%)",
+          }}
+        >
+          <source src="/video/black-hole-purple.webm" type="video/webm" />
+        </video>
+      </div>
+
       {/* Dynamic Background Grid */}
       <div className="absolute inset-0 z-0 pointer-events-none">
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-size-[40px_40px] mask-[radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]" />

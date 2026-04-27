@@ -227,7 +227,7 @@ export default function ContactForm() {
         </div>
 
         <div className="flex justify-center py-2">
-            <TurnstileWidget ref={turnstileRef} onVerify={function (_token: string): void {
+            <TurnstileWidget ref={turnstileRef} onVerify={function (): void {
             throw new Error("Function not implemented.");
           } } />
         </div>
