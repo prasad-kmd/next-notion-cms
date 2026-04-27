@@ -1,0 +1,275 @@
+@media print {
+  /* Set A4 page size and margins */
+  @page {
+    size: A4;
+    margin: 20mm 25mm 20mm 25mm;
+  }
+
+  /* Force light theme colors */
+  :root,
+  .dark {
+    --background: #ffffff !important;
+    --foreground: #000000 !important;
+    --border: #e2e8f0 !important;
+    --muted: #f1f5f9 !important;
+    --muted-foreground: #64748b !important;
+  }
+
+  html,
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+    width: 210mm;
+    height: auto;
+  }
+
+  /* Hide UI elements */
+  nav,
+  footer,
+  aside,
+  .no-print,
+  [data-print-hide="true"],
+  button,
+  .bookmark-button,
+  #toc-sidebar,
+  .comments-section,
+  .related-content,
+  .breadcrumb-nav,
+  .theme-toggle,
+  .accessibility-button,
+  .scroll-progress,
+  .floating-navbar,
+  .connectivity-listener,
+  .scroll-to-top,
+  .sonner-toaster,
+  .ai-content-indicator {
+    display: none !important;
+  }
+
+  /* Reset main container padding for print */
+  main {
+    padding-left: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+  }
+
+  /* Target main article content */
+  [data-print-content="true"] {
+    display: block !important;
+    width: 100% !important;
+  }
+
+  /* Typography */
+  body {
+    font-size: 11pt;
+    line-height: 1.6;
+    color: #000000;
+  }
+
+  h1 {
+    font-size: 20pt;
+    margin-bottom: 0.5em;
+    page-break-after: avoid;
+  }
+
+  h2 {
+    font-size: 16pt;
+    margin-top: 1.5em;
+    margin-bottom: 0.5em;
+    page-break-after: avoid;
+  }
+
+  h3 {
+    font-size: 14pt;
+    margin-top: 1.2em;
+    margin-bottom: 0.4em;
+    page-break-after: avoid;
+  }
+
+  h4 {
+    font-size: 12pt;
+    margin-top: 1em;
+    margin-bottom: 0.3em;
+    page-break-after: avoid;
+  }
+
+  p {
+    margin-bottom: 6pt;
+    orphans: 3;
+    widows: 3;
+  }
+
+  /* Link Handling */
+  a[href^="http"]:not([href*="localhost"]):after {
+    content: " (" attr(href) ")";
+    font-size: 90%;
+    color: #333;
+  }
+
+  a {
+    text-decoration: underline;
+    color: #000000 !important;
+    word-wrap: break-word;
+  }
+
+  /* Code Blocks */
+  pre, code {
+    font-family: var(--font-space-mono), monospace !important;
+    font-size: 9pt !important;
+  }
+
+  pre {
+    background-color: #f4f4f4 !important;
+    border: 1px solid #ddd !important;
+    padding: 10px !important;
+    margin: 10px 0 !important;
+    white-space: pre-wrap !important;
+    word-wrap: break-word !important;
+    page-break-inside: avoid;
+    border-radius: 4px;
+  }
+
+  /* Hide code block decorations */
+  .code-copy-button,
+  .code-window-controls {
+    display: none !important;
+  }
+
+  /* Images */
+  img {
+    max-width: 100% !important;
+    height: auto !important;
+    page-break-inside: avoid;
+    page-break-after: avoid;
+    page-break-before: avoid;
+  }
+
+  /* Tables */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1em;
+    page-break-inside: auto;
+  }
+
+  tr {
+    page-break-inside: avoid;
+    page-break-after: auto;
+  }
+
+  thead {
+    display: table-header-group;
+  }
+
+  th, td {
+    border: 1px solid #ddd !important;
+    padding: 8px;
+    text-align: left;
+  }
+
+  /* Blockquotes */
+  blockquote {
+    border-left: 4px solid #ddd !important;
+    padding-left: 15px;
+    font-style: italic;
+    margin: 1.5em 10px;
+    page-break-inside: avoid;
+  }
+
+  /* KaTeX */
+  .katex {
+    font-size: 1.1em !important;
+  }
+
+  .katex-display {
+    page-break-inside: avoid;
+  }
+
+  /* Alert boxes */
+  .callout, .admonition, .note, .tip, .warning {
+    border: 1px solid #ddd !important;
+    padding: 10px;
+    margin: 1em 0;
+    page-break-inside: avoid;
+    background-color: #fafafa !important;
+  }
+
+  /* Horizontal Rules */
+  hr {
+    border: 0;
+    border-top: 1px solid #ddd;
+    margin: 2em 0;
+  }
+
+  /* Page Break Rules */
+  h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid;
+    page-break-before: auto;
+  }
+
+  h2 {
+    page-break-before: always;
+  }
+
+  h2:first-of-type {
+    page-break-before: auto;
+  }
+
+  ul, ol {
+    page-break-inside: auto;
+  }
+
+  li {
+    page-break-inside: avoid;
+  }
+
+  /* Fix for header/footer overlap */
+  body {
+    padding-top: 15mm;
+    padding-bottom: 15mm;
+  }
+
+  /* Print Header & Footer */
+  .print-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 10mm;
+    border-bottom: 1px solid #ddd;
+    font-size: 9pt;
+    color: #666;
+    display: flex !important;
+    align-items: center;
+    justify-content: space-between;
+    background: white;
+  }
+
+  .print-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 10mm;
+    border-top: 1px solid #ddd;
+    font-size: 9pt;
+    color: #666;
+    display: flex !important;
+    align-items: center;
+    justify-content: space-between;
+    background: white;
+  }
+
+  /* Page numbering */
+  .page-number:after {
+    content: "Page " counter(page) " of " counter(pages);
+  }
+}
+
+/* Hide print-only elements during normal browsing */
+@media screen {
+  .print-header,
+  .print-footer {
+    display: none !important;
+  }
+}

@@ -63,6 +63,7 @@ Perfect for researchers, engineers, and developers who need a robust, scalable, 
 - **♿ Custom Accessibility Controller** - Scoped text adjustments (size, font, spacing, contrast) with draggable interface and persistence
 - **🎯 Smart TOC** - Automatically generated Table of Contents with active-state scroll tracking
 - **🔍 Search & Command Palette** - Global `Cmd+K` search modal for quick navigation
+- **📄 Print-to-PDF Export** - Professional A4 formatting with headers, footers, and page numbers for all content types
 - **🚀 Resource-Driven Loading** - MacOS-styled terminal loading interface that tracks real-time sequential resource loading via PerformanceObserver
 - **🎬 High-Fidelity Hero Background** - Seamlessly blended, theme-aware video background with precision masking for both light and dark modes
 - **🎨 Unique Design Identity** - Redesigned Hero with technical "Engineering Excellence" dashboard, specialized cards for different content types

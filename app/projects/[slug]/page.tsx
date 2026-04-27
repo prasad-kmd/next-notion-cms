@@ -5,6 +5,8 @@ import { Calendar } from "lucide-react";
 // import Link from "next/link";
 import { ContentRenderer } from "@/components/content-renderer";
 import { BookmarkButton } from "@/components/bookmark-button";
+import { PrintButton } from "@/components/content/PrintButton";
+import { PrintHeaderFooter } from "@/components/content/PrintHeaderFooter";
 import { ScrollProgress } from "@/components/scroll-progress";
 import { RelatedContent } from "@/components/related-content";
 import { AIContentIndicator } from "@/components/ai-content-indicator";
@@ -93,6 +95,11 @@ export default async function ProjectPage({
                 </div>
                 <div className="flex items-center gap-2">
                   <CommentScrollButton />
+                  <PrintButton
+                    postTitle={project.title}
+                    authorName="PMEngineerLK"
+                    publishDate={project.date || ""}
+                  />
                   <BookmarkButton
                     key={project.slug}
                     item={{
@@ -108,7 +115,13 @@ export default async function ProjectPage({
           </header>
 
           <ContentArea>
-            <ContentRenderer content={project.content} id={project.slug} />
+            <div data-print-content="true">
+              <PrintHeaderFooter
+                title={project.title}
+                date={project.date}
+              />
+              <ContentRenderer content={project.content} id={project.slug} />
+            </div>
           </ContentArea>
         </article>
 

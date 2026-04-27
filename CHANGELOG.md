@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.8.0] - 2025-06-05
+
+### Added
+
+- **Print-to-PDF Export**: Implemented professional PDF export functionality for all content pages.
+  - **A4 Layout**: Optimized print styles with 25mm/20mm margins and black-on-white theme overrides.
+  - **Dynamic Headers/Footers**: Includes post title, author name, publication date, and page numbers.
+  - **Academic-Grade Formatting**: Professional typography (11pt body), formatted code blocks, and link URL preservation.
+  - **Sonner Notifications**: Interactive toast notifications for preparation, success, and cancellation states.
+  - **Client-Side Only**: Efficient browser-native printing without server dependencies.
+
 ## [1.7.0] - 2025-05-29
 
 ### Added
