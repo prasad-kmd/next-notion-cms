@@ -85,14 +85,16 @@ export default async function BlogPostPage({
       />
       <ScrollProgress />
       <div className="mx-auto max-w-6xl">
-        <Breadcrumbs
-          items={[
-            { label: "Blog", href: "/blog" },
-            { label: post.title, href: `/blog/${post.slug}`, active: true },
-          ]}
-        />
+          <div data-print-hide="true">
+            <Breadcrumbs
+              items={[
+                { label: "Blog", href: "/blog" },
+                { label: post.title, href: `/blog/${post.slug}`, active: true },
+              ]}
+            />
+          </div>
 
-        <div className="flex flex-col lg:flex-row gap-12">
+          <div className="flex flex-col lg:flex-row gap-12">
           <article className="flex-1 min-w-0">
             <header className="mb-8 border-b border-border pb-8">
               <h1 className="mb-4 text-4xl font-bold text-balance lg:text-5xl font-google-sans">
@@ -117,7 +119,7 @@ export default async function BlogPostPage({
                       <ViewCounter slug={post.slug} contentType="blog" />
                     </span>
                   </div>
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2" data-print-hide="true">
                     <CommentScrollButton />
                     <PrintButton
                       postTitle={post.title}

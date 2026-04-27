@@ -98,7 +98,11 @@ export default async function WikiEntryPage({
                 </div>
                 <div className="flex items-center gap-2">
                   <CommentScrollButton />
-                  <PrintButton />
+                  <PrintButton
+                    postTitle={entry.title}
+                    authorName={author?.name || "PMEngineerLK"}
+                    publishDate={entry.date || ""}
+                  />
                   <BookmarkButton
                     key={entry.slug}
                     item={{

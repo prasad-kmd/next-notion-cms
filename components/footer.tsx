@@ -19,7 +19,10 @@ export function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="relative border-t border-border bg-card/30 backdrop-blur-md overflow-hidden">
+    <footer
+      data-print-hide="true"
+      className="relative border-t border-border bg-card/30 backdrop-blur-md overflow-hidden"
+    >
       {/* Decorative background elements with animations */}
       <div className="absolute inset-0 z-0 pointer-events-none opacity-40 dark:opacity-20 overflow-hidden">
         <div

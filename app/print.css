@@ -5,6 +5,12 @@
     margin: 20mm 25mm 20mm 25mm;
   }
 
+  /* Target everything to hide and reset */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
   /* Force light theme colors */
   :root,
   .dark {
@@ -21,12 +27,14 @@
     color: #000000 !important;
     width: 210mm;
     height: auto;
+    counter-reset: page;
   }
 
   /* Hide UI elements */
   nav,
   footer,
   aside,
+  header:not([data-print-content="true"] header),
   .no-print,
   [data-print-hide="true"],
   button,
@@ -42,8 +50,16 @@
   .connectivity-listener,
   .scroll-to-top,
   .sonner-toaster,
-  .ai-content-indicator {
+  .ai-content-indicator,
+  [role="dialog"],
+  [role="complementary"] {
     display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    height: 0 !important;
+    width: 0 !important;
+    position: absolute !important;
+    overflow: hidden !important;
   }
 
   /* Reset main container padding for print */
@@ -225,8 +241,10 @@
 
   /* Fix for header/footer overlap */
   body {
-    padding-top: 15mm;
-    padding-bottom: 15mm;
+    padding-top: 15mm !important;
+    padding-bottom: 15mm !important;
+    margin: 0 !important;
+    position: relative !important;
   }
 
   /* Print Header & Footer */
@@ -258,12 +276,23 @@
     align-items: center;
     justify-content: space-between;
     background: white;
+    counter-increment: page;
   }
 
   /* Page numbering */
   .page-number:after {
-    content: "Page " counter(page) " of " counter(pages);
+    content: "Page " counter(page);
   }
+}
+
+/* Screen preparation during PDF generation */
+html[data-printing="true"] body {
+  cursor: wait;
+}
+
+html[data-printing="true"] [data-print-hide="true"] {
+  opacity: 0.5;
+  pointer-events: none;
 }
 
 /* Hide print-only elements during normal browsing */

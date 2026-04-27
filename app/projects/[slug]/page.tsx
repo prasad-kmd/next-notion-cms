@@ -64,16 +64,18 @@ export default async function ProjectPage({
       />
       <ScrollProgress />
       <div className="mx-auto max-w-4xl">
-        <Breadcrumbs
-          items={[
-            { label: "Projects", href: "/projects" },
-            {
-              label: project.title,
-              href: `/projects/${project.slug}`,
-              active: true,
-            },
-          ]}
-        />
+        <div data-print-hide="true">
+          <Breadcrumbs
+            items={[
+              { label: "Projects", href: "/projects" },
+              {
+                label: project.title,
+                href: `/projects/${project.slug}`,
+                active: true,
+              },
+            ]}
+          />
+        </div>
 
         <article>
           <header className="mb-8 border-b border-border pb-8">
@@ -93,7 +95,7 @@ export default async function ProjectPage({
                     <ViewCounter slug={project.slug} contentType="project" />
                   </span>
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2" data-print-hide="true">
                   <CommentScrollButton />
                   <PrintButton
                     postTitle={project.title}

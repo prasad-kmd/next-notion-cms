@@ -29,6 +29,7 @@ export function CommentsSection({ pageId }: CommentsSectionProps) {
     <section
       id="comments"
       className="mt-16 pt-16 border-t border-border/40 relative"
+      data-print-hide="true"
     >
       {/* Background Decorative Element */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-px bg-linear-to-r from-transparent via-primary/20 to-transparent" />

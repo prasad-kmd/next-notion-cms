@@ -18,7 +18,10 @@ import {
 
 export function AIContentIndicator() {
   return (
-    <div className="fixed bottom-[2rem] right-[5.5rem] z-[99]">
+    <div
+      className="fixed bottom-[2rem] right-[5.5rem] z-[99]"
+      data-print-hide="true"
+    >
       <Dialog>
         <Tooltip delayDuration={300}>
           <TooltipTrigger asChild>

@@ -88,16 +88,18 @@ export default async function ArticlePage({
       />
       <ScrollProgress />
       <div className="mx-auto max-w-6xl">
-        <Breadcrumbs
-          items={[
-            { label: "Articles", href: "/articles" },
-            {
-              label: entry.title,
-              href: `/articles/${entry.slug}`,
-              active: true,
-            },
-          ]}
-        />
+        <div data-print-hide="true">
+          <Breadcrumbs
+            items={[
+              { label: "Articles", href: "/articles" },
+              {
+                label: entry.title,
+                href: `/articles/${entry.slug}`,
+                active: true,
+              },
+            ]}
+          />
+        </div>
 
         <div className="flex flex-col lg:flex-row gap-12">
           <article className="flex-1 min-w-0">
@@ -124,7 +126,7 @@ export default async function ArticlePage({
                       <ViewCounter slug={entry.slug} contentType="article" />
                     </span>
                   </div>
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2" data-print-hide="true">
                     <CommentScrollButton />
                     <PrintButton
                       postTitle={entry.title}
