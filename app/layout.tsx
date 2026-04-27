@@ -2,6 +2,7 @@ import type React from "react";
 import type { Metadata } from "next";
 // import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
+import "@/styles/print.css";
 import { Navigation } from "@/components/navigation";
 import { SidebarProvider } from "@/components/sidebar-context";
 import { ThemeProvider } from "@/components/theme-provider";

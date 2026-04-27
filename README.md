@@ -90,6 +90,7 @@ Perfect for researchers, engineers, and developers who need a robust, scalable, 
 - **🔍 Semantic SEO** - Full Schema.org (JSON-LD) integration for articles, blog posts, and breadcrumbs
 - **⚡ Premium Shiki Highlighting** - VS Code-accurate syntax highlighting with lazy-loaded languages
 - **📐 LaTeX Support** - Full math notation rendering via KaTeX (Inline: $F=ma$, Block: $$E=mc^2$$)
+- **📄 Print-to-PDF Export** - Professional A4 formatting with custom headers, footers, and page numbers for all content pages
 - **🎯 Interactive Quizzes** - Dynamic, base64-encoded quiz components injectable directly into content
 - **🚨 GitHub-style Alerts** - Support for `[!NOTE]`, `[!TIP]`, `[!WARNING]`, etc.
 

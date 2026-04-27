@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.8.0] - 2025-06-05
+
+### Added
+
+- **Print-to-PDF Export**: Implemented professional A4 PDF export functionality for all content pages (blog, articles, tutorials, projects, and wiki).
+- **Professional Print Formatting**: Created a dedicated print stylesheet with academic-grade margins, black-on-white overrides, and optimized typography.
+- **Custom Print Headers & Footers**: Added fixed headers (post title) and footers (author, date, page numbers) visible only in printed output.
+- **Enhanced Print UI**: Integrated a `PrintButton` alongside bookmarks with real-time Sonner notifications for preparation and status tracking.
+
 ## [1.7.0] - 2025-05-29
 
 ### Added

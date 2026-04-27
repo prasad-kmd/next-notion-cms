@@ -9,6 +9,8 @@ import { Clock, BookOpen, Hash } from "lucide-react";
 // import Link from "next/link";
 import { ContentRenderer } from "@/components/content-renderer";
 import { BookmarkButton } from "@/components/bookmark-button";
+import { PrintButton } from "@/components/content/PrintButton";
+import { PrintHeaderFooter } from "@/components/content/PrintHeaderFooter";
 import { ScrollProgress } from "@/components/scroll-progress";
 import { RelatedContent } from "@/components/related-content";
 import { ArticleSidebar } from "@/components/article-sidebar";
@@ -110,6 +112,11 @@ export default async function WikiEntryPage({
                 </div>
                 <div className="flex items-center gap-2">
                   <CommentScrollButton />
+                  <PrintButton
+                    postTitle={entry.title}
+                    authorName={author?.name}
+                    contentElementId="printable-content"
+                  />
                   <BookmarkButton
                     key={entry.slug}
                     item={{
@@ -123,7 +130,13 @@ export default async function WikiEntryPage({
             </header>
 
             <ContentArea>
-              <ContentRenderer content={entry.content} id={entry.slug} />
+              <div id="printable-content" data-print-content="true">
+                <PrintHeaderFooter
+                  title={entry.title}
+                  authorName={author?.name}
+                />
+                <ContentRenderer content={entry.content} id={entry.slug} />
+              </div>
             </ContentArea>
           </article>
 

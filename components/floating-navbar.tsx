@@ -106,6 +106,7 @@ export function FloatingNavbar({
           "relative flex-row p-0 border-none bg-transparent shadow-none",
         className,
       )}
+      data-print-hide="true"
     >
       <Search isMobileSidebar={isMobileSidebar} />
       {navItems.map((item) =>

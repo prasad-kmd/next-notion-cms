@@ -38,6 +38,7 @@ export function ScrollToTop() {
 
   return (
     <div
+      data-print-hide="true"
       style={{
         position: "fixed",
         bottom: "2rem",

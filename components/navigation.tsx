@@ -31,7 +31,10 @@ import { motion } from "framer-motion";
 
 function MobileTopBanner() {
   return (
-    <div className="fixed top-0 left-0 right-0 z-40 lg:hidden h-14 overflow-hidden border-b border-border/40">
+    <div
+      className="fixed top-0 left-0 right-0 z-40 lg:hidden h-14 overflow-hidden border-b border-border/40"
+      data-print-hide="true"
+    >
       {/* Dynamic Background Animation */}
       <div className="absolute inset-0 bg-background/60 backdrop-blur-xl">
         <motion.div

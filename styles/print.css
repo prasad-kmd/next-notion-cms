@@ -1,0 +1,176 @@
+@media print {
+  /* Base print settings */
+  @page {
+    size: A4;
+    margin: 20mm 25mm;
+  }
+
+  /* Hide EVERYTHING first */
+  body > *:not(main),
+  main > *:not([id="printable-content"]),
+  header,
+  nav,
+  footer:not(.print-footer),
+  aside,
+  .fixed:not(.print-header):not(.print-footer),
+  .sticky:not(.print-header):not(.print-footer),
+  [role="dialog"],
+  [role="status"],
+  .sonner-toast,
+  [data-print-hide="true"] {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+  }
+
+  /* Selectively show content and print-specific elements */
+  body,
+  html {
+    background-color: #fff !important;
+    color: #000 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    display: block !important;
+  }
+
+  /* We need to ensure the path to the content is visible */
+  body > main {
+    display: block !important;
+    position: static !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+    left: 0 !important;
+    transform: none !important;
+  }
+
+  /* Inside main, show only our marked content */
+  main > [id="printable-content"] {
+    display: block !important;
+    position: relative !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+  }
+
+  /* Explicitly show print header/footer */
+  .print-only,
+  .print-header,
+  .print-footer {
+    display: flex !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    position: fixed !important;
+    background: #fff !important;
+  }
+
+  /* Typography Refinements */
+  #printable-content {
+    font-size: 11pt;
+    line-height: 1.6;
+    color: #000 !important;
+  }
+
+  h1 { font-size: 20pt; margin-bottom: 12pt; }
+  h2 { font-size: 16pt; margin-top: 18pt; margin-bottom: 10pt; }
+  h3 { font-size: 14pt; margin-top: 14pt; margin-bottom: 8pt; }
+
+  /* Ensure all text is black */
+  #printable-content * {
+    color: #000 !important;
+    background: transparent !important;
+  }
+
+  /* Code blocks styling */
+  pre {
+    background-color: #f5f5f5 !important;
+    border: 1pt solid #ddd !important;
+    padding: 10pt !important;
+    page-break-inside: avoid;
+    border-radius: 4pt;
+  }
+
+  code {
+    font-family: var(--font-space-mono), monospace !important;
+    font-size: 10pt !important;
+  }
+
+  /* Link handling: show URL in parentheses for external links */
+  a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-size: 9pt;
+    color: #444 !important;
+  }
+
+  /* Images */
+  img {
+    max-width: 100% !important;
+    height: auto !important;
+    page-break-inside: avoid;
+    display: block;
+    margin: 12pt auto;
+  }
+
+  /* Tables */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 12pt;
+  }
+
+  th, td {
+    border: 1pt solid #ddd;
+    padding: 8pt;
+    text-align: left;
+  }
+
+  /* Header/Footer specifics */
+  .print-header {
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 15mm;
+    border-bottom: 0.5pt solid #eee !important;
+    padding: 0 10mm;
+    z-index: 9999;
+  }
+
+  .print-footer {
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 12mm;
+    border-top: 0.5pt solid #eee !important;
+    padding: 0 10mm;
+    z-index: 9999;
+  }
+
+  .page-number::after {
+    content: counter(page);
+  }
+
+  body {
+    counter-reset: page;
+  }
+}
+
+/* Screen visibility */
+.print-only {
+  display: none !important;
+}
+
+@media print {
+  .print-only {
+    display: flex !important;
+  }
+}
+
+/* Fallback for components that might not react to @media print correctly in some browsers */
+.is-generating-pdf [data-print-hide="true"],
+.is-generating-pdf nav,
+.is-generating-pdf footer:not(.print-footer),
+.is-generating-pdf aside,
+.is-generating-pdf .fixed:not(.print-header):not(.print-footer),
+.is-generating-pdf .sticky:not(.print-header):not(.print-footer) {
+  display: none !important;
+}
