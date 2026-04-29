@@ -76,3 +76,6 @@ Very long posts (50+ pages) may take 10-20 seconds to generate as they require r
 
 ### Color Parsing Errors
 `html2canvas` (v1.4.1) does not support modern color functions like `oklab()`, `oklch()`, `lab()`, or `hwb()`. The PDF generator includes a `sanitizeColors` utility that automatically replaces these with Hex/RGB equivalents during the off-screen rendering process to prevent crashes. It also sanitizes CSS variables that might hold these values.
+
+### Selectable Text
+To preserve the complex layout of technical content (including KaTeX equations and Shiki syntax highlighting), the system renders the main content area as high-resolution images within the PDF. While headers and footers contain real, selectable text, the main body is currently non-selectable to ensure 100% visual fidelity across all devices and browsers.

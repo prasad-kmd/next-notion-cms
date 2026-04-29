@@ -22,47 +22,55 @@ const CONTENT_HEIGHT = A4_HEIGHT - MARGIN_TOP - MARGIN_BOTTOM; // 242 mm
  * (oklab, oklch, lab, hwb) and CSS variables with safe alternatives.
  */
 function sanitizeColors(element: HTMLElement) {
-  // Reset common CSS variables that might contain oklch/oklab/lab
-  element.style.setProperty("--primary", "#0d9488");
-  element.style.setProperty("--secondary", "#0f766e");
-  element.style.setProperty("--background", "#ffffff");
-  element.style.setProperty("--foreground", "#000000");
-  element.style.setProperty("--border", "#dddddd");
-  element.style.setProperty("--muted", "#f5f5f5");
-  element.style.setProperty("--muted-foreground", "#666666");
+  const unsupportedFuncs = ["oklab", "oklch", "lab(", "hwb("];
 
-  const unsupportedColorFunctions = ["oklab", "oklch", "lab(", "hwb("];
+  const safeVars: Record<string, string> = {
+    "--primary": "#0d9488",
+    "--secondary": "#0f766e",
+    "--background": "#ffffff",
+    "--foreground": "#000000",
+    "--border": "#dddddd",
+    "--muted": "#f5f5f5",
+    "--muted-foreground": "#666666",
+    "--brand-200": "#99f6e4",
+    "--brand-900": "#134e4a"
+  };
+
+  Object.entries(safeVars).forEach(([key, val]) => {
+    element.style.setProperty(key, val, "important");
+  });
 
   const elements = element.querySelectorAll("*");
   elements.forEach((el) => {
     const htmlEl = el as HTMLElement;
-    const style = window.getComputedStyle(htmlEl);
 
-    const checkColor = (color: string) => {
-      return unsupportedColorFunctions.some(func => color.includes(func));
-    };
+    // Remove problematic style attributes
+    const styleAttr = htmlEl.getAttribute("style") || "";
+    if (unsupportedFuncs.some(f => styleAttr.includes(f))) {
+      htmlEl.removeAttribute("style");
+    }
 
-    // Explicitly override colors that might use unsupported functions
-    if (checkColor(style.color)) {
+    const computed = window.getComputedStyle(htmlEl);
+    const hasUnsupported = (val: string) => unsupportedFuncs.some(f => val.includes(f));
+
+    if (hasUnsupported(computed.color)) {
       htmlEl.style.setProperty("color", "#000000", "important");
     }
-    if (checkColor(style.backgroundColor)) {
+    if (hasUnsupported(computed.backgroundColor)) {
       if (htmlEl.tagName === "PRE" || htmlEl.tagName === "CODE") {
         htmlEl.style.setProperty("background-color", "#f5f5f5", "important");
       } else {
         htmlEl.style.setProperty("background-color", "transparent", "important");
       }
     }
-    if (checkColor(style.borderColor)) {
+    if (hasUnsupported(computed.borderColor)) {
       htmlEl.style.setProperty("border-color", "#dddddd", "important");
     }
 
-    // Also strip any custom variables that might be using these functions
     const inlineStyle = htmlEl.style;
     for (let i = 0; i < inlineStyle.length; i++) {
       const prop = inlineStyle[i];
-      const val = inlineStyle.getPropertyValue(prop);
-      if (prop.startsWith("--") && checkColor(val)) {
+      if (prop.startsWith("--") && hasUnsupported(inlineStyle.getPropertyValue(prop))) {
         htmlEl.style.removeProperty(prop);
       }
     }
@@ -77,19 +85,6 @@ export async function generatePDFBlob(
   metadata: PDFMetadata,
   onProgress?: (current: number, total: number) => void
 ): Promise<Blob> {
-  // Create a hidden container for rendering
-  const container = document.createElement("div");
-  container.id = "pdf-gen-main-container";
-  container.style.position = "absolute";
-  container.style.left = "-9999px";
-  container.style.top = "0";
-  container.style.width = "800px";
-  container.style.backgroundColor = "#ffffff";
-  container.style.color = "#000000";
-  container.style.padding = "0";
-  container.className = "pdf-render-container accessibility-content-area";
-
-  // Apply forced light mode styles with SAFE colors (Hex/RGB only)
   const styleTag = document.createElement("style");
   styleTag.textContent = `
     .pdf-render-container {
@@ -98,6 +93,7 @@ export async function generatePDFBlob(
       font-size: 11pt;
       color: #000000 !important;
       background-color: #ffffff !important;
+      width: 800px;
     }
     .pdf-title-section { text-align: center; margin-bottom: 40px; color: #000000 !important; }
     .pdf-render-container h1 { font-size: 24pt; font-weight: bold; margin-bottom: 10px; text-align: center; color: #000000 !important; }
@@ -106,7 +102,7 @@ export async function generatePDFBlob(
     .pdf-render-container p { margin-bottom: 12px; color: #000000 !important; }
     .pdf-render-container code { font-family: 'Space Mono', monospace; background-color: #f5f5f5 !important; padding: 2px 4px; border-radius: 4px; font-size: 9pt; color: #000000 !important; }
     .pdf-render-container pre { background-color: #f5f5f5 !important; padding: 15px; border-radius: 8px; border: 1px solid #dddddd; overflow: hidden; margin-bottom: 20px; white-space: pre-wrap; word-wrap: break-word; color: #000000 !important; }
-    .pdf-render-container pre code { background-color: transparent !important; padding: 0; font-size: 9pt; color: #000000 !important; }
+    .pdf-render-container pre code { background-color: transparent !important; padding: 0; font-size: 9pt; }
     .pdf-render-container img { max-width: 100%; height: auto; border-radius: 8px; margin: 20px 0; display: block; }
     .pdf-render-container table { width: 100%; border-collapse: collapse; margin: 20px 0; page-break-inside: auto; }
     .pdf-render-container tr { page-break-inside: avoid; page-break-after: auto; }
@@ -115,7 +111,16 @@ export async function generatePDFBlob(
     .pdf-render-container blockquote { border-left: 4px solid #dddddd; padding-left: 20px; font-style: italic; margin: 20px 0; color: #444444 !important; }
     .pdf-render-container * { box-shadow: none !important; animation: none !important; transition: none !important; }
   `;
-  container.appendChild(styleTag);
+
+  // Hidden container for measurement
+  const mainContainer = document.createElement("div");
+  mainContainer.style.position = "absolute";
+  mainContainer.style.left = "-9999px";
+  mainContainer.style.top = "0";
+  mainContainer.style.width = "800px";
+  mainContainer.style.backgroundColor = "#ffffff";
+  mainContainer.className = "pdf-render-container";
+  mainContainer.appendChild(styleTag.cloneNode(true));
 
   const titleSection = document.createElement("div");
   titleSection.className = "pdf-title-section";
@@ -125,28 +130,35 @@ export async function generatePDFBlob(
       <span>By ${metadata.author}</span> | <span>${metadata.date}</span>
     </div>
   `;
-  container.appendChild(titleSection);
+  mainContainer.appendChild(titleSection);
 
   const contentWrapper = document.createElement("div");
   contentWrapper.appendChild(element);
-  container.appendChild(contentWrapper);
+  mainContainer.appendChild(contentWrapper);
 
-  document.body.appendChild(container);
-
-  // Initial sanitization
-  sanitizeColors(container);
+  document.body.appendChild(mainContainer);
 
   try {
-    const images = Array.from(container.querySelectorAll("img"));
+    const images = Array.from(mainContainer.querySelectorAll("img"));
     await Promise.all(images.map(img => {
       if (img.complete) return Promise.resolve();
       return new Promise(resolve => { img.onload = resolve; img.onerror = resolve; });
     }));
 
-    const pdf = new jsPDF("p", "mm", "a4");
+    sanitizeColors(mainContainer);
+
+    const pdf = new jsPDF({
+      orientation: "p",
+      unit: "mm",
+      format: "a4",
+      putOnlyUsedFonts: true,
+      floatPrecision: 16
+    });
+
     const pxToMm = CONTENT_WIDTH / 800;
     const pageHeightPx = CONTENT_HEIGHT / pxToMm;
 
+    // Logic: Split content into chunks that fit on pages
     const blocks = Array.from(contentWrapper.children[0].children) as HTMLElement[];
     const allBlocks = [titleSection, ...blocks];
 
@@ -154,19 +166,15 @@ export async function generatePDFBlob(
     let currentHeightPx = 0;
     let pageNum = 1;
 
-    const renderPage = async (pageBlocks: HTMLElement[]) => {
+    const renderPageToPdf = async (pageBlocks: HTMLElement[]) => {
       const pageContainer = document.createElement("div");
-      pageContainer.id = `pdf-page-${pageNum}`;
       pageContainer.style.position = "absolute";
       pageContainer.style.left = "-9999px";
       pageContainer.style.top = "0";
       pageContainer.style.width = "800px";
       pageContainer.style.backgroundColor = "#ffffff";
-      pageContainer.style.color = "#000000";
       pageContainer.className = "pdf-render-container";
-
-      const pageStyle = styleTag.cloneNode(true);
-      pageContainer.appendChild(pageStyle);
+      pageContainer.appendChild(styleTag.cloneNode(true));
 
       const pageContent = document.createElement("div");
       pageBlocks.forEach(b => pageContent.appendChild(b.cloneNode(true)));
@@ -185,8 +193,13 @@ export async function generatePDFBlob(
         });
 
         if (pageNum > 1) pdf.addPage();
+
         const imgData = canvas.toDataURL("image/jpeg", 0.95);
-        pdf.addImage(imgData, "JPEG", MARGIN_LEFT, MARGIN_TOP, CONTENT_WIDTH, (canvas.height * CONTENT_WIDTH) / canvas.width);
+        // Calculate dimensions to fit in content area
+        const renderedWidthMm = CONTENT_WIDTH;
+        const renderedHeightMm = (canvas.height * CONTENT_WIDTH) / canvas.width;
+
+        pdf.addImage(imgData, "JPEG", MARGIN_LEFT, MARGIN_TOP, renderedWidthMm, renderedHeightMm);
 
         if (onProgress) onProgress(pageNum, 0);
         pageNum++;
@@ -200,18 +213,27 @@ export async function generatePDFBlob(
     for (const block of allBlocks) {
       const blockHeight = block.getBoundingClientRect().height;
 
+      // If adding this block exceeds page height
       if (currentHeightPx + blockHeight > pageHeightPx && currentPageBlocks.length > 0) {
-        await renderPage(currentPageBlocks);
+        await renderPageToPdf(currentPageBlocks);
         currentPageBlocks = [block];
         currentHeightPx = blockHeight;
       } else {
-        currentPageBlocks.push(block);
-        currentHeightPx += blockHeight;
+        // If it's a single block that is already taller than a page,
+        // we have to render it anyway (it will overflow or be clipped, but at least we move on)
+        if (blockHeight > pageHeightPx && currentPageBlocks.length === 0) {
+           await renderPageToPdf([block]);
+           currentPageBlocks = [];
+           currentHeightPx = 0;
+        } else {
+           currentPageBlocks.push(block);
+           currentHeightPx += blockHeight;
+        }
       }
     }
 
     if (currentPageBlocks.length > 0) {
-      await renderPage(currentPageBlocks);
+      await renderPageToPdf(currentPageBlocks);
     }
 
     const totalPages = pdf.getNumberOfPages();
@@ -238,8 +260,8 @@ export async function generatePDFBlob(
 
     return pdf.output("blob");
   } finally {
-    if (container.parentNode) {
-      container.parentNode.removeChild(container);
+    if (mainContainer.parentNode) {
+      mainContainer.parentNode.removeChild(mainContainer);
     }
   }
 }
