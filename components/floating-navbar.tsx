@@ -97,6 +97,7 @@ export function FloatingNavbar({
 
   return (
     <div
+      data-pdf-exclude
       style={!mounted && !isMobileSidebar ? { display: "none" } : {}}
       className={cn(
         "flex items-center gap-1 transition-all google-sans",

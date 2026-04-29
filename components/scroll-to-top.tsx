@@ -38,6 +38,7 @@ export function ScrollToTop() {
 
   return (
     <div
+      data-pdf-exclude
       style={{
         position: "fixed",
         bottom: "2rem",

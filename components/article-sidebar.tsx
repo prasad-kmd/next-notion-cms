@@ -79,7 +79,7 @@ export function ArticleSidebar({
   }, [activeId]);
 
   return (
-    <aside className="hidden lg:block w-72 shrink-0">
+    <aside data-pdf-exclude className="hidden lg:block w-72 shrink-0 space-y-8 sticky top-24 h-fit">
       <div className="sticky top-20 flex flex-col gap-10 max-h-[calc(100vh-8rem)]">
         {author && <AuthorProfile author={author} lastUpdated={lastUpdated} />}
 

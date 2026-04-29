@@ -23,7 +23,7 @@ export function FloatingButton() {
   if (!isVisible) return null;
 
   return (
-    <div className="fixed bottom-[5.5rem] right-4 sm:right-8 z-98 flex items-center justify-center transition-all duration-300">
+    <div data-pdf-exclude className="fixed bottom-[5.5rem] right-4 sm:right-8 z-98 flex items-center justify-center transition-all duration-300">
       <button
         onClick={() => updateSetting("isPanelOpen", !isPanelOpen)}
         className={cn(

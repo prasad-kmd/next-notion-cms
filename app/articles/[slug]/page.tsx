@@ -9,6 +9,7 @@ import { Calendar, Clock } from "lucide-react";
 // import Link from "next/link";
 import { ContentRenderer } from "@/components/content-renderer";
 import { BookmarkButton } from "@/components/bookmark-button";
+import { PrintButton } from "@/components/content/PrintButton";
 import { ScrollProgress } from "@/components/scroll-progress";
 import { RelatedContent } from "@/components/related-content";
 import { ArticleSidebar } from "@/components/article-sidebar";
@@ -124,6 +125,13 @@ export default async function ArticlePage({
                   </div>
                   <div className="flex items-center gap-2">
                     <CommentScrollButton />
+                    <PrintButton
+                      postTitle={entry.title}
+                      authorName={author?.name || "Unknown"}
+                      publishDate={entry.date || ""}
+                      postSlug={entry.slug}
+                      contentSelector="[data-pdf-content]"
+                    />
                     <BookmarkButton
                       key={entry.slug}
                       item={{
@@ -139,7 +147,9 @@ export default async function ArticlePage({
             </header>
 
             <ContentArea>
-              <ContentRenderer content={entry.content} id={entry.slug} />
+              <div data-pdf-content>
+                <ContentRenderer content={entry.content} id={entry.slug} />
+              </div>
             </ContentArea>
           </article>
 

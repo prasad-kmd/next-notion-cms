@@ -91,6 +91,7 @@ Perfect for researchers, engineers, and developers who need a robust, scalable, 
 - **⚡ Premium Shiki Highlighting** - VS Code-accurate syntax highlighting with lazy-loaded languages
 - **📐 LaTeX Support** - Full math notation rendering via KaTeX (Inline: $F=ma$, Block: $$E=mc^2$$)
 - **🎯 Interactive Quizzes** - Dynamic, base64-encoded quiz components injectable directly into content
+- **📄 Refined Print-to-PDF** - High-fidelity PDF generation using `jsPDF` & `html2canvas` with custom headers, footers, and page numbers
 - **🚨 GitHub-style Alerts** - Support for `[!NOTE]`, `[!TIP]`, `[!WARNING]`, etc.
 
 ---

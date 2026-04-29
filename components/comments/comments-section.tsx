@@ -27,6 +27,7 @@ export function CommentsSection({ pageId }: CommentsSectionProps) {
 
   return (
     <section
+      data-pdf-exclude
       id="comments"
       className="mt-16 pt-16 border-t border-border/40 relative"
     >

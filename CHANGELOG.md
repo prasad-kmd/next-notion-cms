@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.8.0] - 2025-06-05
+
+### Added
+
+- **Refined Print-to-PDF Engine**: Completely replaced the previous browser-print-based PDF implementation with a robust solution using `jsPDF` and `html2canvas`.
+- **Intelligent Content Extraction**: New utility that clones the DOM and surgically removes all UI elements (navbar, footer, sidebar, TOC, buttons) before generation.
+- **Professional A4 Formatting**: Standardized PDF output with 25mm-30mm margins and academic-grade typography (11pt body, 24pt headers).
+- **Custom Headers & Footers**: Automatic injection of site title, post title, author name, and publication date on every page.
+- **Dynamic Page Numbering**: "Page X of Y" numbering centered in the footer of every generated PDF.
+- **Forced Theme Isolation**: Guaranteed white-background/black-text output regardless of the user's current site theme (Light/Dark mode).
+- **Interactive Generation Progress**: Real-time Sonner toast notifications tracking the extraction, rendering, and pagination progress.
+
 ## [1.7.0] - 2025-05-29
 
 ### Added

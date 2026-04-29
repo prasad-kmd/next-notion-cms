@@ -31,7 +31,7 @@ import { motion } from "framer-motion";
 
 function MobileTopBanner() {
   return (
-    <div className="fixed top-0 left-0 right-0 z-40 lg:hidden h-14 overflow-hidden border-b border-border/40">
+    <div data-pdf-exclude className="fixed top-0 left-0 right-0 z-40 lg:hidden h-14 overflow-hidden border-b border-border/40">
       {/* Dynamic Background Animation */}
       <div className="absolute inset-0 bg-background/60 backdrop-blur-xl">
         <motion.div
@@ -168,6 +168,7 @@ export function Navigation() {
 
       {/* Sidebar */}
       <aside
+        data-pdf-exclude
         className={cn(
           "fixed inset-y-0 left-0 z-40 border-r border-border bg-card/70 backdrop-blur-xl transition-all duration-300 ease-in-out lg:translate-x-0",
           mobileMenuOpen ? "translate-x-0" : "-translate-x-full",

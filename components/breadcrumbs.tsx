@@ -18,6 +18,7 @@ interface BreadcrumbsProps {
 export function Breadcrumbs({ items, className }: BreadcrumbsProps) {
   return (
     <nav
+      data-pdf-exclude
       aria-label="Breadcrumb"
       className={cn(
         "flex items-center space-x-2 text-xs font-medium text-muted-foreground mb-6 overflow-x-auto whitespace-nowrap pb-2 scrollbar-hide font-local-inter",
