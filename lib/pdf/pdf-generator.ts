@@ -14,254 +14,151 @@ const MARGIN_LEFT = 25; // mm
 const MARGIN_RIGHT = 25; // mm
 const MARGIN_TOP = 30; // mm
 const MARGIN_BOTTOM = 25; // mm
-const CONTENT_WIDTH = A4_WIDTH - MARGIN_LEFT - MARGIN_RIGHT; // 160 mm
-const CONTENT_HEIGHT = A4_HEIGHT - MARGIN_TOP - MARGIN_BOTTOM; // 242 mm
 
 /**
- * Sanitizes an element and its children by replacing unsupported color functions
- * (oklab, oklch, lab, hwb) and CSS variables with safe alternatives.
+ * Foolproof sanitization: literally removes problematic color function strings
+ * from the HTML before it is processed.
  */
-function sanitizeColors(element: HTMLElement) {
-  const unsupportedFuncs = ["oklab", "oklch", "lab(", "hwb("];
+function nuclearSanitize(element: HTMLElement) {
+  let html = element.innerHTML;
 
-  const safeVars: Record<string, string> = {
-    "--primary": "#0d9488",
-    "--secondary": "#0f766e",
-    "--background": "#ffffff",
-    "--foreground": "#000000",
-    "--border": "#dddddd",
-    "--muted": "#f5f5f5",
-    "--muted-foreground": "#666666",
-    "--brand-200": "#99f6e4",
-    "--brand-900": "#134e4a"
-  };
+  // Replace modern color functions with safe fallbacks
+  // We use regex to catch variations like oklch(0.5 0.1 200), lab(50 10 20), etc.
+  const regexes = [
+    /oklch\([^)]+\)/gi,
+    /oklab\([^)]+\)/gi,
+    /lab\([^)]+\)/gi,
+    /hwb\([^)]+\)/gi
+  ];
 
-  Object.entries(safeVars).forEach(([key, val]) => {
-    element.style.setProperty(key, val, "important");
+  regexes.forEach(re => {
+    html = html.replace(re, "#000000"); // Default to black
   });
 
-  const elements = element.querySelectorAll("*");
-  elements.forEach((el) => {
-    const htmlEl = el as HTMLElement;
-
-    // Remove problematic style attributes
-    const styleAttr = htmlEl.getAttribute("style") || "";
-    if (unsupportedFuncs.some(f => styleAttr.includes(f))) {
-      htmlEl.removeAttribute("style");
-    }
-
-    const computed = window.getComputedStyle(htmlEl);
-    const hasUnsupported = (val: string) => unsupportedFuncs.some(f => val.includes(f));
-
-    if (hasUnsupported(computed.color)) {
-      htmlEl.style.setProperty("color", "#000000", "important");
-    }
-    if (hasUnsupported(computed.backgroundColor)) {
-      if (htmlEl.tagName === "PRE" || htmlEl.tagName === "CODE") {
-        htmlEl.style.setProperty("background-color", "#f5f5f5", "important");
-      } else {
-        htmlEl.style.setProperty("background-color", "transparent", "important");
-      }
-    }
-    if (hasUnsupported(computed.borderColor)) {
-      htmlEl.style.setProperty("border-color", "#dddddd", "important");
-    }
-
-    const inlineStyle = htmlEl.style;
-    for (let i = 0; i < inlineStyle.length; i++) {
-      const prop = inlineStyle[i];
-      if (prop.startsWith("--") && hasUnsupported(inlineStyle.getPropertyValue(prop))) {
-        htmlEl.style.removeProperty(prop);
-      }
-    }
-  });
+  element.innerHTML = html;
 }
 
 /**
- * Generates a PDF Blob from a cleaned HTML element with intelligent pagination.
+ * Generates a PDF Blob using jsPDF.html() for better pagination and selectable text.
  */
 export async function generatePDFBlob(
   element: HTMLElement,
   metadata: PDFMetadata,
   onProgress?: (current: number, total: number) => void
 ): Promise<Blob> {
-  const styleTag = document.createElement("style");
-  styleTag.textContent = `
-    .pdf-render-container {
+  // 1. Create a clean render container
+  const renderContainer = document.createElement("div");
+  renderContainer.style.width = "160mm"; // Target width
+  renderContainer.style.padding = "0";
+  renderContainer.style.backgroundColor = "#ffffff";
+  renderContainer.style.color = "#000000";
+  renderContainer.className = "pdf-export-root";
+
+  // 2. Add professional styles
+  const style = document.createElement("style");
+  style.textContent = `
+    .pdf-export-root {
       font-family: 'Google Sans', 'Inter', sans-serif;
       line-height: 1.6;
       font-size: 11pt;
       color: #000000 !important;
-      background-color: #ffffff !important;
-      width: 800px;
     }
-    .pdf-title-section { text-align: center; margin-bottom: 40px; color: #000000 !important; }
-    .pdf-render-container h1 { font-size: 24pt; font-weight: bold; margin-bottom: 10px; text-align: center; color: #000000 !important; }
-    .pdf-render-container h2 { font-size: 18pt; font-weight: bold; margin-top: 30px; margin-bottom: 15px; border-bottom: 1px solid #eeeeee; color: #000000 !important; page-break-after: avoid; }
-    .pdf-render-container h3 { font-size: 14pt; font-weight: bold; margin-top: 20px; margin-bottom: 10px; color: #000000 !important; page-break-after: avoid; }
-    .pdf-render-container p { margin-bottom: 12px; color: #000000 !important; }
-    .pdf-render-container code { font-family: 'Space Mono', monospace; background-color: #f5f5f5 !important; padding: 2px 4px; border-radius: 4px; font-size: 9pt; color: #000000 !important; }
-    .pdf-render-container pre { background-color: #f5f5f5 !important; padding: 15px; border-radius: 8px; border: 1px solid #dddddd; overflow: hidden; margin-bottom: 20px; white-space: pre-wrap; word-wrap: break-word; color: #000000 !important; }
-    .pdf-render-container pre code { background-color: transparent !important; padding: 0; font-size: 9pt; }
-    .pdf-render-container img { max-width: 100%; height: auto; border-radius: 8px; margin: 20px 0; display: block; }
-    .pdf-render-container table { width: 100%; border-collapse: collapse; margin: 20px 0; page-break-inside: auto; }
-    .pdf-render-container tr { page-break-inside: avoid; page-break-after: auto; }
-    .pdf-render-container th, .pdf-render-container td { border: 1px solid #dddddd; padding: 10px; text-align: left; color: #000000 !important; }
-    .pdf-render-container th { background-color: #f9f9f9 !important; font-weight: bold; }
-    .pdf-render-container blockquote { border-left: 4px solid #dddddd; padding-left: 20px; font-style: italic; margin: 20px 0; color: #444444 !important; }
-    .pdf-render-container * { box-shadow: none !important; animation: none !important; transition: none !important; }
+    .pdf-title-block { text-align: center; margin-bottom: 40px; border-bottom: 2px solid #eeeeee; padding-bottom: 20px; }
+    .pdf-title-block h1 { font-size: 24pt; font-weight: bold; margin-bottom: 10px; color: #000000 !important; }
+    .pdf-title-block p { font-size: 10pt; color: #666666 !important; }
+    h2 { font-size: 18pt; font-weight: bold; margin-top: 30px; margin-bottom: 15px; color: #000000 !important; page-break-after: avoid; }
+    h3 { font-size: 14pt; font-weight: bold; margin-top: 20px; margin-bottom: 10px; color: #000000 !important; page-break-after: avoid; }
+    p { margin-bottom: 12px; }
+    pre { background-color: #f5f5f5 !important; padding: 15px; border-radius: 8px; border: 1px solid #dddddd; overflow: hidden; margin: 20px 0; white-space: pre-wrap; font-size: 9pt; }
+    code { font-family: 'Space Mono', monospace; background-color: #f5f5f5 !important; padding: 2px 4px; border-radius: 4px; }
+    img { max-width: 100%; height: auto; border-radius: 8px; margin: 20px 0; }
+    table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+    th, td { border: 1px solid #dddddd; padding: 10px; text-align: left; }
+    blockquote { border-left: 4px solid #dddddd; padding-left: 20px; font-style: italic; margin: 20px 0; color: #444444 !important; }
+    * { box-shadow: none !important; animation: none !important; transition: none !important; }
   `;
+  renderContainer.appendChild(style);
 
-  // Hidden container for measurement
-  const mainContainer = document.createElement("div");
-  mainContainer.style.position = "absolute";
-  mainContainer.style.left = "-9999px";
-  mainContainer.style.top = "0";
-  mainContainer.style.width = "800px";
-  mainContainer.style.backgroundColor = "#ffffff";
-  mainContainer.className = "pdf-render-container";
-  mainContainer.appendChild(styleTag.cloneNode(true));
-
-  const titleSection = document.createElement("div");
-  titleSection.className = "pdf-title-section";
-  titleSection.innerHTML = `
-    <h1 style="color: #000000 !important;">${metadata.title}</h1>
-    <div style="color: #666666 !important; font-size: 10pt;">
-      <span>By ${metadata.author}</span> | <span>${metadata.date}</span>
-    </div>
+  // 3. Add Title Section
+  const titleBlock = document.createElement("div");
+  titleBlock.className = "pdf-title-block";
+  titleBlock.innerHTML = `
+    <h1>${metadata.title}</h1>
+    <p>By ${metadata.author} | Published on ${metadata.date}</p>
   `;
-  mainContainer.appendChild(titleSection);
+  renderContainer.appendChild(titleBlock);
 
-  const contentWrapper = document.createElement("div");
-  contentWrapper.appendChild(element);
-  mainContainer.appendChild(contentWrapper);
+  // 4. Append the cleaned content
+  const content = element.cloneNode(true) as HTMLElement;
+  renderContainer.appendChild(content);
 
-  document.body.appendChild(mainContainer);
+  // 5. NUCLEAR SANITIZE - This fixes the oklab/lab errors definitively
+  nuclearSanitize(renderContainer);
+
+  // 6. Off-screen rendering
+  const hiddenDiv = document.createElement("div");
+  hiddenDiv.style.position = "absolute";
+  hiddenDiv.style.left = "-9999px";
+  hiddenDiv.style.top = "0";
+  hiddenDiv.appendChild(renderContainer);
+  document.body.appendChild(hiddenDiv);
 
   try {
-    const images = Array.from(mainContainer.querySelectorAll("img"));
+    // Wait for images
+    const images = Array.from(renderContainer.querySelectorAll("img"));
     await Promise.all(images.map(img => {
       if (img.complete) return Promise.resolve();
       return new Promise(resolve => { img.onload = resolve; img.onerror = resolve; });
     }));
 
-    sanitizeColors(mainContainer);
-
     const pdf = new jsPDF({
       orientation: "p",
       unit: "mm",
       format: "a4",
-      putOnlyUsedFonts: true,
-      floatPrecision: 16
     });
 
-    const pxToMm = CONTENT_WIDTH / 800;
-    const pageHeightPx = CONTENT_HEIGHT / pxToMm;
+    // Use .html() method for automatic paging and potentially selectable text
+    await pdf.html(renderContainer, {
+      callback: (doc) => {
+        // Post-process to add headers/footers/page numbers
+        const totalPages = doc.getNumberOfPages();
+        for (let i = 1; i <= totalPages; i++) {
+          doc.setPage(i);
 
-    // Logic: Split content into chunks that fit on pages
-    const blocks = Array.from(contentWrapper.children[0].children) as HTMLElement[];
-    const allBlocks = [titleSection, ...blocks];
+          // Header
+          doc.setFontSize(8);
+          doc.setTextColor(150);
+          doc.text("PMEngineer.lk", MARGIN_LEFT, 15);
+          const truncatedTitle = metadata.title.length > 50 ? metadata.title.substring(0, 47) + "..." : metadata.title;
+          const titleWidth = doc.getStringUnitWidth(truncatedTitle) * 8 / doc.internal.scaleFactor;
+          doc.text(truncatedTitle, A4_WIDTH - MARGIN_RIGHT - titleWidth, 15);
+          doc.setDrawColor(230);
+          doc.line(MARGIN_LEFT, 18, A4_WIDTH - MARGIN_RIGHT, 18);
 
-    let currentPageBlocks: HTMLElement[] = [];
-    let currentHeightPx = 0;
-    let pageNum = 1;
-
-    const renderPageToPdf = async (pageBlocks: HTMLElement[]) => {
-      const pageContainer = document.createElement("div");
-      pageContainer.style.position = "absolute";
-      pageContainer.style.left = "-9999px";
-      pageContainer.style.top = "0";
-      pageContainer.style.width = "800px";
-      pageContainer.style.backgroundColor = "#ffffff";
-      pageContainer.className = "pdf-render-container";
-      pageContainer.appendChild(styleTag.cloneNode(true));
-
-      const pageContent = document.createElement("div");
-      pageBlocks.forEach(b => pageContent.appendChild(b.cloneNode(true)));
-      pageContainer.appendChild(pageContent);
-
-      document.body.appendChild(pageContainer);
-
-      try {
-        sanitizeColors(pageContainer);
-
-        const canvas = await html2canvas(pageContainer, {
-          scale: 2,
-          useCORS: true,
-          backgroundColor: "#ffffff",
-          logging: false,
-        });
-
-        if (pageNum > 1) pdf.addPage();
-
-        const imgData = canvas.toDataURL("image/jpeg", 0.95);
-        // Calculate dimensions to fit in content area
-        const renderedWidthMm = CONTENT_WIDTH;
-        const renderedHeightMm = (canvas.height * CONTENT_WIDTH) / canvas.width;
-
-        pdf.addImage(imgData, "JPEG", MARGIN_LEFT, MARGIN_TOP, renderedWidthMm, renderedHeightMm);
-
-        if (onProgress) onProgress(pageNum, 0);
-        pageNum++;
-      } finally {
-        if (pageContainer.parentNode) {
-          pageContainer.parentNode.removeChild(pageContainer);
+          // Footer
+          doc.line(MARGIN_LEFT, A4_HEIGHT - 15, A4_WIDTH - MARGIN_RIGHT, A4_HEIGHT - 15);
+          doc.text(`Author: ${metadata.author}`, MARGIN_LEFT, A4_HEIGHT - 10);
+          const pageText = `Page ${i} of ${totalPages}`;
+          const pageTextWidth = doc.getStringUnitWidth(pageText) * 8 / doc.internal.scaleFactor;
+          doc.text(pageText, (A4_WIDTH - pageTextWidth) / 2, A4_HEIGHT - 10);
+          doc.text(metadata.date, A4_WIDTH - MARGIN_RIGHT - (doc.getStringUnitWidth(metadata.date) * 8 / doc.internal.scaleFactor), A4_HEIGHT - 10);
         }
+      },
+      x: MARGIN_LEFT,
+      y: MARGIN_TOP,
+      width: 160, // Width in units (mm)
+      windowWidth: 800, // Matching the internal scale
+      autoPaging: "text", // Best for selectable text and clean breaks
+      html2canvas: {
+        scale: 0.264583, // Magic number to convert px to mm (1/3.78)
+        useCORS: true,
+        logging: false,
+        backgroundColor: "#ffffff",
       }
-    };
-
-    for (const block of allBlocks) {
-      const blockHeight = block.getBoundingClientRect().height;
-
-      // If adding this block exceeds page height
-      if (currentHeightPx + blockHeight > pageHeightPx && currentPageBlocks.length > 0) {
-        await renderPageToPdf(currentPageBlocks);
-        currentPageBlocks = [block];
-        currentHeightPx = blockHeight;
-      } else {
-        // If it's a single block that is already taller than a page,
-        // we have to render it anyway (it will overflow or be clipped, but at least we move on)
-        if (blockHeight > pageHeightPx && currentPageBlocks.length === 0) {
-           await renderPageToPdf([block]);
-           currentPageBlocks = [];
-           currentHeightPx = 0;
-        } else {
-           currentPageBlocks.push(block);
-           currentHeightPx += blockHeight;
-        }
-      }
-    }
-
-    if (currentPageBlocks.length > 0) {
-      await renderPageToPdf(currentPageBlocks);
-    }
-
-    const totalPages = pdf.getNumberOfPages();
-
-    for (let i = 1; i <= totalPages; i++) {
-      pdf.setPage(i);
-      pdf.setFontSize(8);
-      pdf.setTextColor(150, 150, 150);
-
-      pdf.text("PMEngineer.lk", MARGIN_LEFT, MARGIN_TOP - 10);
-      const displayTitle = metadata.title.length > 60 ? metadata.title.substring(0, 57) + "..." : metadata.title;
-      const titleWidth = pdf.getStringUnitWidth(displayTitle) * 8 / pdf.internal.scaleFactor;
-      pdf.text(displayTitle, A4_WIDTH - MARGIN_RIGHT - titleWidth, MARGIN_TOP - 10);
-      pdf.setDrawColor(230, 230, 230);
-      pdf.line(MARGIN_LEFT, MARGIN_TOP - 7, A4_WIDTH - MARGIN_RIGHT, MARGIN_TOP - 7);
-
-      pdf.line(MARGIN_LEFT, A4_HEIGHT - MARGIN_BOTTOM + 7, A4_WIDTH - MARGIN_RIGHT, A4_HEIGHT - MARGIN_BOTTOM + 7);
-      pdf.text(`Author: ${metadata.author}`, MARGIN_LEFT, A4_HEIGHT - MARGIN_BOTTOM + 12);
-      const pageText = `Page ${i} of ${totalPages}`;
-      const pageTextWidth = pdf.getStringUnitWidth(pageText) * 8 / pdf.internal.scaleFactor;
-      pdf.text(pageText, (A4_WIDTH - pageTextWidth) / 2, A4_HEIGHT - MARGIN_BOTTOM + 12);
-      pdf.text(metadata.date, A4_WIDTH - MARGIN_RIGHT - (pdf.getStringUnitWidth(metadata.date) * 8 / pdf.internal.scaleFactor), A4_HEIGHT - MARGIN_BOTTOM + 12);
-    }
+    });
 
     return pdf.output("blob");
   } finally {
-    if (mainContainer.parentNode) {
-      mainContainer.parentNode.removeChild(mainContainer);
-    }
+    document.body.removeChild(hiddenDiv);
   }
 }
