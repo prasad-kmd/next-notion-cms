@@ -1,5 +1,13 @@
 import type { Metadata } from "next";
-import { Printer, Download, Layout, Cpu, Code2, Layers } from "lucide-react";
+import {
+  Printer,
+  Download,
+  Search,
+  Layout,
+  Cpu,
+  Code2,
+  Layers,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
@@ -48,7 +56,7 @@ export default function CheatSheetsPage() {
     <div className="min-h-screen px-6 py-12 lg:px-8 img_grad_pm">
       <div className="mx-auto max-w-5xl">
         <header className="mb-12">
-          <h1 className="mb-4 text-4xl font-bold mozilla-headline flex items-center gap-3">
+          <h1 className="mb-4 text-4xl font-bold font-serif flex items-center gap-3">
             <Printer className="h-10 w-10 text-primary" />
             Cheat Sheets
           </h1>
@@ -73,7 +81,7 @@ export default function CheatSheetsPage() {
                   <span className="text-[10px] font-bold uppercase tracking-widest text-primary/70">
                     {sheet.category}
                   </span>
-                  <CardTitle className="text-xl google-sans">
+                  <CardTitle className="text-xl font-sans">
                     {sheet.title}
                   </CardTitle>
                 </div>

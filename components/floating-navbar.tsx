@@ -1,7 +1,7 @@
 "use client";
 
 import { useTheme } from "next-themes";
-import { Sun, Moon, Bookmark, Share2, LayoutGrid } from "lucide-react";
+import { Sun, Moon, Bookmark, Share2, LayoutGrid, Wrench, Tv } from "lucide-react";
 import { useEffect, useState, startTransition } from "react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
@@ -11,6 +11,7 @@ import { useBookmarks } from "@/hooks/use-bookmarks";
 import { toast } from "sonner";
 import { AccentPicker } from "./accent-picker";
 import { UserMenu } from "./auth/auth-buttons";
+import { useIsAdmin } from "@/lib/auth-utils-client";
 import {
   Tooltip,
   TooltipContent,
@@ -31,6 +32,7 @@ export function FloatingNavbar({
   const [isBookmarksOpen, setIsBookmarksOpen] = useState(false);
   const { bookmarks } = useBookmarks();
   const [copied, setCopied] = useState(false);
+  const { isAdmin } = useIsAdmin();
 
   // Avoid hydration mismatch
   useEffect(() => {
@@ -99,7 +101,7 @@ export function FloatingNavbar({
     <div
       style={!mounted && !isMobileSidebar ? { display: "none" } : {}}
       className={cn(
-        "flex items-center gap-1 transition-all google-sans",
+        "flex items-center gap-1 transition-all font-sans",
         !isMobileSidebar &&
           "fixed top-6 right-6 z-60 p-1 rounded-full border border-border bg-background/80 backdrop-blur shadow-lg",
         isMobileSidebar &&
@@ -108,13 +110,52 @@ export function FloatingNavbar({
       )}
     >
       <Search isMobileSidebar={isMobileSidebar} />
+
+      {/* Desktop Only Tools & Entertainment */}
+      {!isMobileSidebar && (
+        <>
+          <Tooltip delayDuration={0}>
+            <TooltipTrigger asChild>
+              <Link
+                href="/tools"
+                className="p-2 rounded-full hover:bg-muted text-muted-foreground hover:text-foreground transition-colors relative group font-sans"
+                aria-label="Engineering Workspace"
+              >
+                <Wrench className="h-5 w-5" />
+              </Link>
+            </TooltipTrigger>
+            <TooltipContent side="bottom" sideOffset={8}>
+              Engineering Workspace
+            </TooltipContent>
+          </Tooltip>
+
+          {isAdmin && (
+            <Tooltip delayDuration={0}>
+              <TooltipTrigger asChild>
+                <Link
+                  href="/entertainment"
+                  className="p-2 rounded-full hover:bg-muted text-muted-foreground hover:text-foreground transition-colors relative group font-sans"
+                  aria-label="Entertainment"
+                >
+                  <Tv className="h-5 w-5" />
+                </Link>
+              </TooltipTrigger>
+              <TooltipContent side="bottom" sideOffset={8}>
+                Entertainment
+              </TooltipContent>
+            </Tooltip>
+          )}
+          <hr className="h-4 w-px bg-border mx-1" />
+        </>
+      )}
+
       {navItems.map((item) =>
         item.href ? (
           <Tooltip key={item.label} delayDuration={0}>
             <TooltipTrigger asChild>
               <Link
                 href={item.href}
-                className="p-2 rounded-full hover:bg-muted text-muted-foreground hover:text-foreground transition-colors relative group google-sans"
+                className="p-2 rounded-full hover:bg-muted text-muted-foreground hover:text-foreground transition-colors relative group font-sans"
                 aria-label={item.label}
               >
                 <item.icon className="h-5 w-5" />
@@ -131,7 +172,7 @@ export function FloatingNavbar({
             <TooltipTrigger asChild>
               <button
                 onClick={item.onClick}
-                className="p-2 rounded-full hover:bg-muted text-muted-foreground hover:text-foreground transition-colors relative group google-sans"
+                className="p-2 rounded-full hover:bg-muted text-muted-foreground hover:text-foreground transition-colors relative group font-sans"
                 aria-label={item.label}
               >
                 <item.icon className="h-5 w-5" />
@@ -152,7 +193,7 @@ export function FloatingNavbar({
         <TooltipTrigger asChild>
           <button
             onClick={toggleTheme}
-            className="p-2 rounded-full hover:bg-muted text-muted-foreground hover:text-foreground transition-colors relative group google-sans"
+            className="p-2 rounded-full hover:bg-muted text-muted-foreground hover:text-foreground transition-colors relative group font-sans"
             aria-label="Toggle theme"
           >
             {theme === "dark" ? (

@@ -71,10 +71,10 @@ const manualUpdates: ChangelogEntry[] = [
     version: "0.0", // Will be recalculated
     date: "October 09, 2025",
     title:
-      "Update font paths for local fonts and apply 'mozilla-headline' class to project title",
+      "Update font paths for local fonts and apply 'font-serif' class to project title",
     description: "",
     changes: [
-      "Update font paths for local fonts and apply 'mozilla-headline' class to project title",
+      "Update font paths for local fonts and apply 'font-serif' class to project title",
       "Add ESLint configuration for Next.js with TypeScript support",
       "Refactor code structure for improved readability and maintainability",
       "Enhance content handling by adding firstImage extraction for improved visual representation; streamline description formatting across multiple pages.",
@@ -160,7 +160,7 @@ export default async function ChangelogPage() {
     <div className="min-h-screen pb-20 px-6 lg:px-8 pt-12">
       <div className="mx-auto max-w-4xl">
         <header className="mb-16 text-center">
-          <h1 className="text-4xl font-bold tracking-tight lg:text-5xl mb-4 amoriaregular">
+          <h1 className="text-4xl font-bold tracking-tight lg:text-5xl mb-4 font-serif">
             Changelog
           </h1>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">

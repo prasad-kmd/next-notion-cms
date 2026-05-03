@@ -1,7 +1,21 @@
 import type { Metadata } from "next";
-import { Download, FileText, Box, Code, FileArchive } from "lucide-react";
+import {
+  Download,
+  FileText,
+  Box,
+  Code,
+  ExternalLink,
+  FileArchive,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 const title = "Downloads & Resources";
 const description =
@@ -66,7 +80,7 @@ export default function ResourcesPage() {
     <div className="min-h-screen px-6 py-12 lg:px-8 img_grad_pm">
       <div className="mx-auto max-w-5xl">
         <div className="mb-12 text-center lg:text-left">
-          <h1 className="mb-4 text-4xl font-bold mozilla-headline flex items-center justify-center lg:justify-start gap-3">
+          <h1 className="mb-4 text-4xl font-bold font-serif flex items-center justify-center lg:justify-start gap-3">
             <FileArchive className="h-10 w-10 text-primary" />
             Downloads & Resources
           </h1>
@@ -80,7 +94,7 @@ export default function ResourcesPage() {
         <div className="space-y-12">
           {resources.map((group) => (
             <section key={group.category}>
-              <h2 className="text-2xl font-bold mb-6 google-sans border-l-4 border-primary pl-4">
+              <h2 className="text-2xl font-bold mb-6 font-sans border-l-4 border-primary pl-4">
                 {group.category}
               </h2>
               <div className="grid gap-4 sm:grid-cols-2">

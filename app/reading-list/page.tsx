@@ -1,7 +1,13 @@
 import type { Metadata } from "next";
-import { BookMarked, Star, ExternalLink, Library } from "lucide-react";
+import {
+  BookMarked,
+  Star,
+  ExternalLink,
+  Bookmark,
+  Library,
+} from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import { Card } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { SafeLink } from "@/components/ui/safe-link";
 
 const title = "Engineering Reading List";
@@ -54,7 +60,7 @@ export default function ReadingListPage() {
     <div className="min-h-screen px-6 py-12 lg:px-8 img_grad_pm">
       <div className="mx-auto max-w-5xl">
         <header className="mb-12">
-          <h1 className="mb-4 text-4xl font-bold mozilla-headline flex items-center gap-3">
+          <h1 className="mb-4 text-4xl font-bold font-serif flex items-center gap-3">
             <BookMarked className="h-10 w-10 text-primary" />
             Reading List
           </h1>
@@ -83,7 +89,7 @@ export default function ReadingListPage() {
                       {book.status}
                     </span>
                   </div>
-                  <h2 className="text-2xl font-bold google-sans mb-1">
+                  <h2 className="text-2xl font-bold font-sans mb-1">
                     {book.title}
                   </h2>
                   <p className="text-muted-foreground mb-4 font-medium italic">

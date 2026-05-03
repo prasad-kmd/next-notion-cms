@@ -56,7 +56,7 @@ export default async function OpenSourcePage() {
     <div className="min-h-screen px-6 py-12 lg:px-8 img_grad_pm">
       <div className="mx-auto max-w-5xl">
         <div className="mb-12">
-          <h1 className="mb-4 text-4xl font-bold mozilla-headline flex items-center gap-3">
+          <h1 className="mb-4 text-4xl font-bold font-serif flex items-center gap-3">
             <Github className="h-10 w-10" />
             Open Source
           </h1>
@@ -85,7 +85,7 @@ export default async function OpenSourcePage() {
 
                 {/* Profile Info */}
                 <div className="flex-1">
-                  <h2 className="text-2xl font-bold google-sans mb-1">
+                  <h2 className="text-2xl font-bold font-sans mb-1">
                     {user.name}
                   </h2>
                   <p className="text-muted-foreground mb-3">@{user.username}</p>
@@ -173,7 +173,7 @@ export default async function OpenSourcePage() {
         {user && (
           <Card className="mb-12 border-border bg-card/50 backdrop-blur-sm overflow-hidden">
             <CardHeader>
-              <CardTitle className="text-2xl google-sans flex items-center gap-2">
+              <CardTitle className="text-2xl font-sans flex items-center gap-2">
                 <Code className="h-6 w-6 text-primary" />
                 Contribution Activity
               </CardTitle>
@@ -198,7 +198,7 @@ export default async function OpenSourcePage() {
 
         {/* Repositories Section */}
         <div className="mb-8">
-          <h2 className="text-2xl font-bold google-sans mb-6">
+          <h2 className="text-2xl font-bold font-sans mb-6">
             Featured Repositories
           </h2>
         </div>
@@ -222,7 +222,7 @@ export default async function OpenSourcePage() {
                       </span>
                     </div>
                   </div>
-                  <CardTitle className="text-xl google-sans">
+                  <CardTitle className="text-xl font-sans">
                     {repo.name}
                   </CardTitle>
                   <CardDescription className="line-clamp-3">

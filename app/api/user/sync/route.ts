@@ -44,7 +44,7 @@ export async function POST(req: Request) {
 
   try {
     const body = await req.json();
-    const { bookmarks, accentColor } = body;
+    const { bookmarks, entertainmentBookmarks, accentColor } = body;
 
     // Fetch current user preferences
     const currentUser = await db.query.user.findFirst({
@@ -68,14 +68,33 @@ export async function POST(req: Request) {
       }
     }
 
-    // Limit bookmarks to prevent free tier storage exhaustion (e.g., max 50 bookmarks)
-    if (mergedBookmarks.length > 50) {
-      mergedBookmarks = mergedBookmarks.slice(-50);
+    // Limit bookmarks
+    if (mergedBookmarks.length > 100) {
+      mergedBookmarks = mergedBookmarks.slice(-100);
+    }
+
+    // For entertainment bookmarks, we merge and deduplicate by id + type
+    let mergedEntBookmarks = currentPrefs.entertainmentBookmarks || [];
+    if (entertainmentBookmarks && Array.isArray(entertainmentBookmarks)) {
+      const existingIds = new Set(
+        mergedEntBookmarks.map((b: unknown) => `${b.type}:${b.id}`),
+      );
+
+      for (const b of entertainmentBookmarks) {
+        if (!existingIds.has(`${b.type}:${b.id}`)) {
+          mergedEntBookmarks.push(b);
+        }
+      }
+    }
+
+    if (mergedEntBookmarks.length > 100) {
+      mergedEntBookmarks = mergedEntBookmarks.slice(-100);
     }
 
     const newPrefs = {
       ...currentPrefs,
       bookmarks: mergedBookmarks,
+      entertainmentBookmarks: mergedEntBookmarks,
       accentColor: accentColor || currentPrefs.accentColor,
       lastSynced: new Date().toISOString(),
     };

@@ -47,7 +47,7 @@ export default function StyleGuidePage() {
     <div className="min-h-screen px-6 py-12 lg:px-8 img_grad_pm">
       <div className="mx-auto max-w-5xl">
         <header className="mb-12">
-          <h1 className="mb-4 text-4xl font-bold mozilla-headline flex items-center gap-3">
+          <h1 className="mb-4 text-4xl font-bold font-serif flex items-center gap-3">
             <Palette className="h-10 w-10 text-primary" />
             Style Guide
           </h1>
@@ -59,7 +59,7 @@ export default function StyleGuidePage() {
         </header>
 
         <section className="mb-16">
-          <h2 className="text-2xl font-bold mb-8 google-sans flex items-center gap-2">
+          <h2 className="text-2xl font-bold mb-8 font-sans flex items-center gap-2">
             <Layout className="h-6 w-6 text-primary" />
             Color Palette
           </h2>
@@ -90,7 +90,7 @@ export default function StyleGuidePage() {
         </section>
 
         <section className="mb-16">
-          <h2 className="text-2xl font-bold mb-8 google-sans flex items-center gap-2">
+          <h2 className="text-2xl font-bold mb-8 font-sans flex items-center gap-2">
             <Type className="h-6 w-6 text-primary" />
             Typography
           </h2>
@@ -113,7 +113,7 @@ export default function StyleGuidePage() {
                   style={{
                     fontFamily:
                       font.name === "Mozilla Headline"
-                        ? "var(--font-mozilla-headline)"
+                        ? "var(--font-font-serif)"
                         : font.name === "JetBrains Mono"
                           ? "var(--font-jetbrains-mono)"
                           : "inherit",
@@ -127,7 +127,7 @@ export default function StyleGuidePage() {
         </section>
 
         <section>
-          <h2 className="text-2xl font-bold mb-8 google-sans flex items-center gap-2">
+          <h2 className="text-2xl font-bold mb-8 font-sans flex items-center gap-2">
             <ImageIcon className="h-6 w-6 text-primary" />
             Brand Assets
           </h2>

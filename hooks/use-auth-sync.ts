@@ -14,6 +14,7 @@ export function useAuthSync() {
       if (!session?.user || syncInProgress.current) return;
 
       const localBookmarks = localStorage.getItem("user-bookmarks");
+      const localEntBookmarks = localStorage.getItem("entertainment-bookmarks");
       const localAccentColor = localStorage.getItem("accent-color");
 
       // Pull Logic: If localStorage is empty/missing or after a fresh login where we haven't synced yet
@@ -41,6 +42,17 @@ export function useAuthSync() {
                 restored = true;
               }
 
+              if (
+                preferences.entertainmentBookmarks &&
+                (!localEntBookmarks || localEntBookmarks === "[]")
+              ) {
+                localStorage.setItem(
+                  "entertainment-bookmarks",
+                  JSON.stringify(preferences.entertainmentBookmarks),
+                );
+                restored = true;
+              }
+
               if (preferences.accentColor && !localAccentColor) {
                 localStorage.setItem("accent-color", preferences.accentColor);
                 restored = true;
@@ -50,6 +62,7 @@ export function useAuthSync() {
                 // Update markers and trigger storage event for other hooks/components
                 const snapshot = JSON.stringify({
                   bookmarks: localStorage.getItem("user-bookmarks"),
+                  entertainmentBookmarks: localStorage.getItem("entertainment-bookmarks"),
                   accentColor: localStorage.getItem("accent-color"),
                 });
                 localStorage.setItem("last-synced-data-snapshot", snapshot);
@@ -70,10 +83,11 @@ export function useAuthSync() {
       }
 
       // Group data to check for changes (Push logic)
-      if (!localBookmarks && !localAccentColor) return;
+      if (!localBookmarks && !localEntBookmarks && !localAccentColor) return;
 
       const currentData = JSON.stringify({
         bookmarks: localBookmarks,
+        entertainmentBookmarks: localEntBookmarks,
         accentColor: localAccentColor,
       });
       const lastSyncedData = localStorage.getItem("last-synced-data-snapshot");
@@ -100,6 +114,7 @@ export function useAuthSync() {
           },
           body: JSON.stringify({
             bookmarks: localBookmarks ? JSON.parse(localBookmarks) : null,
+            entertainmentBookmarks: localEntBookmarks ? JSON.parse(localEntBookmarks) : null,
             accentColor: localAccentColor,
           }),
         });

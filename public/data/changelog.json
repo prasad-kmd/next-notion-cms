@@ -1,297 +1,185 @@
 [
   {
     "version": "0.0",
-    "date": "25 April 2026",
-    "title": "Add project rules and contribution guidelines in RULES.md",
+    "date": "March 03, 2026",
+    "title": "Custom cursor was removed temporary",
     "description": "",
     "changes": [
-      "Add project rules and contribution guidelines in RULES.md",
-      "Apply consistent markdown formatting and code syntax highlighting to RULES.md",
-      "Update formatting of checklist items in RULES.md",
-      "Critical linting errors",
-      "Critical linting errors",
-      "Applied fixes for `@typescript-eslint/no-unused-vars`",
-      "Add fixes to `react-hooks/set-state-in-effect` related issues."
-    ],
-    "type": "fix",
-    "automated": true
-  },
-  {
-    "version": "0.0",
-    "date": "24 April 2026",
-    "title": "Potential fix for code scanning alert no. 16: Bad HTML filtering regexp",
-    "description": "",
-    "changes": [
-      "Potential fix for code scanning alert no. 16: Bad HTML filtering regexp - Co-authored-by: Copilot Autofix powered by AI <62310815+github-advanced-security[bot]@users.noreply.github.com>",
-      "Potential fix for code scanning alert no. 16: Bad HTML filtering regexp (#24) - Potential fix for",
-      "Revert \"Potential fix for code scanning alert no. 16: Bad HTML filtering regexp\"",
-      "Revert \"Potential fix for code scanning alert no. 16: Bad HTML filtering regexp\" (#25) - Reverts prasad-kmd/next-notion-cms#24",
-      "Implement robots.txt configuration and dynamic route handler for SEO and AI crawler control",
-      "Remove unused file and associated references",
-      "Modified Footer component, configured lint workflow, and bump version to 2.0.0",
-      "Ci: modified GitHub Actions workflow for linting with job summary reporting",
-      "Migrate to flat ESLint configuration and update lint script to use next lint",
-      "Update lint script to target all files using eslint",
-      "Migrate eslint configuration to use direct imports from eslint-config-next",
-      "Address GitHub Security CodeQL warnings - - Fixed incomplete URL substring sanitization by using robust URL hostname checks for GitHub Gist embeds.",
-      "Address GitHub Security CodeQL warnings (#26) in issue #15 - - Fixed incomplete URL substring sanitization by using robust URL",
-      "Ci: add CodeQL advanced security scanning workflow",
-      "Merge branch 'main' of https://github.com/prasad-kmd/next-notion-cms",
-      "Add advanced CodeQL workflow configuration",
-      "Remove unused files and associated references",
-      "Rewrite DESIGN.md to define comprehensive frontend visual tokens, layout specifications, and component styling patterns",
-      "Resolve all CodeQL vulnerabilities in OG route and content transformers - - Replace vulnerable regex-based tag stripping with safe state-machine `stripTags()`",
-      "Modified dynamic Open Graph image generation route with secure text sanitization",
-      "Add sanitize-html and corresponding types to dependencies"
+      "Custom cursor was removed temporary",
+      "Merge branch 'main' of https://github.com/prasad-kmd/PMEngineerLK-NextJS",
+      "Add new tutorial and wiki content with supporting templates, images, and application layout."
     ],
     "type": "feature",
     "automated": true
   },
   {
     "version": "0.0",
-    "date": "23 April 2026",
-    "title": "Modified content renderer with interactive features and add analytics dashboard components",
+    "date": "February 14, 2026",
+    "title": "Merge pull request #7 from prasad-kmd/update-readme-documentation-15094035176316048249",
     "description": "",
     "changes": [
-      "Modified content renderer with interactive features and add analytics dashboard components",
-      "Implement AnalyticsDashboardManager and TopContentTable components for comprehensive site traffic visualization",
-      "Implement comprehensive system monitoring dashboard with health checks for Notion, Supabase, and PostHog",
-      "Potential fix for code scanning alert no. 19: Use of externally-controlled format string - Co-authored-by: Copilot Autofix powered by AI <62310815+github-advanced-security[bot]@users.noreply.github.com>",
-      "Potential fix for code scanning alert no. 19: Use of externally-controlled format string (#23) - Potential fix for",
-      "Modified system monitoring dashboard with log management and service status tracking",
-      "Modified SystemMonitorManager component for real-time service health tracking and log management",
-      "Implement accessibility framework with custom provider, control panel, and content pages"
+      "Merge pull request #7 from prasad-kmd/update-readme-documentation-15094035176316048249 - Comprehensive README update and build ignore files",
+      "Comprehensive README update and build ignore files - - Updated README.md with detailed feature lists, implementation guides, and roadmap.",
+      "Merge pull request #6 from prasad-kmd/feature-interactive-quiz-component-15736366983936253151 - Feature interactive quiz component 15736366983936253151",
+      "Add quiz notifications and fix persistence/scrolling issues - - Added \"Let's take a quiz\" toast notifications using `sonner`.",
+      "Implement dedicated Quiz Library and browser-side persistence - - Added `/quiz` dedicated route with category filtering and progress tracking.",
+      "Merge pull request #5 from prasad-kmd/feature-interactive-quiz-component-15736366983936253151 - Feature interactive quiz component 15736366983936253151",
+      "Final fix for interactive quiz visibility and JSON parsing - - Updated `ContentRenderer` regex to handle multiline `data-quiz` attributes.",
+      "Fix quiz component integration and support HTML content - - Refined `marked` extension and removed redundant post-processing for Markdown.",
+      "Add interactive Quiz component and Markdown integration - - Implemented `Quiz` component in `components/quiz.tsx` with score tracking and feedback.",
+      "Add new blog posts on Sinhala Archaic Numbers and C++ for Mechatronics, along with their respective images and a new content renderer component.",
+      "Update changelog [skip ci]",
+      "Modified the comprehensive content structure with dedicated pages, dynamic routing, and components for articles, projects, blog, wiki, tutorials, tools, and portfolio."
     ],
     "type": "feature",
     "automated": true
   },
   {
     "version": "0.0",
-    "date": "22 April 2026",
-    "title": "Implement PostHog analytics integration with admin dashboard and pageviews visualization",
+    "date": "February 13, 2026",
+    "title": "Modify initial technical content, error and sponsorship pages, and content renderer.",
     "description": "",
     "changes": [
-      "Implement PostHog analytics integration with admin dashboard and pageviews visualization",
-      "Potential fix for code scanning alert no. 18: Incomplete string escaping or encoding - Co-authored-by: Copilot Autofix powered by AI <62310815+github-advanced-security[bot]@users.noreply.github.com>",
-      "Potential fix for code scanning alert no. 18: Incomplete string escaping or encoding (#18) - Potential fix for",
-      "Add comprehensive documentation and initial dashboard page scaffold",
-      "Merge branch 'main' of https://github.com/prasad-kmd/next-notion-cms",
-      "Modified PostHog analytics dashboard with server-side integration and authentication protection",
-      "Modified PostHog analytics dashboard page and admin API route",
-      "Integrate PostHog analytics with provider setup and CSP updates",
-      "Potential fix for code scanning alert no. 8: Double escaping or unescaping - Co-authored-by: Copilot Autofix powered by AI <62310815+github-advanced-security[bot]@users.noreply.github.com>",
-      "Potential fix for code scanning alert no. 8: Double escaping or unescaping (#19) - Potential fix for",
-      "Modified root layout with global providers and updated navigation component",
-      "Modified PostHog analytics integration with page view tracking and dashboard components",
-      "Add secure admin analytics API route for PostHog data retrieval",
-      "Implement Recharts-based visualization components and integrate analytics charts into the dashboard",
-      "Potential fix for code scanning alert no. 20: Use of externally-controlled format string - Co-authored-by: Copilot Autofix powered by AI <62310815+github-advanced-security[bot]@users.noreply.github.com>",
-      "Potential fix for code scanning alert no. 20: Use of externally-controlled format string (#21) - Potential fix for"
+      "Modify initial technical content, error and sponsorship pages, and content renderer."
     ],
     "type": "feature",
     "automated": true
   },
   {
     "version": "0.0",
-    "date": "21 April 2026",
-    "title": "Implement comment system with Cloudflare Turnstile verification, rate limiting, and service worker caching",
+    "date": "February 12, 2026",
+    "title": "Implement dedicated Open Source and Contact pages, including GitHub API integration and a contact form.",
     "description": "",
     "changes": [
-      "Implement comment system with Cloudflare Turnstile verification, rate limiting, and service worker caching",
-      "Add new technology stack badges and update README documentation",
-      "Add Vibe Code 80 badge and update README documentation",
-      "Modified modular comment system and add dynamic content pages for projects, blog, tutorials, articles, and wiki.",
-      "Modified View Transitions API, global CSS theme, and content rendering components",
-      "Add robots.txt configuration to define search engine crawling rules and sitemap location",
-      "Implement role-based access control with admin-only routes, authorization utilities, and protected page components.",
-      "Modified View Transitions API component and define global Tailwind CSS theme variables",
-      "Modifed responsive navigation component in sidebar and new licenses and not-authorized pages",
-      "Modified custom 403 not-authorized page with conditional sign-in and navigation options",
-      "Optimized responsive navigation system with sidebar, mobile bottom bar, and aesthetic background components"
+      "Implement dedicated Open Source and Contact pages, including GitHub API integration and a contact form.",
+      "Add new application pages, an engineering workspace with various tools, content sections, and supporting components.",
+      "Update changelog [skip ci]",
+      "Fix GitHub Actions workflow for automatic changelog generation.",
+      "Implement a new changelog system with automated generation, introduce a tools page, and enhance the homepage with new UI components.",
+      "Merge pull request #4 from prasad-kmd/feature-engineering-workspace-expansion-6380012719988652230 - This substantial update expands the Engineering Workspace with professional-grade utilities. ",
+      "Expand engineering workspace with new tools and enhancements - - Added 9 new tools across Electronics, Mechanical, Mechatronics, Math, and Web categories.",
+      "Modified battery life, beam deflection, gear ratio, and 555 timer calculator tools by adding latex equations."
     ],
     "type": "feature",
     "automated": true
   },
   {
     "version": "0.0",
-    "date": "20 April 2026",
-    "title": "Add date-fns dependency to package.json",
+    "date": "February 10, 2026",
+    "title": "Customized dynamic Open Graph image generation, modified About and Changelog pages, and PWA configuration with updated favicons.",
     "description": "",
     "changes": [
-      "Add date-fns dependency to package.json",
-      "Add various badges to README.md",
-      "Implement native Notion comments system with authentication, rate limiting, and UI components",
-      "Merge branch 'main' of https://github.com/prasad-kmd/next-notion-cms",
-      "Modified modular UI components for author profiles, comment sections, and social account management.",
-      "Modified licenses page, site directory, and linked accounts dashboard component"
+      "Customized dynamic Open Graph image generation, modified About and Changelog pages, and PWA configuration with updated favicons."
     ],
     "type": "feature",
     "automated": true
   },
   {
     "version": "0.0",
-    "date": "19 April 2026",
-    "title": "Implement Better Auth integration with database schema, user preference synchronization, and authentication UI",
+    "date": "February 09, 2026",
+    "title": "Introduce custom cursor, click spark, context menu, and featured hero components.",
     "description": "",
     "changes": [
-      "Implement Better Auth integration with database schema, user preference synchronization, and authentication UI",
-      "Implement cross-device user preference synchronization for bookmarks and accent colors",
-      "Update CSP connect-src directive to include image and asset domains",
-      "Implement user dashboard with profile, account management, and activity tracking components",
-      "Modified dashboard layout with profile overview, activity tracking, and stats summary components",
-      "Modified dashboard page with profile, account, and activity tabs",
-      "Dashboard error fixed",
-      "Add issue templates, pull request template, and contributing guidelines",
-      "Modified interactive bento grid components with GSAP animations and spotlight effects",
-      "Modified interactive ClickSpark component and new content card UI elements"
+      "Introduce custom cursor, click spark, context menu, and featured hero components.",
+      "Implement Progressive Web App (PWA) support with a service worker, web app manifest, and network connectivity listener.",
+      "Merge branch 'main' of https://github.com/prasad-kmd/PMEngineerLK-NextJS",
+      "Add initial homepage with a dynamic hero section, content overviews, and engineering tools."
     ],
     "type": "feature",
     "automated": true
   },
   {
     "version": "0.0",
-    "date": "18 April 2026",
-    "title": "Merge pull request #11 from prasad-kmd/NotionCMS-integration-20260410",
+    "date": "February 08, 2026",
+    "title": "Merge pull request #3 from prasad-kmd/vercel/react-server-components-cve-vu-9bp2vo",
     "description": "",
     "changes": [
-      "Merge pull request #11 from prasad-kmd/NotionCMS-integration-20260410 - Notion CMS integration 20260410",
-      "Add integration analysis and task tracking for Notion starter kit features",
-      "Modified global layout, floating navbar, and accent color customization system",
-      "Modified custom error handling, global layout, and UI components for the documentation platform",
-      "Add project status and environment badges to README",
-      "Implement native Notion search, breadcrumbs, JSON-LD SEO, and image optimizations across content pages",
-      "Add comprehensive codebase improvement suggestions for security, performance, and code quality",
-      "Typo fix",
-      "Build(deps): bump dompurify in the npm_and_yarn group across 1 directory - Bumps the npm_and_yarn group with 1 update in the / directory: [dompurify](https://github.com/cure53/DOMPurify).",
-      "Build(deps): bump lodash in the npm_and_yarn group across 1 directory - Bumps the npm_and_yarn group with 1 update in the / directory: [lodash](https://github.com/lodash/lodash).",
-      "Modified Notion integration with custom block transformers and add contact form functionality",
-      "Build(deps): bump lodash from 4.17.23 to 4.18.1 in the npm_and_yarn group across 1 directory (#13) - Bumps the npm_and_yarn group with 1 update in the / directory:",
-      "Build(deps): bump next in the npm_and_yarn group across 1 directory - Bumps the npm_and_yarn group with 1 update in the / directory: [next](https://github.com/vercel/next.js).",
-      "Enable image optimization, configure formats, and update CSP for Unsplash support",
-      "Rename knowlegde.md to knowledge.md",
-      "Update Telegram API reference in README",
-      "Build(deps): bump dompurify from 3.3.3 to 3.4.0 in the npm_and_yarn group across 1 directory (#12) - Bumps the npm_and_yarn group with 1 update in the / directory:",
-      "Build(deps): bump next from 16.2.2 to 16.2.3 in the npm_and_yarn group across 1 directory (#14) - Bumps the npm_and_yarn group with 1 update in the / directory:",
-      "Add image hostnames and integrate better-auth, drizzle-orm, and postgres with dependency updates"
+      "Merge pull request #3 from prasad-kmd/vercel/react-server-components-cve-vu-9bp2vo - Fix React Server Components CVE vulnerabilities",
+      "Fix React Server Components CVE vulnerabilities - Updated dependencies to fix Next.js and React CVE vulnerabilities.",
+      "Enhance sitemap and add new tools for discovery and research - - Updated sitemap to include new routes for game deals, feeds, researches, and open books.",
+      "Introduce a new 'Tools' section with multiple utilities, a dedicated portfolio page, and new project content.",
+      "Introduce user persona creator, add a new input component, and establish global Tailwind CSS styling with light/dark theme variables.",
+      "Add PCB Trace Width Calculator tool for calculating trace width based on IPC-2221 standards - feat: implement PID Controller Simulator for tuning PID gains with interactive step-response visualization"
     ],
     "type": "feature",
     "automated": true
   },
   {
     "version": "0.0",
-    "date": "14 April 2026",
-    "title": "Update changelog [skip ci]",
+    "date": "February 07, 2026",
+    "title": "Add a collapsible Table of Contents component and a new \"Now\" page detailing current activities.",
     "description": "",
     "changes": [
-      "Update changelog [skip ci]"
+      "Add a collapsible Table of Contents component and a new \"Now\" page detailing current activities.",
+      "Establish core content infrastructure with dynamic pages for tutorials, blog, and articles, alongside dedicated sections for roadmap, tools, snippets, and more.",
+      "Add dynamic content pages for articles, projects, and tools, implement a global search, and introduce portfolio hero actions.",
+      "Add content renderer with code highlighting, math rendering, and external link handling, plus a new blog post.",
+      "Introduce a comprehensive blogfolio website with dynamic content pages, tools, and essential UI components, including RSS and sitemap generation.",
+      "Add Footer component with navigation links and social media icons",
+      "Revamp blogfolio to reflect personal branding and journey, updating titles, descriptions, and content across multiple pages."
+    ],
+    "type": "feature",
+    "automated": true
+  },
+  {
+    "version": "0.0",
+    "date": "February 06, 2026",
+    "title": "Introduce interactive MagicBento component and new pages for gallery, team, about, and a roadmap component.",
+    "description": "",
+    "changes": [
+      "Introduce interactive MagicBento component and new pages for gallery, team, about, and a roadmap component.",
+      "Custom Cursor and Menu added.",
+      "Add new informational pages for privacy policy, terms and conditions, tools, and disclaimer.",
+      "Some updates on equation editors and some pages.",
+      "Add new font families and integrate them into components for improved typography",
+      "Add disclaimer, privacy policy, and terms and conditions pages with navigation links and content structure",
+      "Introduce dedicated tools and portfolio pages, foundational error/loading/not-found pages, and a new navigation component, updating Next.js configuration."
+    ],
+    "type": "feature",
+    "automated": true
+  },
+  {
+    "version": "0.0",
+    "date": "February 05, 2026",
+    "title": "Add new 'Tools' section including scientific calculator, LaTeX editor, HTML encoder, and markdown editor.",
+    "description": "",
+    "changes": [
+      "Add new 'Tools' section including scientific calculator, LaTeX editor, HTML encoder, and markdown editor.",
+      "Implement responsive navigation with a collapsible sidebar, floating navbar, and bookmarking features.",
+      "Implement a bookmarking system with a floating navigation bar, modal, and integration into dynamic content pages.",
+      "Introduce root layout with metadata, custom fonts, and a scroll-to-top component with progress indicator.",
+      "Add core content pages for blog, projects, tutorials, and articles, and configure global styles.",
+      "Implement global search functionality with a new API endpoint and a responsive UI component."
+    ],
+    "type": "feature",
+    "automated": true
+  },
+  {
+    "version": "0.0",
+    "date": "February 04, 2026",
+    "title": "Merge pull request #1 from prasad-kmd/imgbot",
+    "description": "",
+    "changes": [
+      "Merge pull request #1 from prasad-kmd/imgbot - [ImgBot] Optimize images",
+      "Introduce base application layout, navigation, theme provider, and essential UI components including web share and push notifications.",
+      "[ImgBot] Optimize images - *Total -- 567.88kb -> 503.95kb (11.26%)",
+      "Updated OG Image.",
+      "OG API changes",
+      "Implement push notifications, web share, and a dynamic collapsible sidebar, integrating them into the application's main layout and navigation.",
+      "Initialize Next.js application with content management for blog, articles, projects, and tutorials, including UI components and an OG image API."
+    ],
+    "type": "feature",
+    "automated": true
+  },
+  {
+    "version": "0.0",
+    "date": "January 04, 2026",
+    "title": "Cloned from [prasad-kmd/DMX4102-webapp-NEXTJS](https://github.com/prasad-kmd/DMX4102-webapp-NEXTJS) from main and added local fonts to `public/fonts`",
+    "description": "",
+    "changes": [
+      "Cloned from [prasad-kmd/DMX4102-webapp-NEXTJS](https://github.com/prasad-kmd/DMX4102-webapp-NEXTJS) from main and added local fonts to `public/fonts`"
     ],
     "type": "improvement",
-    "automated": true
-  },
-  {
-    "version": "0.0",
-    "date": "10 April 2026",
-    "title": "Add Authors database support to Notion CMS configuration and documentation",
-    "description": "",
-    "changes": [
-      "Add Authors database support to Notion CMS configuration and documentation",
-      "Initialize Next.js CMS with Notion integration, content routing, and UI components",
-      "Modified Tailwind CSS globals and Notion API content integration utilities"
-    ],
-    "type": "feature",
-    "automated": true
-  },
-  {
-    "version": "0.0",
-    "date": "09 April 2026",
-    "title": "Modified site architecture with dynamic routing for blogs, quizzes, tutorials, and projects alongside new UI components and status documentation.",
-    "description": "",
-    "changes": [
-      "Modified site architecture with dynamic routing for blogs, quizzes, tutorials, and projects alongside new UI components and status documentation.",
-      "Modified Blog, Article, and Project card components with associated content utilities and sidebar layout",
-      "Modified dynamic routes for blog, tutorials, authors, and wiki with supporting components and OG image generation."
-    ],
-    "type": "feature",
-    "automated": true
-  },
-  {
-    "version": "0.0",
-    "date": "08 April 2026",
-    "title": "Migrate project structure to new directory and implement core application features and components",
-    "description": "",
-    "changes": [
-      "Migrate project structure to new directory and implement core application features and components",
-      "Modified responsive sidebar navigation and implement content routing for blog, tutorial, and article pages",
-      "Modified content listing pages and search API route for blog, projects, and articles",
-      "Modified content card component and initialize core portfolio, blog, and project pages",
-      "Update packages"
-    ],
-    "type": "feature",
-    "automated": true
-  },
-  {
-    "version": "0.0",
-    "date": "07 April 2026",
-    "title": "Modified Next.js project with custom Tailwind CSS theme, UI components, and content structure",
-    "description": "",
-    "changes": [
-      "Modified Next.js project with custom Tailwind CSS theme, UI components, and content structure",
-      "Modified Table of Contents component and content processing utilities for blog, project, and wiki pages",
-      "Implement base styling, navigation components, and content utility structure",
-      "Add project documentation, tutorial content, and navigation components to CMS"
-    ],
-    "type": "feature",
-    "automated": true
-  },
-  {
-    "version": "0.0",
-    "date": "06 April 2026",
-    "title": "Modified collapsible sidebar navigation with tooltips and responsive mobile support",
-    "description": "",
-    "changes": [
-      "Modified collapsible sidebar navigation with tooltips and responsive mobile support"
-    ],
-    "type": "feature",
-    "automated": true
-  },
-  {
-    "version": "0.0",
-    "date": "03 April 2026",
-    "title": "Finalize blogfolio with polished footer and hero layout",
-    "description": "",
-    "changes": [
-      "Finalize blogfolio with polished footer and hero layout - - Completely redesigned Footer to match the requested design with decorative blurs and grid categories",
-      "Merge pull request #6 from prasad-kmd/feat-engineering-blogfolio-cms-2687831180289273528",
-      "Implement author pages and right-side sidebar layout - - Added dedicated author content system in `content/authors/`.",
-      "Merge pull request #7 from prasad-kmd/feat-author-pages-and-layout-updates-8592326505501747622 - feat: implement author pages and right-side sidebar layout",
-      "Some changes",
-      "Merge branch 'main' of https://github.com/prasad-kmd/next-notion-cms",
-      "Implement right-aligned sidebar with TOC and author profile - - Move TOC and add AuthorProfile to a sticky right sidebar in blog, projects, and wiki pages.",
-      "Merge pull request #8 from prasad-kmd/feat-author-pages-and-layout-updates-8592326505501747622 - feat: implement right-aligned sidebar with TOC and author profile"
-    ],
-    "type": "feature",
-    "automated": true
-  },
-  {
-    "version": "0.0",
-    "date": "02 April 2026",
-    "title": "Initial commit",
-    "description": "",
-    "changes": [
-      "Initial commit",
-      "Initialize Next.js project with App Router, Tailwind CSS, and configuration files",
-      "Add custom font assets and stylesheet configuration",
-      "Implement modern engineering blogfolio with file-based CMS - - Built with Next.js 16, TypeScript, and Tailwind CSS 4.",
-      "Merge pull request #1 from prasad-kmd/feat-engineering-blogfolio-cms-2687831180289273528",
-      "Update `.gitignore`",
-      "Implement modern engineering blogfolio with Next.js 16 - - Built a high-performance blogfolio using Next.js 16 (App Router) and Tailwind CSS 4.",
-      "Merge pull request #3 from prasad-kmd/feat-engineering-blogfolio-cms-2687831180289273528 - ### Engineering Blogfolio + Workspace Website ",
-      "Implement modern engineering blogfolio with file-based CMS - Co-authored-by: google-labs-jules[bot] <161369871+google-labs-jules[bot]@users.noreply.github.com>",
-      "Merge pull request #4 from prasad-kmd/feat-engineering-blogfolio-cms-2687831180289273528 - Implement modern engineering blogfolio with file-based CMS with addressing #2",
-      "Refine blogfolio UI/UX, add about/contact pages and AI indicator - - Implemented AI Content Indicator based on user reference",
-      "Merge pull request #5 from prasad-kmd/feat-engineering-blogfolio-cms-2687831180289273528"
-    ],
-    "type": "feature",
     "automated": true
   }
 ]

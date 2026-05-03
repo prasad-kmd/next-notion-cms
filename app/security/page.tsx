@@ -15,7 +15,7 @@ export default function SecurityPage() {
     <div className="min-h-screen px-6 py-12 lg:px-8 img_grad_pm">
       <div className="mx-auto max-w-4xl">
         <header className="mb-12">
-          <h1 className="mb-4 text-4xl font-bold mozilla-headline flex items-center gap-3">
+          <h1 className="mb-4 text-4xl font-bold font-serif flex items-center gap-3">
             <ShieldAlert className="h-10 w-10 text-primary" />
             Security Policy
           </h1>
@@ -29,7 +29,7 @@ export default function SecurityPage() {
 
         <div className="space-y-12">
           <section className="bg-card/40 border border-border rounded-2xl p-8">
-            <h2 className="text-2xl font-bold mb-6 google-sans flex items-center gap-2">
+            <h2 className="text-2xl font-bold mb-6 font-sans flex items-center gap-2">
               <Bug className="h-6 w-6 text-primary" />
               Reporting a Vulnerability
             </h2>

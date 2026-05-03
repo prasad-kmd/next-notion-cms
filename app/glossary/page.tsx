@@ -57,7 +57,7 @@ export default function GlossaryPage() {
     <div className="min-h-screen px-6 py-12 lg:px-8 img_grad_pm">
       <div className="mx-auto max-w-5xl">
         <header className="mb-12">
-          <h1 className="mb-4 text-4xl font-bold mozilla-headline flex items-center gap-3">
+          <h1 className="mb-4 text-4xl font-bold font-serif flex items-center gap-3">
             <Book className="h-10 w-10 text-primary" />
             Engineering Glossary
           </h1>
@@ -85,7 +85,7 @@ export default function GlossaryPage() {
                 className="group p-6 rounded-xl border border-border bg-card/30 hover:bg-card/50 transition-all hover:border-primary/30"
               >
                 <div className="flex flex-col md:flex-row md:items-baseline gap-2 md:gap-6">
-                  <h2 className="text-xl font-bold google-sans group-hover:text-primary transition-colors min-w-[150px]">
+                  <h2 className="text-xl font-bold font-sans group-hover:text-primary transition-colors min-w-[150px]">
                     {item.term}
                   </h2>
                   <div className="flex-1">

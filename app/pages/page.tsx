@@ -31,6 +31,8 @@ import {
   Search,
   Hash,
   Heart,
+  Cpu,
+  Tv,
 } from "lucide-react";
 
 const title = "Site Directory";
@@ -99,9 +101,48 @@ const categories = [
     ],
   },
   {
+    name: "Engineering Workspace",
+    id: "tools",
+    description: "Interactive calculators and professional design utilities.",
+    pages: [
+      {
+        name: "Tools Landing",
+        href: "/tools",
+        icon: Wrench,
+        color: "text-teal-500",
+        bgColor: "bg-teal-500/10",
+        description: "Central catalog of 30+ engineering tools.",
+      },
+      {
+        name: "Electronics Suite",
+        href: "/tools#electronics",
+        icon: Cpu,
+        color: "text-emerald-500",
+        bgColor: "bg-emerald-500/10",
+        description: "PCB calculators, resistor codes, and op-amp design.",
+      },
+      {
+        name: "Mechanical Suite",
+        href: "/tools#mechanical",
+        icon: GitBranch,
+        color: "text-indigo-500",
+        bgColor: "bg-indigo-500/10",
+        description: "Beam deflection, gear ratios, and inertia tools.",
+      },
+      {
+        name: "Mechatronics Suite",
+        href: "/tools#mechatronics",
+        icon: Activity,
+        color: "text-blue-500",
+        bgColor: "bg-blue-500/10",
+        description: "PID simulators, battery estimation, and sensors.",
+      },
+    ],
+  },
+  {
     name: "Engineering Hub",
     id: "engineering",
-    description: "Specialized tools and technical knowledge bases.",
+    description: "Specialized knowledge bases and research search.",
     pages: [
       {
         name: "Engineering Wiki",
@@ -256,6 +297,29 @@ const categories = [
     ],
   },
   {
+    name: "Entertainment",
+    id: "entertainment",
+    description: "Premium cinematic experience (Admin Only).",
+    pages: [
+      {
+        name: "Entertainment Hub",
+        href: "/entertainment",
+        icon: Tv,
+        color: "text-purple-500",
+        bgColor: "bg-purple-500/10",
+        description: "Movies, TV shows, and cinematic metadata.",
+      },
+      {
+        name: "Universe Search",
+        href: "/entertainment/search",
+        icon: Search,
+        color: "text-blue-500",
+        bgColor: "bg-blue-500/10",
+        description: "Discover millions of entertainment titles.",
+      },
+    ],
+  },
+  {
     name: "Legal & Technical",
     id: "legal",
     description: "Policies, status, and brand guidelines.",
@@ -364,10 +428,10 @@ export default function PagesOverview() {
     <div className="min-h-screen px-6 py-12 lg:px-8 bg-background">
       <div className="mx-auto max-w-6xl">
         <header className="mb-12 text-center lg:text-left">
-          <h1 className="mb-4 text-4xl font-bold mozilla-headline lg:text-5xl">
+          <h1 className="mb-4 text-4xl font-bold font-serif lg:text-5xl">
             Site Directory
           </h1>
-          <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl google-sans">
+          <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl font-sans">
             {description}
           </p>
         </header>
@@ -378,9 +442,9 @@ export default function PagesOverview() {
             <a
               key={c.id}
               href={`#${c.id}`}
-              className="px-4 py-2 text-xs font-bold uppercase tracking-wider rounded-lg transition-all hover:bg-primary/10 hover:text-primary text-muted-foreground local-jetbrains-mono"
+              className="px-4 py-2 text-xs font-bold uppercase tracking-wider rounded-lg transition-all hover:bg-primary/10 hover:text-primary text-muted-foreground font-mono"
             >
-              {c.name.split(" ")[0]}
+              {c.id === "tools" ? "Workspace" : c.id === "engineering" ? "Hub" : c.name.split(" ")[0]}
             </a>
           ))}
         </div>
@@ -393,13 +457,13 @@ export default function PagesOverview() {
               className="scroll-mt-32"
             >
               <div className="mb-8 border-b border-border pb-4">
-                <h2 className="text-2xl font-bold mozilla-headline flex items-center gap-3">
+                <h2 className="text-2xl font-bold font-serif flex items-center gap-3">
                   {category.name}
                   <span className="text-xs font-normal text-muted-foreground uppercase tracking-widest bg-muted px-2 py-0.5 rounded">
                     {category.pages.length} Pages
                   </span>
                 </h2>
-                <p className="mt-1 text-muted-foreground google-sans italic text-sm">
+                <p className="mt-1 text-muted-foreground font-sans italic text-sm">
                   {category.description}
                 </p>
               </div>
@@ -420,10 +484,10 @@ export default function PagesOverview() {
                       <ArrowRight className="h-4 w-4 text-muted-foreground opacity-0 transition-all group-hover:translate-x-1 group-hover:opacity-100 group-hover:text-primary" />
                     </div>
                     <div>
-                      <h3 className="text-lg font-bold group-hover:text-primary transition-colors google-sans">
+                      <h3 className="text-lg font-bold group-hover:text-primary transition-colors font-sans">
                         {page.name}
                       </h3>
-                      <p className="mt-1 text-xs text-muted-foreground leading-relaxed local-inter line-clamp-2">
+                      <p className="mt-1 text-xs text-muted-foreground leading-relaxed font-sans line-clamp-2">
                         {page.description}
                       </p>
                     </div>
@@ -436,7 +500,7 @@ export default function PagesOverview() {
         </div>
 
         <div className="mt-24 flex flex-col items-center gap-4 py-12 border-t border-border/50">
-          <p className="text-sm text-muted-foreground google-sans italic text-center">
+          <p className="text-sm text-muted-foreground font-sans italic text-center">
             Can&apos;t find what you&apos;re looking for? Use the Command
             Palette (Cmd + K) anywhere on the site.
           </p>

@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { useIsAdmin } from "@/lib/auth-utils";
+import { useIsAdmin } from "@/lib/auth-utils-client";
 
 interface AdminOnlyProps {
   children: React.ReactNode;

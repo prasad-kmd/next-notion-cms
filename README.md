@@ -50,6 +50,8 @@ Perfect for researchers, engineers, and developers who need a robust, scalable, 
 ---
 
 ## ✨ Features
+- **🛠️ Engineering Workspace**: Suite of 30+ interactive tools for Electronics, Mechanical, and Mechatronics design.
+- **🎬 Entertainment Hub**: Admin-only cinematic experience with metadata integration (TMDB/OMDB/YTS).
 
 ### 📝 Content Management
 

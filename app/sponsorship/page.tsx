@@ -72,7 +72,7 @@ export default function SponsorshipPage() {
           <div className="inline-flex items-center justify-center p-3 mb-6 rounded-2xl bg-primary/10 text-primary">
             <Heart className="h-8 w-8 fill-current" />
           </div>
-          <h1 className="mb-4 text-4xl font-bold mozilla-headline lg:text-5xl">
+          <h1 className="mb-4 text-4xl font-bold font-serif lg:text-5xl">
             Sponsor My Work
           </h1>
           <p className="mx-auto max-w-2xl text-lg text-muted-foreground leading-relaxed">
@@ -100,7 +100,7 @@ export default function SponsorshipPage() {
                 >
                   <tier.icon className="h-6 w-6" />
                 </div>
-                <CardTitle className="text-2xl google-sans">
+                <CardTitle className="text-2xl font-sans">
                   {tier.name}
                 </CardTitle>
                 <div className="mt-4 flex items-baseline justify-center gap-1">
@@ -146,7 +146,7 @@ export default function SponsorshipPage() {
         </div>
 
         <div className="mt-20 p-8 rounded-3xl border border-dashed border-border bg-muted/30">
-          <h2 className="text-2xl font-bold google-sans mb-4">
+          <h2 className="text-2xl font-bold font-sans mb-4">
             Other Ways to Support
           </h2>
           <p className="text-muted-foreground mb-6">

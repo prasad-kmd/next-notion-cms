@@ -1,9 +1,8 @@
-import type { Metadata } from "next";
-import GalleryClient from "@/components/gallery-client";
+import type { Metadata } from "next"
+import GalleryClient from "@/components/gallery-client"
 
-const title = "Project Gallery";
-const description =
-  "Visual documentation of my engineering journey, prototypes and field work.";
+const title = "Project Gallery"
+const description = "Visual documentation of my engineering journey, prototypes and field work."
 
 export const metadata: Metadata = {
   title,
@@ -21,7 +20,7 @@ export const metadata: Metadata = {
       },
     ],
   },
-};
+}
 
 const galleryImages = [
   {
@@ -60,24 +59,21 @@ const galleryImages = [
     title: "Community Outreach",
     category: "Outreach",
   },
-];
+]
 
 export default function GalleryPage() {
   return (
     <div className="min-h-screen py-20 px-6 lg:px-8">
       <div className="mx-auto max-w-7xl">
         <div className="text-center mb-16">
-          <h1 className="text-4xl font-bold philosopher lg:text-5xl mb-4">
-            Project Gallery
-          </h1>
+          <h1 className="text-4xl font-bold philosopher lg:text-5xl mb-4">Project Gallery</h1>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            Visual highlights from my engineering journey. From early concepts
-            to technical implementations and field work.
+            Visual highlights from my engineering journey. From early concepts to technical implementations and field work.
           </p>
         </div>
 
         <GalleryClient images={galleryImages} />
       </div>
     </div>
-  );
+  )
 }

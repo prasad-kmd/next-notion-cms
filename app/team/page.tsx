@@ -1,10 +1,9 @@
-import type { Metadata } from "next";
-import Image from "next/image";
-import { Mail, Linkedin, Github } from "lucide-react";
+import type { Metadata } from "next"
+import Image from "next/image"
+import { Mail, Linkedin, Github } from "lucide-react"
 
-const title = "Our Team";
-const description =
-  "Meet the dedicated mechanical and mechatronics engineering students behind this initiative.";
+const title = "Our Team"
+const description = "Meet the dedicated mechanical and mechatronics engineering students behind this initiative."
 
 export const metadata: Metadata = {
   title,
@@ -22,7 +21,7 @@ export const metadata: Metadata = {
       },
     ],
   },
-};
+}
 
 const teamMembers = [
   {
@@ -70,20 +69,17 @@ const teamMembers = [
     linkedin: "#",
     github: "#",
   },
-];
+]
 
 export default function TeamPage() {
   return (
     <div className="min-h-screen py-20 px-6 lg:px-8">
       <div className="mx-auto max-w-7xl">
         <div className="text-center mb-16">
-          <h1 className="text-4xl font-bold philosopher lg:text-5xl mb-4">
-            Meet Our Team
-          </h1>
+          <h1 className="text-4xl font-bold philosopher lg:text-5xl mb-4">Meet Our Team</h1>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            A diverse group of mechanical and mechatronics engineering students
-            bringing together different perspectives, skills, and experiences to
-            tackle complex problems.
+            A diverse group of mechanical and mechatronics engineering students bringing together different
+            perspectives, skills, and experiences to tackle complex problems.
           </p>
         </div>
 
@@ -102,12 +98,8 @@ export default function TeamPage() {
                 />
               </div>
               <h3 className="text-xl font-bold">{member.name}</h3>
-              <p className="mt-1 text-sm font-medium text-primary uppercase tracking-wider">
-                {member.role}
-              </p>
-              <p className="mt-4 text-muted-foreground leading-relaxed">
-                {member.bio}
-              </p>
+              <p className="mt-1 text-sm font-medium text-primary uppercase tracking-wider">{member.role}</p>
+              <p className="mt-4 text-muted-foreground leading-relaxed">{member.bio}</p>
 
               <div className="mt-8 flex gap-3 pt-4 border-t border-border/50">
                 <a
@@ -137,5 +129,5 @@ export default function TeamPage() {
         </div>
       </div>
     </div>
-  );
+  )
 }

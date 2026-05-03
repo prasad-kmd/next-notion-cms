@@ -43,3 +43,17 @@ All notable changes to this project will be documented in this file.
 - Initial public release of the Notion CMS integration.
 - High-fidelity engineering dashboard hero.
 - Multi-type content support (Blog, Articles, Projects, Tutorials, Wiki).
+
+## [2.1.0] - 2026-05-03
+
+### Added
+- **Engineering Workspace**: Ported 30+ interactive tools for electronics, mechanical, and mechatronics engineering.
+- **Entertainment Hub**: Admin-only cinematic experience with TMDB, OMDb, and YTS integration.
+- **Entertainment Bookmarks**: Database-synced bookmarking system for movies and TV shows.
+- **Site Directory**: Updated categorized site directory with all new tools and restored pages.
+- **Restored Pages**: Recovered missing content pages including changelog, cheat-sheets, glossary, etc.
+- **Recharts Integration**: Migrated all ported tools from Chart.js to Recharts for modern data visualization.
+
+### Fixed
+- Improved client-side admin checks to avoid server-side dependency conflicts.
+- Standardized font and styling across all ported modules to match the Engineering Workspace aesthetic.
